@@ -16,7 +16,7 @@ export default function Navbar({ session, onOpenLogin, onOpenInquiry }) {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
 
         {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
+        <Link href="/" className="flex items-center gap-2.5 group">
           <img 
             src="/logo.jpg" 
             alt="BuildInByte Logo" 
