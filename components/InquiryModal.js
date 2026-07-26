@@ -56,7 +56,7 @@ export default function InquiryModal({ config, onClose }) {
             </h2>
 
             <p className="text-xs text-[#5C4B3E] mb-6">
-              Connect directly with our 3-person core engineering unit. We respond within 24 hours.
+              Connect directly with our core engineering unit. We respond within 24 hours.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
@@ -141,7 +141,7 @@ export default function InquiryModal({ config, onClose }) {
               Inquiry Received
             </h3>
             <p className="text-xs text-[#5C4B3E] max-w-sm mx-auto leading-relaxed">
-              Thank you, <span className="font-bold text-[#2C1D11]">{formData.name}</span>. Our 3-person collective has received your request and will follow up at <span className="font-bold text-[#800020]">{formData.email}</span> within 24 hours.
+              Thank you, <span className="font-bold text-[#2C1D11]">{formData.name}</span>. Our student collective has received your request and will follow up at <span className="font-bold text-[#800020]">{formData.email}</span> within 24 hours.
             </p>
             <button onClick={onClose} className="btn-primary text-xs py-2 px-6">
               Close Window

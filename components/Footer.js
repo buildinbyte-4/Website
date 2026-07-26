@@ -20,7 +20,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-xs text-[#FDFBF7]/70 max-w-sm leading-relaxed">
-              A 3-person student collective delivering ready-to-use digital software products and custom full-stack solutions.
+              A student collective delivering ready-to-use digital software products and custom full-stack solutions.
             </p>
             <div className="pt-2 text-xs text-[#FDFBF7]/90 font-medium">
               <span>Contact for Sales & Queries: </span>

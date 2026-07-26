@@ -20,7 +20,7 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
 
             {/* Subheadline */}
             <p className="text-lg sm:text-xl text-[#5C4B3E] max-w-2xl font-normal leading-relaxed">
-              Production-ready software, custom web applications, and digital tools built by our 3-person student team.
+              Production-ready software, custom web applications, and digital tools built by our student team.
             </p>
 
             {/* Dual CTAs */}
