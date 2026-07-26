@@ -27,8 +27,8 @@
     --border-sand: #E2D7C7;
 
     /* Typography Update */
-    --font-serif: 'Playwrite NZ', cursive;
-    --font-display: 'Playwrite NZ', cursive;
+    --font-serif: 'TT Phobos', 'Playwrite NZ', cursive, serif;
+    --font-display: 'TT Phobos', 'Playwrite NZ', cursive, serif;
     --font-sans: 'Titillium Web', sans-serif;
   }
 

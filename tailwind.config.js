@@ -42,7 +42,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['"Titillium Web"', 'system-ui', 'sans-serif'],
-        serif: ['"Playwrite NZ"', 'Georgia', 'serif'],
+        serif: ['"TT Phobos"', '"Playwrite NZ"', 'Georgia', 'serif'],
       },
     },
   },
