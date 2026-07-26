@@ -16,10 +16,12 @@ export default function Navbar({ session, onOpenLogin, onOpenInquiry }) {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-9 h-9 rounded-xl bg-[#800020] text-[#FDFBF7] flex items-center justify-center font-serif text-xl font-bold shadow-md group-hover:bg-[#600018] transition-all">
-            B
-          </div>
+          <Link href="/" className="flex items-center gap-2.5 group">
+          <img 
+            src="/logo.jpg" 
+            alt="BuildInByte Logo" 
+            className="w-10 h-10 rounded-xl object-cover shadow-md group-hover:scale-105 transition-transform" 
+          />
           <div>
             <span className="font-serif font-bold text-2xl tracking-tight text-[#4A0E17]">
               BuildInByte
