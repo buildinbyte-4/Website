@@ -32,7 +32,7 @@ export default function HomePage() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       if (session) {
-        setShowLogin(false); // Close login screen automatically once authenticated
+        setShowLogin(false); 
       }
       setAuthLoading(false);
     });
@@ -62,7 +62,7 @@ export default function HomePage() {
             id: p.id,
             title: p.name,
             desc: p.description,
-            price: typeof p.price_usd === 'number' ? `$${p.price_usd.toLocaleString()}` : `$${p.price_usd}`,
+            price: typeof p.price_usd === 'number' ? `₹${p.price_usd.toLocaleString()}` : `₹${p.price_usd}`,
             stack: p.tech_stack || [],
             category: p.tech_stack?.some(s => s.toLowerCase().includes('mobile') || s.toLowerCase().includes('native')) 
               ? 'Mobile Apps' 
@@ -135,7 +135,7 @@ export default function HomePage() {
         onOpenInquiry={handleInquiryRequest}
       />
 
-      {/* Custom Services & 3-Person Collective Model */}
+      {/* Custom Services & Student Collective Model */}
       <CustomServices
         onOpenInquiry={handleInquiryRequest}
       />

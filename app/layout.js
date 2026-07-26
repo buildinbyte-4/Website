@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "BuildInByte — Tailored Software & Digital Solutions",
-  description: "Production-ready software, custom web applications, and digital tools built by our 3-person student team.",
+  description: "Production-ready software, custom web applications, and digital tools built by our student team.",
 };
 
 export default function RootLayout({ children }) {

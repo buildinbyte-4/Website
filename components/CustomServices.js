@@ -10,7 +10,7 @@ export default function CustomServices({ onOpenInquiry }) {
         <div id="work" className="mb-20">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="text-xs font-bold uppercase tracking-widest text-[#800020] bg-[#800020]/10 px-3 py-1 rounded-full border border-[#800020]/20 inline-block mb-3">
-              The 3-Person Collective Model
+              The Student Collective Model
             </span>
             <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#4A0E17]">
               Built by Students. Zero Agency Layers.
@@ -66,7 +66,7 @@ export default function CustomServices({ onOpenInquiry }) {
               Custom Engineering Capabilities
             </h3>
             <p className="text-xs text-[#5C4B3E] mt-1">
-              Bespoke client solutions scoped and delivered by our 3-person core team.
+              Bespoke client solutions scoped and delivered by our core team.
             </p>
           </div>
 
