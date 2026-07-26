@@ -10,6 +10,7 @@ import Footer from '@/components/Footer';
 import DemoModal from '@/components/DemoModal';
 import InquiryModal from '@/components/InquiryModal';
 import LoginScreen from '@/components/LoginScreen';
+import ProfileModal from '@/components/ProfileModal';
 import { PROJECTS as MOCK_PROJECTS } from '@/lib/data';
 
 export default function HomePage() {
@@ -19,6 +20,7 @@ export default function HomePage() {
   const [demoProject, setDemoProject] = useState(null);
   const [inquiryConfig, setInquiryConfig] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
   // 1. Auth State Management
   useEffect(() => {
@@ -32,7 +34,7 @@ export default function HomePage() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       if (session) {
-        setShowLogin(false); 
+        setShowLogin(false); // Close login screen automatically once authenticated
       }
       setAuthLoading(false);
     });
@@ -116,6 +118,7 @@ export default function HomePage() {
       <Navbar 
         session={session} 
         onOpenLogin={() => setShowLogin(true)} 
+        onOpenProfile={() => setShowProfile(true)}
         onOpenInquiry={handleInquiryRequest} 
       />
 
@@ -163,6 +166,14 @@ export default function HomePage() {
       {showLogin && (
         <LoginScreen 
           onClose={() => setShowLogin(false)} 
+        />
+      )}
+
+      {/* User Profile Modal */}
+      {showProfile && (
+        <ProfileModal
+          user={session?.user}
+          onClose={() => setShowProfile(false)}
         />
       )}
 

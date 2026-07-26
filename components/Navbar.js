@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 
-export default function Navbar({ session, onOpenLogin, onOpenInquiry }) {
+export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInquiry }) {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
@@ -44,6 +44,29 @@ export default function Navbar({ session, onOpenLogin, onOpenInquiry }) {
 
         {/* CTA */}
         <div className="flex items-center gap-3">
+          {session && (
+            <button
+              onClick={onOpenProfile}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F5EFEB] hover:bg-[#E2D7C7] transition-all border border-[#E2D7C7] text-[#2C1D11] text-xs font-semibold cursor-pointer"
+            >
+              {session.user.user_metadata?.avatar_url || session.user.user_metadata?.picture ? (
+                <img
+                  src={session.user.user_metadata?.avatar_url || session.user.user_metadata?.picture}
+                  alt="Avatar"
+                  referrerPolicy="no-referrer"
+                  className="w-5 h-5 rounded-full object-cover border border-[#800020]/30"
+                />
+              ) : (
+                <div className="w-5 h-5 rounded-full bg-[#800020] text-[#FDFBF7] flex items-center justify-center font-bold text-[10px]">
+                  {(session.user.user_metadata?.full_name || session.user.user_metadata?.name || session.user.email || 'U').charAt(0).toUpperCase()}
+                </div>
+              )}
+              <span className="hidden sm:inline">
+                {session.user.user_metadata?.full_name?.split(' ')[0] || session.user.user_metadata?.name?.split(' ')[0] || 'Profile'}
+              </span>
+            </button>
+          )}
+
           {session ? (
             <button
               onClick={handleSignOut}
