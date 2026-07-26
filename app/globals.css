@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+NZ:wght@100..400&family=Titillium+Web:wght@200;300;400;600;700;900&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-primary: #FDFBF7;
+    --bg-surface: #FFFDF9;
+    --bg-sand: #F5EFEB;
+    --bg-sand-light: #F4EBE1;
+    
+    --bg-dark-sidebar: #2C1D11;
+    --bg-dark-card: #1A0E09;
+    
+    --text-headline: #4A0E17;
+    --text-main: #2C1D11;
+    --text-body: #5C4B3E;
+    --text-muted: #8C7B6E;
+    --text-light: #FDFBF7;
+    
+    --color-maroon: #800020;
+    --color-maroon-hover: #600018;
+    --color-maroon-dark: #4A0E17;
+    --color-maroon-bg: rgba(128, 0, 32, 0.08);
+    --color-maroon-border: rgba(128, 0, 32, 0.18);
+    
+    --border-subtle: rgba(128, 0, 32, 0.12);
+    --border-sand: #E2D7C7;
+
+    /* Typography Update */
+    --font-serif: 'Playwrite NZ', cursive;
+    --font-display: 'Playwrite NZ', cursive;
+    --font-sans: 'Titillium Web', sans-serif;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+  }
+}
+
+.editorial-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px -2px rgba(44, 29, 17, 0.05);
+  transition: all 0.25s ease;
+}
+
+.editorial-card:hover {
+  border-color: rgba(128, 0, 32, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -4px rgba(74, 14, 23, 0.08);
+}
+
+.btn-primary {
+  background-color: var(--color-maroon);
+  color: #FDFBF7;
+  border: 1px solid var(--color-maroon);
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.15s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-maroon-hover);
+  box-shadow: 0 8px 20px rgba(128, 0, 32, 0.2);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: var(--bg-primary);
+  color: var(--color-maroon);
+  border: 1.5px solid var(--color-maroon-border);
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-sand-light);
+  border-color: var(--color-maroon);
+}
+
+.badge-available {
+  background-color: var(--color-maroon-bg);
+  color: var(--color-maroon);
+  border: 1px solid var(--color-maroon-border);
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.badge-custom {
+  background-color: var(--bg-sand);
+  color: var(--text-main);
+  border: 1px solid var(--border-sand);
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
