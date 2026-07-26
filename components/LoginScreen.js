@@ -92,9 +92,11 @@ export default function LoginScreen({ onClose }) {
         
         {/* Brand Logo */}
         <div className="flex flex-col items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-[#800020] text-[#FDFBF7] flex items-center justify-center font-serif text-2xl font-bold shadow-md">
-            B
-          </div>
+          <img 
+            src="/logo.jpg" 
+            alt="BuildInByte Logo" 
+            className="w-16 h-16 rounded-2xl object-cover shadow-md" 
+          />
           <div>
             <h1 className="font-serif font-bold text-3xl text-[#4A0E17]">
               BuildInByte

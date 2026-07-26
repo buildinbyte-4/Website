@@ -10,9 +10,11 @@ export default function Footer() {
           
           <div className="md:col-span-6 space-y-3">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-[#800020] text-[#FDFBF7] flex items-center justify-center font-serif text-lg font-bold">
-                B
-              </div>
+              <img 
+                src="/logo.jpg" 
+                alt="BuildInByte Logo" 
+                className="w-8 h-8 rounded-lg object-cover shadow-sm" 
+              />
               <span className="font-serif font-bold text-xl text-[#FDFBF7]">
                 BuildInByte
               </span>
