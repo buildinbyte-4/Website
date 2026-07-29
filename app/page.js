@@ -60,21 +60,34 @@ export default function HomePage() {
         if (error) throw error;
 
         if (data && data.length > 0) {
-          const mapped = data.map(p => ({
-            id: p.id,
-            title: p.name,
-            desc: p.description,
-            price: typeof p.price_usd === 'number' ? `₹${p.price_usd.toLocaleString()}` : `₹${p.price_usd}`,
-            stack: p.tech_stack || [],
-            category: p.tech_stack?.some(s => s.toLowerCase().includes('mobile') || s.toLowerCase().includes('native')) 
-              ? 'Mobile Apps' 
-              : p.tech_stack?.some(s => s.toLowerCase().includes('gpt') || s.toLowerCase().includes('ai') || s.toLowerCase().includes('llm'))
-              ? 'AI Tools'
-              : p.tech_stack?.some(s => s.toLowerCase().includes('api') || s.toLowerCase().includes('microservice'))
-              ? 'APIs'
-              : 'Web Apps',
-            status: 'Available Instantly',
-          }));
+          const mapped = data.map((p) => {
+            const normalizedTech = (p.tech_stack || []).map(s => String(s).toLowerCase());
+            let category = 'Custom Application';
+
+            if (normalizedTech.some(s => s.includes('dashboard') || s.includes('analytics'))) {
+              category = 'Dashboard';
+            } else if (normalizedTech.some(s => s.includes('ecommerce') || s.includes('shop') || s.includes('commerce'))) {
+              category = 'E-Commerce';
+            } else if (normalizedTech.some(s => s.includes('ai') || s.includes('gpt') || s.includes('llm') || s.includes('ml'))) {
+              category = 'AI Solutions';
+            } else if (normalizedTech.some(s => s.includes('erp') || s.includes('crm') || s.includes('management') || s.includes('workflow'))) {
+              category = 'Enterprise Software';
+            } else if (normalizedTech.some(s => s.includes('inventory') || s.includes('attendance') || s.includes('queue') || s.includes('employee'))) {
+              category = 'Internal Management System';
+            } else if (normalizedTech.some(s => s.includes('website') || s.includes('web'))) {
+              category = 'Business Website';
+            }
+
+            return {
+              id: p.id,
+              title: p.name,
+              desc: p.description,
+              stack: p.tech_stack || [],
+              category,
+              industry: p.category || 'Business',
+              status: 'Ready to Customize',
+            };
+          });
           setProducts(mapped);
         } else {
           setProducts(MOCK_PROJECTS);

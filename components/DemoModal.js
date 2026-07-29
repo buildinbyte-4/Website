@@ -16,28 +16,30 @@ export default function DemoModal({ project, onClose, onOpenInquiry }) {
 
         <div className="flex items-center gap-2 mb-2">
           <span className="badge-available">{project.category}</span>
-          <span className="text-xs font-bold text-[#800020]">{project.status}</span>
+          {project.industry && (
+            <span className="text-xs font-bold text-[#8C7B6E]">{project.industry}</span>
+          )}
         </div>
 
         <h2 className="font-serif font-bold text-2xl text-[#4A0E17] mb-2">
-          {project.title} — Live Interactive Preview
+          {project.title} — Solution Overview
         </h2>
 
         <p className="text-xs text-[#5C4B3E] mb-6 leading-relaxed">
           {project.desc}
         </p>
 
-        {/* Demo Graphic Container */}
+        {/* Solution Preview Container */}
         <div className="rounded-xl overflow-hidden aspect-[16/9] bg-[#F4EBE1] border border-[#E2D7C7] mb-6 p-4 flex flex-col justify-between">
           <div className="flex items-center justify-between text-xs text-[#8C7B6E]">
-            <span className="font-bold text-[#4A0E17]">Demo Instance #401</span>
-            <span className="font-mono bg-[#FFFDF9] px-2 py-0.5 rounded">Status: Live Engine</span>
+            <span className="font-bold text-[#4A0E17]">Solution Capabilities</span>
+            <span className="font-mono bg-[#FFFDF9] px-2 py-0.5 rounded">Status: Ready to Customize</span>
           </div>
 
           <div className="bg-[#FFFDF9] p-4 rounded-xl border border-[#E2D7C7] shadow-sm space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#2C1D11]">System Throughput</span>
-              <span className="text-xs font-serif font-bold text-[#800020]">99.98% Uptime</span>
+              <span className="text-xs font-bold text-[#2C1D11]">Solution Architecture</span>
+              <span className="text-xs font-serif font-bold text-[#800020]">Enterprise Grade</span>
             </div>
             <div className="h-3 w-full bg-[#800020]/15 rounded-full overflow-hidden">
               <div className="h-full bg-[#800020] w-3/4 rounded-full"></div>
@@ -45,10 +47,32 @@ export default function DemoModal({ project, onClose, onOpenInquiry }) {
           </div>
         </div>
 
+        {/* What's Included */}
+        <div className="mb-6 p-4 rounded-xl bg-[#F4EBE1] border border-[#E2D7C7]">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C7B6E] block mb-3">
+            What's Included
+          </span>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              'Fully Customizable',
+              'Scalable Architecture',
+              'Modern UI/UX',
+              'Deployment Support',
+              'Source Code Ownership',
+              'Tailored to Your Business',
+            ].map((feature, idx) => (
+              <div key={idx} className="flex items-center gap-2 text-xs font-semibold text-[#2C1D11]">
+                <span className="text-[#800020] font-bold">✓</span>
+                {feature}
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Tech Stack */}
         <div className="mb-6">
           <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C7B6E] block mb-2">
-            Included Technical Architecture
+            Technology Stack
           </span>
           <div className="flex flex-wrap gap-2">
             {project.stack.map((item, idx) => (
@@ -62,8 +86,8 @@ export default function DemoModal({ project, onClose, onOpenInquiry }) {
         {/* Footer */}
         <div className="flex items-center justify-between pt-4 border-t border-[#800020]/15">
           <div>
-            <span className="text-[10px] text-[#8C7B6E] block font-bold uppercase">Instant Code Ownership</span>
-            <span className="font-serif font-bold text-3xl text-[#800020]">{project.price}</span>
+            <span className="text-[10px] text-[#8C7B6E] block font-bold uppercase">Fully Customizable</span>
+            <span className="font-serif font-bold text-lg text-[#800020]">Tailored to Your Business</span>
           </div>
 
           <div className="flex gap-3">
@@ -73,11 +97,11 @@ export default function DemoModal({ project, onClose, onOpenInquiry }) {
             <button
               onClick={() => {
                 onClose();
-                onOpenInquiry({ title: `Purchase ${project.title}` });
+                onOpenInquiry({ title: `Request a Quote — ${project.title}` });
               }}
               className="btn-primary text-xs py-2.5 px-5"
             >
-              Enquire / Purchase Code
+              Request a Quote
             </button>
           </div>
         </div>

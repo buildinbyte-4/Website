@@ -48,7 +48,7 @@ export default function InquiryModal({ config, onClose }) {
         {!submitted ? (
           <div>
             <span className="text-[10px] font-bold uppercase tracking-wider text-[#800020] bg-[#800020]/10 px-2.5 py-1 rounded-full border border-[#800020]/20 inline-block mb-2">
-              Direct Collective Channel
+              Direct Consultation Channel
             </span>
             
             <h2 className="font-serif font-bold text-2xl text-[#4A0E17] mb-1">
@@ -56,7 +56,7 @@ export default function InquiryModal({ config, onClose }) {
             </h2>
 
             <p className="text-xs text-[#5C4B3E] mb-6">
-              Connect directly with our core engineering unit. We respond within 24 hours.
+              Connect directly with our delivery team. We respond within 24 hours with a tailored path forward.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
@@ -141,7 +141,7 @@ export default function InquiryModal({ config, onClose }) {
               Inquiry Received
             </h3>
             <p className="text-xs text-[#5C4B3E] max-w-sm mx-auto leading-relaxed">
-              Thank you, <span className="font-bold text-[#2C1D11]">{formData.name}</span>. Our student collective has received your request and will follow up at <span className="font-bold text-[#800020]">{formData.email}</span> within 24 hours.
+              Thank you, <span className="font-bold text-[#2C1D11]">{formData.name}</span>. Our team has received your request and will follow up at <span className="font-bold text-[#800020]">{formData.email}</span> within 24 hours.
             </p>
             <button onClick={onClose} className="btn-primary text-xs py-2 px-6">
               Close Window

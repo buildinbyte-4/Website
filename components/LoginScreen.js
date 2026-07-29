@@ -102,7 +102,7 @@ export default function LoginScreen({ onClose }) {
               BuildInByte
             </h1>
             <p className="text-[10px] uppercase tracking-widest text-[#800020] font-bold mt-1">
-              Student Project Store & Solutions
+              Custom Software Development & Solutions
             </p>
           </div>
         </div>

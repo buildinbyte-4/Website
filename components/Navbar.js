@@ -32,10 +32,10 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
         {/* Navigation Links */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-[#2C1D11]">
           <a href="#projects" className="hover:text-[#800020] transition-colors">
-            Available Projects
+            Our Solutions
           </a>
           <a href="#services" className="hover:text-[#800020] transition-colors">
-            Custom Services
+            Services
           </a>
           <a href="#work" className="hover:text-[#800020] transition-colors">
             Our Work
@@ -82,10 +82,13 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
               Sign In
             </button>
           )}
-          <a href="#projects" className="btn-primary text-xs py-2.5 px-4 shadow-sm">
-            <span>Browse Store</span>
+          <button
+            onClick={() => onOpenInquiry({ title: 'Book a Consultation' })}
+            className="btn-primary text-xs py-2.5 px-4 shadow-sm"
+          >
+            <span>Book a Consultation</span>
             <span>→</span>
-          </a>
+          </button>
         </div>
 
       </div>

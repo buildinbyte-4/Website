@@ -14,43 +14,43 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
 
             {/* Headline */}
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.08] text-[#4A0E17]">
-              Tailored Software & Digital Solutions, <br />
-              <span className="italic text-[#800020]">Built by Students.</span>
+              Building Software That <br />
+              <span className="italic text-[#800020]">Solves Real Business Problems.</span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-lg sm:text-xl text-[#5C4B3E] max-w-2xl font-normal leading-relaxed">
-              Production-ready software, custom web applications, and digital tools built by our student team.
+              We design and develop modern websites, AI-powered applications, enterprise software, dashboards, and automation systems tailored to your business goals.
             </p>
 
             {/* Dual CTAs */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <a href="#projects" className="btn-primary text-base px-7 py-3.5 shadow-md">
-                <span>View Available Projects</span>
-                <span>→</span>
-              </a>
-
               <button
-                onClick={() => onOpenInquiry({ title: 'Book Custom Build' })}
-                className="btn-secondary text-base px-7 py-3.5"
+                onClick={() => onOpenInquiry({ title: 'Book a Free Consultation' })}
+                className="btn-primary text-base px-7 py-3.5 shadow-md"
               >
-                <span>Book Custom Build</span>
+                <span>Book a Free Consultation</span>
+                <span>→</span>
               </button>
+
+              <a href="#projects" className="btn-secondary text-base px-7 py-3.5">
+                <span>Explore Our Solutions</span>
+              </a>
             </div>
 
-            {/* Guarantee Pills */}
+            {/* Trust Pills */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-6 border-t border-[#800020]/15 text-xs text-[#5C4B3E] font-medium">
               <div className="flex items-center gap-2">
                 <span className="text-[#800020] font-bold">✓</span>
-                <span>100% Owned Source Code</span>
+                <span>Enterprise-Grade Quality</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[#800020] font-bold">✓</span>
-                <span>Direct Partner Contact</span>
+                <span>End-to-End Development</span>
               </div>
               <div className="flex items-center gap-2 col-span-2 sm:col-span-1">
                 <span className="text-[#800020] font-bold">✓</span>
-                <span>5-Day Fast Delivery</span>
+                <span>Dedicated Support</span>
               </div>
             </div>
 
@@ -62,8 +62,8 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
               
               <div className="flex items-center justify-between mb-4">
                 <span className="badge-available">Featured Solution</span>
-                <span className="font-serif font-bold text-3xl text-[#800020]">
-                  {featured.price}
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C7B6E] bg-[#F5EFEB] px-2 py-1 rounded border border-[#E2D7C7]">
+                  Tailored Pricing
                 </span>
               </div>
 
@@ -106,13 +106,13 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
                   onClick={() => onOpenDemo(featured)}
                   className="btn-secondary text-xs py-2.5 justify-center"
                 >
-                  Live Demo
+                  View Details
                 </button>
                 <button
-                  onClick={() => onOpenInquiry({ title: `Purchase ${featured.title}` })}
+                  onClick={() => onOpenInquiry({ title: `Request a Quote — ${featured.title}` })}
                   className="btn-primary text-xs py-2.5 justify-center"
                 >
-                  Enquire / Buy
+                  Request a Quote
                 </button>
               </div>
 

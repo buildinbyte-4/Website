@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "BuildInByte — Tailored Software & Digital Solutions",
-  description: "Production-ready software, custom web applications, and digital tools built by our student team.",
+  title: "BuildInByte — Custom Software Development Agency",
+  description: "Custom software solutions for startups, SMEs, and growing businesses — from modern websites to enterprise platforms and AI-powered applications.",
 };
 
 export default function RootLayout({ children }) {

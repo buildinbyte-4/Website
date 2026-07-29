@@ -24,20 +24,20 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
           <div>
             <span className="text-xs font-bold uppercase tracking-widest text-[#800020] bg-[#800020]/10 px-3 py-1 rounded-full border border-[#800020]/20 inline-block mb-3">
-              Software Inventory
+              Solutions We Build
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#4A0E17]">
-              Ready-to-Use Digital Projects & Codebases
+              Solutions We Build
             </h2>
             <p className="text-sm text-[#5C4B3E] mt-1 max-w-xl">
-              Purchase full ownership of production-ready software systems engineered by our core collective.
+              Explore examples of software solutions we design and develop for businesses across multiple industries. Every solution is fully customizable to match your unique business requirements.
             </p>
           </div>
 
           <div className="text-right">
             <span className="text-xs text-[#8C7B6E] block">Available Solutions</span>
             <span className="font-serif font-bold text-2xl text-[#800020]">
-              {filteredProjects.length} Ready Projects
+              {filteredProjects.length} Solutions
             </span>
           </div>
         </div>
@@ -66,7 +66,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
           <div className="relative">
             <input
               type="text"
-              placeholder="Search tech stack..."
+              placeholder="Search solutions..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               className="w-full sm:w-64 px-4 py-2 rounded-xl bg-[#F4EBE1] border border-[#E2D7C7] text-xs text-[#2C1D11] focus:outline-none focus:border-[#800020]"
@@ -78,7 +78,6 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
         {/* Project Card Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map(project => {
-            const isInstant = project.status === 'Available Instantly';
             return (
               <div
                 key={project.id}
@@ -86,10 +85,10 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
               >
                 <div>
                   
-                  {/* Visual Graphic Placeholder */}
+                  {/* Visual Graphic Placeholder with Hover Overlay */}
                   <div className="rounded-xl overflow-hidden aspect-[16/9] bg-[#F4EBE1] border border-[#E2D7C7] mb-5 p-4 flex flex-col justify-between relative group">
                     <div className="flex items-center justify-between">
-                      <span className={isInstant ? 'badge-available' : 'badge-custom'}>
+                      <span className="badge-available">
                         {project.status}
                       </span>
                       <span className="text-[11px] font-bold text-[#800020] uppercase tracking-wider">
@@ -97,15 +96,41 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                       </span>
                     </div>
 
-                    {/* Dynamic Graphic UI Preview */}
-                    <div className="bg-[#FFFDF9] p-3 rounded-lg border border-[#E2D7C7] shadow-sm">
+                    {/* Default Graphic UI Preview */}
+                    <div className="bg-[#FFFDF9] p-3 rounded-lg border border-[#E2D7C7] shadow-sm transition-opacity duration-300 group-hover:opacity-0">
                       <div className="flex items-center gap-2 mb-2">
                         <div className="w-2.5 h-2.5 rounded-full bg-[#800020]"></div>
                         <div className="h-2 w-24 bg-[#2C1D11]/20 rounded"></div>
                       </div>
                       <div className="h-2.5 w-full bg-[#800020]/15 rounded"></div>
                     </div>
+
+                    {/* Hover Overlay: Feature Checklist */}
+                    <div className="absolute inset-0 bg-[#800020]/95 rounded-xl flex flex-col justify-center px-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-[#FDFBF7]/60 mb-3">What's Included</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-center gap-2 text-xs font-semibold text-[#FDFBF7]">
+                          <span className="text-[#F4EBE1] font-bold">✓</span> Fully Customizable
+                        </li>
+                        <li className="flex items-center gap-2 text-xs font-semibold text-[#FDFBF7]">
+                          <span className="text-[#F4EBE1] font-bold">✓</span> Scalable Architecture
+                        </li>
+                        <li className="flex items-center gap-2 text-xs font-semibold text-[#FDFBF7]">
+                          <span className="text-[#F4EBE1] font-bold">✓</span> Modern UI/UX
+                        </li>
+                        <li className="flex items-center gap-2 text-xs font-semibold text-[#FDFBF7]">
+                          <span className="text-[#F4EBE1] font-bold">✓</span> Deployment Support
+                        </li>
+                      </ul>
+                    </div>
                   </div>
+
+                  {/* Industry Tag */}
+                  {project.industry && (
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C7B6E] mb-2 block">
+                      {project.industry}
+                    </span>
+                  )}
 
                   {/* Title & Description */}
                   <h3 className="font-serif font-bold text-xl text-[#4A0E17] mb-2">
@@ -130,12 +155,12 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
 
                 </div>
 
-                {/* Footer Price & Action Buttons */}
+                {/* Footer Action Buttons */}
                 <div className="pt-4 border-t border-[#800020]/12">
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] uppercase font-bold text-[#8C7B6E]">Full Code License</span>
-                    <span className="font-serif font-bold text-2xl text-[#800020]">
-                      {project.price}
+                    <span className="text-[10px] uppercase font-bold text-[#8C7B6E]">Tailored to Your Business</span>
+                    <span className="text-[10px] font-bold text-[#800020] bg-[#800020]/10 px-2 py-1 rounded border border-[#800020]/20 uppercase tracking-wide">
+                      Ready to Customize
                     </span>
                   </div>
 
@@ -144,14 +169,14 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                       onClick={() => onOpenDemo(project)}
                       className="btn-secondary text-xs py-2.5 justify-center"
                     >
-                      Live Demo
+                      View Details
                     </button>
 
                     <button
-                      onClick={() => onOpenInquiry({ title: `Purchase ${project.title}` })}
+                      onClick={() => onOpenInquiry({ title: `Request a Quote — ${project.title}` })}
                       className="btn-primary text-xs py-2.5 justify-center"
                     >
-                      Enquire / Purchase
+                      Request a Quote
                     </button>
                   </div>
                 </div>
