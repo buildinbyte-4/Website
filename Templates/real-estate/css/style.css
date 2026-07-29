@@ -1,0 +1,180 @@
+/* ==========================================================================
+   BuildinByte Real Estate Showcase - Main Stylesheet
+   Design Style: Architectural Luxury, Dark Glassmorphism, Sharp Typography
+   ========================================================================== */
+
+:root {
+    --accent-emerald: #3b7a57;
+    --accent-gold: #d4af37;
+    --dark-bg: #0b0d0e;
+    --dark-surface: #141719;
+    --text-primary: #f0f2f5;
+    --text-secondary: #9098a3;
+    --glass-bg: rgba(255, 255, 255, 0.02);
+    --glass-border: rgba(255, 255, 255, 0.07);
+    --font-heading: 'Cinzel', serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 1px; color: #fff; }
+h1 { font-size: 3.5rem; line-height: 1.15; }
+h2 { font-size: 2.3rem; margin-bottom: 1rem; }
+p { color: var(--text-secondary); font-weight: 300; }
+
+.section-tag {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    color: var(--accent-gold);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.section { padding: 90px 0; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+.align-center { align-items: center; }
+.text-center { text-align: center; }
+.rounded { border-radius: 6px; }
+
+/* Buttons */
+.btn {
+    padding: 14px 28px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+}
+.btn-primary { background: var(--accent-gold); color: #000; font-weight: 600; }
+.btn-primary:hover { background: #c29f2e; transform: translateY(-2px); }
+.btn-outline { background: transparent; border-color: var(--glass-border); color: #fff; }
+.btn-outline:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+
+/* Navigation */
+.navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 25px 0; transition: var(--transition); }
+.navbar.scrolled { background: rgba(11, 13, 14, 0.92); backdrop-filter: blur(12px); padding: 15px 0; border-bottom: 1px solid var(--glass-border); }
+.nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+.brand-logo { font-family: var(--font-heading); font-size: 1.4rem; color: #fff; text-decoration: none; letter-spacing: 3px; }
+.brand-logo span { color: var(--accent-gold); }
+.nav-menu { display: flex; gap: 25px; }
+.nav-link { color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; letter-spacing: 1px; transition: var(--transition); }
+.nav-link:hover, .nav-link.active { color: #fff; }
+.hamburger { display: none; cursor: pointer; }
+.hamburger span { display: block; width: 22px; height: 2px; background: #fff; margin: 4px 0; }
+
+/* Hero & Search Bar */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=80') center/cover no-repeat;
+    text-align: center;
+}
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(11,13,14,0.3), rgba(11,13,14,0.9)); }
+.hero-content { position: relative; z-index: 2; max-width: 900px; padding: 0 20px; }
+
+.search-filter-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) auto;
+    gap: 15px;
+    margin-top: 40px;
+    padding: 20px;
+    align-items: end;
+}
+.filter-group { text-align: left; }
+.filter-group label { display: block; font-size: 0.7rem; uppercase; color: var(--text-secondary); margin-bottom: 5px; }
+.filter-group select {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* Glassmorphism Cards */
+.glass-card { background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 8px; }
+
+.property-tabs { display: flex; justify-content: center; gap: 10px; margin: 30px 0 40px; }
+.tab-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-secondary); padding: 8px 20px; border-radius: 20px; cursor: pointer; }
+.tab-btn.active, .tab-btn:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+
+.property-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+.property-card { overflow: hidden; transition: var(--transition); }
+.property-card:hover { transform: translateY(-6px); border-color: var(--accent-gold); }
+.card-img-holder { position: relative; height: 220px; }
+.card-img-holder img { width: 100%; height: 100%; object-fit: cover; }
+.status-badge { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); color: var(--accent-gold); font-size: 0.7rem; padding: 4px 10px; border: 1px solid var(--accent-gold); }
+.card-body { padding: 25px; }
+.card-body .location { font-size: 0.75rem; text-transform: uppercase; color: var(--accent-gold); }
+.card-body h3 { font-size: 1.3rem; margin: 5px 0 10px; }
+.property-specs { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px; }
+.card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--glass-border); padding-top: 15px; }
+.card-footer .price { font-family: var(--font-heading); font-size: 1.3rem; color: #fff; }
+
+/* Blueprint Showcase Component */
+.blueprint-card { padding: 50px 20px; position: relative; overflow: hidden; }
+.blueprint-graphics {
+    height: 200px;
+    border: 1px dashed var(--accent-gold);
+    margin-bottom: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.blueprint-pin {
+    background: var(--accent-gold);
+    color: #000;
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    position: absolute;
+    top: 30%; left: 20%;
+}
+.blueprint-pin.second { top: 60%; right: 25%; left: auto; }
+
+/* Forms & Map Placeholder */
+.contact-form { display: flex; flex-direction: column; gap: 15px; padding: 30px; margin-top: 20px; }
+.form-group input, .form-group select {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    padding: 12px;
+    color: #fff;
+    border-radius: 4px;
+}
+.map-placeholder { height: 100%; min-height: 380px; display: flex; align-items: center; justify-content: center; }
+
+/* Footer */
+.footer { padding: 40px 0 20px; border-top: 1px solid var(--glass-border); }
+
+/* Scroll Animations */
+.reveal-up, .reveal-left, .reveal-right { opacity: 0; transition: all 0.8s ease; }
+.reveal-up { transform: translateY(30px); }
+.reveal-left { transform: translateX(-30px); }
+.reveal-right { transform: translateX(30px); }
+.reveal-up.active, .reveal-left.active, .reveal-right.active { opacity: 1; transform: translate(0); }
+
+/* Responsive */
+@media (max-width: 992px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .search-filter-bar { grid-template-columns: 1fr; }
+}
