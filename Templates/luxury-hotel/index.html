@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurelia Grand Hotel & Fine Dining | Design Showcase by BuildinByte</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="brand-logo">AURELIA <span>GRAND</span></a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#rooms" class="nav-link">Suites</a>
+                <a href="#restaurant" class="nav-link">Dining</a>
+                <a href="#menu" class="nav-link">Menu</a>
+                <a href="#amenities" class="nav-link">Amenities</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content fade-in">
+            <span class="sub-heading">Sanctuary of Refinement</span>
+            <h1>Timeless Elegance.<br>Unrivaled Luxury.</h1>
+            <p>Experience world-class hospitality in the heart of the coastal mountains.</p>
+            <div class="hero-buttons">
+                <a href="#rooms" class="btn btn-primary">Explore Suites</a>
+                <a href="#restaurant" class="btn btn-secondary">Reserve Table</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section id="about" class="section about-section">
+        <div class="container grid-2">
+            <div class="about-text reveal-left">
+                <span class="section-tag">Welcome to Aurelia</span>
+                <h2>Where Sophistication Meets Serenity</h2>
+                <p>Designed for discerning travelers, Aurelia Grand offers an immersive retreat defined by architectural beauty, tailored concierge services, and panoramic views.</p>
+                <p>Every detail, from hand-stitched Egyptian cottons to Michelin-caliber culinary craft, is curated to provide an unmatched sense of place and tranquility.</p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-num">48</span>
+                        <span class="stat-label">Luxury Suites</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">3</span>
+                        <span class="stat-label">Michelin Stars</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">100%</span>
+                        <span class="stat-label">Personalized Care</span>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image-wrapper reveal-right">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=80" alt="Aurelia Hotel Interior" class="img-responsive rounded">
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Rooms & Pricing Cards -->
+    <section id="rooms" class="section rooms-section">
+        <div class="container">
+            <div class="section-header text-center reveal-up">
+                <span class="section-tag">Accommodations</span>
+                <h2>Suites & Residences</h2>
+                <p>Meticulously designed sanctuaries offering panoramic mountain and ocean views.</p>
+            </div>
+            <div class="cards-grid">
+                <!-- Room Card 1 -->
+                <div class="card room-card reveal-up">
+                    <div class="card-img-holder">
+                        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80" alt="Deluxe Ocean Suite">
+                        <span class="badge">Most Popular</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Deluxe Ocean Suite</h3>
+                        <p class="room-desc">Spacious private terrace, marble soaking tub, and bespoke king bedding.</p>
+                        <ul class="room-features">
+                            <li><span>Size:</span> 65 m²</li>
+                            <li><span>Occupancy:</span> Up to 2 Guests</li>
+                            <li><span>View:</span> Coastal Panorama</li>
+                        </ul>
+                        <div class="card-footer">
+                            <div class="price-tag">$450 <span>/ night</span></div>
+                            <button class="btn btn-outline">Preview Details</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Room Card 2 -->
+                <div class="card room-card reveal-up" data-delay="0.2s">
+                    <div class="card-img-holder">
+                        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80" alt="Executive Panorama Villa">
+                    </div>
+                    <div class="card-body">
+                        <h3>Panorama Sky Villa</h3>
+                        <p class="room-desc">Private infinity plunge pool, dedicated butler service, and fire pit.</p>
+                        <ul class="room-features">
+                            <li><span>Size:</span> 120 m²</li>
+                            <li><span>Occupancy:</span> Up to 4 Guests</li>
+                            <li><span>View:</span> Mountain Range</li>
+                        </ul>
+                        <div class="card-footer">
+                            <div class="price-tag">$850 <span>/ night</span></div>
+                            <button class="btn btn-outline">Preview Details</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Room Card 3 -->
+                <div class="card room-card reveal-up" data-delay="0.4s">
+                    <div class="card-img-holder">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80" alt="Royal Penthouse">
+                    </div>
+                    <div class="card-body">
+                        <h3>The Royal Penthouse</h3>
+                        <p class="room-desc">Full-top-floor suite with private elevator, chef's kitchen, and sauna.</p>
+                        <ul class="room-features">
+                            <li><span>Size:</span> 250 m²</li>
+                            <li><span>Occupancy:</span> Up to 6 Guests</li>
+                            <li><span>View:</span> 360 Horizon</li>
+                        </ul>
+                        <div class="card-footer">
+                            <div class="price-tag">$1,800 <span>/ night</span></div>
+                            <button class="btn btn-outline">Preview Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Restaurant Banner Section -->
+    <section id="restaurant" class="section restaurant-intro">
+        <div class="container grid-2 align-center">
+            <div class="restaurant-img reveal-left">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80" alt="Fine Dining Room" class="rounded">
+            </div>
+            <div class="restaurant-text reveal-right">
+                <span class="section-tag">Gastronomy</span>
+                <h2>L'Étoile Fine Dining</h2>
+                <p>Guided by Executive Chef Marc Laurent, L'Étoile reimagines classic French techniques using organic local produce and sustainable seafood harvested daily.</p>
+                <p>Each plate is paired with rare vintages selected by our master sommelier from our cellar of over 3,000 bottles.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Food Menu Section -->
+    <section id="menu" class="section menu-section">
+        <div class="container">
+            <div class="section-header text-center reveal-up">
+                <span class="section-tag">Culinary Delights</span>
+                <h2>The Culinary Selection</h2>
+                <p>Explore our seasonal offerings curated for refined palates.</p>
+            </div>
+
+            <!-- Category Filter Tabs -->
+            <div class="menu-tabs reveal-up">
+                <button class="tab-btn active" data-category="all">All Items</button>
+                <button class="tab-btn" data-category="breakfast">Breakfast</button>
+                <button class="tab-btn" data-category="lunch">Lunch</button>
+                <button class="tab-btn" data-category="dinner">Dinner</button>
+                <button class="tab-btn" data-category="desserts">Desserts</button>
+                <button class="tab-btn" data-category="drinks">Drinks</button>
+            </div>
+
+            <!-- Menu Grid -->
+            <div class="menu-grid" id="menuGrid">
+                <!-- Dish 1 -->
+                <div class="menu-card glass-card" data-category="breakfast">
+                    <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=600&q=80" alt="Avocado & Truffle Toast">
+                    <div class="menu-card-info">
+                        <div class="menu-title-price">
+                            <h4>Avocado & Black Truffle Toast</h4>
+                            <span class="price">$28</span>
+                        </div>
+                        <p>Artisanal sourdough, poached heritage eggs, shaved black winter truffle, sea salt.</p>
+                    </div>
+                </div>
+                <!-- Dish 2 -->
+                <div class="menu-card glass-card" data-category="lunch">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80" alt="Seared Ahi Tuna Bowl">
+                    <div class="menu-card-info">
+                        <div class="menu-title-price">
+                            <h4>Seared Yellowfin Tuna Bowl</h4>
+                            <span class="price">$38</span>
+                        </div>
+                        <p>Sesame-crusted tuna, wild rice, avocado, pickled ginger, and citrus ponzu dressing.</p>
+                    </div>
+                </div>
+                <!-- Dish 3 -->
+                <div class="menu-card glass-card" data-category="dinner">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" alt="Prime Wagyu Ribeye">
+                    <div class="menu-card-info">
+                        <div class="menu-title-price">
+                            <h4>A5 Miyazaki Wagyu Tenderloin</h4>
+                            <span class="price">$140</span>
+                        </div>
+                        <p>Smoked bone marrow reduction, roasted heirloom carrots, potato mousseline.</p>
+                    </div>
+                </div>
+                <!-- Dish 4 -->
+                <div class="menu-card glass-card" data-category="dinner">
+                    <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80" alt="Lobster Thermidor">
+                    <div class="menu-card-info">
+                        <div class="menu-title-price">
+                            <h4>Brittany Lobster Thermidor</h4>
+                            <span class="price">$95</span>
+                        </div>
+                        <p>Cognac cream sauce, Gruyère crust, wild mushrooms, and tarragon oil.</p>
+                    </div>
+                </div>
+                <!-- Dish 5 -->
+                <div class="menu-card glass-card" data-category="desserts">
+                    <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80" alt="Dark Chocolate Sphere">
+                    <div class="menu-card-info">
+                        <div class="menu-title-price">
+                            <h4>Valrhona Chocolate Sphere</h4>
+                            <span class="price">$24</span>
+                        </div>
+                        <p>Hot salted caramel drizzle, hazelnut praline core, Madagascar vanilla gelée.</p>
+                    </div>
+                </div>
+                <!-- Dish 6 -->
+                <div class="menu-card glass-card" data-category="drinks">
+                    <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=600&q=80" alt="Smoked Gold Fashioned">
+                    <div class="menu-card-info">
+                        <div class="menu-title-price">
+                            <h4>Smoked Gold Fashioned</h4>
+                            <span class="price">$26</span>
+                        </div>
+                        <p>Aged Japanese Whiskey, edible 24k gold leaf, bitters, oak smoke dome.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities Section -->
+    <section id="amenities" class="section amenities-section">
+        <div class="container">
+            <div class="section-header text-center reveal-up">
+                <span class="section-tag">World-Class Facilities</span>
+                <h2>Exclusive Amenities</h2>
+            </div>
+            <div class="amenities-grid">
+                <div class="amenity-box glass-card reveal-up">
+                    <div class="icon">♨</div>
+                    <h3>Thermal Spa & Sauna</h3>
+                    <p>Rejuvenating holistic therapies, outdoor hydrotherapy pools, and private steam rooms.</p>
+                </div>
+                <div class="amenity-box glass-card reveal-up" data-delay="0.1s">
+                    <div class="icon">🏊</div>
+                    <h3>Infinity Sky Pool</h3>
+                    <p>Heated rooftop pool offering uninterrupted panoramic views across the horizon.</p>
+                </div>
+                <div class="amenity-box glass-card reveal-up" data-delay="0.2s">
+                    <div class="icon">🚁</div>
+                    <h3>Helipad & Transfer</h3>
+                    <p>Seamless private transport services via helicopter or chauffeur-driven luxury sedans.</p>
+                </div>
+                <div class="amenity-box glass-card reveal-up" data-delay="0.3s">
+                    <div class="icon">🍷</div>
+                    <h3>Private Cellar</h3>
+                    <p>Tastings led by world-class sommelier featuring vintage collections and reserve pairings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section gallery-section">
+        <div class="container">
+            <div class="section-header text-center reveal-up">
+                <span class="section-tag">Visual Journey</span>
+                <h2>The Aurelia Experience</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item reveal-up"><img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80" alt="Pool Area"></div>
+                <div class="gallery-item reveal-up" data-delay="0.1s"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" alt="Spa Treatment"></div>
+                <div class="gallery-item reveal-up" data-delay="0.2s"><img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80" alt="Suite Balcony"></div>
+                <div class="gallery-item reveal-up" data-delay="0.3s"><img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80" alt="Wine Selection"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials-section">
+        <div class="container">
+            <div class="section-header text-center reveal-up">
+                <span class="section-tag">Guest Experiences</span>
+                <h2>Words of Praise</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card glass-card reveal-up">
+                    <p class="quote">"An unforgettable stay. The attention to detail in every corner of the suite and the exquisite dining made our anniversary extraordinary."</p>
+                    <div class="author">
+                        <h4>Eleanor Vance</h4>
+                        <span>London, UK</span>
+                    </div>
+                </div>
+                <div class="testimonial-card glass-card reveal-up" data-delay="0.2s">
+                    <p class="quote">"Aurelia sets the global standard for luxury. The private pool suite was pristine, and the staff anticipates every need seamlessly."</p>
+                    <div class="author">
+                        <h4>Marcus Sterling</h4>
+                        <span>Zurich, Switzerland</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Map Placeholder Section -->
+    <section id="contact" class="section contact-section">
+        <div class="container grid-2">
+            <div class="contact-info reveal-left">
+                <span class="section-tag">Get in Touch</span>
+                <h2>Plan Your Escape</h2>
+                <p>Reach out to our reservations concierge for custom bookings, private events, or helicopter transfer requests.</p>
+
+                <div class="info-items">
+                    <div class="info-item">
+                        <strong>Address:</strong>
+                        <p>100 Grand Horizon Way, Alpine Ridge, CA 90210</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>Reservations:</strong>
+                        <p>+1 (800) 555-AURELIA | concierges@aureliagrand.com</p>
+                    </div>
+                </div>
+
+                <form class="contact-form glass-card" onsubmit="event.preventDefault(); alert('Demo Mode: Form submission simulated.');">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="4" placeholder="Message or Special Inquiry" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Send Message</button>
+                </form>
+            </div>
+
+            <div class="map-container reveal-right">
+                <!-- Map Placeholder Component -->
+                <div class="map-placeholder glass-card">
+                    <div class="map-content">
+                        <div class="pin">📍</div>
+                        <h3>Aurelia Grand Resort</h3>
+                        <p>Interactive Map Embed Placeholder</p>
+                        <span class="map-coords">34.0522° N, 118.2437° W</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <h3>AURELIA <span>GRAND</span></h3>
+                <p>A static website design showcase created by <strong>BuildinByte</strong>.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Navigation</h4>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#rooms">Suites</a></li>
+                    <li><a href="#menu">Dining Menu</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="#">Instagram</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Facebook</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <p>&copy; 2026 BuildinByte Showcase. All rights reserved. Designed for client preview purposes.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
