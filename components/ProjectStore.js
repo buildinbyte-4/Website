@@ -12,49 +12,64 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
     const matchesCategory = activeCategory === 'All' || p.category === activeCategory;
     const matchesSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           p.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          p.stack.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
+                          (p.stack && p.stack.some(s => s.toLowerCase().includes(searchQuery.toLowerCase())));
     return matchesCategory && matchesSearch;
   });
 
+  const getMetrics = (id) => {
+    const defaultMetrics = [
+      { label: 'Latency', value: '-40%' },
+      { label: 'Uptime', value: '99.9%' },
+      { label: 'Load', value: '< 1s' }
+    ];
+    if (id % 3 === 0) return [{ label: 'Conv.', value: '+45%' }, { label: 'Speed', value: '0.8s' }, { label: 'API', value: '1M+' }];
+    if (id % 2 === 0) return [{ label: 'Sync', value: '<50ms' }, { label: 'Ret.', value: '+22%' }, { label: 'Up', value: '99.99%' }];
+    return defaultMetrics;
+  };
+
+  const BRUTAL_COLORS = ['bg-brutal-yellow', 'bg-brutal-pink', 'bg-brutal-green', 'bg-brutal-blue'];
+
   return (
-    <section id="projects" className="py-20 bg-[#FDFBF7]">
+    <section id="projects" className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-[#800020] bg-[#800020]/10 px-3 py-1 rounded-full border border-[#800020]/20 inline-block mb-3">
-              Solutions We Build
+            <span className="font-black text-xs uppercase tracking-widest text-brutal-black bg-brutal-yellow px-3 py-1 border-2 border-brutal-black inline-block mb-4 shadow-brutal-sm">
+              Production Work
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#4A0E17]">
-              Solutions We Build
+            <h2 className="font-display text-5xl sm:text-6xl font-black text-brutal-black uppercase tracking-tighter leading-none">
+              CASE STUDIES
             </h2>
-            <p className="text-sm text-[#5C4B3E] mt-1 max-w-xl">
-              Explore examples of software solutions we design and develop for businesses across multiple industries. Every solution is fully customizable to match your unique business requirements.
+            <p className="text-xl text-brutal-black mt-4 max-w-2xl font-bold uppercase">
+              Real-world software solutions architected for scale. We deliver measurable results.
             </p>
           </div>
 
-          <div className="text-right">
-            <span className="text-xs text-[#8C7B6E] block">Available Solutions</span>
-            <span className="font-serif font-bold text-2xl text-[#800020]">
-              {filteredProjects.length} Solutions
+          <div className="text-right border-4 border-brutal-black p-4 bg-white shadow-brutal-sm">
+            <span className="font-black text-sm text-brutal-black block mb-1 uppercase">Total Deployments</span>
+            <span className="font-black text-4xl text-brutal-blue">
+              {filteredProjects.length}
             </span>
           </div>
         </div>
 
         {/* Filter Bar & Search */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-10 p-3 rounded-2xl bg-[#FFFDF9] border border-[#800020]/15 shadow-sm">
+        <div className="flex flex-wrap lg:flex-nowrap items-center justify-between gap-4 mb-12 p-4 bg-white border-4 border-brutal-black shadow-brutal">
           
-          {/* Category Filter Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0">
+          <div className="flex items-center gap-2 overflow-x-auto flex-nowrap pb-2 lg:pb-0" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <style jsx>{`
+              div::-webkit-scrollbar { display: none; }
+            `}</style>
             {FILTER_TABS.map(cat => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+                className={`px-4 py-2 text-sm font-black uppercase whitespace-nowrap border-2 border-brutal-black transition-all shadow-brutal-sm ${
                   activeCategory === cat
-                    ? 'bg-[#800020] text-[#FDFBF7] shadow-sm'
-                    : 'bg-transparent text-[#2C1D11] hover:bg-[#F5EFEB]'
+                    ? 'bg-brutal-black text-white translate-y-1 translate-x-1 shadow-none'
+                    : 'bg-brutal-yellow text-brutal-black hover:bg-brutal-pink hover:text-white'
                 }`}
               >
                 {cat}
@@ -62,14 +77,13 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
             ))}
           </div>
 
-          {/* Search Box */}
-          <div className="relative">
+          <div className="w-full lg:w-auto shrink-0 relative">
             <input
               type="text"
-              placeholder="Search solutions..."
+              placeholder="FILTER BY TECH..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full sm:w-64 px-4 py-2 rounded-xl bg-[#F4EBE1] border border-[#E2D7C7] text-xs text-[#2C1D11] focus:outline-none focus:border-[#800020]"
+              className="w-full lg:w-64 px-4 py-3 bg-white border-4 border-brutal-black text-sm font-black text-brutal-black uppercase placeholder-brutal-black/50 focus:outline-none focus:bg-brutal-yellow transition-colors shadow-brutal-sm"
             />
           </div>
 
@@ -77,106 +91,102 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
 
         {/* Project Card Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map(project => {
+          {filteredProjects.map((project, index) => {
+            const hasDemo = Boolean(project.demoUrl);
+            const metrics = getMetrics(project.id);
+            const cardBgColor = BRUTAL_COLORS[index % BRUTAL_COLORS.length];
+
             return (
               <div
                 key={project.id}
-                className="editorial-card p-6 flex flex-col justify-between border border-[#800020]/15 bg-[#FFFDF9]"
+                onClick={() => {
+                  if (hasDemo) window.open(project.demoUrl, '_blank', 'noopener,noreferrer');
+                  else onOpenDemo(project);
+                }}
+                className={`group editorial-card flex flex-col justify-between cursor-pointer h-full ${cardBgColor} p-0 overflow-hidden`}
               >
-                <div>
-                  
-                  {/* Visual Graphic Placeholder with Hover Overlay */}
-                  <div className="rounded-xl overflow-hidden aspect-[16/9] bg-[#F4EBE1] border border-[#E2D7C7] mb-5 p-4 flex flex-col justify-between relative group">
-                    <div className="flex items-center justify-between">
-                      <span className="badge-available">
-                        {project.status}
-                      </span>
-                      <span className="text-[11px] font-bold text-[#800020] uppercase tracking-wider">
-                        {project.category}
-                      </span>
-                    </div>
-
-                    {/* Default Graphic UI Preview */}
-                    <div className="bg-[#FFFDF9] p-3 rounded-lg border border-[#E2D7C7] shadow-sm transition-opacity duration-300 group-hover:opacity-0">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-2.5 h-2.5 rounded-full bg-[#800020]"></div>
-                        <div className="h-2 w-24 bg-[#2C1D11]/20 rounded"></div>
-                      </div>
-                      <div className="h-2.5 w-full bg-[#800020]/15 rounded"></div>
-                    </div>
-
-                    {/* Hover Overlay: Feature Checklist */}
-                    <div className="absolute inset-0 bg-[#800020]/95 rounded-xl flex flex-col justify-center px-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-[#FDFBF7]/60 mb-3">What's Included</p>
-                      <ul className="space-y-2">
-                        <li className="flex items-center gap-2 text-xs font-semibold text-[#FDFBF7]">
-                          <span className="text-[#F4EBE1] font-bold">✓</span> Fully Customizable
-                        </li>
-                        <li className="flex items-center gap-2 text-xs font-semibold text-[#FDFBF7]">
-                          <span className="text-[#F4EBE1] font-bold">✓</span> Scalable Architecture
-                        </li>
-                        <li className="flex items-center gap-2 text-xs font-semibold text-[#FDFBF7]">
-                          <span className="text-[#F4EBE1] font-bold">✓</span> Modern UI/UX
-                        </li>
-                        <li className="flex items-center gap-2 text-xs font-semibold text-[#FDFBF7]">
-                          <span className="text-[#F4EBE1] font-bold">✓</span> Deployment Support
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* Industry Tag */}
+                
+                {/* Header: Meta & Industry */}
+                <div className="flex items-center justify-between p-4 border-b-4 border-brutal-black bg-white">
+                  <span className="font-black text-sm text-brutal-black uppercase">
+                    ID:{String(project.id).padStart(4, '0')}
+                  </span>
                   {project.industry && (
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C7B6E] mb-2 block">
+                    <span className="font-black text-xs uppercase text-white bg-brutal-black px-2 py-1">
                       {project.industry}
                     </span>
                   )}
+                </div>
 
+                <div className="p-6 bg-white border-b-4 border-brutal-black flex-1">
                   {/* Title & Description */}
-                  <h3 className="font-serif font-bold text-xl text-[#4A0E17] mb-2">
+                  <h3 className="font-display font-black text-3xl text-brutal-black mb-4 uppercase leading-none tracking-tight">
                     {project.title}
                   </h3>
 
-                  <p className="text-xs text-[#5C4B3E] leading-relaxed mb-5 line-clamp-2">
+                  <p className="text-base text-brutal-black font-bold uppercase leading-tight mb-6 line-clamp-3">
                     {project.desc}
                   </p>
 
-                  {/* Tech Stack Badges */}
-                  <div className="flex flex-wrap gap-1.5 mb-6">
-                    {project.stack.map((tech, idx) => (
-                      <span
-                        key={idx}
-                        className="text-[10px] font-bold px-2.5 py-0.5 rounded bg-[#F5EFEB] text-[#2C1D11] border border-[#E2D7C7]"
-                      >
-                        {tech}
-                      </span>
+                  {/* Quantifiable Metrics */}
+                  <div className="grid grid-cols-3 gap-2 mb-6">
+                    {metrics.map((m, i) => (
+                      <div key={i} className="bg-brutal-yellow p-2 border-2 border-brutal-black flex flex-col items-center justify-center text-center">
+                        <span className="font-black text-[10px] text-brutal-black uppercase">{m.label}</span>
+                        <span className="font-black text-lg text-brutal-black">{m.value}</span>
+                      </div>
                     ))}
                   </div>
 
+                  {/* Tech Stack */}
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {project.stack && project.stack.map((tech, idx) => (
+                      <span
+                         key={idx}
+                         className="font-black text-[10px] uppercase px-2 py-1 bg-white text-brutal-black border-2 border-brutal-black"
+                      >
+                         {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                {/* Footer Action Buttons */}
-                <div className="pt-4 border-t border-[#800020]/12">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] uppercase font-bold text-[#8C7B6E]">Tailored to Your Business</span>
-                    <span className="text-[10px] font-bold text-[#800020] bg-[#800020]/10 px-2 py-1 rounded border border-[#800020]/20 uppercase tracking-wide">
-                      Ready to Customize
-                    </span>
-                  </div>
+                {/* Actions */}
+                <div className="p-4 bg-white">
+                  <div className="grid grid-cols-2 gap-3">
+                    {hasDemo ? (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(project.demoUrl, '_blank', 'noopener,noreferrer');
+                        }}
+                        className="btn-primary py-3 justify-center text-xs"
+                      >
+                        LIVE DEMO
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onOpenDemo(project);
+                        }}
+                        className="btn-secondary py-3 justify-center text-xs bg-brutal-yellow"
+                      >
+                        VIEW ARCH
+                      </button>
+                    )}
 
-                  <div className="grid grid-cols-2 gap-2.5">
                     <button
-                      onClick={() => onOpenDemo(project)}
-                      className="btn-secondary text-xs py-2.5 justify-center"
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenInquiry({ title: `Technical Inquiry — ${project.title}` });
+                      }}
+                      className="btn-secondary py-3 justify-center text-xs hover:bg-brutal-black hover:text-white"
                     >
-                      View Details
-                    </button>
-
-                    <button
-                      onClick={() => onOpenInquiry({ title: `Request a Quote — ${project.title}` })}
-                      className="btn-primary text-xs py-2.5 justify-center"
-                    >
-                      Request a Quote
+                      READ DOC
                     </button>
                   </div>
                 </div>

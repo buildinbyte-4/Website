@@ -12,82 +12,66 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[#FDFBF7]/90 backdrop-blur-md border-b border-[#800020]/15 px-6 py-4">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <header style={{ position: 'sticky', top: 0, zIndex: 50, backgroundColor: '#ffffff', borderBottom: '4px solid #000000', padding: '1rem 1.5rem', width: '100%' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: '80rem', margin: '0 auto', width: '100%' }}>
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <img 
-            src="/logo.jpg" 
-            alt="BuildInByte Logo" 
-            className="w-10 h-10 rounded-xl object-cover shadow-md group-hover:scale-105 transition-transform" 
-          />
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }} className="group">
+          <img src="/logo.jpg" alt="BuildInByte Logo" className="h-10 w-auto" />
           <div>
-            <span className="font-serif font-bold text-2xl tracking-tight text-[#4A0E17]">
+            <span className="font-display font-black text-3xl tracking-tighter text-brutal-black uppercase">
               BuildInByte
             </span>
           </div>
         </Link>
 
         {/* Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-[#2C1D11]">
-          <a href="#projects" className="hover:text-[#800020] transition-colors">
+        <nav className="hidden md:flex items-center gap-8 text-lg font-black text-brutal-black uppercase font-display">
+          <a href="#projects" className="hover:bg-brutal-yellow px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
             Our Solutions
           </a>
-          <a href="#services" className="hover:text-[#800020] transition-colors">
+          <Link href="/templates" className="bg-brutal-yellow border-2 border-brutal-black px-3 py-1 shadow-brutal-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+            Templates
+          </Link>
+          <a href="#services" className="hover:bg-brutal-pink px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black hover:text-white">
             Services
           </a>
-          <a href="#work" className="hover:text-[#800020] transition-colors">
+          <a href="#work" className="hover:bg-brutal-green px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
             Our Work
           </a>
         </nav>
 
         {/* CTA */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           {session && (
             <button
               onClick={onOpenProfile}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F5EFEB] hover:bg-[#E2D7C7] transition-all border border-[#E2D7C7] text-[#2C1D11] text-xs font-semibold cursor-pointer"
+              className="flex items-center gap-2 px-3 py-1.5 bg-brutal-yellow border-2 border-brutal-black text-brutal-black text-sm font-black uppercase cursor-pointer hover:bg-brutal-pink hover:text-white transition-colors"
             >
-              {session.user.user_metadata?.avatar_url || session.user.user_metadata?.picture ? (
-                <img
-                  src={session.user.user_metadata?.avatar_url || session.user.user_metadata?.picture}
-                  alt="Avatar"
-                  referrerPolicy="no-referrer"
-                  className="w-5 h-5 rounded-full object-cover border border-[#800020]/30"
-                />
-              ) : (
-                <div className="w-5 h-5 rounded-full bg-[#800020] text-[#FDFBF7] flex items-center justify-center font-bold text-[10px]">
-                  {(session.user.user_metadata?.full_name || session.user.user_metadata?.name || session.user.email || 'U').charAt(0).toUpperCase()}
-                </div>
-              )}
-              <span className="hidden sm:inline">
-                {session.user.user_metadata?.full_name?.split(' ')[0] || session.user.user_metadata?.name?.split(' ')[0] || 'Profile'}
-              </span>
+              <span>PROFILE</span>
             </button>
           )}
 
           {session ? (
             <button
               onClick={handleSignOut}
-              className="text-xs font-bold text-[#800020] px-3 py-2.5 rounded-lg bg-[#800020]/10 hover:bg-[#800020]/20 transition-all cursor-pointer"
+              className="text-sm font-black uppercase text-brutal-black px-4 py-2 border-2 border-brutal-black hover:bg-brutal-black hover:text-white transition-colors cursor-pointer"
             >
-              Sign Out
+              Log Out
             </button>
           ) : (
-            <button
+             <button
               onClick={onOpenLogin}
-              className="text-xs font-bold text-[#800020] px-3 py-2.5 rounded-lg bg-[#800020]/10 hover:bg-[#800020]/20 transition-all cursor-pointer"
+              className="text-sm font-black uppercase text-brutal-black px-4 py-2 border-2 border-brutal-black hover:bg-brutal-black hover:text-white transition-colors cursor-pointer"
             >
-              Sign In
+              Log In
             </button>
           )}
           <button
             onClick={() => onOpenInquiry({ title: 'Book a Consultation' })}
-            className="btn-primary text-xs py-2.5 px-4 shadow-sm"
+            className="btn-primary"
           >
-            <span>Book a Consultation</span>
-            <span>→</span>
+            <span>Talk to Us</span>
           </button>
         </div>
 

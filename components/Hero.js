@@ -5,117 +5,97 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
   const featured = PROJECTS[0];
 
   return (
-    <section className="relative pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden bg-gradient-to-b from-[#FDFBF7] via-[#FFFDF9] to-[#FDFBF7]">
+    <section className="relative pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden bg-brutal-bg border-b-4 border-brutal-black">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Left Column: Hero Text & Dual CTAs */}
+          {/* Left Column: Huge Brutalist Text */}
           <div className="lg:col-span-7 space-y-6">
 
             {/* Headline */}
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.08] text-[#4A0E17]">
-              Building Software That <br />
-              <span className="italic text-[#800020]">Solves Real Business Problems.</span>
+            <h1 className="font-display text-5xl sm:text-7xl lg:text-[5.5rem] font-black leading-[0.9] text-brutal-black uppercase tracking-tighter">
+              WE BUILD <br />
+              <span className="bg-brutal-yellow px-2 inline-block -rotate-1 border-4 border-brutal-black shadow-brutal mt-4">SYSTEMS</span><br/>
+              THAT SCALE.
             </h1>
 
             {/* Subheadline */}
-            <p className="text-lg sm:text-xl text-[#5C4B3E] max-w-2xl font-normal leading-relaxed">
-              We design and develop modern websites, AI-powered applications, enterprise software, dashboards, and automation systems tailored to your business goals.
+            <p className="text-xl sm:text-2xl text-brutal-black font-bold uppercase leading-snug border-l-8 border-brutal-pink pl-4 py-2 mt-8">
+              We architect, build, and deploy raw, production-grade custom web applications and APIs for ambitious companies. No fluff.
             </p>
 
             {/* Dual CTAs */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
+            <div className="flex flex-wrap items-center gap-4 pt-6">
               <button
-                onClick={() => onOpenInquiry({ title: 'Book a Free Consultation' })}
-                className="btn-primary text-base px-7 py-3.5 shadow-md"
+                onClick={() => onOpenInquiry({ title: 'Book a Technical Scoping Call' })}
+                className="btn-primary"
               >
-                <span>Book a Free Consultation</span>
-                <span>→</span>
+                BOOK SCOPING CALL
               </button>
 
-              <a href="#projects" className="btn-secondary text-base px-7 py-3.5">
-                <span>Explore Our Solutions</span>
+              <a href="#projects" className="btn-secondary">
+                VIEW OUR WORK
               </a>
             </div>
 
-            {/* Trust Pills */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-6 border-t border-[#800020]/15 text-xs text-[#5C4B3E] font-medium">
-              <div className="flex items-center gap-2">
-                <span className="text-[#800020] font-bold">✓</span>
-                <span>Enterprise-Grade Quality</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[#800020] font-bold">✓</span>
-                <span>End-to-End Development</span>
-              </div>
-              <div className="flex items-center gap-2 col-span-2 sm:col-span-1">
-                <span className="text-[#800020] font-bold">✓</span>
-                <span>Dedicated Support</span>
-              </div>
+            {/* Tech Tags */}
+            <div className="flex flex-wrap gap-2 pt-8 text-sm text-brutal-black font-black uppercase">
+              <span className="bg-brutal-green px-3 py-1 border-2 border-brutal-black shadow-brutal-sm">React & Next.js</span>
+              <span className="bg-brutal-pink px-3 py-1 border-2 border-brutal-black shadow-brutal-sm text-white">Node APIs</span>
+              <span className="bg-brutal-yellow px-3 py-1 border-2 border-brutal-black shadow-brutal-sm">PostgreSQL</span>
+              <span className="bg-brutal-blue px-3 py-1 border-2 border-brutal-black shadow-brutal-sm text-white">AWS / GCP</span>
+              <span className="bg-brutal-green px-3 py-1 border-2 border-brutal-black shadow-brutal-sm">EMBEDDED C/C++</span>
+              <span className="bg-brutal-pink px-3 py-1 border-2 border-brutal-black shadow-brutal-sm text-white">PCB DESIGN & HARDWARE</span>
+              <span className="bg-brutal-yellow px-3 py-1 border-2 border-brutal-black shadow-brutal-sm">PYTHON & FASTAPI</span>
             </div>
 
           </div>
 
-          {/* Right Column: Interactive Featured Card Preview */}
+          {/* Right Column: Brutal Status Box */}
           <div className="lg:col-span-5">
-            <div className="editorial-card p-6 bg-[#FFFDF9] border border-[#800020]/20 shadow-xl relative group">
+            <div className="editorial-card p-6 bg-brutal-pink relative group overflow-hidden">
               
-              <div className="flex items-center justify-between mb-4">
-                <span className="badge-available">Featured Solution</span>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C7B6E] bg-[#F5EFEB] px-2 py-1 rounded border border-[#E2D7C7]">
-                  Tailored Pricing
-                </span>
-              </div>
-
-              {/* Graphical Preview Box */}
-              <div className="rounded-xl overflow-hidden aspect-[16/10] bg-[#F4EBE1] border border-[#E2D7C7] mb-4 p-4 flex flex-col justify-between relative">
-                <div className="flex items-center justify-between text-xs text-[#8C7B6E]">
-                  <span className="font-mono bg-[#FFFDF9] px-2 py-0.5 rounded border border-[#E2D7C7]">v2.4.0</span>
-                  <span className="font-bold text-[#800020]">{featured.category}</span>
-                </div>
-                
-                {/* Mock UI Element */}
-                <div className="bg-[#FFFDF9] p-3 rounded-lg border border-[#E2D7C7] shadow-sm space-y-2">
-                  <div className="h-2 w-3/4 bg-[#800020]/20 rounded"></div>
-                  <div className="h-2 w-1/2 bg-[#5C4B3E]/20 rounded"></div>
-                  <div className="flex gap-2 pt-1">
-                    <div className="h-4 w-12 bg-[#800020]/30 rounded"></div>
-                    <div className="h-4 w-16 bg-[#F4EBE1] rounded"></div>
-                  </div>
-                </div>
-              </div>
-
-              <h3 className="font-serif font-bold text-2xl text-[#4A0E17] mb-1">
-                {featured.title}
-              </h3>
-
-              <p className="text-xs text-[#5C4B3E] mb-4 leading-relaxed">
-                {featured.desc}
-              </p>
-
-              <div className="flex flex-wrap gap-1.5 mb-6">
-                {featured.stack.map((item, i) => (
-                  <span key={i} className="text-[11px] font-semibold px-2.5 py-0.5 rounded bg-[#F5EFEB] text-[#2C1D11] border border-[#E2D7C7]">
-                    {item}
+              <div className="flex items-center justify-between mb-4 border-b-4 border-brutal-black pb-4">
+                <div className="font-black text-2xl uppercase">System Status</div>
+                <div className="flex gap-2">
+                  <span className="font-black text-sm text-brutal-black bg-brutal-green px-2 py-1 border-2 border-brutal-black shadow-brutal-sm">
+                    ONLINE
                   </span>
-                ))}
+                </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  onClick={() => onOpenDemo(featured)}
-                  className="btn-secondary text-xs py-2.5 justify-center"
-                >
-                  View Details
-                </button>
-                <button
-                  onClick={() => onOpenInquiry({ title: `Request a Quote — ${featured.title}` })}
-                  className="btn-primary text-xs py-2.5 justify-center"
-                >
-                  Request a Quote
-                </button>
+              {/* Aggressive Data Box */}
+              <div className="font-mono text-sm font-bold bg-[#070F26] p-4 border-4 border-brutal-black overflow-hidden shadow-brutal" style={{ lineHeight: 1.6 }}>
+                <div className="text-[#22C55E]">&gt; Status: Operational (99.9% Uptime)</div>
+                <div className="text-[#22C55E]">&gt; Architecture: Microservices & Embedded Systems</div>
+                <div className="text-[#22C55E]">&gt; Latency: &lt; 12ms</div>
+                <div className="text-[#22C55E]">&gt; Stack: C/C++, Python, React, Next.js, PostgreSQL</div>
+                <div className="animate-pulse text-[#22C55E] mt-4">_</div>
               </div>
 
+              <div className="mt-8 bg-white p-4 border-4 border-brutal-black shadow-brutal-sm">
+                <h3 className="font-display font-black text-2xl text-brutal-black mb-1 uppercase">
+                  Architecture 
+                </h3>
+                <p className="text-sm text-brutal-black font-bold mb-4 uppercase">
+                  Deploying resilient backend services and high-performance frontend interfaces.
+                </p>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => onOpenInquiry({ title: 'Request Architecture Review' })}
+                    className="btn-secondary py-2 justify-center text-xs"
+                  >
+                    DOCS
+                  </button>
+                  <button
+                    onClick={() => onOpenInquiry({ title: 'System Demo' })}
+                    className="btn-primary py-2 justify-center text-xs"
+                  >
+                    DEMO
+                  </button>
+                </div>
+              </div>
+              
             </div>
           </div>
 

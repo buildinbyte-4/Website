@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA Estates | Luxury Architectural Real Estate | BuildinByte Showcase</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="brand-logo">AURA <span>ESTATES</span></a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#featured" class="nav-link">Properties</a>
+                <a href="#about" class="nav-link">Architecture</a>
+                <a href="#neighborhoods" class="nav-link">Locations</a>
+                <a href="#agents" class="nav-link">Advisors</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content fade-in">
+            <span class="sub-heading">Architectural Perfection</span>
+            <h1>Residences Crafted<br>For Extraordinary Living.</h1>
+            <p>Curated minimalist luxury estates in coastal and mountain sanctuaries.</p>
+
+            <!-- Search/Filter Bar Demo Component -->
+            <div class="search-filter-bar glass-card">
+                <div class="filter-group">
+                    <label>Location</label>
+                    <select>
+                        <option>Aspen, CO</option>
+                        <option>Malibu, CA</option>
+                        <option>Miami Beach, FL</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Property Type</label>
+                    <select>
+                        <option>Modern Villa</option>
+                        <option>Penthouse</option>
+                        <option>Waterfront</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Price Range</label>
+                    <select>
+                        <option>$3M - $8M</option>
+                        <option>$8M - $15M</option>
+                        <option>$15M+</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary">Search Listings</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Property Listings Grid -->
+    <section id="featured" class="section">
+        <div class="container">
+            <div class="section-header text-center reveal-up">
+                <span class="section-tag">Featured Portfolio</span>
+                <h2>Iconic Listings</h2>
+                <p>Architectural masterpieces available for private acquisition.</p>
+            </div>
+
+            <!-- Property Filter Tabs -->
+            <div class="property-tabs reveal-up">
+                <button class="tab-btn active" data-filter="all">All Properties</button>
+                <button class="tab-btn" data-filter="coastal">Coastal</button>
+                <button class="tab-btn" data-filter="mountain">Mountain</button>
+                <button class="tab-btn" data-filter="urban">Urban Penthouse</button>
+            </div>
+
+            <div class="property-grid" id="propertyGrid">
+                <!-- Property Card 1 -->
+                <div class="property-card glass-card reveal-up" data-category="coastal">
+                    <div class="card-img-holder">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Glass Villa">
+                        <span class="status-badge">For Sale</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="location">Malibu, California</span>
+                        <h3>The Horizon Glass Villa</h3>
+                        <div class="property-specs">
+                            <span>5 Beds</span> • <span>7 Baths</span> • <span>8,400 sqft</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">$14,500,000</div>
+                            <button class="btn btn-outline">Preview Villa</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property Card 2 -->
+                <div class="property-card glass-card reveal-up" data-delay="0.1s" data-category="mountain">
+                    <div class="card-img-holder">
+                        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" alt="Mountain Chalet">
+                        <span class="status-badge">Featured</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="location">Aspen, Colorado</span>
+                        <h3>Ridge Line Alpine Residence</h3>
+                        <div class="property-specs">
+                            <span>6 Beds</span> • <span>8 Baths</span> • <span>10,200 sqft</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">$22,000,000</div>
+                            <button class="btn btn-outline">Preview Villa</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property Card 3 -->
+                <div class="property-card glass-card reveal-up" data-delay="0.2s" data-category="urban">
+                    <div class="card-img-holder">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80" alt="Sky Penthouse">
+                        <span class="status-badge">New Listing</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="location">Miami, Florida</span>
+                        <h3>Aura Tower Sky Penthouse</h3>
+                        <div class="property-specs">
+                            <span>4 Beds</span> • <span>5.5 Baths</span> • <span>6,100 sqft</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">$9,800,000</div>
+                            <button class="btn btn-outline">Preview Villa</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture & Brand Introduction -->
+    <section id="about" class="section highlight-section">
+        <div class="container grid-2 align-center">
+            <div class="reveal-left">
+                <span class="section-tag">Design Philosophy</span>
+                <h2>Harmonizing Structure & Nature</h2>
+                <p>AURA Estates represents properties where form, light, and landscape meet. Each home in our collection is evaluated on structural integrity, sustainable integration, and timeless interior craftsmanship.</p>
+                
+                <div class="value-list">
+                    <div class="value-item">
+                        <strong>Bespoke Concierge:</strong> Private discreet showings via private jet or helicopter.
+                    </div>
+                    <div class="value-item">
+                        <strong>Architectural Vetting:</strong> Every property is authenticated by leading design historians.
+                    </div>
+                </div>
+            </div>
+            <div class="reveal-right">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=80" alt="Architectural Interior" class="img-responsive rounded">
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Floorplan Showcase Placeholder -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header text-center reveal-up">
+                <span class="section-tag">Interactive Preview</span>
+                <h2>Bespoke Floor Plan Blueprint</h2>
+            </div>
+            <div class="blueprint-card glass-card reveal-up text-center">
+                <div class="blueprint-graphics">
+                    <div class="blueprint-grid"></div>
+                    <span class="blueprint-pin">MASTER SUITE (1,200 sqft)</span>
+                    <span class="blueprint-pin second">INFINITY POOL DECK</span>
+                </div>
+                <h3>Interactive 3D Virtual Tour Preview</h3>
+                <p>Clients can toggle between floor plan layouts, lighting models, and material swatches.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Agent Section -->
+    <section id="contact" class="section">
+        <div class="container grid-2">
+            <div class="contact-info reveal-left">
+                <span class="section-tag">Private Advisory</span>
+                <h2>Request Private Access</h2>
+                <p>Schedule a confidential consultation with one of our principal broker associates.</p>
+                
+                <form class="contact-form glass-card" onsubmit="event.preventDefault(); alert('BuildinByte Demo: Inquiry captured.');">
+                    <div class="form-group">
+                        <input type="text" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <select required>
+                            <option value="">Interested Property Type</option>
+                            <option>Coastal Villa</option>
+                            <option>Mountain Estate</option>
+                            <option>Urban Penthouse</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Schedule Consultation</button>
+                </form>
+            </div>
+
+            <div class="map-container reveal-right">
+                <div class="map-placeholder glass-card">
+                    <div class="map-content">
+                        <div class="pin">🏙️</div>
+                        <h3>AURA Advisory Headquarters</h3>
+                        <p>Beverly Hills • New York • London • Zurich</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <h3>AURA <span>ESTATES</span></h3>
+                <p>A static design template showcase crafted by <strong>BuildinByte</strong>.</p>
+            </div>
+            <div class="footer-bottom text-center">
+                <p>&copy; 2026 BuildinByte Showcase. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

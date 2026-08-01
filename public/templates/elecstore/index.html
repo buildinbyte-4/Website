@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CircuitCraft | Microcontroller & Electronics Component Store</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Top Announcement Bar -->
+    <div class="announcement-bar">
+        ⚡ Free shipping on hardware orders over $50 | Fast Dispatch & Tested Microcontrollers
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="brand-logo">Circuit<span>Craft</span> <small>_store</small></a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#categories" class="nav-link">Categories</a>
+                <a href="#products" class="nav-link">Products</a>
+                <a href="#kits" class="nav-link">Project Kits</a>
+                <a href="#specs" class="nav-link">Pinouts & Specs</a>
+                <a href="#testimonials" class="nav-link">Maker Reviews</a>
+                <a href="#contact" class="nav-link">Contact Store</a>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content fade-in">
+            <span class="sub-heading">&lt;ELECTRONICS & EMBEDDED HARDWARE&gt;</span>
+            <h1>Power Your Next Big Project.<br>Arduino, ESP32 & Sensors.</h1>
+            <p>Your one-stop component store for DIY electronics, IoT development, robotics, microcontrollers, and custom prototyping hardware.</p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn btn-primary">Browse Catalog</a>
+                <a href="#kits" class="btn btn-secondary">Explore Starter Kits</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Store Features Bar -->
+    <section class="features-bar">
+        <div class="container features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">🔌</div>
+                <div class="feature-text">
+                    <h4>Genuine Chips</h4>
+                    <p>Authentic Espressif & Arduino boards</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-text">
+                    <h4>Fast Shipping</h4>
+                    <p>Same-day dispatch for makers</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📑</div>
+                <div class="feature-text">
+                    <h4>Datasheets Provided</h4>
+                    <p>Pinouts & schematic docs ready</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🛠️</div>
+                <div class="feature-text">
+                    <h4>Maker Support</h4>
+                    <p>Tested hardware guarantee</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="section categories-section">
+        <div class="container">
+            <div class="section-header text-center reveal-up">
+                <span class="section-tag">Browse by Hardware</span>
+                <h2>Component Categories</h2>
+                <p>Select a category to find essential boards, shields, and modules for your build.</p>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card glass-card reveal-up">
+                    <div class="cat-icon">📟</div>
+                    <h3>Microcontrollers</h3>
+                    <p>ESP32, ESP8266, Arduino Uno, Nano, Mega, STM32 & RP2040.</p>
+                    <a href="#products" class="cat-link">View Boards &rarr;</a>
+                </div>
+                <div class="category-card glass-card reveal-up" data-delay="0.1s">
+                    <div class="cat-icon">📡</div>
+                    <h3>Sensors & Modules</h3>
+                    <p>Temperature, humidity, ultrasonic, motion, IMU, and GPS modules.</p>
+                    <a href="#products" class="cat-link">View Sensors &rarr;</a>
+                </div>
+                <div class="category-card glass-card reveal-up" data-delay="0.2s">
+                    <div class="cat-icon">📶</div>
+                    <h3>Wireless & IoT</h3>
+                    <p>Wi-Fi 6, Bluetooth 5.0, LoRa, NRF24L01, and GSM cellular breakouts.</p>
+                    <a href="#products" class="cat-link">View Modules &rarr;</a>
+                </div>
+                <div class="category-card glass-card reveal-up" data-delay="0.3s">
+                    <div class="cat-icon">🔋</div>
+                    <h3>Power & Prototyping</h3>
+                    <p>Breadboards, jumper wires, LiPo chargers, buck converters, and relays.</p>
+                    <a href="#products" class="cat-link">View Gear &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Showcase Section with Filter Tabs -->
+    <section id="products" class="section products-section">
+        <div class="container">
+            <div class="section-header text-center reveal-up">
+                <span class="section-tag">Popular Hardware</span>
+                <h2>Store Catalog</h2>
+                <p>High-performance components carefully selected for prototype and production builds.</p>
+            </div>
+
+            <!-- Category Filter Tabs -->
+            <div class="product-tabs reveal-up">
+                <button class="tab-btn active" data-category="all">All Products</button>
+                <button class="tab-btn" data-category="microcontrollers">Microcontrollers</button>
+                <button class="tab-btn" data-category="sensors">Sensors</button>
+                <button class="tab-btn" data-category="displays">Displays</button>
+                <button class="tab-btn" data-category="power">Power & Relays</button>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid">
+
+                <!-- Product 1: ESP32-S3 -->
+                <div class="product-card glass-card reveal-up" data-category="microcontrollers">
+                    <div class="prod-img-box">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="ESP32-S3 Development Board">
+                        <span class="stock-badge in-stock">In Stock</span>
+                    </div>
+                    <div class="prod-details">
+                        <span class="prod-sku">SKU: ESP-32S3-N16R8</span>
+                        <h4>ESP32-S3 Dual-Core Board</h4>
+                        <p>16MB Flash, 8MB PSRAM, Wi-Fi & Bluetooth 5.0 LE, Dual Type-C ports.</p>
+                        <div class="prod-footer">
+                            <span class="price">$8.99</span>
+                            <button class="btn btn-outline" onclick="alert('Demo Mode: Store preview active.')">Preview Specs</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2: Arduino Uno R3 -->
+                <div class="product-card glass-card reveal-up" data-category="microcontrollers" data-delay="0.1s">
+                    <div class="prod-img-box">
+                        <img src="https://images.unsplash.com/photo-1608564697071-ddf911d81370?auto=format&fit=crop&w=600&q=80" alt="Arduino Uno R3 Compatible Board">
+                        <span class="stock-badge in-stock">In Stock</span>
+                    </div>
+                    <div class="prod-details">
+                        <span class="prod-sku">SKU: ARD-UNO-R3</span>
+                        <h4>Arduino Uno R3 Board</h4>
+                        <p>ATmega328P microcontroller with DIP socket, 14 Digital I/O, 6 Analog inputs.</p>
+                        <div class="prod-footer">
+                            <span class="price">$12.50</span>
+                            <button class="btn btn-outline" onclick="alert('Demo Mode: Store preview active.')">Preview Specs</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3: BME280 Sensor -->
+                <div class="product-card glass-card reveal-up" data-category="sensors" data-delay="0.2s">
+                    <div class="prod-img-box">
+                        <img src="https://images.unsplash.com/photo-1555680202-c86f0e12f086?auto=format&fit=crop&w=600&q=80" alt="BME280 Environmental Sensor">
+                        <span class="stock-badge in-stock">In Stock</span>
+                    </div>
+                    <div class="prod-details">
+                        <span class="prod-sku">SKU: SEN-BME280-I2C</span>
+                        <h4>BME280 Precision Sensor Module</h4>
+                        <p>Temperature, humidity, and barometric pressure sensor with I2C/SPI interface.</p>
+                        <div class="prod-footer">
+                            <span class="price">$4.75</span>
+                            <button class="btn btn-outline" onclick="alert('Demo Mode: Store preview active.')">Preview Specs</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4: OLED Display -->
+                <div class="product-card glass-card reveal-up" data-category="displays" data-delay="0.3s">
+                    <div class="prod-img-box">
+                        <img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&fit=crop&w=600&q=80" alt="0.96 inch OLED Display Module">
+                        <span class="stock-badge low-stock">Low Stock</span>
+                    </div>
+                    <div class="prod-details">
+                        <span class="prod-sku">SKU: DSP-096-I2C</span>
+                        <h4>0.96" I2C OLED Display (SSD1306)</h4>
+                        <p>128x64 pixels, monochrome blue/yellow display, high contrast, low power consumption.</p>
+                        <div class="prod-footer">
+                            <span class="price">$3.90</span>
+                            <button class="btn btn-outline" onclick="alert('Demo Mode: Store preview active.')">Preview Specs</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5: 4-Channel Relay Module -->
+                <div class="product-card glass-card reveal-up" data-category="power">
+                    <div class="prod-img-box">
+                        <img src="https://images.unsplash.com/photo-1563770660941-20978e870e26?auto=format&fit=crop&w=600&q=80" alt="4 Channel Relay Module">
+                        <span class="stock-badge in-stock">In Stock</span>
+                    </div>
+                    <div class="prod-details">
+                        <span class="prod-sku">SKU: PWR-RELAY-4CH</span>
+                        <h4>4-Channel 5V Relay Breakout</h4>
+                        <p>Optocoupler isolation, supports 250V/10A AC loads for home automation projects.</p>
+                        <div class="prod-footer">
+                            <span class="price">$5.25</span>
+                            <button class="btn btn-outline" onclick="alert('Demo Mode: Store preview active.')">Preview Specs</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6: Raspberry Pi Pico W -->
+                <div class="product-card glass-card reveal-up" data-category="microcontrollers" data-delay="0.1s">
+                    <div class="prod-img-box">
+                        <img src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=600&q=80" alt="Raspberry Pi Pico W">
+                        <span class="stock-badge in-stock">In Stock</span>
+                    </div>
+                    <div class="prod-details">
+                        <span class="prod-sku">SKU: RPI-PICO-W</span>
+                        <h4>Raspberry Pi Pico W Board</h4>
+                        <p>RP2040 dual-core ARM Cortex-M0+, built-in 2.4GHz Wi-Fi, 2MB onboard flash.</p>
+                        <div class="prod-footer">
+                            <span class="price">$6.00</span>
+                            <button class="btn btn-outline" onclick="alert('Demo Mode: Store preview active.')">Preview Specs</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Starter Kits Section -->
+    <section id="kits" class="section kits-section">
+        <div class="container grid-2 align-center">
+            <div class="kits-text reveal-left">
+                <span class="section-tag">All-in-One Hardware Bundles</span>
+                <h2>Complete Project Starter Kits</h2>
+                <p>Everything you need to launch your next project without ordering individual parts separately. Each kit comes packed with jumper wires, breadboards, power modules, and tested sample code snippets.</p>
+                
+                <div class="kit-list">
+                    <div class="kit-item">
+                        <strong>🤖 Beginner Robotics Kit:</strong> Motor drivers, wheels, ultrasonic distance sensors, and Arduino Nano.
+                    </div>
+                    <div class="kit-item">
+                        <strong>🌐 ESP32 IoT Weather Station Kit:</strong> BME280 sensor, OLED screen, ESP32 board, and solar charger board.
+                    </div>
+                    <div class="kit-item">
+                        <strong>⚡ Home Automation Starter Kit:</strong> 8-channel relay, ESP8266 NodeMCU, PIR motion sensors, and terminal blocks.
+                    </div>
+                </div>
+            </div>
+            <div class="kits-image reveal-right">
+                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80" alt="Electronics Starter Project Bundle" class="img-responsive rounded">
+            </div>
+        </div>
+    </section>
+
+    <!-- Hardware Pinouts & Spec Reference Section -->
+    <section id="specs" class="section specs-section">
+        <div class="container">
+            <div class="section-header text-center reveal-up">
+                <span class="section-tag">Quick Technical Comparison</span>
+                <h2>Popular Board Specifications</h2>
+                <p>Compare core hardware specifications before purchasing components for your project.</p>
+            </div>
+
+            <div class="specs-table-wrapper glass-card reveal-up">
+                <table class="specs-table">
+                    <thead>
+                        <tr>
+                            <th>Board Name</th>
+                            <th>MCU Chip</th>
+                            <th>Clock Speed</th>
+                            <th>Wireless</th>
+                            <th>Operating Voltage</th>
+                            <th>Best For</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ESP32-S3 DevKit</strong></td>
+                            <td>Xtensa LX7 Dual-Core</td>
+                            <td>240 MHz</td>
+                            <td>Wi-Fi + BT 5.0</td>
+                            <td>3.3V Logic (5V USB)</td>
+                            <td>IoT, AI Vision, Audio</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Arduino Uno R3</strong></td>
+                            <td>ATmega328P</td>
+                            <td>16 MHz</td>
+                            <td>None (Shields req.)</td>
+                            <td>5V Logic</td>
+                            <td>Beginners, Basic Robotics</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NodeMCU ESP8266</strong></td>
+                            <td>Tensilica L106</td>
+                            <td>80 / 160 MHz</td>
+                            <td>2.4GHz Wi-Fi</td>
+                            <td>3.3V Logic</td>
+                            <td>Simple Wi-Fi Switches</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Raspberry Pi Pico W</strong></td>
+                            <td>RP2040 Dual ARM M0+</td>
+                            <td>133 MHz</td>
+                            <td>2.4GHz Wi-Fi</td>
+                            <td>3.3V Logic</td>
+                            <td>MicroPython, Embedded C</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer / Maker Reviews -->
+    <section id="testimonials" class="section reviews-section">
+        <div class="container">
+            <div class="section-header text-center reveal-up">
+                <span class="section-tag">Feedback from Engineers & Makers</span>
+                <h2>Trusted by Hardware Developers</h2>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card glass-card reveal-up">
+                    <p class="quote">"CircuitCraft is my go-to store for prototyping. The ESP32 boards arrive pre-tested, and their pinout datasheets saved me hours on custom PCB designs!"</p>
+                    <div class="reviewer">
+                        <h4>David Vance</h4>
+                        <span>Embedded Systems Engineer</span>
+                    </div>
+                </div>
+                <div class="review-card glass-card reveal-up" data-delay="0.2s">
+                    <p class="quote">"Awesome store! Ordered an Arduino project kit along with OLED displays. Super fast shipping, well-packaged components, and top quality pin headers."</p>
+                    <div class="reviewer">
+                        <h4>Elena Rostova</h4>
+                        <span>IoT Product Designer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Store & Location Section -->
+    <section id="contact" class="section contact-section">
+        <div class="container grid-2">
+            <div class="contact-info reveal-left">
+                <span class="section-tag">Inquiries & Bulk Orders</span>
+                <h2>Contact Component Support</h2>
+                <p>Need custom PCB component kitting, bulk microcontroller discounts, or hardware availability questions? Send us a message.</p>
+
+                <div class="info-items">
+                    <div class="info-item">
+                        <strong>Store Address:</strong>
+                        <p>Unit 402 Tech Park Plaza, Silicon Avenue, Innovation Hub</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>Technical Support:</strong>
+                        <p>+1 (800) 555-CRAFT | support@circuitcraft-store.com</p>
+                    </div>
+                </div>
+
+                <form class="contact-form glass-card" onsubmit="event.preventDefault(); alert('Demo Mode: Store contact form submission simulated.');">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="4" placeholder="List components, project requirements, or questions..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Send Message</button>
+                </form>
+            </div>
+
+            <div class="map-container reveal-right">
+                <div class="map-placeholder glass-card">
+                    <div class="map-content">
+                        <div class="pin">⚡</div>
+                        <h3>CircuitCraft Store & Warehouse</h3>
+                        <p>Interactive Map Placeholder</p>
+                        <span class="map-coords">37.7749° N, 122.4194° W</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <h3>Circuit<span>Craft</span></h3>
+                <p>High-quality microcontrollers, sensors, and hardware components built for makers and engineers.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="#products">ESP32 & Wireless</a></li>
+                    <li><a href="#products">Arduino Boards</a></li>
+                    <li><a href="#products">Sensors & Displays</a></li>
+                    <li><a href="#kits">Starter Bundles</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Store Socials</h4>
+                <div class="social-icons">
+                    <a href="#">GitHub</a>
+                    <a href="#">Twitter/X</a>
+                    <a href="#">Discord</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <p>&copy; 2026 CircuitCraft Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

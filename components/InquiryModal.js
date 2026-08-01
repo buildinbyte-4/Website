@@ -35,79 +35,79 @@ export default function InquiryModal({ config, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-[#1A0E09]/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-[#FFFDF9] border border-[#800020]/20 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
+    <div className="fixed inset-0 bg-bg-primary-dark backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-bg-primary-dark border border-accent-blue rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
         
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#F5EFEB] text-[#2C1D11] font-bold flex items-center justify-center hover:bg-[#800020] hover:text-white transition-all"
+          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-bg-primary-dark text-text-primary font-bold flex items-center justify-center hover:bg-accent-blue hover:text-white transition-all"
         >
           ✕
         </button>
 
         {!submitted ? (
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#800020] bg-[#800020]/10 px-2.5 py-1 rounded-full border border-[#800020]/20 inline-block mb-2">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-accent-blue bg-accent-blue/10 px-2.5 py-1 rounded-full border border-accent-blue inline-block mb-2">
               Direct Consultation Channel
             </span>
             
-            <h2 className="font-serif font-bold text-2xl text-[#4A0E17] mb-1">
+            <h2 className="font-display font-bold text-2xl text-text-primary mb-1">
               {config.title || 'Initiate Client Inquiry'}
             </h2>
 
-            <p className="text-xs text-[#5C4B3E] mb-6">
+            <p className="text-xs text-text-secondary mb-6">
               Connect directly with our delivery team. We respond within 24 hours with a tailored path forward.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
               <div>
-                <label className="block font-bold text-[#2C1D11] mb-1">Full Name *</label>
+                <label className="block font-bold text-text-primary mb-1">Full Name *</label>
                 <input
                   required
                   type="text"
                   placeholder="e.g. Alex Sterling"
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#F4EBE1] border border-[#E2D7C7] text-xs text-[#2C1D11] focus:outline-none focus:border-[#800020]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-bg-primary-dark border border-border-subtle text-xs text-text-primary focus:outline-none focus:border-accent-blue"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-[#2C1D11] mb-1">Work Email *</label>
+                <label className="block font-bold text-text-primary mb-1">Work Email *</label>
                 <input
                   required
                   type="email"
                   placeholder="alex@company.com"
                   value={formData.email}
                   onChange={e => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#F4EBE1] border border-[#E2D7C7] text-xs text-[#2C1D11] focus:outline-none focus:border-[#800020]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-bg-primary-dark border border-border-subtle text-xs text-text-primary focus:outline-none focus:border-accent-blue"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-[#2C1D11] mb-1">Company / Organization</label>
+                <label className="block font-bold text-text-primary mb-1">Company / Organization</label>
                 <input
                   type="text"
                   placeholder="e.g. Vanguard Labs"
                   value={formData.company}
                   onChange={e => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#F4EBE1] border border-[#E2D7C7] text-xs text-[#2C1D11] focus:outline-none focus:border-[#800020]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-bg-primary-dark border border-border-subtle text-xs text-text-primary focus:outline-none focus:border-accent-blue"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-[#2C1D11] mb-1">Project Scope & Requirements</label>
+                <label className="block font-bold text-text-primary mb-1">Project Scope & Requirements</label>
                 <textarea
                   rows={3}
                   placeholder="Detail your technology requirements, timeframe, or desired features..."
                   value={formData.scope}
                   onChange={e => setFormData({ ...formData, scope: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#F4EBE1] border border-[#E2D7C7] text-xs text-[#2C1D11] focus:outline-none focus:border-[#800020]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-bg-primary-dark border border-border-subtle text-xs text-text-primary focus:outline-none focus:border-accent-blue"
                 ></textarea>
               </div>
 
               {errorMsg && (
-                <div className="p-3 bg-[#800020]/10 border border-[#800020]/30 rounded-xl text-xs font-semibold text-[#800020]">
+                <div className="p-3 bg-accent-blue/10 border border-accent-blue rounded-xl text-xs font-semibold text-accent-blue">
                   {errorMsg}
                 </div>
               )}
@@ -134,14 +134,14 @@ export default function InquiryModal({ config, onClose }) {
           </div>
         ) : (
           <div className="text-center py-6 space-y-4">
-            <div className="w-12 h-12 rounded-full bg-[#800020]/10 text-[#800020] mx-auto flex items-center justify-center font-bold text-2xl">
+            <div className="w-12 h-12 rounded-full bg-accent-blue/10 text-accent-blue mx-auto flex items-center justify-center font-bold text-2xl">
               ✓
             </div>
-            <h3 className="font-serif font-bold text-2xl text-[#4A0E17]">
+            <h3 className="font-display font-bold text-2xl text-text-primary">
               Inquiry Received
             </h3>
-            <p className="text-xs text-[#5C4B3E] max-w-sm mx-auto leading-relaxed">
-              Thank you, <span className="font-bold text-[#2C1D11]">{formData.name}</span>. Our team has received your request and will follow up at <span className="font-bold text-[#800020]">{formData.email}</span> within 24 hours.
+            <p className="text-xs text-text-secondary max-w-sm mx-auto leading-relaxed">
+              Thank you, <span className="font-bold text-text-primary">{formData.name}</span>. Our team has received your request and will follow up at <span className="font-bold text-accent-blue">{formData.email}</span> within 24 hours.
             </p>
             <button onClick={onClose} className="btn-primary text-xs py-2 px-6">
               Close Window

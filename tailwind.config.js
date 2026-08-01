@@ -8,42 +8,33 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Beige / Cream Backgrounds
-        cream: {
-          50:  '#FDFBF7',
-          100: '#F5EFEB',
-          200: '#F4EBE1',
-          300: '#EDE0D4',
-        },
-        // Brown / Espresso Text
-        espresso: {
-          700: '#3D2314',
-          800: '#2C1D11',
-          900: '#1A0E09',
-        },
-        // Maroon Accents / CTAs
-        maroon: {
-          50:  '#FDF2F4',
-          100: '#FBE4E8',
-          200: '#F5BEC7',
-          300: '#EE8FA2',
-          400: '#E25B7A',
-          500: '#C2183A',
-          600: '#A0102E',
-          700: '#800020',
-          800: '#600018',
-          900: '#4A0E17',
-          950: '#300A10',
-        },
-        // Border utility
-        border: {
-          muted: 'rgba(128,0,32,0.15)',
-        },
+        'brutal-bg': 'var(--brutal-bg)',
+        'brutal-black': 'var(--brutal-black)',
+        'brutal-yellow': 'var(--brutal-yellow)',
+        'brutal-blue': 'var(--brutal-blue)',
+        'brutal-pink': 'var(--brutal-pink)',
+        'brutal-green': 'var(--brutal-green)',
+        
+        // Aliases to avoid breaking everything entirely right away, though we will refactor components
+        'bg-primary-dark': 'var(--brutal-bg)',
+        'bg-surface-dark': 'var(--brutal-bg)',
+        'text-primary': 'var(--brutal-black)',
+        'text-secondary': 'var(--brutal-black)',
+        'text-muted': 'var(--brutal-black)',
+        'border-subtle': 'var(--brutal-black)',
+        'accent-blue': 'var(--brutal-blue)',
+        'accent-cyan': 'var(--brutal-pink)',
       },
       fontFamily: {
-        sans: ['"Titillium Web"', 'system-ui', 'sans-serif'],
-        serif: ['"Ubuntu"', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-plus-jakarta)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-jetbrains-mono)', 'monospace'],
       },
+      boxShadow: {
+        'brutal': '6px 6px 0px 0px rgba(0,0,0,1)',
+        'brutal-hover': '8px 8px 0px 0px rgba(0,0,0,1)',
+        'brutal-sm': '4px 4px 0px 0px rgba(0,0,0,1)',
+      }
     },
   },
   plugins: [],

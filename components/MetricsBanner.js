@@ -1,37 +1,30 @@
+'use client';
 import { METRICS } from '@/lib/data';
 
 export default function MetricsBanner() {
   return (
-    <section className="py-12 bg-[#F5EFEB] border-y border-[#800020]/15">
-      <div className="max-w-7xl mx-auto px-6">
-        
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {METRICS.map((item, idx) => (
+    <section className="py-12 bg-brutal-bg border-b-4 border-brutal-black">
+      <div className="max-w-7xl mx-auto px-6 relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+          {METRICS.map((metric, idx) => (
             <div
               key={idx}
-              className="editorial-card p-6 bg-[#FFFDF9] border border-[#800020]/15 flex flex-col justify-between"
+              className="editorial-card p-6 bg-white flex flex-col justify-between"
             >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#800020] bg-[#800020]/10 px-2 py-0.5 rounded">
-                  Verified Stat
-                </span>
-              </div>
-
               <div>
-                <span className="font-serif font-bold text-3xl sm:text-4xl text-[#4A0E17] block mb-1">
-                  {item.value}
+                <span className="font-display text-[10px] font-black uppercase tracking-widest text-white bg-brutal-black px-2 py-1 mb-4 inline-block shadow-brutal-sm">
+                  {metric.label}
                 </span>
-                <span className="text-xs font-bold text-[#2C1D11] block">
-                  {item.label}
-                </span>
-                <span className="text-[11px] text-[#8C7B6E]">
-                  {item.sub}
+                <span className="font-display font-black text-5xl sm:text-6xl text-brutal-black block mb-2 mt-2 leading-none">
+                  {metric.value}
                 </span>
               </div>
+              <span className="text-xs text-brutal-black font-bold uppercase mt-4 block border-t-4 border-brutal-black pt-4">
+                {metric.sub}
+              </span>
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
