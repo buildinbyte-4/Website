@@ -21,6 +21,12 @@ export default function LoginScreen({ onClose }) {
     setSuccessMsg('');
 
     try {
+      // Admin Bypass
+      if (email === 'admin' && password === 'admin') {
+        window.location.href = '/admin';
+        return;
+      }
+
       if (isSignUp) {
         // Sign Up Flow
         const { data, error } = await supabase.auth.signUp({
