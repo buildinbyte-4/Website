@@ -69,7 +69,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                 className={`px-4 py-2 text-sm font-black uppercase whitespace-nowrap border-2 border-brutal-black transition-all shadow-brutal-sm ${
                   activeCategory === cat
                     ? 'bg-brutal-black text-white translate-y-1 translate-x-1 shadow-none'
-                    : 'bg-brutal-yellow text-brutal-black hover:bg-brutal-pink hover:text-white'
+                    : 'bg-brutal-yellow text-brutal-black hover:bg-brutal-pink hover:text-brutal-black'
                 }`}
               >
                 {cat}
@@ -184,7 +184,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                         e.stopPropagation();
                         onOpenInquiry({ title: `Technical Inquiry — ${project.title}` });
                       }}
-                      className="btn-secondary py-3 justify-center text-xs hover:bg-brutal-black hover:text-white"
+                      className="btn-secondary py-3 justify-center text-xs hover:bg-brutal-yellow hover:text-brutal-black"
                     >
                       READ DOC
                     </button>

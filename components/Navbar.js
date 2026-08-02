@@ -46,7 +46,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
           {session && (
             <button
               onClick={onOpenProfile}
-              className="flex items-center gap-2 px-3 py-1.5 bg-brutal-yellow border-2 border-brutal-black text-brutal-black text-sm font-black uppercase cursor-pointer hover:bg-brutal-pink hover:text-white transition-colors"
+              className="flex items-center gap-2 px-3 py-1.5 bg-brutal-yellow border-2 border-brutal-black text-brutal-black text-sm font-black uppercase cursor-pointer hover:bg-brutal-pink hover:text-brutal-black transition-colors"
             >
               <span>PROFILE</span>
             </button>
