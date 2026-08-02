@@ -95,7 +95,6 @@ export default function AboutPage() {
               We are always looking for ways to improve and better serve our community. Have ideas, questions, or feedback?
             </p>
             <div className="space-y-1 font-black text-sm">
-              <p>Website: <a href="https://builtinbyte.in" className="text-[#0066FF] underline" target="_blank" rel="noreferrer">https://builtinbyte.in</a></p>
               <p>Email: <a href="mailto:support@builtinbyte.in" className="text-[#0066FF] underline">support@builtinbyte.in</a></p>
             </div>
           </section>

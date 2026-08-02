@@ -35,7 +35,7 @@ export default function PrivacyPage() {
           
           <section className="border-b-2 border-[#E2E8F0] pb-6">
             <p className="font-bold text-base">
-              At <span className="font-black">BuiltInByte</span> (&quot;BuiltInByte&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;), accessible from <a href="https://builtinbyte.in" className="text-[#0066FF] underline font-bold" target="_blank" rel="noreferrer">https://builtinbyte.in</a>, protecting your privacy is a top priority. This Privacy Policy outlines how we handle, process, and secure user data when you interact with our platform and Software-as-a-Service (SaaS) products.
+              At <span className="font-black">BuiltInByte</span> (&quot;BuiltInByte&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;), protecting your privacy is a top priority. This Privacy Policy outlines how we handle, process, and secure user data when you interact with our platform and Software-as-a-Service (SaaS) products.
             </p>
           </section>
 
@@ -102,7 +102,6 @@ export default function PrivacyPage() {
             </p>
             <div className="space-y-1 font-black text-sm">
               <p>BuiltInByte</p>
-              <p>Website: <a href="https://builtinbyte.in" className="text-[#0066FF] underline" target="_blank" rel="noreferrer">https://builtinbyte.in</a></p>
               <p>Email: <a href="mailto:support@builtinbyte.in" className="text-[#0066FF] underline">support@builtinbyte.in</a></p>
             </div>
           </section>

@@ -13,7 +13,7 @@ const FAQ_DATA = [
       },
       {
         q: "Do I need to download or install any software?",
-        a: "No. BuiltInByte is fully cloud-based. You can access all features directly through your web browser at https://builtinbyte.in without downloading or installing additional software."
+        a: "No. BuiltInByte is fully cloud-based. You can access all features directly through your web browser without downloading or installing additional software."
       },
       {
         q: "Who can use BuiltInByte?",

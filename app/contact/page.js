@@ -45,13 +45,6 @@ export default function ContactPage() {
 
             <div className="space-y-3 font-bold text-base">
               <div>
-                <span className="block font-black text-xs uppercase text-brutal-black/70">Website</span>
-                <a href="https://builtinbyte.in" className="text-[#0066FF] underline font-black" target="_blank" rel="noreferrer">
-                  https://builtinbyte.in
-                </a>
-              </div>
-
-              <div>
                 <span className="block font-black text-xs uppercase text-brutal-black/70">Email</span>
                 <a href="mailto:support@builtinbyte.in" className="text-[#0066FF] underline font-black">
                   support@builtinbyte.in
