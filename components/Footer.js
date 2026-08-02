@@ -48,7 +48,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-4 text-sm uppercase font-bold">
               <li><Link href="/about" className="transition-colors text-[#18181B] hover:text-[#0066FF]">About Us</Link></li>
-              <li><a href="#services" className="transition-colors text-[#18181B] hover:text-[#0066FF]">FAQ</a></li>
+              <li><Link href="/faq" className="transition-colors text-[#18181B] hover:text-[#0066FF]">FAQ</Link></li>
 
               <li><Link href="/contact" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Contact</Link></li>
             </ul>
