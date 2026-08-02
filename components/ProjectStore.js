@@ -186,7 +186,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                       }}
                       className="btn-secondary py-3 justify-center text-xs hover:bg-brutal-yellow hover:text-brutal-black"
                     >
-                      EXPLORE
+                      MODIFY
                     </button>
                   </div>
                 </div>
