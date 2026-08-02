@@ -3,50 +3,74 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#2C1D11] text-[#FDFBF7] py-16 border-t border-[#800020]/20">
+    <footer style={{ backgroundColor: '#FFFFFF' }} className="py-16 mt-auto border-t-4 border-[#000000]">
       <div className="max-w-7xl mx-auto px-6">
-        
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-[#FDFBF7]/10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           
-          <div className="md:col-span-6 space-y-3">
-            <div className="flex items-center gap-2">
-              <img 
-                src="/logo.jpg" 
-                alt="BuildInByte Logo" 
-                className="w-8 h-8 rounded-lg object-cover shadow-sm" 
-              />
-              <span className="font-serif font-bold text-xl text-[#FDFBF7]">
+          <div className="md:col-span-1">
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }} className="group mb-6">
+              <img src="/logo.jpg" alt="BuildInByte Logo" className="h-10 w-auto" />
+              <span className="font-display font-black text-2xl tracking-tighter text-[#000000] uppercase">
                 BuildInByte
               </span>
-            </div>
-            <p className="text-xs text-[#FDFBF7]/70 max-w-sm leading-relaxed">
-              A student collective delivering ready-to-use digital software products and custom full-stack solutions.
+            </Link>
+            <p className="text-sm font-bold uppercase leading-snug mb-6 text-[#18181B]">
+              Production-grade software engineering for ambitious companies.
             </p>
-            <div className="pt-2 text-xs text-[#FDFBF7]/90 font-medium">
-              <span>Contact for Sales & Queries: </span>
-              <a href="mailto:support@buildinbyte.in" className="font-bold text-rose-300 hover:text-rose-200 hover:underline">
-                support@buildinbyte.in
+            <div className="flex gap-4">
+              <a href="#" className="w-10 h-10 bg-white text-[#000000] flex items-center justify-center font-bold hover:bg-[#F8FAFC] transition-colors border border-[#000000]">
+                X
+              </a>
+              <a href="#" className="w-10 h-10 bg-white text-[#000000] flex items-center justify-center font-bold hover:bg-[#F8FAFC] transition-colors border border-[#000000]">
+                IN
+              </a>
+              <a href="#" className="w-10 h-10 bg-white text-[#000000] flex items-center justify-center font-bold hover:bg-[#F8FAFC] transition-colors border border-[#000000]">
+                GH
               </a>
             </div>
           </div>
 
-          <div className="md:col-span-6 space-y-2 text-xs text-[#FDFBF7]/80 text-right">
-            <h4 className="font-bold uppercase tracking-wider text-[#800020] text-[11px] mb-3">
-              Navigation
+          <div>
+            <h4 className="font-display uppercase tracking-wider mb-6 pb-2" style={{ color: '#000000', fontWeight: 700 }}>
+              SOLUTIONS
             </h4>
-            <ul className="space-y-2">
-              <li><a href="#projects" className="hover:text-[#FDFBF7] transition-colors">Available Projects</a></li>
-              <li><a href="#services" className="hover:text-[#FDFBF7] transition-colors">Custom Services</a></li>
-              <li><a href="#work" className="hover:text-[#FDFBF7] transition-colors">Our Work</a></li>
+            <ul className="space-y-4 text-sm uppercase font-bold">
+              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Custom Web Apps</a></li>
+              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Enterprise Systems</a></li>
+              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">AI & Automation</a></li>
+              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">API Architecture</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-display uppercase tracking-wider mb-6 pb-2" style={{ color: '#000000', fontWeight: 700 }}>
+              COMPANY
+            </h4>
+            <ul className="space-y-4 text-sm uppercase font-bold">
+              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">About Us</a></li>
+              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Careers</a></li>
+              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Case Studies</a></li>
+              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Contact</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-display uppercase tracking-wider mb-6 pb-2" style={{ color: '#000000', fontWeight: 700 }}>
+              LEGAL
+            </h4>
+            <ul className="space-y-4 text-sm uppercase font-bold">
+              <li><Link href="/privacy" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Terms of Service</Link></li>
             </ul>
           </div>
 
         </div>
 
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#FDFBF7]/60">
-          <span>© 2026 BuildInByte. All rights reserved.</span>
+        <div className="mt-16 pt-8 border-t-2 border-[#E2E8F0] text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-sm uppercase font-bold text-[#64748B]">
+            &copy; {new Date().getFullYear()} BuildInByte. All rights reserved.
+          </p>
         </div>
-
       </div>
     </footer>
   );
