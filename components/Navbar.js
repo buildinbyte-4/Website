@@ -33,7 +33,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
           <Link href="/templates" className="hover:bg-brutal-yellow px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
             Templates
           </Link>
-          <a href="#services" className="hover:bg-brutal-pink px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black hover:text-white">
+          <a href="#services" className="hover:bg-brutal-pink px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
             Services
           </a>
           <a href="#work" className="hover:bg-brutal-green px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
