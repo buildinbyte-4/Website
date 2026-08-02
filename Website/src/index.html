@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuildInByte — Engineering the Future of Business</title>
+<meta name="description" content="BuildInByte builds complete digital and embedded solutions: software, hardware, cloud, AI and IoT — engineered as one ecosystem for businesses, manufacturers, and enterprises.">
+<meta name="keywords" content="embedded systems, PCB design, IoT solutions, SaaS development, AI integration, industrial automation, BuildInByte">
+<meta property="og:title" content="BuildInByte — Engineering the Future of Business">
+<meta property="og:description" content="Software. Hardware. Cloud. AI. One ecosystem.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://buildinbyte.in">
+<meta name="theme-color" content="#050810">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+:root{
+  --bg:#050810;
+  --bg-alt:#080c17;
+  --panel:rgba(255,255,255,0.03);
+  --panel-border:rgba(255,255,255,0.08);
+  --cyan:#3ee8ff;
+  --blue:#4d7cff;
+  --violet:#7c5cff;
+  --text:#eef2f9;
+  --text-dim:#8b93a7;
+  --text-dimmer:#5a6178;
+  --radius:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  overflow-x:hidden;
+}
+
+h1,h2,h3,h4,.font-display{
+  font-family:'Space Grotesk',sans-serif;
+  letter-spacing:-0.02em;
+}
+.mono{font-family:'JetBrains Mono',monospace;}
+
+::selection{background:rgba(62,232,255,0.25);color:#fff;}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--blue),var(--cyan));border-radius:10px;}
+
+/* ---------- Loader ---------- */
+#loader{
+  position:fixed;inset:0;background:var(--bg);z-index:10000;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;
+  transition:opacity .8s ease, visibility .8s ease;
+}
+#loader.hide{opacity:0;visibility:hidden;}
+.loader-logo{font-size:1.6rem;font-weight:700;letter-spacing:-0.01em;}
+.loader-logo span{color:var(--cyan);}
+.loader-bar{width:200px;height:2px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;position:relative;}
+.loader-bar::after{content:'';position:absolute;left:-40%;top:0;height:100%;width:40%;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  animation:loaderslide 1.1s ease-in-out infinite;}
+@keyframes loaderslide{0%{left:-40%;}100%{left:100%;}}
+
+/* ---------- Background layers ---------- */
+.grain{
+  position:fixed;inset:0;pointer-events:none;z-index:2;opacity:0.035;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.grid-overlay{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 75%);
+}
+
+/* ---------- Nav ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:20px 5vw;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:padding .3s ease, background .3s ease, border-color .3s ease;
+  border-bottom:1px solid transparent;
+}
+header.scrolled{
+  padding:12px 5vw;
+  background:rgba(5,8,16,0.72);
+  backdrop-filter:blur(16px) saturate(160%);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  border-bottom:1px solid var(--panel-border);
+}
+.logo{font-family:'Space Grotesk';font-weight:700;font-size:1.25rem;display:flex;align-items:center;gap:9px;letter-spacing:-0.01em;}
+.logo .mark{
+  width:30px;height:30px;border-radius:8px;position:relative;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 20px rgba(62,232,255,0.35);
+}
+.logo .mark::before{content:'';position:absolute;inset:5px;border:1.5px solid rgba(5,8,16,0.7);border-radius:4px;}
+.logo span{color:var(--cyan);}
+
+nav.desktop-nav{display:flex;gap:2.2rem;align-items:center;}
+nav.desktop-nav a{
+  color:var(--text-dim);text-decoration:none;font-size:0.92rem;font-weight:500;
+  position:relative;transition:color .25s;
+}
+nav.desktop-nav a::after{
+  content:'';position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--cyan);
+  transition:width .3s ease;
+}
+nav.desktop-nav a:hover{color:var(--text);}
+nav.desktop-nav a:hover::after{width:100%;}
+
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 24px;border-radius:100px;font-weight:600;font-size:0.9rem;
+  cursor:pointer;text-decoration:none;border:1px solid transparent;
+  transition:transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease, background .3s ease, border-color .3s;
+  white-space:nowrap;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--blue),var(--cyan));color:#02060f;
+  box-shadow:0 0 0 rgba(62,232,255,0);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(62,232,255,0.35);}
+.btn-ghost{
+  background:rgba(255,255,255,0.03);color:var(--text);border-color:var(--panel-border);
+  backdrop-filter:blur(10px);
+}
+.btn-ghost:hover{border-color:rgba(62,232,255,0.5);transform:translateY(-2px);background:rgba(62,232,255,0.06);}
+
+.nav-cta{display:flex;gap:12px;align-items:center;}
+.burger{display:none;width:40px;height:40px;border-radius:10px;border:1px solid var(--panel-border);background:rgba(255,255,255,0.03);align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:5px;}
+.burger span{width:16px;height:1.5px;background:var(--text);transition:.3s;}
+@media (max-width:960px){
+  nav.desktop-nav{display:none;}
+  .nav-cta .btn-ghost{display:none;}
+  .burger{display:flex;}
+}
+
+#mobile-menu{
+  position:fixed;inset:0;background:rgba(5,8,16,0.98);backdrop-filter:blur(20px);z-index:999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+  opacity:0;visibility:hidden;transform:translateY(-10px);transition:all .4s ease;
+}
+#mobile-menu.open{opacity:1;visibility:visible;transform:translateY(0);}
+#mobile-menu a{color:var(--text);font-size:1.5rem;text-decoration:none;font-family:'Space Grotesk';font-weight:600;}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:140px 5vw 80px;overflow:hidden;
+}
+#hero-canvas{position:absolute;inset:0;z-index:0;opacity:0.9;}
+.hero-fade{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse 60% 50% at 50% 40%, transparent 0%, var(--bg) 85%);
+}
+.hero-content{position:relative;z-index:3;text-align:center;max-width:960px;margin:0 auto;}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 16px;border-radius:100px;
+  background:rgba(62,232,255,0.06);border:1px solid rgba(62,232,255,0.25);
+  color:var(--cyan);font-size:0.8rem;font-weight:500;letter-spacing:0.03em;
+  margin-bottom:28px;
+}
+
+.hero h1{
+  font-size:clamp(2.4rem, 6.4vw, 5.6rem);
+  font-weight:700;line-height:1.04;margin-bottom:26px;
+}
+.hero h1 .grad{
+  color:var(--cyan);
+  font-style:italic;
+}
+
+.hero p.sub{
+  font-size:clamp(1rem,1.6vw,1.25rem);color:var(--text-dim);
+  max-width:680px;margin:0 auto 44px;line-height:1.65;font-weight:400;
+}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:70px;}
+.btn-primary.large,.btn-ghost.large{padding:16px 32px;font-size:1rem;}
+
+.hero-stats{
+  display:flex;gap:0;justify-content:center;flex-wrap:wrap;
+  border-top:1px solid var(--panel-border);padding-top:36px;max-width:760px;margin:0 auto;
+}
+.hero-stats .stat{padding:0 32px;text-align:center;border-right:1px solid var(--panel-border);}
+.hero-stats .stat:last-child{border-right:none;}
+.hero-stats .num{font-family:'Space Grotesk';font-size:2rem;font-weight:700;color:var(--text);}
+.hero-stats .num span{color:var(--cyan);}
+.hero-stats .label{font-size:0.78rem;color:var(--text-dimmer);margin-top:4px;text-transform:uppercase;letter-spacing:0.05em;}
+@media (max-width:640px){
+  .hero-stats .stat{padding:0 14px;}
+  .hero-stats .num{font-size:1.4rem;}
+}
+
+.scroll-cue{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:3;
+  display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-dimmer);font-size:0.72rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+}
+.scroll-cue .line{width:1px;height:36px;background:linear-gradient(var(--cyan),transparent);position:relative;overflow:hidden;}
+.scroll-cue .line::after{content:'';position:absolute;top:-36px;left:0;width:100%;height:36px;background:linear-gradient(var(--cyan),transparent);animation:scrolldown 1.8s infinite;}
+@keyframes scrolldown{0%{transform:translateY(0);}100%{transform:translateY(72px);}}
+
+/* ---------- Sections generic ---------- */
+section{position:relative;padding:130px 5vw;z-index:2;}
+.section-inner{max-width:1280px;margin:0 auto;}
+.section-head{max-width:640px;margin-bottom:64px;}
+.section-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+.eyebrow-label{
+  display:inline-block;color:var(--cyan);font-size:0.8rem;font-weight:600;letter-spacing:0.12em;
+  text-transform:uppercase;margin-bottom:16px;font-family:'JetBrains Mono';
+}
+.section-head h2{font-size:clamp(1.9rem,3.6vw,3rem);font-weight:700;margin-bottom:18px;line-height:1.15;}
+.section-head p{color:var(--text-dim);font-size:1.05rem;line-height:1.7;}
+
+/* ---------- Glass panel base ---------- */
+.glass{
+  background:var(--panel);
+  border:1px solid var(--panel-border);
+  border-radius:var(--radius);
+  backdrop-filter:blur(14px) saturate(150%);
+  -webkit-backdrop-filter:blur(14px) saturate(150%);
+  position:relative;
+  overflow:hidden;
+}
+.glass::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;
+  background:linear-gradient(140deg, rgba(62,232,255,0.25), transparent 40%, transparent 60%, rgba(124,92,255,0.2));
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:0;transition:opacity .4s ease;pointer-events:none;
+}
+.glass:hover::before{opacity:1;}
+
+/* ---------- Services Index ---------- */
+.services-grid{
+  display:grid;grid-template-columns:1fr 1fr;column-gap:48px;
+  border-top:1px solid var(--panel-border);
+}
+@media (max-width:800px){ .services-grid{grid-template-columns:1fr;} }
+.service-card{
+  display:grid;grid-template-columns:44px 1fr;gap:18px;
+  padding:22px 0;border-bottom:1px solid var(--panel-border);cursor:default;
+  transition:padding-left .3s ease;
+}
+.service-card:hover{padding-left:8px;}
+.service-icon{
+  font-family:'JetBrains Mono';font-size:0.78rem;color:var(--text-dimmer);
+  padding-top:3px;transition:color .3s ease;
+}
+.service-card:hover .service-icon{color:var(--cyan);}
+.service-card h3{font-size:1rem;font-weight:600;margin-bottom:6px;}
+.service-card p{font-size:0.85rem;color:var(--text-dim);line-height:1.5;max-width:400px;}
+
+/* ---------- Solutions ---------- */
+.solutions-scroll{display:flex;gap:20px;overflow-x:auto;padding-bottom:20px;scroll-snap-type:x mandatory;}
+.solutions-scroll::-webkit-scrollbar{height:6px;}
+.solution-card{
+  min-width:260px;scroll-snap-align:start;padding:28px;
+  background:linear-gradient(160deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border:1px solid var(--panel-border);border-radius:16px;
+  transition:transform .35s ease, border-color .35s;
+}
+.solution-card:hover{transform:translateY(-4px);border-color:rgba(62,232,255,0.3);}
+.solution-card .ico{color:var(--cyan);margin-bottom:16px;}
+.solution-card h4{font-weight:600;margin-bottom:8px;font-size:1.02rem;}
+.solution-card p{font-size:0.85rem;color:var(--text-dim);line-height:1.5;}
+
+/* ---------- Tech Stack ---------- */
+.stack-layers{border-top:1px solid var(--panel-border);}
+.stack-layer{
+  display:grid;grid-template-columns:200px 1fr;gap:24px;
+  padding:28px 0;border-bottom:1px solid var(--panel-border);align-items:baseline;
+}
+@media (max-width:700px){ .stack-layer{grid-template-columns:1fr;gap:12px;} }
+.stack-layer .layer-label{font-family:'JetBrains Mono';font-size:0.8rem;color:var(--text-dimmer);text-transform:uppercase;letter-spacing:0.06em;}
+.stack-layer .layer-items{display:flex;flex-wrap:wrap;gap:10px;}
+.stack-item{
+  padding:8px 16px;border-radius:8px;border:1px solid var(--panel-border);background:var(--panel);
+  font-family:'JetBrains Mono';font-size:0.85rem;color:var(--text);transition:border-color .25s, background .25s;
+}
+.stack-item:hover{border-color:var(--cyan);background:rgba(62,232,255,0.06);}
+
+/* ---------- Why Us ---------- */
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;}
+.why-card{padding:26px;display:flex;gap:14px;align-items:flex-start;}
+.why-check{
+  min-width:30px;height:30px;border-radius:8px;background:rgba(62,232,255,0.1);
+  display:flex;align-items:center;justify-content:center;color:var(--cyan);
+}
+.why-card h4{font-size:0.96rem;font-weight:600;margin-bottom:6px;}
+.why-card p{font-size:0.82rem;color:var(--text-dim);line-height:1.5;}
+
+/* ---------- Portfolio ---------- */
+.portfolio-filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px;}
+.filter-btn{
+  padding:9px 18px;border-radius:100px;border:1px solid var(--panel-border);background:transparent;
+  color:var(--text-dim);font-size:0.85rem;font-weight:500;cursor:pointer;transition:all .3s ease;
+}
+.filter-btn.active,.filter-btn:hover{background:rgba(62,232,255,0.1);border-color:var(--cyan);color:var(--text);}
+.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px;}
+.portfolio-card{
+  border-radius:20px;overflow:hidden;position:relative;height:340px;cursor:pointer;
+  border:1px solid var(--panel-border);
+}
+.portfolio-card .pf-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(150deg,var(--bg-alt),#0c1830);
+  transition:transform .5s cubic-bezier(.2,.8,.2,1);
+}
+.portfolio-card:hover .pf-bg{transform:scale(1.04);}
+.portfolio-card .pf-content{
+  position:absolute;bottom:0;left:0;right:0;padding:26px;z-index:2;
+  background:linear-gradient(0deg, rgba(5,8,16,0.92), transparent);
+}
+.portfolio-card .pf-tag{
+  display:inline-block;font-size:0.72rem;color:var(--cyan);font-family:'JetBrains Mono';
+  margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;
+}
+.portfolio-card h3{font-size:1.2rem;font-weight:600;margin-bottom:6px;}
+.portfolio-card p{font-size:0.85rem;color:var(--text-dim);}
+.portfolio-card .pf-arrow{
+  position:absolute;top:24px;right:24px;width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,0.06);border:1px solid var(--panel-border);
+  display:flex;align-items:center;justify-content:center;color:var(--text);
+  transform:rotate(-45deg) scale(0.8);opacity:0;transition:all .4s ease;z-index:2;
+}
+.portfolio-card:hover .pf-arrow{opacity:1;transform:rotate(0) scale(1);border-color:var(--cyan);}
+
+/* ---------- Process Timeline ---------- */
+.timeline{position:relative;max-width:900px;margin:0 auto;}
+.timeline-line{
+  position:absolute;left:29px;top:10px;bottom:10px;width:2px;
+  background:linear-gradient(var(--cyan), var(--blue), var(--violet));
+  transform-origin:top;
+}
+.timeline-item{display:flex;gap:28px;padding-bottom:56px;position:relative;}
+.timeline-item:last-child{padding-bottom:0;}
+.timeline-node{
+  min-width:60px;height:60px;border-radius:50%;
+  background:var(--bg-alt);border:1.5px solid var(--panel-border);
+  display:flex;align-items:center;justify-content:center;color:var(--cyan);z-index:2;
+  font-family:'JetBrains Mono';font-weight:600;font-size:0.85rem;
+  transition:all .4s ease;
+}
+.timeline-item.active .timeline-node{border-color:var(--cyan);box-shadow:0 0 20px rgba(62,232,255,0.4);background:rgba(62,232,255,0.08);}
+.timeline-body{padding-top:10px;}
+.timeline-body h3{font-size:1.15rem;font-weight:600;margin-bottom:8px;}
+.timeline-body p{color:var(--text-dim);font-size:0.92rem;line-height:1.6;max-width:520px;}
+
+/* ---------- Testimonials ---------- */
+.testi-wrap{position:relative;max-width:820px;margin:0 auto;}
+.testi-slide{padding:48px;text-align:center;display:none;}
+.testi-slide.active{display:block;animation:fadein .6s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.testi-slide .quote-mark{font-size:3rem;color:var(--cyan);opacity:0.3;font-family:'Space Grotesk';line-height:1;}
+.testi-slide p.quote{font-size:1.2rem;line-height:1.7;color:var(--text);margin:18px 0 28px;font-weight:400;}
+.testi-person{display:flex;align-items:center;justify-content:center;gap:14px;}
+.testi-avatar{
+  width:46px;height:46px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-family:'Space Grotesk';color:#02060f;
+}
+.testi-person .name{font-weight:600;font-size:0.92rem;text-align:left;}
+.testi-person .role{font-size:0.8rem;color:var(--text-dimmer);text-align:left;}
+.testi-dots{display:flex;justify-content:center;gap:8px;margin-top:24px;}
+.testi-dot{width:8px;height:8px;border-radius:50%;background:var(--panel-border);cursor:pointer;transition:all .3s;}
+.testi-dot.active{background:var(--cyan);width:24px;border-radius:4px;}
+
+/* ---------- CTA ---------- */
+.cta-section{
+  border-radius:32px;margin:0 5vw;padding:100px 5vw;text-align:center;position:relative;overflow:hidden;
+  background:radial-gradient(circle at 30% 20%, rgba(62,232,255,0.12), transparent 55%),
+             radial-gradient(circle at 80% 80%, rgba(124,92,255,0.12), transparent 55%),
+             var(--bg-alt);
+  border:1px solid var(--panel-border);
+}
+.cta-section h2{font-size:clamp(2rem,4.5vw,3.4rem);font-weight:700;margin-bottom:24px;}
+.cta-section p{color:var(--text-dim);max-width:520px;margin:0 auto 40px;font-size:1.05rem;}
+
+/* ---------- Contact ---------- */
+.contact-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:48px;}
+@media (max-width:900px){.contact-grid{grid-template-columns:1fr;}}
+.contact-info-item{display:flex;gap:16px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--panel-border);}
+.contact-info-item:last-child{border-bottom:none;}
+.contact-info-item .ico{
+  min-width:44px;height:44px;border-radius:12px;background:rgba(62,232,255,0.08);
+  display:flex;align-items:center;justify-content:center;color:var(--cyan);
+}
+.contact-info-item .label{font-size:0.75rem;color:var(--text-dimmer);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
+.contact-info-item .val{font-weight:500;font-size:0.98rem;}
+.contact-info-item a{color:var(--text);text-decoration:none;transition:color .3s;}
+.contact-info-item a:hover{color:var(--cyan);}
+
+.form-glass{padding:36px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+@media (max-width:560px){.form-row{grid-template-columns:1fr;}}
+.field label{display:block;font-size:0.78rem;color:var(--text-dim);margin-bottom:8px;font-weight:500;}
+.field input,.field textarea,.field select{
+  width:100%;padding:13px 16px;border-radius:10px;
+  background:rgba(255,255,255,0.03);border:1px solid var(--panel-border);
+  color:var(--text);font-family:'Inter';font-size:0.92rem;outline:none;
+  transition:border-color .3s, background .3s;
+}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--cyan);background:rgba(62,232,255,0.04);}
+.field{margin-bottom:16px;}
+.field textarea{resize:vertical;min-height:110px;}
+
+/* ---------- Footer ---------- */
+footer{padding:80px 5vw 30px;border-top:1px solid var(--panel-border);position:relative;z-index:2;}
+.footer-top{display:grid;grid-template-columns:1.6fr repeat(4,1fr);gap:40px;margin-bottom:60px;}
+@media (max-width:900px){.footer-top{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:560px){.footer-top{grid-template-columns:1fr;}}
+.footer-brand p{color:var(--text-dim);font-size:0.9rem;margin-top:14px;max-width:280px;line-height:1.6;}
+.footer-col h5{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dimmer);margin-bottom:18px;}
+.footer-col a{display:block;color:var(--text-dim);text-decoration:none;font-size:0.9rem;margin-bottom:12px;transition:color .3s;}
+.footer-col a:hover{color:var(--cyan);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding-top:30px;border-top:1px solid var(--panel-border);color:var(--text-dimmer);font-size:0.82rem;}
+.footer-social{display:flex;gap:12px;}
+.footer-social a{
+  width:38px;height:38px;border-radius:10px;border:1px solid var(--panel-border);
+  display:flex;align-items:center;justify-content:center;color:var(--text-dim);text-decoration:none;transition:all .3s;
+}
+.footer-social a:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(62,232,255,0.06);}
+
+/* ---------- Reveal Utility ---------- */
+.reveal{opacity:0;transform:translateY(32px);}
+.reveal.in{animation:revealIn .9s cubic-bezier(.2,.8,.2,1) forwards;}
+@keyframes revealIn{to{opacity:1;transform:translateY(0);}}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important;}
+}
+
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+</style>
+</head>
+<body>
+
+<div id="loader"><div class="loader-logo">Build<span>In</span>Byte</div><div class="loader-bar"></div></div>
+<div class="grid-overlay"></div>
+<div class="grain"></div>
+
+<header id="header">
+  <a href="#top" class="logo"><div class="mark"></div>Build<span>In</span>Byte</a>
+  <nav class="desktop-nav">
+    <a href="#services">Services</a>
+    <a href="#solutions">Solutions</a>
+    <a href="#stack">Technology</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+    <a href="login.html">Sign In</a>
+  </nav>
+  <div class="nav-cta">
+    <a href="#contact" class="btn btn-ghost">Book Consultation</a>
+    <a href="#services" class="btn btn-primary">Explore Services</a>
+    <div class="burger" id="burger"><span></span><span></span><span></span></div>
+  </div>
+</header>
+
+<div id="mobile-menu">
+  <a href="#services">Services</a>
+  <a href="#solutions">Solutions</a>
+  <a href="#stack">Technology</a>
+  <a href="#portfolio">Portfolio</a>
+  <a href="#process">Process</a>
+  <a href="#contact">Contact</a>
+  <a href="login.html">Sign In</a>
+  <a href="#contact" class="btn btn-primary" style="margin-top:1rem;font-size:1rem;">Book Consultation</a>
+</div>
+
+<main id="top">
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-fade"></div>
+  <div class="hero-content">
+    <div class="eyebrow">Based in India — building for manufacturing, healthcare &amp; industrial clients</div>
+    <h1>Engineering the <span class="grad">Future</span> of Business.</h1>
+    <p class="sub">We build intelligent software, embedded systems, SaaS platforms, AI solutions, websites, IoT products, and custom electronics that help businesses innovate faster.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn btn-primary large">Book Consultation <span data-lucide="arrow-right" style="width:16px;height:16px;"></span></a>
+      <a href="#services" class="btn btn-ghost large">Explore Services</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="num" data-count="120">0<span>+</span></div><div class="label">Projects Shipped</div></div>
+      <div class="stat"><div class="num" data-count="40">0<span>+</span></div><div class="label">Enterprise Clients</div></div>
+      <div class="stat"><div class="num" data-count="9">0<span>+</span></div><div class="label">Industries Served</div></div>
+      <div class="stat"><div class="num" data-count="99">0<span>%</span></div><div class="label">Client Retention</div></div>
+    </div>
+  </div>
+  <div class="scroll-cue">Scroll<div class="line"></div></div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow-label">/ 01 — Capabilities</span>
+      <h2>Every layer of your product, built in‑house.</h2>
+      <p>From silicon to cloud, we design and ship the full stack — so you work with one accountable partner, not five vendors.</p>
+    </div>
+    <div class="services-grid" id="services-grid"></div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section id="solutions">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow-label">/ 02 — Industries</span>
+      <h2>Solutions engineered for your industry.</h2>
+      <p>Purpose-built systems for the sectors where reliability, compliance and scale actually matter.</p>
+    </div>
+    <div class="solutions-scroll" id="solutions-scroll"></div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section id="stack">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow-label">/ 03 — Technology</span>
+      <h2>The stack, by layer.</h2>
+      <p>We pick tools for the job, not the resume. This is what's actually in production across our client base right now.</p>
+    </div>
+    <div class="stack-layers" id="stack-layers"></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow-label">/ 04 — Why BuildInByte</span>
+      <h2>One team. Every discipline. No handoffs.</h2>
+      <p>Most vendors specialize in a slice of the stack. We own the whole thing — which means faster iteration and fewer integration failures.</p>
+    </div>
+    <div class="why-grid" id="why-grid"></div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow-label">/ 05 — Portfolio</span>
+      <h2>Selected work.</h2>
+      <p>A cross-section of systems we've designed, built and deployed for clients across industries.</p>
+    </div>
+    <div class="portfolio-filters" id="portfolio-filters"></div>
+    <div class="portfolio-grid" id="portfolio-grid"></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-inner">
+    <div class="section-head center">
+      <span class="eyebrow-label">/ 06 — Process</span>
+      <h2>How we build.</h2>
+      <p>A disciplined, transparent process from first call to long-term support.</p>
+    </div>
+    <div class="timeline" id="timeline">
+      <div class="timeline-line" id="timeline-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-inner">
+    <div class="section-head center">
+      <span class="eyebrow-label">/ 07 — Testimonials</span>
+      <h2>Trusted by teams who ship.</h2>
+    </div>
+    <div class="testi-wrap glass" id="testi-wrap">
+      <div id="testi-slides"></div>
+      <div class="testi-dots" id="testi-dots"></div>
+    </div>
+    <div class="badge-row" id="logo-row" style="margin-top:56px;"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding-top:0;padding-bottom:60px;">
+  <div class="cta-section reveal">
+    <span class="eyebrow-label">Let's talk</span>
+    <h2>Let's build <span class="grad">something real.</span></h2>
+    <p>Tell us what you're building. We'll come back with a plan, a timeline, and a straight answer on cost.</p>
+    <div class="hero-btns" style="margin-bottom:0;">
+      <a href="#contact" class="btn btn-primary large">Start Your Project</a>
+      <a href="#contact" class="btn btn-ghost large">Schedule a Meeting</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow-label">/ 08 — Contact</span>
+      <h2>Start a conversation.</h2>
+      <p>Reach out directly, or send details through the form and we'll respond within one business day.</p>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-info-item glass" style="padding:20px 24px;border-radius:14px;margin-bottom:14px;">
+          <div class="ico"><span data-lucide="mail" style="width:18px;height:18px;"></span></div>
+          <div><div class="label">General &amp; Support</div><div class="val"><a href="mailto:support@buildinbyte.in">support@buildinbyte.in</a></div></div>
+        </div>
+        <div class="contact-info-item glass" style="padding:20px 24px;border-radius:14px;margin-bottom:14px;">
+          <div class="ico"><span data-lucide="package" style="width:18px;height:18px;"></span></div>
+          <div><div class="label">Orders &amp; Projects</div><div class="val"><a href="mailto:orders@buildinbyte.in">orders@buildinbyte.in</a></div></div>
+        </div>
+        <div class="contact-info-item glass" style="padding:20px 24px;border-radius:14px;margin-bottom:14px;">
+          <div class="ico"><span data-lucide="phone" style="width:18px;height:18px;"></span></div>
+          <div><div class="label">Phone</div><div class="val"><a href="tel:+910000000000">+91 00000 00000</a></div></div>
+        </div>
+        <div class="contact-info-item glass" style="padding:20px 24px;border-radius:14px;margin-bottom:14px;">
+          <div class="ico"><span data-lucide="instagram" style="width:18px;height:18px;"></span></div>
+          <div><div class="label">Instagram</div><div class="val"><a href="https://instagram.com/BuildInByte" target="_blank" rel="noopener">@BuildInByte</a></div></div>
+        </div>
+        <div class="contact-info-item glass" style="padding:20px 24px;border-radius:14px;">
+          <div class="ico"><span data-lucide="map-pin" style="width:18px;height:18px;"></span></div>
+          <div><div class="label">Location</div><div class="val">India — Remote &amp; On-site</div></div>
+        </div>
+      </div>
+      <form class="form-glass glass" onsubmit="event.preventDefault(); this.reset(); const b=this.querySelector('.form-success'); if(b){b.style.display='block';}">
+        <div class="form-row">
+          <div class="field"><label>Full name</label><input type="text" required placeholder="Jane Doe"></div>
+          <div class="field"><label>Company</label><input type="text" placeholder="Acme Manufacturing"></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>Email</label><input type="email" required placeholder="jane@company.com"></div>
+          <div class="field"><label>Budget range</label>
+            <select><option>Under ₹5L</option><option>₹5L – ₹20L</option><option>₹20L – ₹1Cr</option><option>₹1Cr+</option></select>
+          </div>
+        </div>
+        <div class="field"><label>Project details</label><textarea required placeholder="Tell us what you're building..."></textarea></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:15px;">Send Message <span data-lucide="send" style="width:15px;height:15px;"></span></button>
+        <p class="form-success" style="display:none;color:var(--cyan);font-size:0.85rem;margin-top:14px;text-align:center;">Message sent — we'll be in touch within one business day.</p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="section-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="logo"><div class="mark"></div>Build<span>In</span>Byte</a>
+        <p>Engineering Businesses Through Technology. Software, hardware, cloud and AI — built as one ecosystem.</p>
+        <div class="footer-social" style="margin-top:20px;">
+          <a href="https://instagram.com/BuildInByte" target="_blank" rel="noopener"><span data-lucide="instagram" style="width:16px;height:16px;"></span></a>
+          <a href="mailto:support@buildinbyte.in"><span data-lucide="mail" style="width:16px;height:16px;"></span></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Company</h5>
+        <a href="#services">Services</a><a href="#portfolio">Portfolio</a><a href="#">About</a><a href="#">Careers</a>
+      </div>
+      <div class="footer-col"><h5>Explore</h5>
+        <a href="#solutions">Solutions</a><a href="#stack">Technology</a><a href="#process">Process</a><a href="#testimonials">Testimonials</a>
+      </div>
+      <div class="footer-col"><h5>Support</h5>
+        <a href="#contact">Contact</a><a href="#">Documentation</a><a href="#">Status</a>
+      </div>
+      <div class="footer-col"><h5>Legal</h5>
+        <a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Cookie Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 BuildInByte. All rights reserved.</span>
+      <span>Made in India · Engineered for the world 🌐</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+lucide.createIcons();
+
+/* ============ LOADER ============ */
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('hide'), 500);
+});
+
+/* ============ HEADER SCROLL ============ */
+const header = document.getElementById('header');
+window.addEventListener('scroll', ()=>{ header.classList.toggle('scrolled', window.scrollY > 40); });
+
+/* ============ MOBILE MENU ============ */
+const burger = document.getElementById('burger');
+const mmenu = document.getElementById('mobile-menu');
+burger.addEventListener('click', ()=> mmenu.classList.toggle('open'));
+mmenu.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>mmenu.classList.remove('open')));
+
+/* ============ THREE.JS HERO BACKGROUND ============ */
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, canvas.clientWidth/canvas.clientHeight, 0.1, 1000);
+  camera.position.set(0,0,26);
+
+  function resize(){
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    renderer.setSize(w,h,false);
+    camera.aspect = w/h; camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize);
+
+  // Particle network (data nodes)
+  const NUM = 160;
+  const geo = new THREE.BufferGeometry();
+  const positions = new Float32Array(NUM*3);
+  const speeds = [];
+  for(let i=0;i<NUM;i++){
+    positions[i*3] = (Math.random()-0.5)*40;
+    positions[i*3+1] = (Math.random()-0.5)*24;
+    positions[i*3+2] = (Math.random()-0.5)*20;
+    speeds.push(0.15+Math.random()*0.3);
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  const mat = new THREE.PointsMaterial({color:0x3ee8ff, size:0.14, transparent:true, opacity:0.85});
+  const points = new THREE.Points(geo, mat);
+  scene.add(points);
+
+  // Connection lines (circuit-like)
+  const lineGroup = new THREE.Group();
+  scene.add(lineGroup);
+  function rebuildLines(){
+    lineGroup.clear();
+    const pos = geo.attributes.position.array;
+    const lineMat = new THREE.LineBasicMaterial({color:0x4d7cff, transparent:true, opacity:0.12});
+    const verts = [];
+    for(let i=0;i<NUM;i++){
+      for(let j=i+1;j<NUM;j++){
+        const dx=pos[i*3]-pos[j*3], dy=pos[i*3+1]-pos[j*3+1], dz=pos[i*3+2]-pos[j*3+2];
+        const d = Math.sqrt(dx*dx+dy*dy+dz*dz);
+        if(d<4.2){
+          verts.push(pos[i*3],pos[i*3+1],pos[i*3+2], pos[j*3],pos[j*3+1],pos[j*3+2]);
+        }
+      }
+    }
+    const lg = new THREE.BufferGeometry();
+    lg.setAttribute('position', new THREE.Float32BufferAttribute(verts,3));
+    lineGroup.add(new THREE.LineSegments(lg, lineMat));
+  }
+  rebuildLines();
+
+  // Floating "PCB board" wireframe panels
+  const boardGroup = new THREE.Group();
+  for(let i=0;i<5;i++){
+    const w = 3+Math.random()*2, h = 2+Math.random()*1.2;
+    const bgeo = new THREE.PlaneGeometry(w,h);
+    const bmat = new THREE.MeshBasicMaterial({color: i%2===0?0x3ee8ff:0x7c5cff, wireframe:true, transparent:true, opacity:0.25});
+    const board = new THREE.Mesh(bgeo,bmat);
+    board.position.set((Math.random()-0.5)*30, (Math.random()-0.5)*16, (Math.random()-0.5)*14-4);
+    board.rotation.set(Math.random(),Math.random(),Math.random());
+    board.userData.rotSpeed = (Math.random()-0.5)*0.003;
+    boardGroup.add(board);
+  }
+  scene.add(boardGroup);
+
+  // Torus "cloud node" rings
+  const ringGroup = new THREE.Group();
+  for(let i=0;i<3;i++){
+    const rgeo = new THREE.TorusGeometry(2.2+i*0.6, 0.02, 8, 60);
+    const rmat = new THREE.MeshBasicMaterial({color:0x3ee8ff, transparent:true, opacity:0.35});
+    const torus = new THREE.Mesh(rgeo,rmat);
+    torus.position.set(0,0,0);
+    torus.rotation.x = Math.PI/2 + i*0.3;
+    ringGroup.add(torus);
+  }
+  ringGroup.position.set(9,4,-6);
+  scene.add(ringGroup);
+
+  const ringGroup2 = ringGroup.clone();
+  ringGroup2.position.set(-10,-5,-8);
+  ringGroup2.scale.set(0.7,0.7,0.7);
+  scene.add(ringGroup2);
+
+  let mouseX=0, mouseY=0;
+  window.addEventListener('mousemove', e=>{
+    mouseX = (e.clientX/window.innerWidth - 0.5);
+    mouseY = (e.clientY/window.innerHeight - 0.5);
+  });
+
+  let t = 0;
+  function animate(){
+    t += 0.005;
+    const pos = geo.attributes.position.array;
+    for(let i=0;i<NUM;i++){
+      pos[i*3+1] += Math.sin(t*speeds[i]+i)*0.004;
+      pos[i*3] += Math.cos(t*speeds[i]+i)*0.003;
+    }
+    geo.attributes.position.needsUpdate = true;
+    if(Math.floor(t*40)%20===0) rebuildLines();
+
+    boardGroup.children.forEach(b=>{ b.rotation.z += b.userData.rotSpeed; b.rotation.x += b.userData.rotSpeed*0.6; });
+    ringGroup.rotation.z += 0.0018;
+    ringGroup2.rotation.z -= 0.0022;
+
+    camera.position.x += (mouseX*3 - camera.position.x)*0.02;
+    camera.position.y += (-mouseY*2 - camera.position.y)*0.02;
+    camera.lookAt(0,0,0);
+
+    resize();
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+/* ============ DATA: SERVICES ============ */
+const services = [
+  ["SaaS Development","Multi-tenant platforms with billing, roles and usage metering built in."],
+  ["Custom Business Software","Internal tools built around a workflow you already have, not a template."],
+  ["Website Design & Development","Marketing sites and product sites, built for speed and search."],
+  ["Web Applications","Data-heavy applications with real-time state and complex permissions."],
+  ["Mobile Applications","Native iOS and Android, or cross-platform where it makes sense."],
+  ["Embedded Systems Development","Firmware paired with the board it runs on, designed together."],
+  ["PCB Design","Schematic capture, layout, and design-for-manufacture review."],
+  ["Firmware Development","Real-time firmware for ARM, AVR and ESP-class microcontrollers."],
+  ["IoT Solutions","Sensors, gateways, and the telemetry pipeline that ties them together."],
+  ["Cloud Solutions","Infrastructure on AWS or Azure, provisioned as code from day one."],
+  ["AI Integration","Applied models — vision, forecasting, LLMs — wired into a working product."],
+  ["Automation Systems","Replacing manual, repeatable steps in your operations with software."],
+  ["Robotics Solutions","Motion control and sensor fusion for physical automation."],
+  ["Industrial Electronics","Electronics rated for factory-floor heat, vibration and dust."],
+  ["API Development","Versioned, documented APIs your partners can integrate without asking."],
+  ["Database Design","Schemas built for the query patterns you'll actually run."],
+  ["UI/UX Design","Interfaces designed from how people actually use the product."],
+  ["DevOps & Deployment","CI/CD pipelines and zero-downtime releases, not manual deploys."],
+  ["Technical Consulting","Architecture review and a roadmap from engineers who'll build it."],
+  ["Product Prototyping","A working prototype in weeks, so you validate before scaling."]
+];
+const grid = document.getElementById('services-grid');
+services.forEach(([title,desc],i)=>{
+  const card = document.createElement('div');
+  card.className = 'service-card reveal';
+  card.innerHTML = `<div class="service-icon">${String(i+1).padStart(2,'0')}</div>
+    <div><h3>${title}</h3><p>${desc}</p></div>`;
+  grid.appendChild(card);
+});
+
+/* ============ DATA: SOLUTIONS ============ */
+const solutions = [
+  ["heart-pulse","Healthcare","Patient monitoring devices, hospital software and compliant data systems."],
+  ["factory","Manufacturing","MES integration, predictive maintenance and shop-floor automation."],
+  ["graduation-cap","Education","Learning platforms, lab hardware and campus management systems."],
+  ["shopping-bag","Retail","POS systems, inventory intelligence and omnichannel commerce."],
+  ["truck","Logistics","Fleet tracking, route optimization and warehouse automation."],
+  ["sprout","Agriculture","Soil sensors, irrigation automation and yield prediction models."],
+  ["landmark","Finance","Secure transaction systems and fraud-detection infrastructure."],
+  ["building-2","Smart Buildings","Energy management, access control and HVAC automation."],
+  ["radio-tower","Smart Cities","Connected infrastructure for traffic, utilities and public safety."]
+];
+const solWrap = document.getElementById('solutions-scroll');
+solutions.forEach(([icon,title,desc])=>{
+  const el = document.createElement('div');
+  el.className = 'solution-card';
+  el.innerHTML = `<div class="ico"><span data-lucide="${icon}" style="width:26px;height:26px;"></span></div><h4>${title}</h4><p>${desc}</p>`;
+  solWrap.appendChild(el);
+});
+
+/* ============ DATA: TECH STACK ============ */
+const stack = [
+  ["Microcontrollers", ["ESP32","STM32","AVR","Arduino","Raspberry Pi"]],
+  ["Languages", ["Python","C","C++","JavaScript","TypeScript"]],
+  ["Application", ["React","Next.js","Node.js"]],
+  ["Data", ["PostgreSQL","MongoDB"]],
+  ["Infrastructure", ["Docker","Linux","AWS","Azure","GitHub"]]
+];
+const stackWrap = document.getElementById('stack-layers');
+stack.forEach(([label, items])=>{
+  const row = document.createElement('div');
+  row.className = 'stack-layer reveal';
+  row.innerHTML = `<div class="layer-label">${label}</div>
+    <div class="layer-items">${items.map(i=>`<span class="stack-item">${i}</span>`).join('')}</div>`;
+  stackWrap.appendChild(row);
+});
+
+/* ============ DATA: WHY US ============ */
+const why = [
+  ["End-to-end development","One team owns discovery through deployment — no lost context between vendors."],
+  ["Hardware + Software under one roof","Firmware and app teams sit together, so integration issues surface early."],
+  ["Scalable architecture","Systems designed to handle 10x growth without a rebuild."],
+  ["Enterprise-grade security","Security reviewed at every layer, from silicon to API."],
+  ["Custom-built solutions","No templated products — every system is built around your exact requirements."],
+  ["Modern UI/UX","Interfaces your team will actually enjoy using every day."],
+  ["Cloud-ready systems","Built to deploy and scale on AWS or Azure from day one."],
+  ["Long-term support","We stay on after launch — maintenance, monitoring and upgrades included."],
+  ["Rapid prototyping","Working prototypes in weeks, so you validate before you scale."],
+  ["Business automation","We identify and automate manual processes as part of every engagement."]
+];
+const whyGrid = document.getElementById('why-grid');
+why.forEach(([title,desc])=>{
+  const el = document.createElement('div');
+  el.className = 'why-card glass reveal';
+  el.innerHTML = `<div class="why-check"><span data-lucide="check" style="width:16px;height:16px;"></span></div>
+    <div><h4>${title}</h4><p>${desc}</p></div>`;
+  whyGrid.appendChild(el);
+});
+
+/* ============ DATA: PORTFOLIO ============ */
+const portfolio = [
+  ["Software","FleetSight","Real-time logistics dashboard for a 400-vehicle fleet operator."],
+  ["Embedded Systems","PowerGuard MCU","Custom firmware for industrial power monitoring units."],
+  ["IoT","AgroSense Network","Soil and climate sensor mesh across 200+ acres of farmland."],
+  ["Web Platforms","MedPortal","Compliant patient-management platform for a hospital network."],
+  ["Industrial Automation","LineFlow OS","Factory-floor automation system reducing downtime by 34%."],
+  ["Robotics","PickBot Arm","Sensor-fused robotic arm for warehouse picking operations."],
+  ["AI Applications","VisionQC","Computer-vision quality inspection system for a manufacturing line."],
+  ["Software","LedgerFlow","Multi-tenant SaaS accounting platform for SMB finance teams."],
+  ["IoT","SmartMeter Grid","Connected utility metering system for a smart-city pilot."]
+];
+const categories = ["All", ...new Set(portfolio.map(p=>p[0]))];
+const filtersEl = document.getElementById('portfolio-filters');
+const pgrid = document.getElementById('portfolio-grid');
+function renderPortfolio(cat){
+  pgrid.innerHTML = '';
+  portfolio.filter(p=>cat==='All'||p[0]===cat).forEach(([tag,title,desc])=>{
+    const card = document.createElement('div');
+    card.className = 'portfolio-card reveal';
+    card.innerHTML = `<div class="pf-bg"></div>
+      <div class="pf-arrow"><span data-lucide="arrow-up-right" style="width:16px;height:16px;"></span></div>
+      <div class="pf-content"><span class="pf-tag">${tag}</span><h3>${title}</h3><p>${desc}</p></div>`;
+    pgrid.appendChild(card);
+  });
+  lucide.createIcons();
+  ScrollTrigger.refresh();
+}
+categories.forEach(cat=>{
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn' + (cat==='All'?' active':'');
+  btn.textContent = cat;
+  btn.addEventListener('click', ()=>{
+    filtersEl.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderPortfolio(cat);
+  });
+  filtersEl.appendChild(btn);
+});
+renderPortfolio('All');
+
+/* ============ DATA: PROCESS TIMELINE ============ */
+const process = [
+  ["01","Discovery","We map your goals, constraints and technical landscape before writing a single spec."],
+  ["02","Planning","Scope, architecture and timeline are locked down so there are no surprises later."],
+  ["03","Design","UI/UX and hardware schematics are designed and validated with you before build."],
+  ["04","Development","Software and firmware are built in parallel sprints with regular demos."],
+  ["05","Testing","Rigorous QA, hardware-in-loop testing and security review before release."],
+  ["06","Deployment","Production rollout with monitoring, documentation and a clean handover."],
+  ["07","Support","Ongoing maintenance, monitoring and feature iteration after launch."]
+];
+const tl = document.getElementById('timeline');
+process.forEach(([num,title,desc])=>{
+  const item = document.createElement('div');
+  item.className = 'timeline-item';
+  item.innerHTML = `<div class="timeline-node">${num}</div><div class="timeline-body"><h3>${title}</h3><p>${desc}</p></div>`;
+  tl.appendChild(item);
+});
+
+/* ============ DATA: TESTIMONIALS ============ */
+const testimonials = [
+  ["The BuildInByte team shipped our IoT monitoring platform faster than any vendor we'd worked with before, and the firmware has run without a single field failure.","Priya Raman","VP Engineering, Meridian Manufacturing"],
+  ["Having hardware and software under one roof cut our integration time in half. It's rare to find a partner who can speak both languages fluently.","Arjun Mehta","CTO, Northstar Logistics"],
+  ["Our SaaS platform went from prototype to production in twelve weeks. BuildInByte's process is genuinely the most disciplined we've encountered.","Lena Fischer","Founder, ClearPath Health"],
+  ["They didn't just build what we asked for — they questioned our assumptions and delivered a better architecture than the one we came in with.","Rohit Nair","Director of Operations, Vantage Agritech"]
+];
+const slidesEl = document.getElementById('testi-slides');
+const dotsEl = document.getElementById('testi-dots');
+testimonials.forEach(([quote,name,role],i)=>{
+  const initials = name.split(' ').map(s=>s[0]).join('');
+  const s = document.createElement('div');
+  s.className = 'testi-slide' + (i===0?' active':'');
+  s.innerHTML = `<div class="quote-mark">"</div><p class="quote">${quote}</p>
+    <div class="testi-person"><div class="testi-avatar">${initials}</div>
+    <div><div class="name">${name}</div><div class="role">${role}</div></div></div>`;
+  slidesEl.appendChild(s);
+  const d = document.createElement('div');
+  d.className = 'testi-dot' + (i===0?' active':'');
+  d.addEventListener('click', ()=>showTesti(i));
+  dotsEl.appendChild(d);
+});
+let testiIdx = 0;
+function showTesti(i){
+  document.querySelectorAll('.testi-slide').forEach((s,idx)=>s.classList.toggle('active', idx===i));
+  document.querySelectorAll('.testi-dot').forEach((d,idx)=>d.classList.toggle('active', idx===i));
+  testiIdx = i;
+}
+setInterval(()=> showTesti((testiIdx+1)%testimonials.length), 5500);
+
+const companyLogos = ["Meridian Mfg","Northstar Logistics","ClearPath Health","Vantage Agritech","Orbit Retail","Ferra Industrial"];
+const logoRow = document.getElementById('logo-row');
+companyLogos.forEach(name=>{
+  const el = document.createElement('div');
+  el.className = 'mono';
+  el.style.cssText = 'padding:10px 20px;border:1px solid var(--panel-border);border-radius:100px;color:var(--text-dimmer);font-size:0.82rem;';
+  el.textContent = name;
+  logoRow.appendChild(el);
+});
+
+/* re-init icons after dynamic content */
+lucide.createIcons();
+
+/* ============ SCROLL REVEALS (GSAP) ============ */
+gsap.utils.toArray('.reveal').forEach(el=>{
+  gsap.fromTo(el, {opacity:0,y:32}, {
+    opacity:1, y:0, duration:0.9, ease:'power3.out',
+    scrollTrigger:{ trigger:el, start:'top 88%' }
+  });
+});
+gsap.utils.toArray('.section-head, .glass, .service-card, .solution-card, .why-card, .portfolio-card, .timeline-item').forEach(el=>{
+  if(el.classList.contains('reveal')) return;
+  gsap.fromTo(el, {opacity:0,y:26}, {
+    opacity:1, y:0, duration:0.8, ease:'power3.out',
+    scrollTrigger:{ trigger:el, start:'top 90%' }
+  });
+});
+
+/* Timeline progress line + active node */
+gsap.to('#timeline-line', {
+  scaleY:1, transformOrigin:'top',
+  scrollTrigger:{ trigger:'#timeline', start:'top 70%', end:'bottom 60%', scrub:0.6 }
+});
+gsap.set('#timeline-line',{scaleY:0});
+document.querySelectorAll('.timeline-item').forEach(item=>{
+  ScrollTrigger.create({
+    trigger:item, start:'top 60%', end:'bottom 40%',
+    onEnter:()=>item.classList.add('active'),
+    onEnterBack:()=>item.classList.add('active'),
+  });
+});
+
+/* ============ STAT COUNTERS ============ */
+document.querySelectorAll('.hero-stats .num').forEach(el=>{
+  const target = parseInt(el.dataset.count,10);
+  const suffixEl = el.querySelector('span');
+  const obj = {val:0};
+  ScrollTrigger.create({
+    trigger: '.hero-stats', start:'top 95%', once:true,
+    onEnter:()=>{
+      gsap.to(obj,{val:target, duration:2, ease:'power2.out', onUpdate:()=>{
+        el.firstChild.textContent = Math.floor(obj.val);
+      }});
+    }
+  });
+});
+
+/* subtle section fade-parallax for CTA */
+gsap.fromTo('.cta-section', {opacity:0, y:40}, {
+  opacity:1, y:0, duration:1, ease:'power3.out',
+  scrollTrigger:{trigger:'.cta-section', start:'top 85%'}
+});
+</script>
+</body>
+</html>
