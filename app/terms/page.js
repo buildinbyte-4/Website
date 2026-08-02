@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import FloatingContactButton from '@/components/FloatingContactButton';
 
 export default function TermsPage() {
   return (
@@ -184,6 +185,7 @@ export default function TermsPage() {
 
         </div>
       </div>
+      <FloatingContactButton />
     </main>
   );
 }

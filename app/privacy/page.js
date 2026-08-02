@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import FloatingContactButton from '@/components/FloatingContactButton';
 
 export default function PrivacyPage() {
   return (
@@ -108,6 +109,7 @@ export default function PrivacyPage() {
 
         </div>
       </div>
+      <FloatingContactButton />
     </main>
   );
 }

@@ -12,6 +12,7 @@ import InquiryModal from '@/components/InquiryModal';
 import LoginScreen from '@/components/LoginScreen';
 import ProfileModal from '@/components/ProfileModal';
 import SmoothScroll from '@/components/SmoothScroll';
+import FloatingContactButton from '@/components/FloatingContactButton';
 import { PROJECTS as MOCK_PROJECTS } from '@/lib/data';
 
 export default function HomePage() {
@@ -219,6 +220,9 @@ export default function HomePage() {
             onClose={() => setShowProfile(false)}
           />
         )}
+
+        {/* Floating Contact Button */}
+        <FloatingContactButton onClick={handleInquiryRequest} />
 
       </div>
     </SmoothScroll>
