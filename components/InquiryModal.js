@@ -15,6 +15,10 @@ export default function InquiryModal({ config, onClose }) {
     setLoading(true);
     setErrorMsg('');
     try {
+      if (!supabase) {
+        throw new Error('Supabase client is unavailable.');
+      }
+
       const { error } = await supabase.from('inquiries').insert([
         {
           name: formData.name,

@@ -1,11 +1,22 @@
 'use client';
-import { PROJECTS } from '@/lib/data';
+import { useHero } from '@/hooks/useHero';
 
 export default function Hero({ onOpenDemo, onOpenInquiry }) {
-  const featured = PROJECTS[0];
+  const { hero, loading, error } = useHero();
+
+  const title = hero?.title || 'WE BUILD SYSTEMS THAT SCALE.';
+  const subtitle = hero?.subtitle || 'We architect, build, and deploy raw, production-grade custom web applications and APIs for ambitious companies. No fluff.';
+  const primaryLabel = hero?.primary_button || 'BOOK SCOPING CALL';
+  const primaryLink = hero?.primary_button_link || '#';
+  const secondaryLabel = hero?.secondary_button || 'VIEW OUR WORK';
+  const secondaryLink = hero?.secondary_button_link || '#projects';
+  const backgroundImage = hero?.background_image || null;
 
   return (
-    <section className="relative pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden bg-brutal-bg border-b-4 border-brutal-black">
+    <section
+      className="relative pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden bg-brutal-bg border-b-4 border-brutal-black"
+      style={backgroundImage ? { backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
+    >
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
@@ -14,27 +25,25 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
 
             {/* Headline */}
             <h1 className="font-display text-5xl sm:text-7xl lg:text-[5.5rem] font-black leading-[0.9] text-brutal-black uppercase tracking-tighter">
-              WE BUILD <br />
-              <span className="bg-brutal-yellow px-2 inline-block -rotate-1 border-4 border-brutal-black shadow-brutal mt-4">SYSTEMS</span><br/>
-              THAT SCALE.
+              {loading ? 'LOADING...' : title}
             </h1>
 
             {/* Subheadline */}
             <p className="text-xl sm:text-2xl text-brutal-black font-bold uppercase leading-snug border-l-8 border-brutal-pink pl-4 py-2 mt-8">
-              We architect, build, and deploy raw, production-grade custom web applications and APIs for ambitious companies. No fluff.
+              {loading ? 'Loading latest company story...' : subtitle}
             </p>
 
             {/* Dual CTAs */}
             <div className="flex flex-wrap items-center gap-4 pt-6">
               <button
-                onClick={() => onOpenInquiry({ title: 'Book a Technical Scoping Call' })}
+                onClick={() => onOpenInquiry({ title: primaryLabel })}
                 className="btn-primary"
               >
-                BOOK SCOPING CALL
+                {loading ? 'LOADING...' : primaryLabel}
               </button>
 
-              <a href="#projects" className="btn-secondary">
-                VIEW OUR WORK
+              <a href={secondaryLink} className="btn-secondary">
+                {loading ? 'LOADING...' : secondaryLabel}
               </a>
             </div>
 

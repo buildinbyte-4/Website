@@ -1,12 +1,21 @@
 'use client';
-import { METRICS } from '@/lib/data';
+import { useStats } from '@/hooks/useStats';
 
 export default function MetricsBanner() {
+  const { stats, loading, error } = useStats();
+
+  const metrics = [
+    { label: 'Projects Completed', value: stats?.projects_completed ?? '—', sub: 'delivered across core engagements' },
+    { label: 'Clients Served', value: stats?.clients_served ?? '—', sub: 'from startups to enterprises' },
+    { label: 'Industries Served', value: stats?.industries_served ?? '—', sub: 'across business and technology operations' },
+    { label: 'Success Rate', value: stats?.success_rate ?? '—', sub: 'built for reliability and growth' },
+  ];
+
   return (
     <section className="py-12 bg-brutal-bg border-b-4 border-brutal-black">
       <div className="max-w-7xl mx-auto px-6 relative">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
-          {METRICS.map((metric, idx) => (
+          {metrics.map((metric, idx) => (
             <div
               key={idx}
               className="editorial-card p-6 bg-white flex flex-col justify-between"
@@ -16,7 +25,7 @@ export default function MetricsBanner() {
                   {metric.label}
                 </span>
                 <span className="font-display font-black text-5xl sm:text-6xl text-brutal-black block mb-2 mt-2 leading-none">
-                  {metric.value}
+                  {loading ? '...' : metric.value}
                 </span>
               </div>
               <span className="text-xs text-brutal-black font-bold uppercase mt-4 block border-t-4 border-brutal-black pt-4">

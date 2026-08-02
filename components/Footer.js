@@ -1,7 +1,17 @@
 'use client';
 import Link from 'next/link';
+import { useSettings } from '@/hooks/useSettings';
 
 export default function Footer() {
+  const { settings, loading, error } = useSettings();
+  const companyName = settings?.company_name || 'BuildInByte';
+  const description = settings?.address ? `${settings.address}` : 'Production-grade software engineering for ambitious companies.';
+  const socials = [
+    { label: 'X', href: settings?.twitter || '#', icon: 'X' },
+    { label: 'IN', href: settings?.linkedin || '#', icon: 'IN' },
+    { label: 'GH', href: settings?.github || '#', icon: 'GH' },
+  ];
+
   return (
     <footer style={{ backgroundColor: '#FFFFFF' }} className="py-16 mt-auto border-t-4 border-[#000000]">
       <div className="max-w-7xl mx-auto px-6">
@@ -11,22 +21,18 @@ export default function Footer() {
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }} className="group mb-6">
               <img src="/logo.jpg" alt="BuildInByte Logo" className="h-10 w-auto" />
               <span className="font-display font-black text-2xl tracking-tighter text-[#000000] uppercase">
-                BuildInByte
+                {loading ? 'Loading...' : companyName}
               </span>
             </Link>
             <p className="text-sm font-bold uppercase leading-snug mb-6 text-[#18181B]">
-              Production-grade software engineering for ambitious companies.
+              {loading ? 'Loading company profile...' : description}
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 bg-white text-[#000000] flex items-center justify-center font-bold hover:bg-[#F8FAFC] transition-colors border border-[#000000]">
-                X
-              </a>
-              <a href="#" className="w-10 h-10 bg-white text-[#000000] flex items-center justify-center font-bold hover:bg-[#F8FAFC] transition-colors border border-[#000000]">
-                IN
-              </a>
-              <a href="#" className="w-10 h-10 bg-white text-[#000000] flex items-center justify-center font-bold hover:bg-[#F8FAFC] transition-colors border border-[#000000]">
-                GH
-              </a>
+              {socials.map((item) => (
+                <a key={item.label} href={item.href} className="w-10 h-10 bg-white text-[#000000] flex items-center justify-center font-bold hover:bg-[#F8FAFC] transition-colors border border-[#000000]">
+                  {item.icon}
+                </a>
+              ))}
             </div>
           </div>
 
@@ -35,10 +41,10 @@ export default function Footer() {
               SOLUTIONS
             </h4>
             <ul className="space-y-4 text-sm uppercase font-bold">
-              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Custom Web Apps</a></li>
-              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Enterprise Systems</a></li>
-              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">AI & Automation</a></li>
-              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">API Architecture</a></li>
+              <li><a href="#projects" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Custom Web Apps</a></li>
+              <li><a href="#services" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Enterprise Systems</a></li>
+              <li><a href="#services" className="transition-colors text-[#18181B] hover:text-[#0066FF]">AI & Automation</a></li>
+              <li><a href="#services" className="transition-colors text-[#18181B] hover:text-[#0066FF]">API Architecture</a></li>
             </ul>
           </div>
 
@@ -47,10 +53,10 @@ export default function Footer() {
               COMPANY
             </h4>
             <ul className="space-y-4 text-sm uppercase font-bold">
-              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">About Us</a></li>
-              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Careers</a></li>
-              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Case Studies</a></li>
-              <li><a href="#" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Contact</a></li>
+              <li><a href="#work" className="transition-colors text-[#18181B] hover:text-[#0066FF]">About Us</a></li>
+              <li><a href="#services" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Careers</a></li>
+              <li><a href="#projects" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Case Studies</a></li>
+              <li><a href="mailto:{settings?.email || 'hello@buildinbyte.com'}" className="transition-colors text-[#18181B] hover:text-[#0066FF]">Contact</a></li>
             </ul>
           </div>
 
@@ -68,7 +74,7 @@ export default function Footer() {
 
         <div className="mt-16 pt-8 border-t-2 border-[#E2E8F0] text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm uppercase font-bold text-[#64748B]">
-            &copy; {new Date().getFullYear()} BuildInByte. All rights reserved.
+            &copy; {new Date().getFullYear()} {companyName}. All rights reserved.
           </p>
         </div>
       </div>

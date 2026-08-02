@@ -1,7 +1,41 @@
 'use client';
-import { SERVICES } from '@/lib/data';
+import { useFAQ } from '@/hooks/useFAQ';
+
+const serviceCards = [
+  {
+    icon: '🌐',
+    title: 'Web Application Development',
+    desc: 'End-to-end web applications built with modern frameworks — from customer-facing portals to complex multi-tenant SaaS platforms, delivered with clean architecture.',
+  },
+  {
+    icon: '🏢',
+    title: 'Enterprise Software',
+    desc: 'Scalable enterprise systems including ERP modules, internal management platforms, and workflow automation tools tailored to your operational structure.',
+  },
+  {
+    icon: '🤖',
+    title: 'AI & Intelligent Automation',
+    desc: 'AI-powered features, document processing pipelines, chatbots, recommendation engines, and LLM integrations that give your business a competitive edge.',
+  },
+  {
+    icon: '🎛️',
+    title: 'Embedded Systems & ECE Solutions',
+    desc: 'Custom hardware integration, firmware development, and embedded C/C++ architectures for IoT, robotics, and smart hardware projects.',
+  },
+  {
+    icon: '📊',
+    title: 'Dashboards & Analytics',
+    desc: 'Custom analytics dashboards, reporting tools, and data visualization platforms that transform your raw business data into actionable insights.',
+  },
+  {
+    icon: '🔗',
+    title: 'API Development & Integrations',
+    desc: 'High-performance REST and GraphQL APIs, third-party integrations, payment gateways, and microservice architectures engineered for reliability and scale.',
+  },
+];
 
 export default function CustomServices({ onOpenInquiry }) {
+  const { faq, loading, error } = useFAQ();
   return (
     <section id="services" className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
       <div className="max-w-7xl mx-auto px-6">
@@ -100,7 +134,7 @@ export default function CustomServices({ onOpenInquiry }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {SERVICES.map((service, idx) => {
+            {serviceCards.map((service, idx) => {
               const bColors = ['bg-brutal-yellow', 'bg-brutal-green', 'bg-brutal-pink', 'bg-brutal-blue'];
               const bg = bColors[idx % bColors.length];
               
@@ -133,6 +167,27 @@ export default function CustomServices({ onOpenInquiry }) {
               );
             })}
           </div>
+        </div>
+
+        <div className="mt-24 border-4 border-brutal-black bg-white p-8 shadow-brutal">
+          <div className="flex items-center justify-between gap-4 mb-6">
+            <h3 className="font-display text-3xl font-black uppercase text-brutal-black">FAQ</h3>
+            <span className="text-xs font-black uppercase tracking-widest text-brutal-black bg-brutal-yellow px-3 py-1 border-2 border-brutal-black">LIVE CONTENT</span>
+          </div>
+          {error ? (
+            <p className="text-sm font-bold uppercase text-brutal-black">{error}</p>
+          ) : loading ? (
+            <p className="text-sm font-bold uppercase text-brutal-black">Loading frequently asked questions...</p>
+          ) : (
+            <div className="space-y-4">
+              {faq.map((item) => (
+                <div key={item.id} className="border-2 border-brutal-black p-4 bg-brutal-bg">
+                  <h4 className="text-lg font-black uppercase text-brutal-black">{item.question}</h4>
+                  <p className="mt-2 text-sm font-bold uppercase leading-relaxed text-brutal-black">{item.answer}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
       </div>

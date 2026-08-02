@@ -1,12 +1,24 @@
 'use client';
 import { useState } from 'react';
-import { PROJECTS, FILTER_TABS } from '@/lib/data';
+import { useProducts } from '@/hooks/useProducts';
+
+const FILTER_TABS = [
+  'All',
+  'Business Website',
+  'Enterprise Software',
+  'Internal Management System',
+  'AI Solutions',
+  'Dashboard',
+  'E-Commerce',
+  'Custom Application',
+];
 
 export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry }) {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const { products, loading, error } = useProducts();
 
-  const displayList = customProjects && customProjects.length > 0 ? customProjects : PROJECTS;
+  const displayList = (customProjects && customProjects.length > 0 ? customProjects : products);
 
   const filteredProjects = displayList.filter(p => {
     const matchesCategory = activeCategory === 'All' || p.category === activeCategory;
@@ -89,9 +101,23 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
 
         </div>
 
+        {error && (
+          <div className="mb-6 border-4 border-brutal-black bg-white p-4 text-sm font-bold uppercase text-brutal-black">
+            {error}
+          </div>
+        )}
+
         {/* Project Card Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => {
+          {loading ? (
+            <div className="md:col-span-2 lg:col-span-3 border-4 border-brutal-black bg-white p-8 text-center text-sm font-black uppercase text-brutal-black">
+              Loading products...
+            </div>
+          ) : filteredProjects.length === 0 ? (
+            <div className="md:col-span-2 lg:col-span-3 border-4 border-brutal-black bg-white p-8 text-center text-sm font-black uppercase text-brutal-black">
+              No products available right now.
+            </div>
+          ) : filteredProjects.map((project, index) => {
             const hasDemo = Boolean(project.demoUrl);
             const metrics = getMetrics(project.id);
             const cardBgColor = BRUTAL_COLORS[index % BRUTAL_COLORS.length];

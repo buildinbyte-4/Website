@@ -1,8 +1,10 @@
 'use client';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
+import { useSettings } from '@/hooks/useSettings';
 
 export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInquiry }) {
+  const { settings, loading } = useSettings();
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
@@ -20,7 +22,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
           <img src="/logo.jpg" alt="BuildInByte Logo" className="h-10 w-auto" />
           <div>
             <span className="font-display font-black text-3xl tracking-tighter text-brutal-black uppercase">
-              BuildInByte
+              {loading ? 'Loading...' : settings?.company_name || 'BuildInByte'}
             </span>
           </div>
         </Link>
