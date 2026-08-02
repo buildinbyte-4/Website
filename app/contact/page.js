@@ -69,6 +69,15 @@ export default function ContactPage() {
             </p>
           </section>
 
+          <section className="bg-brutal-pink/20 p-6 border-4 border-brutal-black shadow-brutal-sm">
+            <h3 className="font-display font-black text-lg text-brutal-black uppercase mb-1">
+              Note on Privacy
+            </h3>
+            <p className="font-bold text-sm text-brutal-black">
+              Any personal information submitted through our contact channels is handled strictly in accordance with our <Link href="/privacy" className="text-[#0066FF] underline font-black">Privacy Policy</Link>. We do not share your details with unauthorized third parties.
+            </p>
+          </section>
+
         </div>
       </div>
     </main>
