@@ -110,16 +110,21 @@ export default function FAQPage() {
         </div>
 
         {/* Card Header */}
-        <div className="bg-white border-4 border-brutal-black p-6 sm:p-10 shadow-brutal mb-8">
-          <span className="text-xs font-black uppercase tracking-widest text-brutal-black bg-brutal-yellow px-3 py-1 border-2 border-brutal-black inline-block mb-4 shadow-brutal-sm">
-            Help Center
-          </span>
-          <h1 className="font-display font-black text-3xl sm:text-5xl text-brutal-black uppercase tracking-tight mb-2">
-            Frequently Asked Questions
-          </h1>
-          <p className="text-sm font-bold text-[#64748B] uppercase">
-            Everything you need to know about BuiltInByte.
-          </p>
+        <div className="bg-white border-4 border-brutal-black p-6 sm:p-10 shadow-brutal mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <div>
+            <span className="text-xs font-black uppercase tracking-widest text-brutal-black bg-brutal-yellow px-3 py-1 border-2 border-brutal-black inline-block mb-4 shadow-brutal-sm">
+              Help Center
+            </span>
+            <h1 className="font-display font-black text-3xl sm:text-5xl text-brutal-black uppercase tracking-tight mb-2">
+              Frequently Asked Questions
+            </h1>
+            <p className="text-sm font-bold text-[#64748B] uppercase">
+              Everything you need to know about BuiltInByte.
+            </p>
+          </div>
+          <div className="shrink-0 border-4 border-brutal-black bg-white p-3 shadow-brutal-sm self-start sm:self-center">
+            <img src="/logo.jpg" alt="BuildInByte Logo" className="h-14 sm:h-20 w-auto" />
+          </div>
         </div>
 
         {/* Content Body */}
