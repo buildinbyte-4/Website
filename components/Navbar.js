@@ -1,8 +1,28 @@
 'use client';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 
 export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk, onOpenInquiry }) {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const isDark = document.documentElement.classList.contains('dark');
+    setDarkMode(isDark);
+  }, []);
+
+  const toggleDarkMode = () => {
+    const nextDark = !darkMode;
+    setDarkMode(nextDark);
+    if (nextDark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  };
+
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
@@ -15,15 +35,25 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk
     <header className="sticky top-0 z-50 bg-white border-b-4 border-black px-3 sm:px-6 py-3 w-full">
       <div className="flex items-center justify-between max-w-7xl mx-auto w-full gap-2 sm:gap-4">
 
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 sm:gap-3 group shrink-0">
-          <img src="/logo.jpg" alt="BuildInByte Logo" className="h-7 sm:h-9 md:h-10 w-auto" />
-          <div>
-            <span className="font-display font-black text-lg sm:text-2xl md:text-3xl tracking-tighter text-brutal-black uppercase whitespace-nowrap">
-              BuildInByte
-            </span>
-          </div>
-        </Link>
+        {/* Logo and Dark Mode Toggle on Top Left */}
+        <div className="flex items-center gap-3 shrink-0">
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
+            <img src="/logo.jpg" alt="BuildInByte Logo" className="h-7 sm:h-9 md:h-10 w-auto" />
+            <div>
+              <span className="font-display font-black text-lg sm:text-2xl md:text-3xl tracking-tighter text-brutal-black uppercase whitespace-nowrap">
+                BuildInByte
+              </span>
+            </div>
+          </Link>
+
+          <button
+            onClick={toggleDarkMode}
+            className="w-8 h-8 md:w-9 md:h-9 border-2 border-brutal-black bg-white text-brutal-black font-bold flex items-center justify-center rounded-none shadow-brutal-sm hover:bg-brutal-yellow transition-all cursor-pointer"
+            aria-label="Toggle dark mode"
+          >
+            {darkMode ? '☀️' : '🌙'}
+          </button>
+        </div>
 
         {/* Navigation Links */}
         <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-base lg:text-lg font-black text-brutal-black uppercase font-display">

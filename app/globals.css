@@ -11,8 +11,11 @@
     --brutal-green: #00FF41;
   }
 
-  html, html.dark {
+  html {
     color-scheme: light !important;
+  }
+  html.dark {
+    color-scheme: dark !important;
   }
 
   body {
@@ -203,5 +206,118 @@ html.lenis, html.lenis body {
 .animate-telemetry-3 { animation: telemetrySlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.4s both; }
 .animate-telemetry-4 { animation: telemetrySlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.6s both; }
 .animate-telemetry-5 { animation: telemetrySlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.8s both; }
+
+html.dark {
+  --brutal-bg: #09090B;
+  --brutal-black: #FFFFFF;
+  --brutal-yellow: #CA8A04;
+  --brutal-blue: #3388FF;
+  --brutal-pink: #D946EF;
+  --brutal-green: #22C55E;
+}
+
+html.dark body {
+  color: #FFFFFF !important;
+}
+
+/* Background overrides for cards and main panels to #18181B */
+html.dark .bg-white,
+html.dark .bg-\[\#FFFFFF\],
+html.dark .editorial-card,
+html.dark .bg-bg-primary-dark {
+  background-color: #18181B !important;
+}
+
+/* Background overrides for nested/secondary lists to #09090B */
+html.dark .bg-\[\#F8FAFC\],
+html.dark .bg-zinc-100 {
+  background-color: #09090B !important;
+}
+
+/* Hardcoded border colors to white for brutalist high-contrast */
+html.dark .border-black,
+html.dark .border-brutal-black,
+html.dark .border-\[\#000000\],
+html.dark .border-2,
+html.dark .border-4,
+html.dark .border-t-2,
+html.dark .border-t-4,
+html.dark .border-b-4,
+html.dark .border-l-4,
+html.dark .border-l-8 {
+  border-color: #FFFFFF !important;
+}
+
+/* Hardcoded text colors to white */
+html.dark .text-black,
+html.dark .text-zinc-900,
+html.dark .text-zinc-800,
+html.dark .text-\[\#000000\],
+html.dark .text-\[\#18181B\],
+html.dark .text-brutal-black {
+  color: #FFFFFF !important;
+}
+
+/* Hardcoded muted text colors to zinc-400 */
+html.dark .text-zinc-600,
+html.dark .text-zinc-500,
+html.dark .text-zinc-400,
+html.dark .text-zinc-300,
+html.dark .text-\[\#64748B\] {
+  color: #A1A1AA !important;
+}
+
+/* Form input fields overrides */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #09090B !important;
+  color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #71717A !important;
+}
+
+/* Focus input fields */
+html.dark input:focus,
+html.dark textarea:focus {
+  border-color: #3388FF !important;
+}
+
+/* Ensure dynamic filter buttons on homepage look stunning */
+html.dark .bg-brutal-yellow {
+  background-color: #CA8A04 !important;
+  color: #FFFFFF !important;
+}
+
+/* Adjust shadows for high contrast white border styling */
+html.dark .shadow-brutal {
+  box-shadow: 8px 8px 0px 0px #FFFFFF !important;
+}
+html.dark .shadow-brutal-sm {
+  box-shadow: 4px 4px 0px 0px #FFFFFF !important;
+}
+html.dark .editorial-card {
+  box-shadow: 8px 8px 0px 0px #FFFFFF !important;
+}
+html.dark .editorial-card:hover {
+  box-shadow: 12px 12px 0px 0px #FFFFFF !important;
+}
+html.dark .btn-primary {
+  box-shadow: 4px 4px 0px 0px #FFFFFF !important;
+}
+html.dark .btn-primary:hover {
+  box-shadow: 2px 2px 0px 0px #FFFFFF !important;
+}
+html.dark .btn-secondary {
+  box-shadow: 4px 4px 0px 0px #FFFFFF !important;
+}
+html.dark .btn-secondary:hover {
+  box-shadow: 2px 2px 0px 0px #FFFFFF !important;
+}
+
 
 
