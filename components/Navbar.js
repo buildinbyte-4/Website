@@ -95,8 +95,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk
           )}
           <button
             onClick={() => onOpenInquiry({ title: 'Book a Consultation' })}
-            className="text-xs sm:text-sm font-black uppercase text-white px-2.5 sm:px-4 py-1.5 sm:py-2 border-2 border-black cursor-pointer whitespace-nowrap"
-            style={{ backgroundColor: 'var(--brutal-blue)' }}
+            className="text-xs sm:text-sm font-black uppercase text-white px-2.5 sm:px-4 py-1.5 sm:py-2 border-2 border-black dark:border-white bg-[#0066FF] hover:bg-[#0055EE] cursor-pointer whitespace-nowrap transition-all shadow-brutal-sm"
           >
             Talk to Us
           </button>
@@ -110,7 +109,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk
             return (
               <button
                 onClick={onOpenProfile}
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-black flex items-center justify-center bg-brutal-yellow hover:scale-105 hover:bg-brutal-pink transition-all shrink-0 cursor-pointer overflow-hidden"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-black dark:border-white flex items-center justify-center bg-white text-black dark:bg-black dark:text-white hover:scale-105 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all shrink-0 cursor-pointer overflow-hidden"
               >
                 {avatarUrl ? (
                   <img
@@ -120,7 +119,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <span className="font-display font-black text-sm sm:text-base text-brutal-black">
+                  <span className="font-display font-black text-sm sm:text-base text-black dark:text-white">
                     {initial}
                   </span>
                 )}

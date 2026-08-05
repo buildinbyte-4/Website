@@ -66,7 +66,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 pt-8 border-t-2 border-zinc-200 dark:border-zinc-800 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm uppercase font-bold text-zinc-600 dark:text-zinc-400">
+          <p className="text-sm uppercase font-bold text-zinc-700 dark:text-zinc-300">
             &copy; {new Date().getFullYear()} BuildInByte. All rights reserved.
           </p>
         </div>
