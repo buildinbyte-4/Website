@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 
 export default function ProfileModal({ user, onClose }) {
@@ -14,6 +14,27 @@ export default function ProfileModal({ user, onClose }) {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+
+  // Dark Mode Toggle inside Profile
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setDarkMode(document.documentElement.classList.contains('dark'));
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    const nextDark = !darkMode;
+    setDarkMode(nextDark);
+    if (nextDark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  };
 
   // Form Fields
   const [fullName, setFullName] = useState(metadata.full_name || metadata.name || 'BuildInByte User');
@@ -150,6 +171,16 @@ export default function ProfileModal({ user, onClose }) {
                 <span className={`font-semibold ${location ? 'text-[#18181B]' : 'text-zinc-500 italic'}`}>
                   {location || 'Not provided'}
                 </span>
+              </div>
+              <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
+                <span className="font-bold text-[#000000] uppercase tracking-wider text-[10px]">Theme Mode</span>
+                <button
+                  type="button"
+                  onClick={toggleDarkMode}
+                  className="px-3 py-1 border-2 border-black bg-white text-black font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5 hover:bg-zinc-100 transition-all cursor-pointer shadow-brutal-sm hover:translate-x-[1px] hover:translate-y-[1px]"
+                >
+                  <span>{darkMode ? '☀️ LIGHT MODE' : '🌙 DARK MODE'}</span>
+                </button>
               </div>
               <div className="flex justify-between items-center">
                 <span className="font-bold text-[#000000] uppercase tracking-wider text-[10px]">Member Since</span>
