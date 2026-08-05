@@ -21,8 +21,17 @@ export default function LoginScreen({ onClose }) {
     setSuccessMsg('');
 
     try {
-      // Admin Bypass
-      if (email === 'admin' && password === 'admin') {
+      // Admin Login Routing
+      if (email === 'admin' || email === 'admin@buildinbyte.in') {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: email, password })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Admin authentication failed.');
+        }
         window.location.href = '/admin';
         return;
       }
@@ -69,10 +78,19 @@ export default function LoginScreen({ onClose }) {
     setSuccessMsg('');
     try {
       const currentOrigin = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8000';
+      const allowedOrigins = [
+        'http://localhost:8000',
+        'http://localhost:3000',
+        process.env.NEXT_PUBLIC_APP_URL
+      ].filter(Boolean);
+
+      const isValidOrigin = allowedOrigins.some(origin => origin.startsWith(currentOrigin) || currentOrigin.startsWith(origin));
+      const safeRedirectTo = isValidOrigin ? currentOrigin : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:8000');
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: currentOrigin,
+          redirectTo: safeRedirectTo,
         }
       });
       if (error) throw error;
@@ -167,11 +185,11 @@ export default function LoginScreen({ onClose }) {
           )}
 
           <div>
-            <label className="block font-bold text-[#000000] mb-1">Email Address</label>
+            <label className="block font-bold text-[#000000] mb-1">Email Address / Username</label>
             <input
               required
-              type="email"
-              placeholder="name@domain.com"
+              type="text"
+              placeholder="name@domain.com or admin"
               value={email}
               onChange={e => setEmail(e.target.value)}
               className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border-2 border-[#000000] text-xs text-[#000000] placeholder:text-[#71717A] focus:outline-none focus:border-[#0066FF]"
