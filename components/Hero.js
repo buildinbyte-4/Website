@@ -20,7 +20,7 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
             </h1>
 
             {/* Subheadline */}
-            <p className="text-xl sm:text-2xl text-brutal-black font-bold uppercase leading-snug border-l-8 border-brutal-pink pl-4 py-2 mt-8">
+            <p className="text-xl sm:text-2xl text-brutal-black font-bold uppercase leading-snug border-l-8 border-brutal-pink pl-4 py-2 mt-8 animate-slide-in-left">
               We architect, build, and deploy raw, production-grade custom web applications and APIs for ambitious companies. No fluff.
             </p>
 

@@ -104,3 +104,19 @@ html.lenis, html.lenis body {
   50% { transform: translate3d(10%, -10%, -100px) rotateX(45deg) rotateY(15deg) rotateZ(45deg) translateY(-20px); }
   100% { transform: translate3d(10%, -10%, -100px) rotateX(45deg) rotateY(15deg) rotateZ(45deg) translateY(0px); }
 }
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+  will-change: transform, opacity;
+}
