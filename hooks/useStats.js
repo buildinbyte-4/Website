@@ -4,7 +4,13 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 
 export function useStats() {
-  const [stats, setStats] = useState(null);
+  const [stats, setStats] = useState({
+    projects_completed: 0,
+    clients_served: 0,
+    industries_served: 0,
+    success_rate: 0,
+  });
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -20,17 +26,27 @@ export function useStats() {
           throw new Error('Supabase client is unavailable.');
         }
 
-        const { data, error } = await supabase.from('company_stats').select('*').limit(1).single();
+        const { data, error } = await supabase
+          .from('company_stats')
+          .select(
+            `
+            projects_completed,
+            clients_served,
+            industries_served,
+            success_rate
+          `
+          )
+          .limit(1)
+          .maybeSingle();
 
         if (error) throw error;
 
-        if (active) {
+        if (active && data) {
           setStats(data);
         }
       } catch (err) {
         if (active) {
           setError(err.message || 'Unable to load stats.');
-          setStats(null);
         }
       } finally {
         if (active) {

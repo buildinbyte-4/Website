@@ -85,32 +85,22 @@ export default function HomePage() {
   // 2. Fetch Products from Supabase on Login / Session Status Change
   useEffect(() => {
     const fetchProducts = async () => {
-      // If not logged in, we default to showing MOCK_PROJECTS for public view
-      if (!session) {
-        setProducts(MOCK_PROJECTS);
-        return;
-      }
-
       try {
-        const { data, error } = await supabase
-          .from('products')
-          .select('*')
-          .eq('status', 'active');
+       const { data, error } = await supabase
+  .from('products')
+  .select('*')
+  .eq('status', 'active')
+  .eq('show_on_store', true)
+  .order('created_at', { ascending: false });
 
-        if (error) throw error;
+console.log("Products from Supabase:", data);
+console.log("Count:", data?.length);
+
+if (error) throw error;
 
         if (data && data.length > 0) {
-          const bannedTitles = [
-            'Hospital Website Template',
-            'Queue Management System',
-            'Business Analytics Dashboard',
-            'Business Management System',
-            'BuildInByte Luxury Hotel Template'
-          ].map(t => t.toLowerCase());
 
-          const filteredData = data.filter(p => !bannedTitles.includes((p.name || '').toLowerCase()));
-
-          const mapped = filteredData.map((p) => {
+          const mapped = data.map((p) => {
             const normalizedTech = (p.tech_stack || []).map(s => String(s).toLowerCase());
             let category = 'Custom Application';
 
@@ -150,16 +140,11 @@ export default function HomePage() {
               demoUrl,
             };
           });
+          console.log("Mapped products:", mapped);
+          console.log("Mapped count:", mapped.length);
 
-          // Merge database products with MOCK_PROJECTS so Template Gallery templates are always visible
-          const combined = [...mapped];
-          MOCK_PROJECTS.forEach((mock) => {
-            if (!combined.some((item) => item.title.toLowerCase() === mock.title.toLowerCase())) {
-              combined.push(mock);
-            }
-          });
-
-          setProducts(combined);
+          setProducts(mapped);
+          
         } else {
           setProducts(MOCK_PROJECTS);
         }

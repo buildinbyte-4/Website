@@ -1,14 +1,31 @@
 'use client';
+
 import { useStats } from '@/hooks/useStats';
 
 export default function MetricsBanner() {
   const { stats, loading, error } = useStats();
 
   const metrics = [
-    { label: 'Projects Completed', value: stats?.projects_completed ?? '—', sub: 'delivered across core engagements' },
-    { label: 'Clients Served', value: stats?.clients_served ?? '—', sub: 'from startups to enterprises' },
-    { label: 'Industries Served', value: stats?.industries_served ?? '—', sub: 'across business and technology operations' },
-    { label: 'Success Rate', value: stats?.success_rate ?? '—', sub: 'built for reliability and growth' },
+    {
+      label: "Projects",
+      value: `${stats?.projects_completed ?? 0}+`,
+      sub: "Delivered Across Core Engagements",
+    },
+    {
+      label: "Clients",
+      value: `${stats?.clients_served ?? 0}+`,
+      sub: "From Startups to Enterprises",
+    },
+    {
+      label: "Industries",
+      value: `${stats?.industries_served ?? 0}+`,
+      sub: "Across Business and Technology Operations",
+    },
+    {
+      label: "Success Rate",
+      value: `${stats?.success_rate ?? 0}%`,
+      sub: "Built for Reliability and Growth",
+    },
   ];
 
   return (
@@ -24,16 +41,24 @@ export default function MetricsBanner() {
                 <span className="font-display text-[10px] font-black uppercase tracking-widest text-white bg-brutal-black px-2 py-1 mb-4 inline-block shadow-brutal-sm">
                   {metric.label}
                 </span>
+
                 <span className="font-display font-black text-5xl sm:text-6xl text-brutal-black block mb-2 mt-2 leading-none">
-                  {loading ? '...' : metric.value}
+                  {loading ? "..." : metric.value}
                 </span>
               </div>
+
               <span className="text-xs text-brutal-black font-bold uppercase mt-4 block border-t-4 border-brutal-black pt-4">
                 {metric.sub}
               </span>
             </div>
           ))}
         </div>
+
+        {error && (
+          <p className="mt-4 text-center text-sm text-red-600">
+            Failed to load company statistics.
+          </p>
+        )}
       </div>
     </section>
   );
