@@ -1,0 +1,100 @@
+﻿@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Brutal Palette */
+    --brutal-bg: #FFFFFF;
+    --brutal-black: #000000;
+    --brutal-yellow: #FFE800;
+    --brutal-blue: #0055FF;
+    --brutal-pink: #FF00FF;
+    --brutal-green: #00FF41;
+  }
+
+  html, html.dark {
+    color-scheme: light !important;
+  }
+
+  body {
+    background-color: var(--brutal-bg) !important;
+    color: #18181B !important;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+  }
+}
+
+/* Lenis */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Base components */
+.editorial-card {
+  background-color: #FFFFFF;
+  border: 3px solid #000000;
+  border-radius: 0px;
+  box-shadow: 8px 8px 0px 0px #000000;
+  transition: all 0.1s ease;
+}
+.editorial-card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 12px 12px 0px 0px #000000;
+}
+
+.btn-primary {
+  background-color: var(--brutal-blue);
+  color: #FFFFFF;
+  border: 3px solid #000000;
+  padding: 0.75rem 1.5rem;
+  font-weight: 800;
+  font-size: 1rem;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 4px 4px 0px 0px #000000;
+  transition: all 0.1s ease;
+}
+.btn-primary:hover {
+  background-color: var(--brutal-yellow);
+  color: #000000;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px 0px #000000;
+}
+
+.btn-secondary {
+  background-color: #FFFFFF;
+  color: #000000;
+  border: 3px solid #000000;
+  padding: 0.75rem 1.5rem;
+  font-weight: 800;
+  font-size: 1rem;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 4px 4px 0px 0px #000000;
+  transition: all 0.1s ease;
+}
+.btn-secondary:hover {
+  background-color: var(--brutal-pink);
+  color: #FFFFFF;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px 0px #000000;
+}

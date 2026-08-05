@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
 import { PROJECTS, FILTER_TABS } from '@/lib/data';
 
@@ -183,7 +183,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onOpenInquiry({ title: `Technical Inquiry — ${project.title}` });
+                        onOpenInquiry({ title: `Technical Inquiry ΓÇö ${project.title}` });
                       }}
                       className="btn-secondary py-3 justify-center text-xs hover:bg-brutal-yellow hover:text-brutal-black"
                     >

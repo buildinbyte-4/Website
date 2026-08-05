@@ -1,0 +1,141 @@
+﻿'use client';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
+import Navbar from '@/components/Navbar';
+import Hero from '@/components/Hero';
+import MetricsBanner from '@/components/MetricsBanner';
+import ProjectStore from '@/components/ProjectStore';
+import CustomServices from '@/components/CustomServices';
+import Footer from '@/components/Footer';
+import DemoModal from '@/components/DemoModal';
+import InquiryModal from '@/components/InquiryModal';
+import LoginScreen from '@/components/LoginScreen';
+import ProfileModal from '@/components/ProfileModal';
+import SmoothScroll from '@/components/SmoothScroll';
+
+export default function HomePage() {
+  const [session, setSession] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [demoProject, setDemoProject] = useState(null);
+  const [inquiryConfig, setInquiryConfig] = useState(null);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+
+  // 1. Auth State Management
+  useEffect(() => {
+    if (!supabase) {
+      setAuthLoading(false);
+      return;
+    }
+
+    // Check initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setAuthLoading(false);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      if (session) {
+        setShowLogin(false);
+      }
+      setAuthLoading(false);
+    });
+
+    return () => subscription?.unsubscribe();
+  }, []);
+
+  // Auth gate wrapper for action conversions
+  const handleInquiryRequest = (config) => {
+    if (!session) {
+      setShowLogin(true); // Gated transition: open login panel
+    } else {
+      setInquiryConfig(config); // Authorised transition: open submission form
+    }
+  };
+
+  // Auth Loading State
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-brutal-bg">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-4 border-brutal-black bg-brutal-yellow animate-spin"></div>
+          <span className="text-xl font-bold text-brutal-black uppercase tracking-widest font-display">
+            LOADING
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <SmoothScroll>
+      <div className="min-h-screen bg-brutal-bg text-brutal-black font-sans antialiased selection:bg-brutal-yellow selection:text-brutal-black">
+        
+        {/* Header (Pass session state and trigger callbacks) */}
+        <Navbar 
+          session={session} 
+          onOpenLogin={() => setShowLogin(true)} 
+          onOpenProfile={() => setShowProfile(true)}
+          onOpenInquiry={handleInquiryRequest} 
+        />
+
+        {/* Hero Section */}
+        <Hero
+          onOpenDemo={setDemoProject}
+          onOpenInquiry={handleInquiryRequest}
+        />
+
+        {/* Social Proof Live Metrics Banner */}
+        <MetricsBanner />
+
+        {/* Software Inventory Grid */}
+        <ProjectStore
+          onOpenDemo={setDemoProject}
+          onOpenInquiry={handleInquiryRequest}
+        />
+
+        {/* Custom Services & Student Collective Model */}
+        <CustomServices
+          onOpenInquiry={handleInquiryRequest}
+        />
+
+        {/* Footer */}
+        <Footer />
+
+        {/* Modals */}
+        {demoProject && (
+          <DemoModal
+            project={demoProject}
+            onClose={() => setDemoProject(null)}
+            onOpenInquiry={handleInquiryRequest}
+          />
+        )}
+
+        {inquiryConfig && (
+          <InquiryModal
+            config={inquiryConfig}
+            onClose={() => setInquiryConfig(null)}
+          />
+        )}
+
+        {/* Overlay Login Panel */}
+        {showLogin && (
+          <LoginScreen 
+            onClose={() => setShowLogin(false)} 
+          />
+        )}
+
+        {/* User Profile Modal */}
+        {showProfile && (
+          <ProfileModal
+            user={session?.user}
+            onClose={() => setShowProfile(false)}
+          />
+        )}
+
+      </div>
+    </SmoothScroll>
+  );
+}

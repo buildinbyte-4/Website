@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { PROJECTS } from '@/lib/data';
 
 export default function Hero({ onOpenDemo, onOpenInquiry }) {

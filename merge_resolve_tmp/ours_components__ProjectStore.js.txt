@@ -1,13 +1,24 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
-import { PROJECTS, FILTER_TABS } from '@/lib/data';
+import { useProducts } from '@/hooks/useProducts';
+
+const FILTER_TABS = [
+  'All',
+  'Business Website',
+  'Enterprise Software',
+  'Internal Management System',
+  'AI Solutions',
+  'Dashboard',
+  'E-Commerce',
+  'Custom Application',
+];
 
 export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry }) {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const { products, loading, error } = useProducts();
 
-  const displayList = customProjects && customProjects.length > 0 ? customProjects : PROJECTS;
-  const dynamicFilterTabs = ['All', ...Array.from(new Set(displayList.map(p => p.category)))];
+  const displayList = (customProjects && customProjects.length > 0 ? customProjects : products);
 
   const filteredProjects = displayList.filter(p => {
     const matchesCategory = activeCategory === 'All' || p.category === activeCategory;
@@ -31,7 +42,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
   const BRUTAL_COLORS = ['bg-brutal-yellow', 'bg-brutal-pink', 'bg-brutal-green', 'bg-brutal-blue'];
 
   return (
-    <section id="case-studies" className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
+    <section id="projects" className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header */}
@@ -59,18 +70,18 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
         {/* Filter Bar & Search */}
         <div className="flex flex-wrap lg:flex-nowrap items-center justify-between gap-4 mb-12 p-4 bg-white border-4 border-brutal-black shadow-brutal">
           
-          <div data-lenis-prevent className="flex items-center gap-2 overflow-x-auto flex-nowrap pb-2 lg:pb-0 scroll-smooth" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="flex items-center gap-2 overflow-x-auto flex-nowrap pb-2 lg:pb-0" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <style jsx>{`
               div::-webkit-scrollbar { display: none; }
             `}</style>
-            {dynamicFilterTabs.map(cat => (
+            {FILTER_TABS.map(cat => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-4 py-2 text-sm font-black uppercase whitespace-nowrap border-2 border-brutal-black transition-all shadow-brutal-sm ${
                   activeCategory === cat
                     ? 'bg-brutal-black text-white translate-y-1 translate-x-1 shadow-none'
-                    : 'bg-brutal-yellow text-brutal-black hover:bg-brutal-pink hover:text-brutal-black'
+                    : 'bg-brutal-yellow text-brutal-black hover:bg-brutal-pink hover:text-white'
                 }`}
               >
                 {cat}
@@ -90,9 +101,23 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
 
         </div>
 
+        {error && (
+          <div className="mb-6 border-4 border-brutal-black bg-white p-4 text-sm font-bold uppercase text-brutal-black">
+            {error}
+          </div>
+        )}
+
         {/* Project Card Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => {
+          {loading ? (
+            <div className="md:col-span-2 lg:col-span-3 border-4 border-brutal-black bg-white p-8 text-center text-sm font-black uppercase text-brutal-black">
+              Loading products...
+            </div>
+          ) : filteredProjects.length === 0 ? (
+            <div className="md:col-span-2 lg:col-span-3 border-4 border-brutal-black bg-white p-8 text-center text-sm font-black uppercase text-brutal-black">
+              No products available right now.
+            </div>
+          ) : filteredProjects.map((project, index) => {
             const hasDemo = Boolean(project.demoUrl);
             const metrics = getMetrics(project.id);
             const cardBgColor = BRUTAL_COLORS[index % BRUTAL_COLORS.length];
@@ -183,11 +208,11 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onOpenInquiry({ title: `Technical Inquiry — ${project.title}` });
+                        onOpenInquiry({ title: `Technical Inquiry ΓÇö ${project.title}` });
                       }}
-                      className="btn-secondary py-3 justify-center text-xs hover:bg-brutal-yellow hover:text-brutal-black"
+                      className="btn-secondary py-3 justify-center text-xs hover:bg-brutal-black hover:text-white"
                     >
-                      MODIFY
+                      READ DOC
                     </button>
                   </div>
                 </div>
