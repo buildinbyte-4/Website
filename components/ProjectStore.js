@@ -7,6 +7,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
   const [searchQuery, setSearchQuery] = useState('');
 
   const displayList = customProjects && customProjects.length > 0 ? customProjects : PROJECTS;
+  const dynamicFilterTabs = ['All', ...Array.from(new Set(displayList.map(p => p.category)))];
 
   const filteredProjects = displayList.filter(p => {
     const matchesCategory = activeCategory === 'All' || p.category === activeCategory;
@@ -62,7 +63,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
             <style jsx>{`
               div::-webkit-scrollbar { display: none; }
             `}</style>
-            {FILTER_TABS.map(cat => (
+            {dynamicFilterTabs.map(cat => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
