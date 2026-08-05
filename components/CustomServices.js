@@ -56,22 +56,22 @@ export default function CustomServices({ onOpenInquiry }) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="editorial-card p-8 bg-white dark:bg-black border-4 border-black dark:border-white shadow-brutal dark:shadow-brutal transition-colors duration-200">
-              <div className="w-16 h-16 border-4 border-black dark:border-white bg-white dark:bg-black flex items-center justify-center mb-6 shadow-brutal-sm">
+              <div className="w-16 h-16 bg-white dark:bg-black border-2 border-black dark:border-white flex items-center justify-center mb-6 shadow-brutal-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 stroke-black dark:stroke-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="4 17 10 11 4 5"></polyline>
                   <line x1="12" y1="19" x2="20" y2="19"></line>
                 </svg>
               </div>
-              <h3 className="font-display font-black text-3xl text-black dark:text-white mb-2 uppercase leading-none">
+              <h3 className="font-display text-black dark:text-white font-bold text-xl mb-2 uppercase leading-none">
                 CUSTOM BUILT
               </h3>
-              <p className="text-sm text-black dark:text-zinc-400 font-bold uppercase leading-snug">
+              <p className="text-zinc-800 dark:text-zinc-200 text-sm leading-relaxed font-bold uppercase leading-snug">
                 Every solution is engineered from scratch. No generic templates, no compromise.
               </p>
             </div>
 
             <div className="editorial-card p-8 bg-white dark:bg-black border-4 border-black dark:border-white shadow-brutal dark:shadow-brutal transition-colors duration-200">
-              <div className="w-16 h-16 border-4 border-black dark:border-white bg-white dark:bg-black flex items-center justify-center mb-6 shadow-brutal-sm">
+              <div className="w-16 h-16 bg-white dark:bg-black border-2 border-black dark:border-white flex items-center justify-center mb-6 shadow-brutal-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 stroke-black dark:stroke-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="4" y="4" width="16" height="16" rx="2"></rect>
                   <rect x="9" y="9" width="6" height="6"></rect>
@@ -85,16 +85,16 @@ export default function CustomServices({ onOpenInquiry }) {
                   <line x1="1" y1="15" x2="4" y2="15"></line>
                 </svg>
               </div>
-              <h3 className="font-display font-black text-3xl text-black dark:text-white mb-2 uppercase leading-none">
+              <h3 className="font-display text-black dark:text-white font-bold text-xl mb-2 uppercase leading-none">
                 MODERN TECH
               </h3>
-              <p className="text-sm text-black dark:text-zinc-400 font-bold uppercase leading-snug">
+              <p className="text-zinc-800 dark:text-zinc-200 text-sm leading-relaxed font-bold uppercase leading-snug">
                 WE BUILD WITH NEXT.JS, FastAPI, POSTGRESQL, AND AI INTEGRATIONS. FUTURE-READY.
               </p>
             </div>
 
             <div className="editorial-card p-8 bg-white dark:bg-black border-4 border-black dark:border-white shadow-brutal dark:shadow-brutal transition-colors duration-200">
-              <div className="w-16 h-16 border-4 border-black dark:border-white bg-white dark:bg-black flex items-center justify-center mb-6 shadow-brutal-sm">
+              <div className="w-16 h-16 bg-white dark:bg-black border-2 border-black dark:border-white flex items-center justify-center mb-6 shadow-brutal-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 stroke-black dark:stroke-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="3" y="3" width="18" height="18" rx="2"></rect>
                   <path d="M21 9h-6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h6"></path>
@@ -102,10 +102,10 @@ export default function CustomServices({ onOpenInquiry }) {
                   <circle cx="12" cy="12" r="1"></circle>
                 </svg>
               </div>
-              <h3 className="font-display font-black text-3xl text-black dark:text-white mb-2 uppercase leading-none">
+              <h3 className="font-display text-black dark:text-white font-bold text-xl mb-2 uppercase leading-none">
                 PCB, FIRMWARE & HARDWARE DESIGN
               </h3>
-              <p className="text-sm text-black dark:text-zinc-400 font-bold uppercase leading-snug">
+              <p className="text-zinc-800 dark:text-zinc-200 text-sm leading-relaxed font-bold uppercase leading-snug">
                 END-TO-END PCB LAYOUT, CUSTOM FIRMWARE DEVELOPMENT (C/C++), SCHEMATIC DESIGN, PROTOTYPING, AND SIGNAL INTEGRITY OPTIMIZATION TAILORED FOR HIGH-PERFORMANCE ELECTRONICS.
               </p>
             </div>
