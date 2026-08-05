@@ -337,5 +337,32 @@ html.dark .btn-secondary:hover {
   box-shadow: 2px 2px 0px 0px #FFFFFF !important;
 }
 
+/* FORCE OVERRIDES FOR LIGHT MODE CONTRAST (html:not(.dark)) */
+html:not(.dark) footer {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-top: 2px solid #000000 !important;
+}
+html:not(.dark) footer a,
+html:not(.dark) footer p,
+html:not(.dark) footer span,
+html:not(.dark) footer h1,
+html:not(.dark) footer h2,
+html:not(.dark) footer h3,
+html:not(.dark) footer h4 {
+  color: #000000 !important;
+}
+
+html:not(.dark) .floating-contact-btn {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 3px 3px 0px 0px #000000 !important;
+}
+html:not(.dark) .floating-contact-btn svg,
+html:not(.dark) .floating-contact-btn span {
+  color: #000000 !important;
+}
+
 
 

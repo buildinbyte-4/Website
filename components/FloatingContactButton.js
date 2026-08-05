@@ -2,7 +2,7 @@
 import Link from 'next/link';
 
 export default function FloatingContactButton({ onClick }) {
-  const buttonClasses = "fixed bottom-6 right-6 z-40 flex items-center gap-2.5 px-5 py-3 font-black uppercase text-sm transition-all cursor-pointer rounded-full bg-white dark:bg-black border-2 border-black dark:border-white text-black dark:text-white shadow-[3px_3px_0px_#000000] dark:shadow-[3px_3px_0px_#FFFFFF] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0px_#000000] dark:hover:shadow-[1px_1px_0px_#FFFFFF]";
+  const buttonClasses = "floating-contact-btn fixed bottom-6 right-6 z-40 flex items-center gap-2.5 px-5 py-3 font-black uppercase text-sm transition-all cursor-pointer rounded-full bg-white dark:bg-black border-2 border-black dark:border-white text-black dark:text-white shadow-[3px_3px_0px_#000000] dark:shadow-[3px_3px_0px_#FFFFFF] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0px_#000000] dark:hover:shadow-[1px_1px_0px_#FFFFFF]";
 
   if (onClick) {
     return (
