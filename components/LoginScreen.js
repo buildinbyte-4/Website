@@ -78,14 +78,24 @@ export default function LoginScreen({ onClose }) {
     setSuccessMsg('');
     try {
       const currentOrigin = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8000';
-      const allowedOrigins = [
-        'http://localhost:8000',
-        'http://localhost:3000',
-        process.env.NEXT_PUBLIC_APP_URL
-      ].filter(Boolean);
+      
+      // Dynamically allow any port on localhost or 127.0.0.1, or the configured app URL
+      const isValidOrigin = (origin) => {
+        try {
+          const url = new URL(origin);
+          return (
+            url.hostname === 'localhost' ||
+            url.hostname === '127.0.0.1' ||
+            (process.env.NEXT_PUBLIC_APP_URL && origin.startsWith(process.env.NEXT_PUBLIC_APP_URL))
+          );
+        } catch (e) {
+          return false;
+        }
+      };
 
-      const isValidOrigin = allowedOrigins.some(origin => origin.startsWith(currentOrigin) || currentOrigin.startsWith(origin));
-      const safeRedirectTo = isValidOrigin ? currentOrigin : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:8000');
+      const safeRedirectTo = isValidOrigin(currentOrigin) 
+        ? currentOrigin 
+        : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:8000');
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',

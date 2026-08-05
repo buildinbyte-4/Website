@@ -31,13 +31,47 @@ export default function HomePage() {
     }
   }, []);
 
-  // 1. Auth State Management
+  // 1. Auth State Management & URL Hash Parser
   useEffect(() => {
-    // Check initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
+    const handleInitialAuth = async () => {
+      if (typeof window !== 'undefined' && window.location.hash) {
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        const accessToken = params.get('access_token');
+        const refreshToken = params.get('refresh_token');
+
+        if (accessToken) {
+          try {
+            setAuthLoading(true);
+            const { data, error } = await supabase.auth.setSession({
+              access_token: accessToken,
+              refresh_token: refreshToken || ''
+            });
+            if (error) throw error;
+            if (data?.session) {
+              setSession(data.session);
+              setShowLogin(false);
+            }
+          } catch (err) {
+            console.error('Error parsing hash session:', err.message);
+          } finally {
+            // Strip the sensitive token hash from the browser URL immediately
+            window.history.replaceState(
+              {},
+              document.title,
+              window.location.pathname + window.location.search
+            );
+          }
+        }
+      }
+
+      // Check current session status
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      setSession(currentSession);
       setAuthLoading(false);
-    });
+    };
+
+    handleInitialAuth();
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
