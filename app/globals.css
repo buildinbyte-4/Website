@@ -5,14 +5,17 @@
     /* Brutal Palette */
     --brutal-bg: #FFFFFF;
     --brutal-black: #000000;
-    --brutal-yellow: #FFE800;
-    --brutal-blue: #0055FF;
-    --brutal-pink: #FF00FF;
-    --brutal-green: #00FF41;
+    --brutal-yellow: #FFFFFF;
+    --brutal-pink: #FFFFFF;
+    --brutal-green: #FFFFFF;
+    --brutal-blue: #FFFFFF;
   }
 
-  html, html.dark {
+  html {
     color-scheme: light !important;
+  }
+  html.dark {
+    color-scheme: dark !important;
   }
 
   body {
@@ -58,8 +61,8 @@ html.lenis, html.lenis body {
 }
 
 .btn-primary {
-  background-color: var(--brutal-blue);
-  color: #FFFFFF;
+  background-color: #0066FF !important;
+  color: #FFFFFF !important;
   border: 3px solid #000000;
   padding: 0.75rem 1.5rem;
   font-weight: 800;
@@ -72,8 +75,8 @@ html.lenis, html.lenis body {
   transition: all 0.1s ease;
 }
 .btn-primary:hover {
-  background-color: var(--brutal-yellow);
-  color: #000000;
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
   transform: translate(2px, 2px);
   box-shadow: 2px 2px 0px 0px #000000;
 }
@@ -203,5 +206,186 @@ html.lenis, html.lenis body {
 .animate-telemetry-3 { animation: telemetrySlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.4s both; }
 .animate-telemetry-4 { animation: telemetrySlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.6s both; }
 .animate-telemetry-5 { animation: telemetrySlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.8s both; }
+
+html.dark {
+  --brutal-bg: #09090B;
+  --brutal-black: #FFFFFF;
+  --brutal-yellow: #09090B;
+  --brutal-blue: #09090B;
+  --brutal-pink: #09090B;
+  --brutal-green: #09090B;
+}
+
+html.dark body {
+  color: #FFFFFF !important;
+}
+
+/* Background overrides for cards and main panels to #09090B */
+html.dark .bg-white,
+html.dark .bg-\[\#FFFFFF\],
+html.dark .editorial-card,
+html.dark .bg-bg-primary-dark {
+  background-color: #09090B !important;
+}
+
+/* Background overrides for nested/secondary lists to #09090B */
+html.dark .bg-\[\#F8FAFC\],
+html.dark .bg-zinc-100 {
+  background-color: #09090B !important;
+}
+
+/* Hardcoded border colors to white for brutalist high-contrast */
+html.dark .border-black,
+html.dark .border-brutal-black,
+html.dark .border-\[\#000000\],
+html.dark .border-2,
+html.dark .border-4,
+html.dark .border-t-2,
+html.dark .border-t-4,
+html.dark .border-b-4,
+html.dark .border-l-4,
+html.dark .border-l-8 {
+  border-color: #FFFFFF !important;
+}
+
+/* Hardcoded text colors to white */
+html.dark .text-black,
+html.dark .text-zinc-900,
+html.dark .text-zinc-800,
+html.dark .text-\[\#000000\],
+html.dark .text-\[\#18181B\],
+html.dark .text-brutal-black {
+  color: #FFFFFF !important;
+}
+
+/* Hardcoded muted text colors to zinc-400 */
+html.dark .text-zinc-600,
+html.dark .text-zinc-500,
+html.dark .text-zinc-400,
+html.dark .text-zinc-300,
+html.dark .text-\[\#64748B\] {
+  color: #A1A1AA !important;
+}
+
+/* Form input fields overrides */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #09090B !important;
+  color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #71717A !important;
+}
+
+/* Focus input fields */
+html.dark input:focus,
+html.dark textarea:focus {
+  border-color: #3388FF !important;
+}
+
+/* Helper to lock background to solid white with black text in both modes */
+.bg-pure-white {
+  background-color: #FFFFFF !important;
+}
+html.dark .bg-pure-white {
+  background-color: #FFFFFF !important;
+}
+html.dark .bg-pure-white .text-black,
+html.dark .bg-pure-white span {
+  color: #000000 !important;
+}
+
+/* Primary Button Dark Mode Preservations */
+html.dark .btn-primary {
+  background-color: #0066FF !important;
+  color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+}
+html.dark .btn-primary:hover {
+  background-color: #09090B !important;
+  color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+}
+
+/* Adjust shadows for high contrast white border styling */
+html.dark .shadow-brutal {
+  box-shadow: 8px 8px 0px 0px #FFFFFF !important;
+}
+html.dark .shadow-brutal-sm {
+  box-shadow: 4px 4px 0px 0px #FFFFFF !important;
+}
+html.dark .editorial-card {
+  box-shadow: 8px 8px 0px 0px #FFFFFF !important;
+}
+html.dark .editorial-card:hover {
+  box-shadow: 12px 12px 0px 0px #FFFFFF !important;
+}
+html.dark .btn-primary {
+  box-shadow: 4px 4px 0px 0px #FFFFFF !important;
+}
+html.dark .btn-primary:hover {
+  box-shadow: 2px 2px 0px 0px #FFFFFF !important;
+}
+html.dark .btn-secondary {
+  box-shadow: 4px 4px 0px 0px #FFFFFF !important;
+}
+html.dark .btn-secondary:hover {
+  box-shadow: 2px 2px 0px 0px #FFFFFF !important;
+}
+
+/* FORCE OVERRIDES FOR LIGHT MODE CONTRAST (html:not(.dark)) */
+html:not(.dark) footer {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-top: 2px solid #000000 !important;
+}
+html:not(.dark) footer a,
+html:not(.dark) footer p,
+html:not(.dark) footer span,
+html:not(.dark) footer h1,
+html:not(.dark) footer h2,
+html:not(.dark) footer h3,
+html:not(.dark) footer h4 {
+  color: #000000 !important;
+}
+
+html:not(.dark) .floating-contact-btn {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 3px 3px 0px 0px #000000 !important;
+}
+html:not(.dark) .floating-contact-btn svg,
+html:not(.dark) .floating-contact-btn span {
+  color: #000000 !important;
+}
+
+/* Footer Social Buttons overrides */
+html:not(.dark) .footer-social-btn {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+}
+html:not(.dark) .footer-social-btn:hover {
+  background-color: #0066FF !important;
+  color: #FFFFFF !important;
+  border: 2px solid #000000 !important;
+}
+
+html.dark .footer-social-btn {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border: 2px solid #FFFFFF !important;
+}
+html.dark .footer-social-btn:hover {
+  background-color: #0066FF !important;
+  color: #FFFFFF !important;
+  border: 2px solid #FFFFFF !important;
+}
+
 
 

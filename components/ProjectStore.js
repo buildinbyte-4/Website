@@ -28,7 +28,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
     return defaultMetrics;
   };
 
-  const BRUTAL_COLORS = ['bg-brutal-yellow', 'bg-brutal-pink', 'bg-brutal-green', 'bg-brutal-blue'];
+
 
   return (
     <section id="case-studies" className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
@@ -67,10 +67,10 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 text-sm font-black uppercase whitespace-nowrap border-2 border-brutal-black transition-all shadow-brutal-sm ${
+                className={`px-4 py-2 text-sm font-black uppercase whitespace-nowrap border-2 border-brutal-black transition-all shadow-brutal-sm cursor-pointer ${
                   activeCategory === cat
-                    ? 'bg-brutal-black text-white translate-y-1 translate-x-1 shadow-none'
-                    : 'bg-brutal-yellow text-brutal-black hover:bg-brutal-pink hover:text-brutal-black'
+                    ? 'bg-black text-white dark:bg-white dark:text-black dark:border-white translate-y-1 translate-x-1 shadow-none'
+                    : 'bg-white text-black hover:bg-zinc-100 dark:bg-black dark:text-white dark:hover:bg-zinc-900'
                 }`}
               >
                 {cat}
@@ -95,8 +95,6 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
           {filteredProjects.map((project, index) => {
             const hasDemo = Boolean(project.demoUrl);
             const metrics = getMetrics(project.id);
-            const cardBgColor = BRUTAL_COLORS[index % BRUTAL_COLORS.length];
-
             return (
               <div
                 key={project.id}
@@ -104,7 +102,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                   if (hasDemo) window.open(project.demoUrl, '_blank', 'noopener,noreferrer');
                   else onOpenDemo(project);
                 }}
-                className={`group editorial-card flex flex-col justify-between cursor-pointer h-full ${cardBgColor} p-0 overflow-hidden`}
+                className="group editorial-card flex flex-col justify-between cursor-pointer h-full bg-white p-0 overflow-hidden"
               >
                 
                 {/* Header: Meta & Industry */}
@@ -132,9 +130,9 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                   {/* Quantifiable Metrics */}
                   <div className="grid grid-cols-3 gap-2 mb-6">
                     {metrics.map((m, i) => (
-                      <div key={i} className="bg-brutal-yellow p-2 border-2 border-brutal-black flex flex-col items-center justify-center text-center">
-                        <span className="font-black text-[10px] text-brutal-black uppercase">{m.label}</span>
-                        <span className="font-black text-lg text-brutal-black">{m.value}</span>
+                      <div key={i} className="bg-pure-white text-black border-2 border-black dark:border-white flex flex-col items-center justify-center text-center">
+                        <span className="font-black text-[10px] text-black uppercase">{m.label}</span>
+                        <span className="font-black text-lg text-black">{m.value}</span>
                       </div>
                     ))}
                   </div>
@@ -173,7 +171,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                           e.stopPropagation();
                           onOpenDemo(project);
                         }}
-                        className="btn-secondary py-3 justify-center text-xs bg-brutal-yellow"
+                        className="btn-secondary py-3 justify-center text-xs"
                       >
                         VIEW ARCH
                       </button>
@@ -185,7 +183,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                         e.stopPropagation();
                         onOpenInquiry({ title: `Technical Inquiry — ${project.title}` });
                       }}
-                      className="btn-secondary py-3 justify-center text-xs hover:bg-brutal-yellow hover:text-brutal-black"
+                      className="btn-secondary py-3 justify-center text-xs hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
                     >
                       MODIFY
                     </button>
