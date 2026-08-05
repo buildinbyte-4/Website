@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 
-export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInquiry }) {
+export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk, onOpenInquiry }) {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
@@ -36,9 +36,14 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
           <a href="#services-offered" className="hover:bg-brutal-pink px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
             Services
           </a>
-          <a href="#my-desk" className="hover:bg-brutal-green px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
-            My Desk
-          </a>
+          {session && (
+            <button
+              onClick={onOpenDesk}
+              className="hover:bg-brutal-green px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black font-black uppercase text-base lg:text-lg font-display cursor-pointer bg-transparent"
+            >
+              My Desk
+            </button>
+          )}
         </nav>
 
         {/* CTA */}
