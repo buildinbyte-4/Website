@@ -36,9 +36,19 @@ export default function ProfileModal({ user, onClose }) {
     }
   };
 
+  const getInitials = (name) => {
+    if (!name) return 'US';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+    }
+    return parts[0].substring(0, 2).toUpperCase();
+  };
+
   // Form Fields
   const [fullName, setFullName] = useState(metadata.full_name || metadata.name || 'BuildInByte User');
-  const [avatarUrl, setAvatarUrl] = useState(metadata.avatar_url || metadata.picture || '');
+  const [avatarUrl, setAvatarUrl] = useState(user.photoURL || metadata.avatar_url || metadata.picture || '');
+  const [imgFailed, setImgFailed] = useState(false);
   const [phone, setPhone] = useState(metadata.phone_number || '');
   const [occupation, setOccupation] = useState(metadata.occupation || '');
   const [location, setLocation] = useState(metadata.location || '');
@@ -125,16 +135,17 @@ export default function ProfileModal({ user, onClose }) {
           <div className="space-y-6">
             {/* Avatar Display */}
             <div className="flex flex-col items-center gap-3">
-              {avatarUrl ? (
+              {avatarUrl && !imgFailed ? (
                 <img
                   src={avatarUrl}
                   alt={fullName}
                   referrerPolicy="no-referrer"
-                  className="w-20 h-20 rounded-full object-cover border-2 border-accent-blue shadow-md bg-bg-primary-dark"
+                  onError={() => setImgFailed(true)}
+                  className="w-20 h-20 rounded-full object-cover border-2 border-black dark:border-white shadow-brutal-sm"
                 />
               ) : (
-                <div className="w-20 h-20 rounded-full bg-accent-blue text-[#FDFBF7] flex items-center justify-center font-display text-3xl font-bold shadow-md">
-                  {fullName.charAt(0).toUpperCase()}
+                <div className="w-20 h-20 rounded-full bg-white dark:bg-black border-2 border-black dark:border-white text-black dark:text-white flex items-center justify-center font-display text-2xl font-bold shadow-brutal-sm shrink-0">
+                  {getInitials(fullName)}
                 </div>
               )}
 
@@ -143,7 +154,7 @@ export default function ProfileModal({ user, onClose }) {
                   {fullName}
                 </h4>
                 <span className="text-[10px] font-bold uppercase tracking-wider border border-[#0066FF] px-2.5 py-1 rounded-full text-[#0066FF] inline-block mt-1">
-                  Signed in via {provider === 'google' ? 'Google OAuth' : 'Credentials'}
+                  Signed in via {provider === 'google' ? 'Google' : 'Credentials'}
                 </span>
               </div>
             </div>
@@ -156,20 +167,29 @@ export default function ProfileModal({ user, onClose }) {
               </div>
               <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
                 <span className="font-bold text-[#000000] uppercase tracking-wider text-[10px]">Phone Number</span>
-                <span className={`font-semibold ${phone ? 'text-[#18181B]' : 'text-zinc-500 italic'}`}>
-                  {phone || 'Not provided'}
+                <span 
+                  onClick={() => setIsEditing(true)}
+                  className={`font-semibold transition-all ${phone ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#0066FF] hover:underline cursor-pointer'}`}
+                >
+                  {phone || 'Not provided [Add details]'}
                 </span>
               </div>
               <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
                 <span className="font-bold text-[#000000] uppercase tracking-wider text-[10px]">Occupation</span>
-                <span className={`font-semibold ${occupation ? 'text-[#18181B]' : 'text-zinc-500 italic'}`}>
-                  {occupation || 'Not provided'}
+                <span 
+                  onClick={() => setIsEditing(true)}
+                  className={`font-semibold transition-all ${occupation ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#0066FF] hover:underline cursor-pointer'}`}
+                >
+                  {occupation || 'Not provided [Add details]'}
                 </span>
               </div>
               <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
                 <span className="font-bold text-[#000000] uppercase tracking-wider text-[10px]">Location</span>
-                <span className={`font-semibold ${location ? 'text-[#18181B]' : 'text-zinc-500 italic'}`}>
-                  {location || 'Not provided'}
+                <span 
+                  onClick={() => setIsEditing(true)}
+                  className={`font-semibold transition-all ${location ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#0066FF] hover:underline cursor-pointer'}`}
+                >
+                  {location || 'Not provided [Add details]'}
                 </span>
               </div>
               <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
