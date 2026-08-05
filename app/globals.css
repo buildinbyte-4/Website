@@ -187,3 +187,21 @@ html.lenis, html.lenis body {
 .animate-badge-6 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.30s both; }
 .animate-badge-7 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.36s both; }
 
+@keyframes telemetrySlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-telemetry-1 { animation: telemetrySlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.0s both; }
+.animate-telemetry-2 { animation: telemetrySlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.2s both; }
+.animate-telemetry-3 { animation: telemetrySlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.4s both; }
+.animate-telemetry-4 { animation: telemetrySlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.6s both; }
+.animate-telemetry-5 { animation: telemetrySlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.8s both; }
+
+

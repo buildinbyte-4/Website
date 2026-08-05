@@ -68,11 +68,13 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
 
               {/* Aggressive Data Box */}
               <div className="font-mono text-sm font-bold bg-[#070F26] p-4 border-4 border-brutal-black overflow-hidden shadow-brutal" style={{ lineHeight: 1.6 }}>
-                <div className="text-[#22C55E]">&gt; Status: Operational (99.9% Uptime)</div>
-                <div className="text-[#22C55E]">&gt; Architecture: Microservices & Embedded Systems</div>
-                <div className="text-[#22C55E]">&gt; Latency: &lt; 12ms</div>
-                <div className="text-[#22C55E]">&gt; Stack: C/C++, Python, React, Next.js, PostgreSQL</div>
-                <div className="animate-pulse text-[#22C55E] mt-4">_</div>
+                <div className="text-[#22C55E] animate-telemetry-1">&gt; Status: Operational (99.9% Uptime)</div>
+                <div className="text-[#22C55E] animate-telemetry-2">&gt; Architecture: Microservices & Embedded Systems</div>
+                <div className="text-[#22C55E] animate-telemetry-3">&gt; Latency: &lt; 12ms</div>
+                <div className="text-[#22C55E] animate-telemetry-4">&gt; Stack: C/C++, Python, React, Next.js, PostgreSQL</div>
+                <div className="animate-telemetry-5 mt-4">
+                  <span className="animate-pulse text-[#22C55E]">_</span>
+                </div>
               </div>
 
               <div className="mt-8 bg-white p-4 border-4 border-brutal-black shadow-brutal-sm">
