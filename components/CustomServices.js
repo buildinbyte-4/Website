@@ -21,7 +21,7 @@ export default function CustomServices({ onOpenInquiry }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="editorial-card p-8 bg-brutal-yellow">
+            <div className="editorial-card p-8 bg-white">
               <div className="w-16 h-16 border-4 border-brutal-black bg-white flex items-center justify-center font-bold text-3xl mb-6 shadow-brutal-sm">
                 🏗️
               </div>
@@ -33,7 +33,7 @@ export default function CustomServices({ onOpenInquiry }) {
               </p>
             </div>
 
-            <div className="editorial-card p-8 bg-brutal-green">
+            <div className="editorial-card p-8 bg-white">
               <div className="w-16 h-16 border-4 border-brutal-black bg-white flex items-center justify-center font-bold text-3xl mb-6 shadow-brutal-sm">
                 🚀
               </div>
@@ -45,7 +45,7 @@ export default function CustomServices({ onOpenInquiry }) {
               </p>
             </div>
 
-            <div className="editorial-card p-8 bg-brutal-pink text-black">
+            <div className="editorial-card p-8 bg-white">
               <div className="w-16 h-16 border-4 border-brutal-black bg-white flex items-center justify-center font-bold text-3xl mb-6 shadow-brutal-sm text-brutal-black">
                 🔌
               </div>
@@ -101,13 +101,10 @@ export default function CustomServices({ onOpenInquiry }) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {SERVICES.map((service, idx) => {
-              const bColors = ['bg-brutal-yellow', 'bg-brutal-green', 'bg-brutal-pink', 'bg-brutal-blue'];
-              const bg = bColors[idx % bColors.length];
-              
               return (
                 <div
                   key={idx}
-                  className={`editorial-card p-0 flex flex-col justify-between ${bg}`}
+                  className="editorial-card p-0 flex flex-col justify-between bg-white"
                 >
                   <div className="p-8">
                     <span className="text-5xl mb-6 block border-4 border-brutal-black bg-white inline-block shadow-brutal-sm p-2">

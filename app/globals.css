@@ -220,12 +220,12 @@ html.dark body {
   color: #FFFFFF !important;
 }
 
-/* Background overrides for cards and main panels to #18181B */
+/* Background overrides for cards and main panels to #09090B */
 html.dark .bg-white,
 html.dark .bg-\[\#FFFFFF\],
 html.dark .editorial-card,
 html.dark .bg-bg-primary-dark {
-  background-color: #18181B !important;
+  background-color: #09090B !important;
 }
 
 /* Background overrides for nested/secondary lists to #09090B */
