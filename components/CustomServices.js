@@ -7,7 +7,7 @@ export default function CustomServices({ onOpenInquiry }) {
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Why Choose BuildInByte */}
-        <div id="work" className="mb-20">
+        <div id="enterprise-solutions" className="mb-20">
           <div className="text-center max-w-4xl mx-auto mb-14">
             <span className="text-xs font-black uppercase tracking-widest text-brutal-black bg-brutal-pink px-4 py-2 border-2 border-brutal-black inline-block mb-4 shadow-brutal-sm">
               WHY CHOOSE BUILDINBYTE
@@ -89,7 +89,7 @@ export default function CustomServices({ onOpenInquiry }) {
         </div>
 
         {/* Custom Service Offerings Grid */}
-        <div>
+        <div id="services-offered">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h3 className="font-display text-5xl font-black text-brutal-black uppercase leading-none mb-2 bg-brutal-yellow inline-block px-4 py-2 border-4 border-brutal-black shadow-brutal-sm">
               SERVICES OFFERED

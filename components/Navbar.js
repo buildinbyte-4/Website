@@ -27,17 +27,17 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
 
         {/* Navigation Links */}
         <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-base lg:text-lg font-black text-brutal-black uppercase font-display">
-          <a href="#projects" className="hover:bg-brutal-yellow px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
+          <a href="#enterprise-solutions" className="hover:bg-brutal-yellow px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
             Our Solutions
           </a>
-          <Link href="/templates" className="hover:bg-brutal-yellow px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
+          <a href="#case-studies" className="hover:bg-brutal-yellow px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
             Templates
-          </Link>
-          <a href="#services" className="hover:bg-brutal-pink px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
+          </a>
+          <a href="#services-offered" className="hover:bg-brutal-pink px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
             Services
           </a>
-          <a href="#work" className="hover:bg-brutal-green px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
-            Our Work
+          <a href="#my-desk" className="hover:bg-brutal-green px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
+            My Desk
           </a>
         </nav>
 

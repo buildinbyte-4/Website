@@ -30,7 +30,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
   const BRUTAL_COLORS = ['bg-brutal-yellow', 'bg-brutal-pink', 'bg-brutal-green', 'bg-brutal-blue'];
 
   return (
-    <section id="projects" className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
+    <section id="case-studies" className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header */}

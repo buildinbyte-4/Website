@@ -218,6 +218,74 @@ export default function HomePage() {
           onOpenInquiry={handleInquiryRequest}
         />
 
+        {/* My Desk Workspace Section */}
+        <section id="my-desk" className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <span className="font-black text-xs uppercase tracking-widest text-white bg-brutal-blue px-3 py-1 border-2 border-brutal-black inline-block mb-4 shadow-brutal-sm">
+                Developer Desk
+              </span>
+              <h2 className="font-display text-4xl sm:text-6xl font-black text-brutal-black uppercase leading-none">
+                My Workspace
+              </h2>
+              <p className="text-lg text-brutal-black font-bold uppercase mt-6 leading-relaxed">
+                Manage your projects, support tickets, and direct lines of communication.
+              </p>
+            </div>
+
+            {session ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="editorial-card p-8 bg-brutal-yellow">
+                  <span className="text-4xl mb-4 block">📦</span>
+                  <h3 className="font-display font-black text-2xl mb-2 uppercase">My Projects</h3>
+                  <p className="text-xs font-bold uppercase text-brutal-black mb-4">View your active deployments and codebases.</p>
+                  <a href="#case-studies" className="btn-secondary py-2 justify-center text-xs w-full text-center block bg-white border-2 border-black">
+                    View Catalog
+                  </a>
+                </div>
+
+                <div className="editorial-card p-8 bg-brutal-pink">
+                  <span className="text-4xl mb-4 block">🎫</span>
+                  <h3 className="font-display font-black text-2xl mb-2 uppercase">Support Tickets</h3>
+                  <p className="text-xs font-bold uppercase text-brutal-black mb-4">Raise bugs, request adjustments, or view updates.</p>
+                  <button 
+                    onClick={() => handleInquiryRequest({ title: 'Raise a Support Ticket' })}
+                    className="btn-primary py-2 justify-center text-xs w-full text-center cursor-pointer"
+                  >
+                    Open Support Ticket
+                  </button>
+                </div>
+
+                <div className="editorial-card p-8 bg-brutal-green">
+                  <span className="text-4xl mb-4 block">💬</span>
+                  <h3 className="font-display font-black text-2xl mb-2 uppercase">Scoping & Scans</h3>
+                  <p className="text-xs font-bold uppercase text-brutal-black mb-4">Schedule live architecture design calls.</p>
+                  <button 
+                    onClick={() => handleInquiryRequest({ title: 'Book a Technical Scoping Call' })}
+                    className="btn-primary py-2 justify-center text-xs w-full text-center cursor-pointer"
+                  >
+                    Book Call
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="editorial-card p-12 bg-white text-center max-w-2xl mx-auto border-4 border-black">
+                <span className="text-5xl mb-6 block">🔒</span>
+                <h3 className="font-display font-black text-3xl mb-4 uppercase">Authentication Required</h3>
+                <p className="text-sm font-bold uppercase text-zinc-600 mb-8">
+                  Log in with Google to access your active workspace, support tickets, and scheduled consultation channels.
+                </p>
+                <button
+                  onClick={() => setShowLogin(true)}
+                  className="btn-primary px-8 py-3 text-sm font-black uppercase cursor-pointer"
+                >
+                  Log In Now
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
+
         {/* Footer */}
         <Footer />
 
