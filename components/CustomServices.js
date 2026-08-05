@@ -1,5 +1,4 @@
 'use client';
-import { useFAQ } from '@/hooks/useFAQ';
 
 const serviceCards = [
   {
@@ -35,7 +34,6 @@ const serviceCards = [
 ];
 
 export default function CustomServices({ onOpenInquiry }) {
-  const { faq, loading, error } = useFAQ();
   return (
     <section id="services" className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
       <div className="max-w-7xl mx-auto px-6">
@@ -188,26 +186,6 @@ export default function CustomServices({ onOpenInquiry }) {
           </div>
         </div>
 
-        <div className="mt-24 border-4 border-brutal-black bg-white p-8 shadow-brutal">
-          <div className="flex items-center justify-between gap-4 mb-6">
-            <h3 className="font-display text-3xl font-black uppercase text-brutal-black">FAQ</h3>
-            <span className="text-xs font-black uppercase tracking-widest text-brutal-black bg-brutal-yellow px-3 py-1 border-2 border-brutal-black">LIVE CONTENT</span>
-          </div>
-          {error ? (
-            <p className="text-sm font-bold uppercase text-brutal-black">{error}</p>
-          ) : loading ? (
-            <p className="text-sm font-bold uppercase text-brutal-black">Loading frequently asked questions...</p>
-          ) : (
-            <div className="space-y-4">
-              {faq.map((item) => (
-                <div key={item.id} className="border-2 border-brutal-black p-4 bg-brutal-bg">
-                  <h4 className="text-lg font-black uppercase text-brutal-black">{item.question}</h4>
-                  <p className="mt-2 text-sm font-bold uppercase leading-relaxed text-brutal-black">{item.answer}</p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
 
       </div>
     </section>
