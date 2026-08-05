@@ -283,7 +283,6 @@ export default function LoginScreen({ onClose }) {
         {/* Footnotes */}
         <div className="pt-4 border-t-2 border-[#000000] text-[9px] text-[#000000] font-bold flex justify-between items-center">
           <span>Google OAuth & Database Encryption</span>
-          <span>BuildInByte © 2026</span>
         </div>
 
       </div>
