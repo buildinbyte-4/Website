@@ -4,14 +4,6 @@ import Link from 'next/link';
 
 const TEMPLATES = [
   {
-    id: 'buildinbyte-luxury-hotel',
-    name: 'BuildInByte Luxury Hotel',
-    category: 'Hospitality',
-    description: 'Ultra-luxury resort & boutique hotel website template with immersive room showcases, amenity galleries, and booking conversion flows.',
-    url: '/templates/buildinbyte-luxury-hotel/index.html',
-    badge: 'Luxury Hospitality'
-  },
-  {
     id: 'luxury-hotel',
     name: 'Luxury Hotel Experience',
     category: 'Hospitality',

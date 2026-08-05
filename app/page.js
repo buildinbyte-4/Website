@@ -100,7 +100,17 @@ export default function HomePage() {
         if (error) throw error;
 
         if (data && data.length > 0) {
-          const mapped = data.map((p) => {
+          const bannedTitles = [
+            'Hospital Website Template',
+            'Queue Management System',
+            'Business Analytics Dashboard',
+            'Business Management System',
+            'BuildInByte Luxury Hotel Template'
+          ].map(t => t.toLowerCase());
+
+          const filteredData = data.filter(p => !bannedTitles.includes((p.name || '').toLowerCase()));
+
+          const mapped = filteredData.map((p) => {
             const normalizedTech = (p.tech_stack || []).map(s => String(s).toLowerCase());
             let category = 'Custom Application';
 
