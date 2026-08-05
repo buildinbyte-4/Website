@@ -21,7 +21,6 @@ export default function LoginScreen({ onClose }) {
     setSuccessMsg('');
 
     try {
-      // Admin Login Routing
       if (email === 'admin' || email === 'admin@buildinbyte.in') {
         const res = await fetch('/api/admin/login', {
           method: 'POST',
@@ -77,7 +76,6 @@ export default function LoginScreen({ onClose }) {
     setErrorMsg('');
     setSuccessMsg('');
     try {
-      // Use the actual browser origin dynamically to support both local ports and production domains
       const redirectUri = typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:8000');
 
       const { error } = await supabase.auth.signInWithOAuth({

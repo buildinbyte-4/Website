@@ -31,7 +31,7 @@ export default function HomePage() {
     }
   }, []);
 
-  // 1. Auth State Management & URL Hash Parser
+  // Auth
   useEffect(() => {
     const handleInitialAuth = async () => {
       if (typeof window !== 'undefined' && window.location.hash) {
@@ -55,7 +55,6 @@ export default function HomePage() {
           } catch (err) {
             console.error('Error parsing hash session:', err.message);
           } finally {
-            // Strip the sensitive token hash from the browser URL immediately
             window.history.replaceState(
               {},
               document.title,
@@ -65,7 +64,6 @@ export default function HomePage() {
         }
       }
 
-      // Check current session status
       const { data: { session: currentSession } } = await supabase.auth.getSession();
       setSession(currentSession);
       setAuthLoading(false);
@@ -73,11 +71,10 @@ export default function HomePage() {
 
     handleInitialAuth();
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       if (session) {
-        setShowLogin(false); // Close login screen automatically once authenticated
+        setShowLogin(false);
       }
       setAuthLoading(false);
     });

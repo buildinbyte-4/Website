@@ -4,16 +4,14 @@ export async function POST() {
   try {
     const response = NextResponse.json({ success: true });
 
-    // Clear the admin session cookie
     response.cookies.set('admin_session', '', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 0, // Invalidate immediately
+      maxAge: 0,
     });
 
-    // Enforce browser-side cleanup via Clear-Site-Data
     response.headers.set('Clear-Site-Data', '"cookies", "storage", "cache"');
 
     return response;
@@ -31,7 +29,6 @@ export async function GET(request) {
     const origin = process.env.NEXT_PUBLIC_APP_URL || request.headers.get('origin') || 'http://localhost:8000';
     const response = NextResponse.redirect(new URL('/', origin));
 
-    // Clear the admin session cookie on redirection
     response.cookies.set('admin_session', '', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

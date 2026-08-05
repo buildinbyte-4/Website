@@ -3,23 +3,18 @@ import { z } from 'zod';
 import { verifyPassword } from '@/lib/crypto';
 import { signToken } from '@/lib/token';
 
-// In-memory rate limiting map
 const rateLimitMap = new Map();
 
-/**
- * Perform IP-based rate limiting.
- * Max 5 requests per minute per IP.
- */
 function applyRateLimit(ip) {
   const now = Date.now();
-  const windowMs = 60 * 1000; // 1 minute
+  const windowMs = 60 * 1000;
   const limit = 5;
 
   const timestamps = rateLimitMap.get(ip) || [];
   const activeTimestamps = timestamps.filter((ts) => now - ts < windowMs);
 
   if (activeTimestamps.length >= limit) {
-    return true; // Rate limited
+    return true;
   }
 
   activeTimestamps.push(now);
@@ -28,15 +23,13 @@ function applyRateLimit(ip) {
 }
 
 const loginSchema = z.object({
-  username: z.string().min(1, 'Username is required'),
-  password: z.string().min(1, 'Password is required'),
+  username: z.string().min(1),
+  password: z.string().min(1),
 });
 
 export async function POST(request) {
-  // Get IP address for rate limiting
   const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || '127.0.0.1';
 
-  // Apply Auth Rate Limiting
   if (applyRateLimit(ip)) {
     return NextResponse.json(
       { error: 'Too many login attempts. Please try again in a minute.' },
@@ -46,19 +39,15 @@ export async function POST(request) {
 
   try {
     const body = await request.json();
-
-    // Perform Schema Validation
     const validation = loginSchema.safeParse(body);
     if (!validation.success) {
       return NextResponse.json(
-        { error: 'Invalid request payload', details: validation.error.format() },
+        { error: 'Invalid request payload' },
         { status: 400 }
       );
     }
 
     const { username, password } = validation.data;
-
-    // Load Admin credentials from environment variables
     const adminUsername = process.env.ADMIN_USERNAME || 'admin';
     const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
     const adminPasswordPlain = process.env.ADMIN_PASSWORD || 'admin';
@@ -80,10 +69,7 @@ export async function POST(request) {
       );
     }
 
-    // Generate Session Token
     const token = await signToken({ username });
-
-    // Build Response and Set Secure Session Cookie
     const response = NextResponse.json({ success: true });
     
     response.cookies.set('admin_session', token, {
@@ -91,13 +77,12 @@ export async function POST(request) {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 3600, // 1 hour
+      maxAge: 3600,
     });
 
     return response;
   } catch (error) {
     console.error('Admin API Login Error:', error);
-    // Mask internal error details from the client
     return NextResponse.json(
       { error: 'Internal Server Error' },
       { status: 500 }

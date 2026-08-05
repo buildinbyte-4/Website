@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 
 export default function Error({ error, reset }) {
   useEffect(() => {
-    // Log the error internally for auditing
     console.error('Unhandled UI exception captured:', error);
   }, [error]);
 
