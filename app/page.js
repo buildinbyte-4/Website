@@ -11,7 +11,6 @@ import DemoModal from '@/components/DemoModal';
 import InquiryModal from '@/components/InquiryModal';
 import LoginScreen from '@/components/LoginScreen';
 import ProfileModal from '@/components/ProfileModal';
-import DeskModal from '@/components/DeskModal';
 import SmoothScroll from '@/components/SmoothScroll';
 import FloatingContactButton from '@/components/FloatingContactButton';
 import { PROJECTS as MOCK_PROJECTS } from '@/lib/data';
@@ -24,7 +23,6 @@ export default function HomePage() {
   const [inquiryConfig, setInquiryConfig] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
-  const [showDesk, setShowDesk] = useState(false);
 
   // 0. Auto-redirect port 3000 -> port 8000 fallback
   useEffect(() => {
@@ -196,7 +194,6 @@ export default function HomePage() {
           session={session} 
           onOpenLogin={() => setShowLogin(true)} 
           onOpenProfile={() => setShowProfile(true)}
-          onOpenDesk={() => setShowDesk(true)}
           onOpenInquiry={handleInquiryRequest} 
         />
 
@@ -323,14 +320,7 @@ export default function HomePage() {
           />
         )}
 
-        {/* Desk Workspace Modal */}
-        {showDesk && (
-          <DeskModal
-            user={session?.user}
-            onClose={() => setShowDesk(false)}
-            onOpenInquiry={handleInquiryRequest}
-          />
-        )}
+
 
         {/* Floating Contact Button */}
         <FloatingContactButton onClick={handleInquiryRequest} />

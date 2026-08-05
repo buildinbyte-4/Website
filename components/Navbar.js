@@ -37,12 +37,12 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk
             Services
           </a>
           {session && (
-            <button
-              onClick={onOpenDesk}
+            <Link
+              href="/desk"
               className="hover:bg-brutal-green px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black font-black uppercase text-base lg:text-lg font-display cursor-pointer bg-transparent"
             >
               My Desk
-            </button>
+            </Link>
           )}
         </nav>
 
