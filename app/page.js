@@ -12,12 +12,10 @@ import InquiryModal from '@/components/InquiryModal';
 import LoginScreen from '@/components/LoginScreen';
 import ProfileModal from '@/components/ProfileModal';
 import SmoothScroll from '@/components/SmoothScroll';
-import { PROJECTS as MOCK_PROJECTS } from '@/lib/data';
 
 export default function HomePage() {
   const [session, setSession] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
-  const [products, setProducts] = useState(MOCK_PROJECTS); // Start with mock projects
   const [demoProject, setDemoProject] = useState(null);
   const [inquiryConfig, setInquiryConfig] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
@@ -25,6 +23,11 @@ export default function HomePage() {
 
   // 1. Auth State Management
   useEffect(() => {
+    if (!supabase) {
+      setAuthLoading(false);
+      return;
+    }
+
     // Check initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -35,93 +38,13 @@ export default function HomePage() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       if (session) {
-        setShowLogin(false); // Close login screen automatically once authenticated
+        setShowLogin(false);
       }
       setAuthLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    return () => subscription?.unsubscribe();
   }, []);
-
-  // 2. Fetch Products from Supabase on Login / Session Status Change
-  useEffect(() => {
-    const fetchProducts = async () => {
-      // If not logged in, we default to showing MOCK_PROJECTS for public view
-      if (!session) {
-        setProducts(MOCK_PROJECTS);
-        return;
-      }
-
-      try {
-        const { data, error } = await supabase
-          .from('products')
-          .select('*')
-          .eq('status', 'active');
-
-        if (error) throw error;
-
-        if (data && data.length > 0) {
-          const mapped = data.map((p) => {
-            const normalizedTech = (p.tech_stack || []).map(s => String(s).toLowerCase());
-            let category = 'Custom Application';
-
-            if (normalizedTech.some(s => s.includes('dashboard') || s.includes('analytics'))) {
-              category = 'Dashboard';
-            } else if (normalizedTech.some(s => s.includes('ecommerce') || s.includes('shop') || s.includes('commerce'))) {
-              category = 'E-Commerce';
-            } else if (normalizedTech.some(s => s.includes('ai') || s.includes('gpt') || s.includes('llm') || s.includes('ml'))) {
-              category = 'AI Solutions';
-            } else if (normalizedTech.some(s => s.includes('erp') || s.includes('crm') || s.includes('management') || s.includes('workflow'))) {
-              category = 'Enterprise Software';
-            } else if (normalizedTech.some(s => s.includes('inventory') || s.includes('attendance') || s.includes('queue') || s.includes('employee'))) {
-              category = 'Internal Management System';
-            } else if (normalizedTech.some(s => s.includes('website') || s.includes('web'))) {
-              category = 'Business Website';
-            }
-
-            const nameLower = (p.name || '').toLowerCase();
-            let demoUrl = p.demo_url || p.demoUrl || p.url || null;
-            if (!demoUrl) {
-              if (nameLower.includes('buildinbyte') || nameLower.includes('aurelia')) demoUrl = '/templates/buildinbyte-luxury-hotel/index.html';
-              else if (nameLower.includes('luxury hotel') || nameLower.includes('hotel')) demoUrl = '/templates/luxury-hotel/index.html';
-              else if (nameLower.includes('real estate') || nameLower.includes('property')) demoUrl = '/templates/real-estate/index.html';
-              else if (nameLower.includes('elecstore') || nameLower.includes('electronics')) demoUrl = '/templates/elecstore/index.html';
-              else if (nameLower.includes('kanchi')) demoUrl = '/templates/kanchimarket/index.html';
-              else if (nameLower.includes('scsvmv') || nameLower.includes('university') || nameLower.includes('school')) demoUrl = '/templates/scsvmv/index.html';
-            }
-
-            return {
-              id: p.id,
-              title: p.name,
-              desc: p.description,
-              stack: p.tech_stack || [],
-              category,
-              industry: p.category || 'Business',
-              status: 'Ready to Customize',
-              demoUrl,
-            };
-          });
-
-          // Merge database products with MOCK_PROJECTS so Template Gallery templates are always visible
-          const combined = [...mapped];
-          MOCK_PROJECTS.forEach((mock) => {
-            if (!combined.some((item) => item.title.toLowerCase() === mock.title.toLowerCase())) {
-              combined.push(mock);
-            }
-          });
-
-          setProducts(combined);
-        } else {
-          setProducts(MOCK_PROJECTS);
-        }
-      } catch (err) {
-        console.error('Error fetching Supabase products:', err);
-        setProducts(MOCK_PROJECTS);
-      }
-    };
-
-    fetchProducts();
-  }, [session]);
 
   // Auth gate wrapper for action conversions
   const handleInquiryRequest = (config) => {
@@ -169,7 +92,6 @@ export default function HomePage() {
 
         {/* Software Inventory Grid */}
         <ProjectStore
-          customProjects={products}
           onOpenDemo={setDemoProject}
           onOpenInquiry={handleInquiryRequest}
         />
