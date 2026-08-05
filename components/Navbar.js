@@ -43,15 +43,6 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
 
         {/* CTA */}
         <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
-          {session && (
-            <button
-              onClick={onOpenProfile}
-              className="flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 bg-brutal-yellow border-2 border-brutal-black text-brutal-black text-xs sm:text-sm font-black uppercase cursor-pointer hover:bg-brutal-pink hover:text-brutal-black transition-colors"
-            >
-              <span>PROFILE</span>
-            </button>
-          )}
-
           {session ? (
             <button
               onClick={handleSignOut}
@@ -73,6 +64,33 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
           >
             <span>Talk to Us</span>
           </button>
+
+          {session && (() => {
+            const avatarUrl = session?.user?.user_metadata?.avatar_url || session?.user?.user_metadata?.picture || session?.user?.user_metadata?.avatarUrl || '';
+            const email = session?.user?.email || '';
+            const fullName = session?.user?.user_metadata?.full_name || session?.user?.user_metadata?.name || '';
+            const initial = (fullName || email || 'U').charAt(0).toUpperCase();
+
+            return (
+              <button
+                onClick={onOpenProfile}
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-black flex items-center justify-center bg-brutal-yellow hover:scale-105 hover:bg-brutal-pink transition-all shrink-0 cursor-pointer overflow-hidden"
+              >
+                {avatarUrl ? (
+                  <img
+                    src={avatarUrl}
+                    alt="Profile"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="font-display font-black text-sm sm:text-base text-brutal-black">
+                    {initial}
+                  </span>
+                )}
+              </button>
+            );
+          })()}
         </div>
 
       </div>
