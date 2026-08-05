@@ -23,14 +23,34 @@ export default function InquiryModal({ config, onClose }) {
     const message = company ? `Company: ${company}\n\n${scope}` : scope;
 
     try {
-      const { error: insertError } = await supabase.from('inquiries').insert({
-        name,
-        email,
-        project_type: config.title || 'General Inquiry',
-        message,
+      if (supabase) {
+        const { error: insertError } = await supabase.from('inquiries').insert({
+          name,
+          email,
+          project_type: config.title || 'General Inquiry',
+          message,
+        });
+        if (insertError) {
+          console.warn('Supabase insert warning:', insertError.message);
+        }
+      }
+
+      // Submit via FormSubmit AJAX endpoint in background
+      await fetch("https://formsubmit.co/ajax/support@buildinbyte.in", {
+        method: "POST",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          company,
+          scope,
+          _subject: config.title || 'New Client Inquiry',
+        })
       });
 
-      if (insertError) throw insertError;
       setSubmitted(true);
     } catch (err) {
       console.error('Error submitting inquiry:', err);

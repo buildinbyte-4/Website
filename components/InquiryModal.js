@@ -15,24 +15,44 @@ export default function InquiryModal({ config, onClose }) {
     setLoading(true);
     setErrorMsg('');
     try {
-      if (!supabase) {
-        throw new Error('Supabase client is unavailable.');
+      // 1. Log to Supabase Database
+      if (supabase) {
+        const { error } = await supabase.from('inquiries').insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            project_type: config.title || 'General Custom Scope',
+            message: formData.company ? `Company: ${formData.company}. Scope: ${formData.scope}` : formData.scope,
+            status: 'new'
+          }
+        ]);
+        if (error) {
+          console.warn('Supabase insert warning:', error.message);
+        }
       }
 
-      const { error } = await supabase.from('inquiries').insert([
-        {
-          name: formData.name,
-          email: formData.email,
-          project_type: config.title || 'General Custom Scope',
-          message: formData.company ? `Company: ${formData.company}. Scope: ${formData.scope}` : formData.scope,
-          status: 'new'
-        }
-      ]);
-      if (error) throw error;
+      // 2. Submit to FormSubmit via AJAX in background to trigger email
+      const formBody = {
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+        scope: formData.scope,
+        _subject: config.title || 'New Client Inquiry',
+      };
+
+      await fetch("https://formsubmit.co/ajax/support@buildinbyte.in", {
+        method: "POST",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formBody)
+      });
+
       setSubmitted(true);
     } catch (err) {
-      console.error('Error inserting inquiry:', err);
-      setErrorMsg(err.message || 'Failed to submit inquiry to database. Check RLS or authentication status.');
+      console.error('Error submitting inquiry:', err);
+      setErrorMsg('Failed to submit inquiry. Please try again.');
     } finally {
       setLoading(false);
     }
