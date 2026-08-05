@@ -30,25 +30,25 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
             <div className="flex flex-wrap items-center gap-4 pt-6">
               <button
                 onClick={() => onOpenInquiry({ title: 'Book a Technical Scoping Call' })}
-                className="btn-primary"
+                className="btn-primary animate-cta-1"
               >
                 BOOK SCOPING CALL
               </button>
 
-              <a href="#projects" className="btn-secondary">
+              <a href="#projects" className="btn-secondary animate-cta-2">
                 VIEW OUR WORK
               </a>
             </div>
 
             {/* Tech Tags */}
             <div className="flex flex-wrap items-center gap-2.5 pt-6 text-xs sm:text-sm text-brutal-black font-black uppercase">
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center">React & Next.js</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center">Node APIs</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center">PostgreSQL</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center">AWS / GCP</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center">EMBEDDED C/C++</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center">PCB DESIGN & HARDWARE</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center">PYTHON & FASTAPI</span>
+              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-1">React & Next.js</span>
+              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-2">Node APIs</span>
+              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-3">PostgreSQL</span>
+              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-4">AWS / GCP</span>
+              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-5">EMBEDDED C/C++</span>
+              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-6">PCB DESIGN & HARDWARE</span>
+              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-7">PYTHON & FASTAPI</span>
             </div>
 
           </div>

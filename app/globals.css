@@ -146,3 +146,44 @@ html.lenis, html.lenis body {
   animation: dropFromTop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
   will-change: transform, opacity;
 }
+
+@keyframes ctaPopUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1.0);
+  }
+}
+
+.animate-cta-1 {
+  animation: ctaPopUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.8s both;
+  will-change: transform, opacity;
+}
+
+.animate-cta-2 {
+  animation: ctaPopUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.9s both;
+  will-change: transform, opacity;
+}
+
+@keyframes badgePopUp {
+  0% {
+    opacity: 0;
+    transform: translateY(25px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-badge-1 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.00s both; }
+.animate-badge-2 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.06s both; }
+.animate-badge-3 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.12s both; }
+.animate-badge-4 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.18s both; }
+.animate-badge-5 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.24s both; }
+.animate-badge-6 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.30s both; }
+.animate-badge-7 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.36s both; }
+
