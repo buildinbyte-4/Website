@@ -46,21 +46,21 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
           {session ? (
             <button
               onClick={handleSignOut}
-              className="text-xs sm:text-sm font-black uppercase text-brutal-black px-2.5 sm:px-4 py-1.5 sm:py-2 border-2 border-brutal-black hover:bg-brutal-black hover:text-white transition-colors cursor-pointer whitespace-nowrap"
+              className="text-xs sm:text-sm font-black uppercase text-brutal-black px-2.5 sm:px-4 py-1.5 sm:py-2 border-2 border-brutal-black cursor-pointer whitespace-nowrap"
             >
               Log Out
             </button>
           ) : (
              <button
               onClick={onOpenLogin}
-              className="text-xs sm:text-sm font-black uppercase text-brutal-black px-2.5 sm:px-4 py-1.5 sm:py-2 border-2 border-brutal-black hover:bg-brutal-black hover:text-white transition-colors cursor-pointer whitespace-nowrap"
+              className="text-xs sm:text-sm font-black uppercase text-brutal-black px-2.5 sm:px-4 py-1.5 sm:py-2 border-2 border-brutal-black cursor-pointer whitespace-nowrap"
             >
               Log In
             </button>
           )}
           <button
             onClick={() => onOpenInquiry({ title: 'Book a Consultation' })}
-            className="text-xs sm:text-sm font-black uppercase bg-brutal-blue text-white px-2.5 sm:px-4 py-1.5 sm:py-2 border-2 border-black hover:bg-brutal-yellow hover:text-black transition-colors cursor-pointer whitespace-nowrap"
+            className="text-xs sm:text-sm font-black uppercase bg-brutal-blue text-white px-2.5 sm:px-4 py-1.5 sm:py-2 border-2 border-black cursor-pointer whitespace-nowrap"
           >
             Talk to Us
           </button>
