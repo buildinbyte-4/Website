@@ -60,9 +60,9 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
           )}
           <button
             onClick={() => onOpenInquiry({ title: 'Book a Consultation' })}
-            className="btn-primary text-xs sm:text-sm px-3 sm:px-5 py-1.5 sm:py-2 whitespace-nowrap"
+            className="text-xs sm:text-sm font-black uppercase bg-brutal-blue text-white px-2.5 sm:px-4 py-1.5 sm:py-2 border-2 border-black hover:bg-brutal-yellow hover:text-black transition-colors cursor-pointer whitespace-nowrap"
           >
-            <span>Talk to Us</span>
+            Talk to Us
           </button>
 
           {session && (() => {
@@ -74,7 +74,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
             return (
               <button
                 onClick={onOpenProfile}
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-black flex items-center justify-center bg-brutal-yellow hover:scale-105 hover:bg-brutal-pink transition-all shrink-0 cursor-pointer overflow-hidden"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-black flex items-center justify-center bg-brutal-yellow hover:scale-105 hover:bg-brutal-pink transition-all shrink-0 cursor-pointer overflow-hidden"
               >
                 {avatarUrl ? (
                   <img
