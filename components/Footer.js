@@ -18,13 +18,13 @@ export default function Footer() {
               Production-grade software engineering for ambitious companies.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 bg-white dark:bg-black text-black dark:text-white flex items-center justify-center font-bold transition-colors border-2 border-black dark:border-white shadow-brutal-sm hover:-translate-y-0.5">
+              <a href="#" className="footer-social-btn w-10 h-10 flex items-center justify-center font-bold text-sm bg-white dark:bg-black text-black dark:text-white border-2 border-black dark:border-white transition-colors duration-150 hover:bg-[#0066FF] hover:text-white dark:hover:bg-[#0066FF]">
                 X
               </a>
-              <a href="#" className="w-10 h-10 bg-white dark:bg-black text-black dark:text-white flex items-center justify-center font-bold transition-colors border-2 border-black dark:border-white shadow-brutal-sm hover:-translate-y-0.5">
+              <a href="#" className="footer-social-btn w-10 h-10 flex items-center justify-center font-bold text-sm bg-white dark:bg-black text-black dark:text-white border-2 border-black dark:border-white transition-colors duration-150 hover:bg-[#0066FF] hover:text-white dark:hover:bg-[#0066FF]">
                 IN
               </a>
-              <a href="#" className="w-10 h-10 bg-white dark:bg-black text-black dark:text-white flex items-center justify-center font-bold transition-colors border-2 border-black dark:border-white shadow-brutal-sm hover:-translate-y-0.5">
+              <a href="#" className="footer-social-btn w-10 h-10 flex items-center justify-center font-bold text-sm bg-white dark:bg-black text-black dark:text-white border-2 border-black dark:border-white transition-colors duration-150 hover:bg-[#0066FF] hover:text-white dark:hover:bg-[#0066FF]">
                 GH
               </a>
             </div>

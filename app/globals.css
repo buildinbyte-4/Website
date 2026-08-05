@@ -364,5 +364,28 @@ html:not(.dark) .floating-contact-btn span {
   color: #000000 !important;
 }
 
+/* Footer Social Buttons overrides */
+html:not(.dark) .footer-social-btn {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+}
+html:not(.dark) .footer-social-btn:hover {
+  background-color: #0066FF !important;
+  color: #FFFFFF !important;
+  border: 2px solid #000000 !important;
+}
+
+html.dark .footer-social-btn {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border: 2px solid #FFFFFF !important;
+}
+html.dark .footer-social-btn:hover {
+  background-color: #0066FF !important;
+  color: #FFFFFF !important;
+  border: 2px solid #FFFFFF !important;
+}
+
 
 
