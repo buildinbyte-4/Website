@@ -14,9 +14,11 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
 
             {/* Headline */}
             <h1 className="font-display text-5xl sm:text-7xl lg:text-[5.5rem] font-black leading-[0.9] text-brutal-black uppercase tracking-tighter">
-              WE BUILD <br />
-              <span className="bg-brutal-yellow px-2 inline-block -rotate-1 border-4 border-brutal-black shadow-brutal mt-4">SYSTEMS</span><br/>
-              THAT SCALE.
+              <span className="animate-drop-1 block">WE BUILD</span>
+              <div className="animate-drop-2">
+                <span className="bg-brutal-yellow px-2 inline-block -rotate-1 border-4 border-brutal-black shadow-brutal mt-4">SYSTEMS</span>
+              </div>
+              <span className="animate-drop-3 block mt-4">THAT SCALE.</span>
             </h1>
 
             {/* Subheadline */}
