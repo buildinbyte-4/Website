@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 
 export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk, onOpenInquiry }) {
   const [darkMode, setDarkMode] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   useEffect(() => {
     const isDark = document.documentElement.classList.contains('dark');
@@ -80,7 +81,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk
         <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           {session ? (
             <button
-              onClick={handleSignOut}
+              onClick={() => setShowLogoutConfirm(true)}
               className="text-xs sm:text-sm font-black uppercase text-brutal-black px-2.5 sm:px-4 py-1.5 sm:py-2 border-2 border-brutal-black cursor-pointer whitespace-nowrap"
             >
               Log Out
@@ -129,6 +130,38 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk
         </div>
 
       </div>
+
+      {showLogoutConfirm && (
+        <div className="fixed inset-0 w-screen h-screen flex items-center justify-center bg-[rgba(0,0,0,0.6)] z-50 p-4">
+          <div className="max-w-md w-full bg-white dark:bg-black border-2 border-black dark:border-white p-8 shadow-[6px_6px_0px_#000000] dark:shadow-[6px_6px_0px_#FFFFFF] text-center space-y-6">
+            <h2 className="font-display font-black text-2xl text-black dark:text-white uppercase">
+              CONFIRM LOGOUT
+            </h2>
+            <p className="text-sm font-bold text-zinc-700 dark:text-zinc-300 uppercase leading-snug">
+              Are you sure you want to log out of your session?
+            </p>
+            <div className="grid grid-cols-2 gap-4">
+              <button
+                onClick={() => setShowLogoutConfirm(false)}
+                className="btn-secondary py-3 justify-center text-xs border-2 border-black dark:border-white cursor-pointer"
+              >
+                CANCEL
+              </button>
+              <button
+                onClick={async () => {
+                  setShowLogoutConfirm(false);
+                  await handleSignOut();
+                  window.location.href = '/';
+                }}
+                className="btn-primary py-3 justify-center text-xs text-white font-bold border-2 border-black dark:border-white shadow-[3px_3px_0px_#000000] dark:shadow-[3px_3px_0px_#FFFFFF] cursor-pointer"
+                style={{ backgroundColor: '#DC2626' }}
+              >
+                YES, LOG OUT
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

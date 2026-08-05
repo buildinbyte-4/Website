@@ -11,6 +11,7 @@ export default function LoginScreen({ onClose }) {
   // Form Fields
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
 
   // Handle standard login
@@ -82,15 +83,23 @@ export default function LoginScreen({ onClose }) {
     }
   };
 
+  const hasMinLength = password.length >= 8;
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasLowercase = /[a-z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecial = /[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/.test(password);
+  const passwordsMatch = !isSignUp || (password === confirmPassword);
+  const isPasswordValid = hasMinLength && hasUppercase && hasLowercase && hasNumber && hasSpecial;
+
   return (
     <div className="fixed inset-0 w-screen h-screen flex items-center justify-center bg-[rgba(0,0,0,0.6)] z-50 overflow-y-auto p-4 md:p-6">
-      <div className="max-w-md w-full bg-[#FFFFFF] border-2 border-[#000000] p-8 shadow-[6px_6px_0px_#000000] text-center space-y-6 my-auto relative">
+      <div className="max-w-md w-full bg-white dark:bg-black border-2 border-black dark:border-white p-8 shadow-[6px_6px_0px_#000000] dark:shadow-[6px_6px_0px_#FFFFFF] text-center space-y-6 my-auto relative">
         
         {/* Close Button */}
         {onClose && (
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-8 h-8 bg-[#FFFFFF] border-2 border-[#000000] text-[#000000] font-bold flex items-center justify-center hover:bg-[#000000] hover:text-white transition-all cursor-pointer"
+            className="absolute top-4 right-4 w-8 h-8 bg-white dark:bg-black border-2 border-black dark:border-white text-black dark:text-white font-bold flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all cursor-pointer"
           >
             ✕
           </button>
@@ -104,7 +113,7 @@ export default function LoginScreen({ onClose }) {
             className="w-16 h-16 rounded-2xl object-cover shadow-md" 
           />
           <div>
-            <h1 className="font-display font-bold text-3xl text-[#000000]">
+            <h1 className="font-display font-bold text-3xl text-black dark:text-white">
               BuildInByte
             </h1>
             <p className="text-[10px] uppercase tracking-widest text-[#0066FF] font-bold mt-1">
@@ -114,23 +123,25 @@ export default function LoginScreen({ onClose }) {
         </div>
 
         {/* Tab Selector */}
-        <div className="flex bg-[#FFFFFF] p-1 border-2 border-[#000000]">
+        <div className="flex bg-white dark:bg-black p-1 border-2 border-black dark:border-white">
           <button
+            type="button"
             onClick={() => { setIsSignUp(false); setErrorMsg(''); setSuccessMsg(''); }}
-            className={`flex-1 py-2 text-xs font-bold transition-all ${
+            className={`flex-1 py-2 text-xs font-bold transition-all cursor-pointer ${
               !isSignUp 
-                ? 'bg-[#000000] text-[#FFFFFF] shadow-sm' 
-                : 'text-[#000000] hover:bg-[#F8FAFC]'
+                ? 'bg-black text-white dark:bg-white dark:text-black shadow-sm' 
+                : 'text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900'
             }`}
           >
             Sign In
           </button>
           <button
+            type="button"
             onClick={() => { setIsSignUp(true); setErrorMsg(''); setSuccessMsg(''); }}
-            className={`flex-1 py-2 text-xs font-bold transition-all ${
+            className={`flex-1 py-2 text-xs font-bold transition-all cursor-pointer ${
               isSignUp 
-                ? 'bg-[#000000] text-[#FFFFFF] shadow-sm' 
-                : 'text-[#000000] hover:bg-[#F8FAFC]'
+                ? 'bg-black text-white dark:bg-white dark:text-black shadow-sm' 
+                : 'text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900'
             }`}
           >
             Create Account
@@ -138,13 +149,13 @@ export default function LoginScreen({ onClose }) {
         </div>
 
         {errorMsg && (
-          <div className="p-3 bg-accent-blue/10 border border-accent-blue rounded-xl text-xs font-semibold text-accent-blue text-left">
+          <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-xs font-semibold text-red-600 dark:text-red-400 text-left">
             ⚠️ {errorMsg}
           </div>
         )}
 
         {successMsg && (
-          <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs font-semibold text-emerald-800 text-left">
+          <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs font-semibold text-emerald-800 dark:text-emerald-400 text-left">
             ✓ {successMsg}
           </div>
         )}
@@ -153,57 +164,99 @@ export default function LoginScreen({ onClose }) {
         <form onSubmit={handleCredentialsSubmit} className="space-y-4 text-left text-xs">
           {isSignUp && (
             <div>
-              <label className="block font-bold text-[#000000] mb-1">Full Name</label>
+              <label className="block font-bold text-black dark:text-white mb-1">Full Name</label>
               <input
                 required
                 type="text"
                 placeholder="e.g. Liam Patel"
                 value={name}
                 onChange={e => setName(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border-2 border-[#000000] text-xs text-[#000000] placeholder:text-[#71717A] focus:outline-none focus:border-[#0066FF]"
+                className="w-full px-3.5 py-2.5 bg-white dark:bg-black border-2 border-black dark:border-white text-xs text-black dark:text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#0066FF]"
               />
             </div>
           )}
 
           <div>
-            <label className="block font-bold text-[#000000] mb-1">Email Address</label>
+            <label className="block font-bold text-black dark:text-white mb-1">Email Address</label>
             <input
               required
               type="email"
               placeholder="name@domain.com"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border-2 border-[#000000] text-xs text-[#000000] placeholder:text-[#71717A] focus:outline-none focus:border-[#0066FF]"
+              className="w-full px-3.5 py-2.5 bg-white dark:bg-black border-2 border-black dark:border-white text-xs text-black dark:text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#0066FF]"
             />
           </div>
 
           <div>
-            <label className="block font-bold text-[#000000] mb-1">Password</label>
+            <label className="block font-bold text-black dark:text-white mb-1">Password</label>
             <input
               required
               type="password"
               placeholder="••••••••"
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border-2 border-[#000000] text-xs text-[#000000] placeholder:text-[#71717A] focus:outline-none focus:border-[#0066FF]"
+              className="w-full px-3.5 py-2.5 bg-white dark:bg-black border-2 border-black dark:border-white text-xs text-black dark:text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#0066FF]"
             />
           </div>
 
+          {/* Password Validation Checklist */}
+          {isSignUp && password && (
+            <div className="p-3 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-[10px] space-y-1 font-bold text-black dark:text-white">
+              <div className="uppercase tracking-wider text-[9px] text-[#0066FF] mb-1">Password Requirements:</div>
+              <div className={hasMinLength ? "text-emerald-600 dark:text-emerald-400" : "text-red-500"}>
+                {hasMinLength ? '✓' : '✗'} Minimum 8 characters
+              </div>
+              <div className={hasUppercase ? "text-emerald-600 dark:text-emerald-400" : "text-red-500"}>
+                {hasUppercase ? '✓' : '✗'} At least one uppercase letter (A-Z)
+              </div>
+              <div className={hasLowercase ? "text-emerald-600 dark:text-emerald-400" : "text-red-500"}>
+                {hasLowercase ? '✓' : '✗'} At least one lowercase letter (a-z)
+              </div>
+              <div className={hasNumber ? "text-emerald-600 dark:text-emerald-400" : "text-red-500"}>
+                {hasNumber ? '✓' : '✗'} At least one number (0-9)
+              </div>
+              <div className={hasSpecial ? "text-emerald-600 dark:text-emerald-400" : "text-red-500"}>
+                {hasSpecial ? '✓' : '✗'} At least one special character
+              </div>
+            </div>
+          )}
+
+          {isSignUp && (
+            <div>
+              <label className="block font-bold text-black dark:text-white mb-1">Confirm Password</label>
+              <input
+                required
+                type="password"
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+                className="w-full px-3.5 py-2.5 bg-white dark:bg-black border-2 border-black dark:border-white text-xs text-black dark:text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#0066FF]"
+              />
+            </div>
+          )}
+
+          {isSignUp && confirmPassword && !passwordsMatch && (
+            <div className="text-red-500 font-bold text-[10px] uppercase">
+              ⚠️ Passwords do not match.
+            </div>
+          )}
+
           <button
             type="submit"
-            disabled={loading}
-            className="w-full btn-primary py-3 justify-center shadow-md font-bold text-xs border-2 border-[#000000]"
+            disabled={loading || (isSignUp && (!isPasswordValid || !passwordsMatch))}
+            className="w-full btn-primary py-3 justify-center shadow-md font-bold text-xs border-2 border-black dark:border-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Please wait...' : isSignUp ? 'Register & Sign In' : 'Sign In with Email'}
+            {loading ? 'Please wait...' : isSignUp ? 'CREATE ACCOUNT WITH EMAIL' : 'SIGN IN WITH EMAIL'}
           </button>
         </form>
 
         {/* Divider */}
         <div className="relative flex items-center justify-center">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t-2 border-[#000000]"></div>
+            <div className="w-full border-t-2 border-black dark:border-white"></div>
           </div>
-          <span className="relative px-3 bg-[#FFFFFF] text-[10px] uppercase font-bold text-[#000000]">
+          <span className="relative px-3 bg-white dark:bg-black text-[10px] uppercase font-bold text-black dark:text-white">
             Or Continue With
           </span>
         </div>
@@ -211,9 +264,10 @@ export default function LoginScreen({ onClose }) {
         {/* Google OAuth Button */}
         <div>
           <button
+            type="button"
             onClick={handleGoogleLogin}
             disabled={loading}
-            className="w-full btn-secondary py-3 justify-center text-xs shadow-sm flex items-center gap-3 bg-[#FFFFFF] border-2 border-[#000000] text-[#000000] font-bold hover:bg-[#000000] hover:text-[#FFFFFF]"
+            className="w-full btn-secondary py-3 justify-center text-xs shadow-sm flex items-center gap-3 bg-white dark:bg-black border-2 border-black dark:border-white text-black dark:text-white font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black cursor-pointer"
           >
             {/* SVG Google Logo */}
             <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
