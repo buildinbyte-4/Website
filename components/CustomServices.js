@@ -137,12 +137,11 @@ export default function CustomServices({ onOpenInquiry }) {
             {serviceCards.map((service, idx) => {
               const bColors = ['bg-brutal-yellow', 'bg-brutal-green', 'bg-brutal-pink', 'bg-brutal-blue'];
               const bg = bColors[idx % bColors.length];
-              
-            {SERVICES.map((service, idx) => {
+
               return (
                 <div
                   key={idx}
-                  className="editorial-card p-0 flex flex-col justify-between bg-white"
+                  className={`editorial-card p-0 flex flex-col justify-between ${bg}`}
                 >
                   <div className="p-8">
                     <span className="text-5xl mb-6 block border-4 border-brutal-black bg-white inline-block shadow-brutal-sm p-2">
