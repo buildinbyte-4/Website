@@ -60,7 +60,8 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
           )}
           <button
             onClick={() => onOpenInquiry({ title: 'Book a Consultation' })}
-            className="text-xs sm:text-sm font-black uppercase bg-brutal-blue text-white px-2.5 sm:px-4 py-1.5 sm:py-2 border-2 border-black cursor-pointer whitespace-nowrap"
+            className="text-xs sm:text-sm font-black uppercase text-white px-2.5 sm:px-4 py-1.5 sm:py-2 border-2 border-black cursor-pointer whitespace-nowrap"
+            style={{ backgroundColor: 'var(--brutal-blue)' }}
           >
             Talk to Us
           </button>

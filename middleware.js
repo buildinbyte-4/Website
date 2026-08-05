@@ -82,23 +82,21 @@ export async function middleware(request) {
   
   if (process.env.NODE_ENV === 'production') {
     response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-  } else {
-    response.headers.set('Strict-Transport-Security', 'max-age=300; includeSubDomains');
+
+    const cspHeader = [
+      "default-src 'self';",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://rfrowgjjwrwdcigftcjl.supabase.co;",
+      "style-src 'self' 'unsafe-inline';",
+      "img-src 'self' data: blob: https://api.dicebear.com https://rfrowgjjwrwdcigftcjl.supabase.co;",
+      "connect-src 'self' https://rfrowgjjwrwdcigftcjl.supabase.co https://formsubmit.co ws: wss:;",
+      "font-src 'self' data:;",
+      "frame-ancestors 'none';",
+      "object-src 'none';",
+      "base-uri 'none';"
+    ].join(' ');
+
+    response.headers.set('Content-Security-Policy', cspHeader);
   }
-
-  const cspHeader = [
-    "default-src 'self';",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://rfrowgjjwrwdcigftcjl.supabase.co;",
-    "style-src 'self' 'unsafe-inline';",
-    "img-src 'self' data: blob: https://api.dicebear.com https://rfrowgjjwrwdcigftcjl.supabase.co;",
-    "connect-src 'self' https://rfrowgjjwrwdcigftcjl.supabase.co https://formsubmit.co;",
-    "font-src 'self' data:;",
-    "frame-ancestors 'none';",
-    "object-src 'none';",
-    "base-uri 'none';"
-  ].join(' ');
-
-  response.headers.set('Content-Security-Policy', cspHeader);
 
   return response;
 }
