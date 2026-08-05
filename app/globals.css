@@ -5,10 +5,10 @@
     /* Brutal Palette */
     --brutal-bg: #FFFFFF;
     --brutal-black: #000000;
-    --brutal-yellow: #FFE800;
-    --brutal-blue: #0055FF;
-    --brutal-pink: #FF00FF;
-    --brutal-green: #00FF41;
+    --brutal-yellow: #FFFFFF;
+    --brutal-pink: #FFFFFF;
+    --brutal-green: #FFFFFF;
+    --brutal-blue: #FFFFFF;
   }
 
   html {
@@ -61,8 +61,8 @@ html.lenis, html.lenis body {
 }
 
 .btn-primary {
-  background-color: var(--brutal-blue);
-  color: #FFFFFF;
+  background-color: #0066FF !important;
+  color: #FFFFFF !important;
   border: 3px solid #000000;
   padding: 0.75rem 1.5rem;
   font-weight: 800;
@@ -75,8 +75,8 @@ html.lenis, html.lenis body {
   transition: all 0.1s ease;
 }
 .btn-primary:hover {
-  background-color: var(--brutal-yellow);
-  color: #000000;
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
   transform: translate(2px, 2px);
   box-shadow: 2px 2px 0px 0px #000000;
 }
@@ -210,10 +210,10 @@ html.lenis, html.lenis body {
 html.dark {
   --brutal-bg: #09090B;
   --brutal-black: #FFFFFF;
-  --brutal-yellow: #CA8A04;
-  --brutal-blue: #3388FF;
-  --brutal-pink: #D946EF;
-  --brutal-green: #22C55E;
+  --brutal-yellow: #09090B;
+  --brutal-blue: #09090B;
+  --brutal-pink: #09090B;
+  --brutal-green: #09090B;
 }
 
 html.dark body {
@@ -287,10 +287,28 @@ html.dark textarea:focus {
   border-color: #3388FF !important;
 }
 
-/* Ensure dynamic filter buttons on homepage look stunning */
-html.dark .bg-brutal-yellow {
-  background-color: #CA8A04 !important;
+/* Helper to lock background to solid white with black text in both modes */
+.bg-pure-white {
+  background-color: #FFFFFF !important;
+}
+html.dark .bg-pure-white {
+  background-color: #FFFFFF !important;
+}
+html.dark .bg-pure-white .text-black,
+html.dark .bg-pure-white span {
+  color: #000000 !important;
+}
+
+/* Primary Button Dark Mode Preservations */
+html.dark .btn-primary {
+  background-color: #0066FF !important;
   color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+}
+html.dark .btn-primary:hover {
+  background-color: #09090B !important;
+  color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
 }
 
 /* Adjust shadows for high contrast white border styling */
