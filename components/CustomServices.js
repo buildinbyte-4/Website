@@ -157,7 +157,7 @@ export default function CustomServices({ onOpenInquiry }) {
 
               return (
                 <div
-                  key={idx} API load API law admin law login
+                  key={idx}
                   className={`editorial-card p-0 flex flex-col justify-between ${bg}`}
                 >
                   <div className="p-8">
