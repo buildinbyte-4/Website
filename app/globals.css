@@ -571,3 +571,148 @@ html.dark .footer-social-btn:hover {
   opacity: 0;
   will-change: transform, opacity;
 }
+
+/* ==========================================
+   NEUBRUTALIST FOOTER COMPONENTS & STYLES
+   ========================================== */
+
+/* Watermark Outline Typography */
+.footer-watermark {
+  font-family: var(--font-display);
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.07);
+}
+html.dark .footer-watermark {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.05);
+}
+
+/* Infinite Marquee Animation */
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-content {
+  display: inline-flex;
+  animation: marquee-scroll 25s linear infinite;
+}
+.marquee-container:hover .marquee-content {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-content {
+    animation: none !important;
+    transform: none !important;
+    display: block;
+    text-align: center;
+    white-space: normal;
+  }
+}
+
+/* Social Link Horizontal Hover Transitions (Magnetic Invert + Accordion Expand) */
+.social-link-horizontal {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #000000;
+  background-color: #FFFFFF;
+  color: #000000;
+  z-index: 10;
+  transition: width 100ms linear, transform 80ms linear, background-color 80ms linear, color 80ms linear, border-color 80ms linear;
+}
+html.dark .social-link-horizontal {
+  border-color: #FFFFFF;
+  background-color: #000000;
+  color: #FFFFFF;
+}
+.social-link-horizontal:hover {
+  width: 176px;
+  transform: translateY(-3px);
+  background-color: #000000;
+  color: #FFFFFF;
+  border-color: #000000;
+}
+html.dark .social-link-horizontal:hover {
+  background-color: #FFFFFF;
+  color: #000000;
+  border-color: #FFFFFF;
+}
+
+.social-icon-horizontal {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.social-label-horizontal {
+  font-family: var(--font-sans);
+  font-weight: 900;
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: inherit;
+  margin-left: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 100ms linear;
+  pointer-events: none;
+}
+.social-link-horizontal:hover .social-label-horizontal {
+  opacity: 1;
+}
+
+/* Contrast overrides for light mode aggressive selectors */
+html:not(.dark) footer .social-link-horizontal:hover {
+  color: #FFFFFF !important;
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+}
+html.dark footer .social-link-horizontal:hover {
+  color: #000000 !important;
+  background-color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+}
+html:not(.dark) footer .social-link-horizontal:hover span,
+html:not(.dark) footer .social-link-horizontal:hover svg {
+  color: #FFFFFF !important;
+}
+html.dark footer .social-link-horizontal:hover span,
+html.dark footer .social-link-horizontal:hover svg {
+  color: #000000 !important;
+}
+
+/* Status Pill Pulsing Live indicator */
+@keyframes pulse-dot {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #10B981 !important;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Specificity helpers to bypass aggressive light-mode footer rules */
+html:not(.dark) footer .text-white,
+html:not(.dark) footer .text-white * {
+  color: #FFFFFF !important;
+}
+html:not(.dark) footer .text-\[\#1D4FF7\],
+html:not(.dark) footer .text-\[\#1D4FF7\] * {
+  color: #1D4FF7 !important;
+}
