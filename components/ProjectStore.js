@@ -106,16 +106,13 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
               >
                 
                 {/* Header: Meta & Industry */}
-                <div className="flex items-center justify-between p-4 border-b-4 border-brutal-black bg-white">
-                  <span className="font-black text-sm text-brutal-black uppercase">
-                    ID:{String(project.id).padStart(4, '0')}
-                  </span>
-                  {project.industry && (
+                {project.industry ? (
+                  <div className="flex items-center justify-start p-4 border-b-4 border-brutal-black bg-white">
                     <span className="font-black text-xs uppercase text-white bg-brutal-black px-2 py-1">
                       {project.industry}
                     </span>
-                  )}
-                </div>
+                  </div>
+                ) : null}
 
                 <div className="p-6 bg-white border-b-4 border-brutal-black flex-1">
                   {/* Title & Description */}
