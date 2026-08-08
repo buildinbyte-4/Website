@@ -28,13 +28,13 @@ export default function Footer() {
               Production-grade software engineering for ambitious companies.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="footer-social-btn w-10 h-10 flex items-center justify-center font-bold text-sm bg-white dark:bg-black text-black dark:text-white border-2 border-black dark:border-white transition-colors duration-150 hover:bg-[#0066FF] hover:text-white dark:hover:bg-[#0066FF]">
+              <a href="#" className="footer-social-btn w-10 h-10 flex items-center justify-center font-bold text-sm select-none">
                 X
               </a>
-              <a href="#" className="footer-social-btn w-10 h-10 flex items-center justify-center font-bold text-sm bg-white dark:bg-black text-black dark:text-white border-2 border-black dark:border-white transition-colors duration-150 hover:bg-[#0066FF] hover:text-white dark:hover:bg-[#0066FF]">
+              <a href="#" className="footer-social-btn w-10 h-10 flex items-center justify-center font-bold text-sm select-none">
                 IN
               </a>
-              <a href="#" className="footer-social-btn w-10 h-10 flex items-center justify-center font-bold text-sm bg-white dark:bg-black text-black dark:text-white border-2 border-black dark:border-white transition-colors duration-150 hover:bg-[#0066FF] hover:text-white dark:hover:bg-[#0066FF]">
+              <a href="#" className="footer-social-btn w-10 h-10 flex items-center justify-center font-bold text-sm select-none">
                 GH
               </a>
             </div>

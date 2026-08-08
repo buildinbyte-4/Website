@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
 
-export default function LoginScreen({ onClose }) {
+export default function LoginScreen({ onClose, message }) {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -147,6 +147,12 @@ export default function LoginScreen({ onClose }) {
             Create Account
           </button>
         </div>
+
+        {message && (
+          <div className="p-3 bg-brutal-yellow border-2 border-black text-xs font-black text-black text-left uppercase shadow-brutal-sm">
+            {message}
+          </div>
+        )}
 
         {errorMsg && (
           <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-xs font-semibold text-red-600 text-left">

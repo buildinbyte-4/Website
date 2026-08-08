@@ -22,6 +22,7 @@ export default function HomePage() {
   const [demoProject, setDemoProject] = useState(null);
   const [inquiryConfig, setInquiryConfig] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
+  const [loginMessage, setLoginMessage] = useState('');
   const [showProfile, setShowProfile] = useState(false);
 
   // 0. Auto-redirect port 3000 -> port 8000 fallback
@@ -160,6 +161,7 @@ if (error) throw error;
   // Auth gate wrapper for action conversions
   const handleInquiryRequest = (config) => {
     if (!session) {
+      setLoginMessage("Please log in or create an account to modify templates or request quotes.");
       setShowLogin(true); // Gated transition: open login panel
     } else {
       setInquiryConfig(config); // Authorised transition: open submission form
@@ -237,7 +239,11 @@ if (error) throw error;
         {/* Overlay Login Panel */}
         {showLogin && (
           <LoginScreen 
-            onClose={() => setShowLogin(false)} 
+            onClose={() => {
+              setShowLogin(false);
+              setLoginMessage('');
+            }} 
+            message={loginMessage}
           />
         )}
 

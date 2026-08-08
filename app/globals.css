@@ -62,6 +62,91 @@ html.lenis, html.lenis body {
   box-shadow: 12px 12px 0px 0px #000000;
 }
 
+.project-scoping-card {
+  background-color: #FFFFFF;
+  border: 4px solid #000000;
+  border-radius: 0px;
+  box-shadow: 8px 8px 0px 0px #000000;
+  transition: none !important;
+}
+.project-scoping-card:hover {
+  transform: translate(-4px, -4px) !important;
+  box-shadow: 14px 14px 0px 0px #000000 !important;
+}
+
+.brutal-card-hover {
+  background-color: #FFFFFF;
+  border: 4px solid #000000;
+  border-radius: 0px;
+  box-shadow: 8px 8px 0px 0px #000000;
+  transition: none !important;
+}
+.brutal-card-hover:hover {
+  transform: translate(-4px, -4px) !important;
+  box-shadow: 12px 12px 0px 0px #000000 !important;
+}
+
+.btn-primary-invert {
+  background-color: #0066FF !important;
+  color: #FFFFFF !important;
+  border: 3px solid #000000;
+  padding: 0.75rem 1.5rem;
+  font-weight: 800;
+  font-size: 1rem;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 4px 4px 0px 0px #000000;
+  transition: none !important;
+}
+.btn-primary-invert:hover {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+}
+
+.btn-secondary-invert {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border: 3px solid #000000;
+  padding: 0.75rem 1.5rem;
+  font-weight: 800;
+  font-size: 1rem;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 4px 4px 0px 0px #000000;
+  transition: none !important;
+}
+.btn-secondary-invert:hover {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border-color: #000000 !important;
+}
+
+.shadow-press {
+  transition: none !important;
+}
+.shadow-press:active {
+  transform: translate(4px, 4px) !important;
+  box-shadow: 0px 0px 0px #000000 !important;
+}
+
+.card-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 150ms linear, transform 150ms linear;
+}
+.card-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.card-reveal.visible:hover {
+  transform: translate(-4px, -4px) !important;
+}
+
 .btn-primary {
   background-color: #0066FF !important;
   color: #FFFFFF !important;
@@ -184,13 +269,23 @@ html.lenis, html.lenis body {
   }
 }
 
-.animate-badge-1 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.00s both; }
-.animate-badge-2 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.06s both; }
-.animate-badge-3 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.12s both; }
-.animate-badge-4 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.18s both; }
-.animate-badge-5 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.24s both; }
-.animate-badge-6 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.30s both; }
-.animate-badge-7 { animation: badgePopUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.36s both; }
+@keyframes badgePopUpBrutal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-badge-1 { animation: badgePopUpBrutal 0.15s linear 0.20s both; }
+.animate-badge-2 { animation: badgePopUpBrutal 0.15s linear 0.25s both; }
+.animate-badge-3 { animation: badgePopUpBrutal 0.15s linear 0.30s both; }
+.animate-badge-4 { animation: badgePopUpBrutal 0.15s linear 0.35s both; }
+.animate-badge-5 { animation: badgePopUpBrutal 0.15s linear 0.40s both; }
+.animate-badge-6 { animation: badgePopUpBrutal 0.15s linear 0.45s both; }
+.animate-badge-7 { animation: badgePopUpBrutal 0.15s linear 0.50s both; }
 
 @keyframes telemetrySlideUp {
   0% {
@@ -339,6 +434,41 @@ html.dark .btn-secondary:hover {
   box-shadow: 2px 2px 0px 0px #FFFFFF !important;
 }
 
+html.dark .project-scoping-card {
+  box-shadow: 8px 8px 0px 0px #FFFFFF !important;
+}
+html.dark .project-scoping-card:hover {
+  box-shadow: 14px 14px 0px 0px #FFFFFF !important;
+}
+html.dark .brutal-card-hover {
+  box-shadow: 8px 8px 0px 0px #FFFFFF !important;
+}
+html.dark .brutal-card-hover:hover {
+  box-shadow: 12px 12px 0px 0px #FFFFFF !important;
+}
+html.dark .btn-primary-invert {
+  box-shadow: 4px 4px 0px 0px #FFFFFF !important;
+}
+html.dark .btn-primary-invert:hover {
+  background-color: #09090B !important;
+  color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+}
+html.dark .btn-secondary-invert {
+  box-shadow: 4px 4px 0px 0px #FFFFFF !important;
+}
+html.dark .btn-secondary-invert:hover {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border-color: #FFFFFF !important;
+}
+html.dark .shadow-press:active {
+  box-shadow: 0px 0px 0px #FFFFFF !important;
+}
+html.dark .card-reveal.visible:hover {
+  box-shadow: 12px 12px 0px 0px #FFFFFF !important;
+}
+
 /* FORCE OVERRIDES FOR LIGHT MODE CONTRAST (html:not(.dark)) */
 html:not(.dark) footer {
   background-color: #ffffff !important;
@@ -371,9 +501,10 @@ html:not(.dark) .footer-social-btn {
   background-color: #FFFFFF !important;
   color: #000000 !important;
   border: 2px solid #000000 !important;
+  transition: none !important;
 }
 html:not(.dark) .footer-social-btn:hover {
-  background-color: #0066FF !important;
+  background-color: #000000 !important;
   color: #FFFFFF !important;
   border: 2px solid #000000 !important;
 }
@@ -382,11 +513,12 @@ html.dark .footer-social-btn {
   background-color: #000000 !important;
   color: #FFFFFF !important;
   border: 2px solid #FFFFFF !important;
+  transition: none !important;
 }
 html.dark .footer-social-btn:hover {
-  background-color: #0066FF;
-  color: #FFFFFF;
-  border: 2px solid #FFFFFF;
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border: 2px solid #FFFFFF !important;
 }
 
 /* Scoping Widget Stagger Animations */

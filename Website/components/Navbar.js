@@ -1,8 +1,19 @@
 'use client';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 
 export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInquiry }) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100);
+    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
@@ -12,11 +23,11 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
   };
 
   return (
-    <header style={{ position: 'sticky', top: 0, zIndex: 50, backgroundColor: '#ffffff', borderBottom: '4px solid #000000', padding: '1rem 1.5rem', width: '100%' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: '80rem', margin: '0 auto', width: '100%' }}>
+    <header className={`sticky top-0 z-50 bg-white dark:bg-black px-3 sm:px-6 py-3 w-full border-black dark:border-white transition-none ${isScrolled ? 'border-b-[3px] border-solid' : 'border-b border-solid'}`}>
+      <div className="flex items-center justify-between max-w-7xl mx-auto w-full gap-2 sm:gap-4">
 
         {/* Logo */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }} className="group">
+        <Link href="/" className="flex items-center gap-3 shrink-0">
           <img src="/logo.jpg" alt="BuildInByte Logo" className="h-10 w-auto" />
           <div>
             <span className="font-display font-black text-3xl tracking-tighter text-brutal-black uppercase">
@@ -27,16 +38,16 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
 
         {/* Navigation Links */}
         <nav className="hidden md:flex items-center gap-8 text-lg font-black text-brutal-black uppercase font-display">
-          <a href="#projects" className="hover:bg-brutal-yellow px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
+          <a href="#projects" className="px-1 pb-1 border-b-4 border-transparent hover:border-brutal-black transition-none duration-0">
             Our Solutions
           </a>
-          <Link href="/templates" className="bg-brutal-yellow border-2 border-brutal-black px-3 py-1 shadow-brutal-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+          <Link href="/templates" className="px-1 pb-1 border-b-4 border-transparent hover:border-brutal-black transition-none duration-0">
             Templates
           </Link>
-          <a href="#services" className="hover:bg-brutal-pink px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black hover:text-white">
+          <a href="#services" className="px-1 pb-1 border-b-4 border-transparent hover:border-brutal-black transition-none duration-0">
             Services
           </a>
-          <a href="#work" className="hover:bg-brutal-green px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
+          <a href="#work" className="px-1 pb-1 border-b-4 border-transparent hover:border-brutal-black transition-none duration-0">
             Our Work
           </a>
         </nav>

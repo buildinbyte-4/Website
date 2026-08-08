@@ -5,6 +5,16 @@ import { supabase } from '@/lib/supabase';
 
 export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk, onOpenInquiry }) {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100);
+    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSignOut = async () => {
     try {
@@ -15,7 +25,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b-4 border-black px-3 sm:px-6 py-3 w-full">
+    <header className={`sticky top-0 z-50 bg-white dark:bg-black px-3 sm:px-6 py-3 w-full border-black dark:border-white transition-none ${isScrolled ? 'border-b-[3px]' : 'border-b'}`}>
       <div className="flex items-center justify-between max-w-7xl mx-auto w-full gap-2 sm:gap-4">
 
         {/* Logo on Top Left */}
@@ -32,19 +42,19 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk
 
         {/* Navigation Links */}
         <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-base lg:text-lg font-black text-brutal-black uppercase font-display">
-          <a href="#enterprise-solutions" className="hover:bg-brutal-yellow px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
+          <a href="#enterprise-solutions" className="px-1 pb-1 border-b-4 border-transparent hover:border-brutal-black transition-none duration-0">
             Our Solutions
           </a>
-          <a href="#case-studies" className="hover:bg-brutal-yellow px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
+          <a href="#case-studies" className="px-1 pb-1 border-b-4 border-transparent hover:border-brutal-black transition-none duration-0">
             Templates
           </a>
-          <a href="#services-offered" className="hover:bg-brutal-pink px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black">
+          <a href="#services-offered" className="px-1 pb-1 border-b-4 border-transparent hover:border-brutal-black transition-none duration-0">
             Services
           </a>
           {session && (
             <Link
               href="/desk"
-              className="hover:bg-brutal-green px-2 py-1 transition-colors border-2 border-transparent hover:border-brutal-black font-black uppercase text-base lg:text-lg font-display cursor-pointer bg-transparent"
+              className="px-1 pb-1 border-b-4 border-transparent hover:border-brutal-black transition-none duration-0 font-black uppercase text-base lg:text-lg font-display cursor-pointer bg-transparent"
             >
               My Desk
             </Link>

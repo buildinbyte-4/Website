@@ -1,4 +1,15 @@
 'use client';
+import { useState, useEffect, useRef } from 'react';
+import { Globe, Building2, Bot, Cpu, BarChart3, Webhook } from 'lucide-react';
+
+const ICON_MAP = {
+  '🌐': Globe,
+  '🏢': Building2,
+  '🤖': Bot,
+  '🎛️': Cpu,
+  '📊': BarChart3,
+  '🔗': Webhook,
+};
 
 const serviceCards = [
   {
@@ -34,6 +45,34 @@ const serviceCards = [
 ];
 
 export default function CustomServices({ onOpenInquiry }) {
+  const processRef = useRef(null);
+  const [activeStep, setActiveStep] = useState(-1);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!processRef.current) return;
+      const rect = processRef.current.getBoundingClientRect();
+      const viewHeight = window.innerHeight;
+      
+      const totalDist = rect.height + viewHeight;
+      const scrolledDist = viewHeight - rect.top;
+      
+      let progress = scrolledDist / totalDist;
+      progress = Math.max(0, Math.min(progress, 1));
+      
+      if (rect.top < viewHeight && rect.bottom > 0) {
+        const step = Math.floor(progress * 7);
+        setActiveStep(Math.max(0, Math.min(step, 6)));
+      } else {
+        setActiveStep(-1);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <section id="services" className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
       <div className="max-w-7xl mx-auto px-6">
@@ -121,7 +160,7 @@ export default function CustomServices({ onOpenInquiry }) {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
+          <div ref={processRef} className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
             {[
               { step: '01', label: 'DISCOVER' },
               { step: '02', label: 'PLAN' },
@@ -131,9 +170,16 @@ export default function CustomServices({ onOpenInquiry }) {
               { step: '06', label: 'DEPLOY' },
               { step: '07', label: 'MAINTAIN' },
             ].map((phase, idx) => (
-              <div key={idx} className="bg-white border-2 border-[#000000] text-center flex flex-col items-center gap-0 group hover:bg-[#0066FF] transition-all hover:-translate-y-1 shadow-brutal-sm cursor-pointer">
-                <span className="w-full text-xl font-bold text-[#0066FF] group-hover:text-[#FFFFFF] py-2">{phase.step}</span>
-                <span className="w-full font-[800] tracking-[0.05em] text-sm text-[#000000] group-hover:text-[#FFFFFF] uppercase pb-4 px-2">{phase.label}</span>
+              <div 
+                key={idx} 
+                className={`border-2 border-[#000000] text-center flex flex-col items-center gap-0 group cursor-pointer transition-none ${
+                  idx === activeStep 
+                    ? 'bg-[#0066FF] text-white -translate-y-1 shadow-brutal-sm' 
+                    : 'bg-white text-[#000000] hover:bg-[#0066FF] hover:text-white hover:-translate-y-1 shadow-brutal-sm'
+                }`}
+              >
+                <span className={`w-full text-xl font-bold py-2 transition-none ${idx === activeStep ? 'text-white' : 'text-[#0066FF] group-hover:text-white'}`}>{phase.step}</span>
+                <span className={`w-full font-[800] tracking-[0.05em] text-sm uppercase pb-4 px-2 transition-none ${idx === activeStep ? 'text-white' : 'text-[#000000] group-hover:text-white'}`}>{phase.label}</span>
               </div>
             ))}
           </div>
@@ -161,8 +207,11 @@ export default function CustomServices({ onOpenInquiry }) {
                   className={`editorial-card p-0 flex flex-col justify-between ${bg}`}
                 >
                   <div className="p-8">
-                    <span className="text-5xl mb-6 block border-4 border-brutal-black bg-white inline-block shadow-brutal-sm p-2">
-                      {service.icon}
+                    <span className="w-16 h-16 mb-6 flex items-center justify-center border-4 border-brutal-black bg-white shadow-brutal-sm transition-none duration-0 group-hover:rotate-90 group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black">
+                      {(() => {
+                        const IconComponent = ICON_MAP[service.icon] || Globe;
+                        return <IconComponent size={36} strokeWidth={2.5} />;
+                      })()}
                     </span>
                     <h4 className="font-display font-black text-3xl mb-4 uppercase leading-none text-brutal-black">
                       {service.title}
@@ -172,10 +221,10 @@ export default function CustomServices({ onOpenInquiry }) {
                     </p>
                   </div>
 
-                  <div className="p-4 bg-white border-t-4 border-brutal-black">
+                  <div className="p-4 bg-white border-t-4 border-brutal-black dark:bg-black">
                     <button
                       onClick={() => onOpenInquiry({ title: `Request a Quote — ${service.title}` })}
-                      className="btn-primary text-xs py-4 w-full justify-center text-lg"
+                      className="btn-primary text-xs py-4 w-full justify-center text-lg shadow-press cursor-pointer"
                     >
                       GET A QUOTE
                     </button>
@@ -185,7 +234,6 @@ export default function CustomServices({ onOpenInquiry }) {
             })}
           </div>
         </div>
-
 
       </div>
     </section>

@@ -1,11 +1,21 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PROJECTS } from '@/lib/data';
 
 export default function Hero({ onOpenDemo, onOpenInquiry }) {
   const [selectedType, setSelectedType] = useState('Web App');
   const [timeline, setTimeline] = useState('3-6 weeks');
   const featured = PROJECTS[0];
+
+  const tickerWords = ['SYSTEMS', 'PRODUCTS', 'APIS', 'PLATFORMS'];
+  const [tickerIndex, setTickerIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTickerIndex((prev) => (prev + 1) % tickerWords.length);
+    }, 1500);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section className="relative pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden bg-brutal-bg border-b-4 border-brutal-black">
@@ -19,7 +29,9 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
             <h1 className="font-display text-5xl sm:text-7xl lg:text-[5.5rem] font-black leading-[0.9] text-brutal-black uppercase tracking-tighter">
               <span className="animate-drop-1 block">WE BUILD</span>
               <div className="animate-drop-2">
-                <span className="bg-brutal-yellow px-2 inline-block -rotate-1 border-4 border-brutal-black shadow-brutal mt-4">SYSTEMS</span>
+                <span className="bg-brutal-yellow px-4 py-1 inline-block -rotate-1 border-4 border-brutal-black shadow-brutal mt-4 min-w-[220px] sm:min-w-[320px] text-center transition-none duration-0">
+                  {tickerWords[tickerIndex]}
+                </span>
               </div>
               <span className="animate-drop-3 block mt-4">THAT SCALE.</span>
             </h1>
@@ -56,9 +68,8 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
 
           </div>
 
-          {/* Right Column: Start Your Project Widget */}
           <div className="lg:col-span-5 animate-project-card">
-            <div className="editorial-card p-6 bg-white border-4 border-brutal-black relative group overflow-hidden shadow-brutal">
+            <div className="project-scoping-card p-6 bg-white dark:bg-black border-4 border-brutal-black relative group overflow-hidden">
               
               {/* Header Section */}
               <div className="animate-project-header flex flex-col gap-2 mb-6">
