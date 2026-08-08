@@ -1,91 +1,33 @@
 import { NextResponse } from 'next/server';
-import { z } from 'zod';
-import { verifyPassword } from '@/lib/crypto';
-import { signToken } from '@/lib/token';
-
-const rateLimitMap = new Map();
-
-function applyRateLimit(ip) {
-  const now = Date.now();
-  const windowMs = 60 * 1000;
-  const limit = 5;
-
-  const timestamps = rateLimitMap.get(ip) || [];
-  const activeTimestamps = timestamps.filter((ts) => now - ts < windowMs);
-
-  if (activeTimestamps.length >= limit) {
-    return true;
-  }
-
-  activeTimestamps.push(now);
-  rateLimitMap.set(ip, activeTimestamps);
-  return false;
-}
-
-const loginSchema = z.object({
-  username: z.string().min(1),
-  password: z.string().min(1),
-});
+import { createSessionCookieOptions } from '@/lib/auth/session';
+import { parseJsonBody, loginSchema } from '@/lib/validation/schemas';
+import { authenticateAdmin } from '@/lib/services/admin.service';
+import { jsonError, jsonSuccess, ApiError } from '@/lib/security/response';
+import { appLog, errorLog } from '@/lib/security/logger';
 
 export async function POST(request) {
   const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || '127.0.0.1';
 
-  if (applyRateLimit(ip)) {
-    return NextResponse.json(
-      { error: 'Too many login attempts. Please try again in a minute.' },
-      { status: 429 }
-    );
-  }
-
   try {
-    const body = await request.json();
-    const validation = loginSchema.safeParse(body);
-    if (!validation.success) {
-      return NextResponse.json(
-        { error: 'Invalid request payload' },
-        { status: 400 }
-      );
+    const body = await parseJsonBody(request, loginSchema);
+    const result = await authenticateAdmin({ username: body.username, password: body.password, ip });
+
+    if (!result.ok) {
+      return jsonError(result.error, result.status);
     }
 
-    const { username, password } = validation.data;
-    const adminUsername = process.env.ADMIN_USERNAME || 'admin';
-    const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
-    const adminPasswordPlain = process.env.ADMIN_PASSWORD || 'admin';
+    const response = jsonSuccess({ authenticated: true }, 200);
+    response.cookies.set('admin_session', result.token, createSessionCookieOptions());
 
-    let isValid = false;
-
-    if (username === adminUsername) {
-      if (adminPasswordHash) {
-        isValid = verifyPassword(password, adminPasswordHash);
-      } else {
-        isValid = password === adminPasswordPlain;
-      }
-    }
-
-    if (!isValid) {
-      return NextResponse.json(
-        { error: 'Invalid username or password' },
-        { status: 401 }
-      );
-    }
-
-    const token = await signToken({ username });
-    const response = NextResponse.json({ success: true });
-    
-    response.cookies.set('admin_session', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 3600,
-    });
-
+    appLog('Admin login succeeded', { ip });
     return response;
   } catch (error) {
-    console.error('Admin API Login Error:', error);
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    );
+    if (error instanceof ApiError) {
+      errorLog('Admin login validation failed', { ip, message: error.message, status: error.status });
+      return jsonError(error.message, error.status, error.details);
+    }
+
+    errorLog('Admin login failed', { ip, message: error.message });
+    return jsonError('Internal server error', 500);
   }
 }
