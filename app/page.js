@@ -143,7 +143,7 @@ if (error) throw error;
           console.log("Mapped products:", mapped);
           console.log("Mapped count:", mapped.length);
 
-          setProducts(mapped);
+          setProducts(mapped.filter(p => p.demoUrl));
           
         } else {
           setProducts(MOCK_PROJECTS);

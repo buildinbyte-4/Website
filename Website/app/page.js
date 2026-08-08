@@ -85,7 +85,7 @@ export default function HomePage() {
           };
         });
 
-        setProducts(mapped);
+        setProducts(mapped.filter(p => p.demoUrl));
       } catch (err) {
         console.error('Error fetching Supabase products:', err);
         setProducts([]);
