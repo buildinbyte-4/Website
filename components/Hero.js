@@ -1,7 +1,10 @@
 'use client';
+import { useState } from 'react';
 import { PROJECTS } from '@/lib/data';
 
 export default function Hero({ onOpenDemo, onOpenInquiry }) {
+  const [selectedType, setSelectedType] = useState('Web App');
+  const [timeline, setTimeline] = useState('3-6 weeks');
   const featured = PROJECTS[0];
 
   return (
@@ -53,51 +56,74 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
 
           </div>
 
-          {/* Right Column: Brutal Status Box */}
-          <div className="lg:col-span-5">
-            <div className="editorial-card p-6 bg-brutal-pink relative group overflow-hidden">
+          {/* Right Column: Start Your Project Widget */}
+          <div className="lg:col-span-5 animate-project-card">
+            <div className="editorial-card p-6 bg-white border-4 border-brutal-black relative group overflow-hidden shadow-brutal">
               
-              <div className="flex items-center justify-between mb-4 border-b-4 border-brutal-black pb-4">
-                <div className="font-black text-2xl uppercase">System Status</div>
-                <div className="flex gap-2">
-                  <span className="font-black text-sm text-brutal-black bg-brutal-green px-2 py-1 border-2 border-brutal-black shadow-brutal-sm">
-                    ONLINE
+              {/* Header Section */}
+              <div className="animate-project-header flex flex-col gap-2 mb-6">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-display font-black text-2xl text-brutal-black uppercase tracking-tighter">
+                    Start Your Project
+                  </h3>
+                  <span className="font-black text-[10px] tracking-wider text-white bg-brutal-black px-2 py-1 border-2 border-brutal-black uppercase">
+                    Interactive Scoping
                   </span>
                 </div>
-              </div>
-
-              {/* Aggressive Data Box */}
-              <div className="font-mono text-sm font-bold bg-[#070F26] p-4 border-4 border-brutal-black overflow-hidden shadow-brutal" style={{ lineHeight: 1.6 }}>
-                <div className="text-[#22C55E] animate-telemetry-1">&gt; Status: Operational (99.9% Uptime)</div>
-                <div className="text-[#22C55E] animate-telemetry-2">&gt; Architecture: Microservices & Embedded Systems</div>
-                <div className="text-[#22C55E] animate-telemetry-3">&gt; Latency: &lt; 12ms</div>
-                <div className="text-[#22C55E] animate-telemetry-4">&gt; Stack: C/C++, Python, React, Next.js, PostgreSQL</div>
-                <div className="animate-telemetry-5 mt-4">
-                  <span className="animate-pulse text-[#22C55E]">_</span>
-                </div>
-              </div>
-
-              <div className="mt-8 bg-white p-4 border-4 border-brutal-black shadow-brutal-sm">
-                <h3 className="font-display font-black text-2xl text-brutal-black mb-1 uppercase">
-                  Architecture 
-                </h3>
-                <p className="text-sm text-brutal-black font-bold mb-4 uppercase">
-                  Deploying resilient backend services and high-performance frontend interfaces.
+                <p className="text-xs text-brutal-black font-bold uppercase">
+                  Select your solution type and timeline to launch your custom project.
                 </p>
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    onClick={() => onOpenInquiry({ title: 'Request Architecture Review' })}
-                    className="btn-secondary py-2 justify-center text-xs"
-                  >
-                    DOCS
-                  </button>
-                  <button
-                    onClick={() => onOpenInquiry({ title: 'System Demo' })}
-                    className="btn-primary py-2 justify-center text-xs"
-                  >
-                    DEMO
-                  </button>
+              </div>
+
+              {/* Step 1: Solution Type Pills */}
+              <div className="mb-6 animate-project-step-1">
+                <span className="font-black text-[10px] uppercase block mb-3 text-brutal-black/75">
+                  Step 1: Select Solution Type
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {['Web App', 'Custom API', 'IoT/Hardware', 'Dashboard'].map((type) => {
+                    const isSelected = selectedType === type;
+                    return (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() => setSelectedType(type)}
+                        className={`px-3 py-1.5 text-xs font-black uppercase border-2 border-brutal-black cursor-pointer shadow-brutal-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all ${
+                          isSelected ? 'bg-brutal-black text-white' : 'bg-brutal-yellow text-brutal-black'
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    );
+                  })}
                 </div>
+              </div>
+
+              {/* Step 2: Timeline Dropdown */}
+              <div className="mb-6 animate-project-step-2">
+                <span className="font-black text-[10px] uppercase block mb-3 text-brutal-black/75">
+                  Step 2: Estimated Timeline
+                </span>
+                <select
+                  value={timeline}
+                  onChange={(e) => setTimeline(e.target.value)}
+                  className="w-full p-2.5 bg-white border-4 border-brutal-black text-xs font-black uppercase text-brutal-black focus:outline-none focus:bg-brutal-yellow shadow-brutal-sm cursor-pointer"
+                >
+                  <option value="1-2 weeks">1-2 Weeks (Rapid Prototype)</option>
+                  <option value="3-6 weeks">3-6 Weeks (Standard Deployment)</option>
+                  <option value="6+ weeks">6+ Weeks (Enterprise / Custom Scale)</option>
+                </select>
+              </div>
+
+              {/* Action Button */}
+              <div className="animate-project-button">
+                <button
+                  type="button"
+                  onClick={() => onOpenInquiry({ title: `Scoping: ${selectedType} (${timeline})` })}
+                  className="w-full btn-primary py-3 justify-center text-xs font-black tracking-wider shadow-brutal-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+                >
+                  LAUNCH PROJECT SCOPING
+                </button>
               </div>
               
             </div>
