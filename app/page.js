@@ -121,6 +121,12 @@ if (error) throw error;
 
             const nameLower = (p.name || '').toLowerCase();
             let demoUrl = p.demo_url || p.demoUrl || p.url || null;
+            if (demoUrl && demoUrl.includes('/demos/')) {
+              demoUrl = demoUrl.replace('/demos/', '/templates/');
+              if (!demoUrl.endsWith('index.html')) {
+                demoUrl = demoUrl.endsWith('/') ? `${demoUrl}index.html` : `${demoUrl}/index.html`;
+              }
+            }
             if (!demoUrl) {
               if (nameLower.includes('buildinbyte') || nameLower.includes('aurelia')) demoUrl = '/templates/buildinbyte-luxury-hotel/index.html';
               else if (nameLower.includes('luxury hotel') || nameLower.includes('hotel')) demoUrl = '/templates/luxury-hotel/index.html';
@@ -128,6 +134,7 @@ if (error) throw error;
               else if (nameLower.includes('elecstore') || nameLower.includes('electronics')) demoUrl = '/templates/elecstore/index.html';
               else if (nameLower.includes('kanchi')) demoUrl = '/templates/kanchimarket/index.html';
               else if (nameLower.includes('scsvmv') || nameLower.includes('university') || nameLower.includes('school')) demoUrl = '/templates/scsvmv/index.html';
+              else if (nameLower.includes('hostel')) demoUrl = '/templates/hostel-management/index.html';
             }
 
             return {

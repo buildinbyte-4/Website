@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> University — Hostel Management System</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+    <!-- ═══════════════ SIDEBAR ═══════════════ -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-wrap">
+                <svg class="logo-crest" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="28" stroke="#A51C30" stroke-width="2" />
+                    <text x="50%" y="36%" dominant-baseline="middle" text-anchor="middle" font-size="8"
+                        font-family="serif" fill="#A51C30" font-weight="bold">VERITAS</text>
+                    <line x1="14" y1="32" x2="46" y2="32" stroke="#A51C30" stroke-width="1" />
+                    <text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" font-size="6"
+                        font-family="serif" fill="#A51C30">EST. 1636</text>
+                </svg>
+                <div>
+                    <div class="logo-title"></div>
+                    <div class="logo-sub">Hostel Management</div>
+                </div>
+            </div>
+            <button class="sidebar-close" id="sidebarClose"><i class="fa fa-times"></i></button>
+        </div>
+
+        <div class="user-card">
+            <div class="user-avatar" id="sidebarAvatar">JD</div>
+            <div class="user-info">
+                <div class="user-name" id="sidebarName">John Doe</div>
+                <div class="user-room" id="sidebarRoom">Room 204 · Adams House</div>
+            </div>
+            <span class="badge-online"></span>
+        </div>
+
+        <nav class="nav-links">
+            <a href="#" class="nav-item active" data-section="dashboard"><i
+                    class="fa fa-th-large"></i><span>Dashboard</span></a>
+            <a href="#" class="nav-item" data-section="rooms"><i class="fa fa-door-open"></i><span>Room
+                    Allocation</span></a>
+            <a href="#" class="nav-item" data-section="complaints"><i
+                    class="fa fa-exclamation-circle"></i><span>Complaint Tracking</span></a>
+            <a href="#" class="nav-item" data-section="mess"><i class="fa fa-utensils"></i><span>Mess Menu</span></a>
+            <a href="#" class="nav-item" data-section="laundry"><i class="fa fa-tshirt"></i><span>Laundry
+                    Booking</span></a>
+            <a href="#" class="nav-item" data-section="notices"><i class="fa fa-bell"></i><span>Notices</span><span
+                    class="nav-badge" id="noticeBadge">3</span></a>
+            <a href="#" class="nav-item" data-section="profile"><i class="fa fa-user-circle"></i><span>My
+                    Profile</span></a>
+            <a href="#" class="nav-item" data-section="admin"><i class="fa fa-shield-alt"></i><span>Admin
+                    Panel</span></a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span class="sys-version">HMS v3.1 · Spring 2026</span>
+        </div>
+    </aside>
+
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ═══════════════ MAIN ═══════════════ -->
+    <div class="main-wrapper">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="hamburger" id="hamburger"><i class="fa fa-bars"></i></button>
+                <div class="breadcrumb-section" id="breadcrumbSection">Dashboard</div>
+            </div>
+            <div class="topbar-right">
+                <div class="search-wrap">
+                    <i class="fa fa-search"></i>
+                    <input type="text" placeholder="Search…" id="globalSearch" />
+                </div>
+                <button class="topbar-icon" onclick="navigateTo('notices')"><i class="fa fa-bell"></i><span
+                        class="dot-indicator"></span></button>
+                <div class="topbar-avatar" id="topbarAvatar" onclick="navigateTo('profile')">JD</div>
+            </div>
+        </header>
+
+        <main class="content-area">
+
+            <!-- ████ DASHBOARD ████ -->
+            <section class="section active" id="section-dashboard">
+                <div class="section-hero">
+                    <div class="hero-text">
+                        <p class="hero-greeting" id="greetingMsg">Good Morning,</p>
+                        <h1 class="hero-name">John Doe</h1>
+                        <p class="hero-sub">Spring Semester 2026 · Adams House, Room 204</p>
+                    </div>
+                    <div class="hero-date">
+                        <div class="hero-date-day" id="heroDayNum">18</div>
+                        <div class="hero-date-info"><span id="heroMonth">March</span><span id="heroYear">2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card" onclick="navigateTo('rooms')">
+                        <div class="stat-icon crimson"><i class="fa fa-door-open"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value">204</div>
+                            <div class="stat-label">My Room</div>
+                        </div>
+                        <div class="stat-trend up"><i class="fa fa-check-circle"></i> Allocated</div>
+                    </div>
+                    <div class="stat-card" onclick="navigateTo('complaints')">
+                        <div class="stat-icon amber"><i class="fa fa-exclamation-circle"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="openComplaintsCount">3</div>
+                            <div class="stat-label">Open Complaints</div>
+                        </div>
+                        <div class="stat-trend warn"><i class="fa fa-clock"></i> In Progress</div>
+                    </div>
+                    <div class="stat-card" onclick="navigateTo('laundry')">
+                        <div class="stat-icon teal"><i class="fa fa-tshirt"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value">Slot #3</div>
+                            <div class="stat-label">Next Laundry</div>
+                        </div>
+                        <div class="stat-trend info"><i class="fa fa-calendar-alt"></i> Tomorrow</div>
+                    </div>
+                    <div class="stat-card" onclick="navigateTo('mess')">
+                        <div class="stat-icon green"><i class="fa fa-utensils"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value">Lunch</div>
+                            <div class="stat-label">Today's Highlight</div>
+                        </div>
+                        <div class="stat-trend ok"><i class="fa fa-fire"></i> Pasta Primavera</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dash-card">
+                        <div class="card-header">
+                            <h3>Quick Actions</h3>
+                        </div>
+                        <div class="quick-actions">
+                            <button class="qa-btn" onclick="navigateTo('rooms')"><i class="fa fa-door-open"></i>Room
+                                Booking</button>
+                            <button class="qa-btn" onclick="openComplaintModal()"><i class="fa fa-plus-circle"></i>File
+                                Complaint</button>
+                            <button class="qa-btn" onclick="navigateTo('laundry')"><i class="fa fa-tshirt"></i>Book
+                                Laundry</button>
+                            <button class="qa-btn" onclick="navigateTo('mess')"><i class="fa fa-utensils"></i>View
+                                Menu</button>
+                            <button class="qa-btn" onclick="navigateTo('notices')"><i
+                                    class="fa fa-bell"></i>Notices</button>
+                            <button class="qa-btn" onclick="navigateTo('profile')"><i class="fa fa-user-edit"></i>Edit
+                                Profile</button>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="card-header">
+                            <h3>Today's Schedule</h3><span class="card-sub" id="todayDate"></span>
+                        </div>
+                        <ul class="timeline">
+                            <li class="tl-item done">
+                                <div class="tl-dot"></div>
+                                <div class="tl-body">
+                                    <div class="tl-time">7:30 AM</div>
+                                    <div class="tl-event">Breakfast — Mess Hall A</div>
+                                </div>
+                            </li>
+                            <li class="tl-item active">
+                                <div class="tl-dot"></div>
+                                <div class="tl-body">
+                                    <div class="tl-time">12:30 PM</div>
+                                    <div class="tl-event">Lunch — Pasta Primavera</div>
+                                </div>
+                            </li>
+                            <li class="tl-item">
+                                <div class="tl-dot"></div>
+                                <div class="tl-body">
+                                    <div class="tl-time">3:00 PM</div>
+                                    <div class="tl-event">Laundry Pickup — Slot #3</div>
+                                </div>
+                            </li>
+                            <li class="tl-item">
+                                <div class="tl-dot"></div>
+                                <div class="tl-body">
+                                    <div class="tl-time">7:00 PM</div>
+                                    <div class="tl-event">Dinner — Adams Dining</div>
+                                </div>
+                            </li>
+                            <li class="tl-item">
+                                <div class="tl-dot"></div>
+                                <div class="tl-body">
+                                    <div class="tl-time">10:00 PM</div>
+                                    <div class="tl-event">Quiet Hours Begin</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="card-header">
+                            <h3>Recent Notices</h3><a href="#" class="card-link"
+                                onclick="navigateTo('notices');return false;">View All</a>
+                        </div>
+                        <ul class="notice-mini-list">
+                            <li class="notice-mini urgent"><span class="nm-dot"></span>
+                                <div>
+                                    <div class="nm-title">Fire Drill — March 20</div>
+                                    <div class="nm-time">2 hours ago</div>
+                                </div>
+                            </li>
+                            <li class="notice-mini info"><span class="nm-dot"></span>
+                                <div>
+                                    <div class="nm-title">Wi-Fi Maintenance: 2–4 AM</div>
+                                    <div class="nm-time">Yesterday</div>
+                                </div>
+                            </li>
+                            <li class="notice-mini normal"><span class="nm-dot"></span>
+                                <div>
+                                    <div class="nm-title">Spring Fest Room Decoration Contest</div>
+                                    <div class="nm-time">3 days ago</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ████ ROOM ALLOCATION ████ -->
+            <section class="section" id="section-rooms">
+                <div class="section-title-bar">
+                    <h2>Room Allocation</h2>
+                    <p>Manage your room assignment and explore availability across Adams House</p>
+                </div>
+
+                <div class="my-room-card">
+                    <div class="my-room-info">
+                        <div class="my-room-badge">Currently Assigned</div>
+                        <h2 class="my-room-num">Room 204</h2>
+                        <p class="my-room-house">Adams House · 2nd Floor · North Wing</p>
+                        <div class="my-room-details-grid">
+                            <div><i class="fa fa-users"></i> Double Occupancy</div>
+                            <div><i class="fa fa-wifi"></i> High-Speed Wi-Fi</div>
+                            <div><i class="fa fa-snowflake"></i> Air Conditioned</div>
+                            <div><i class="fa fa-bath"></i> Shared Bath (x2)</div>
+                        </div>
+                        <div class="room-lease">
+                            <span><i class="fa fa-calendar-check"></i> Check-in: Jan 20, 2026</span>
+                            <span><i class="fa fa-calendar-times"></i> Check-out: May 15, 2026</span>
+                        </div>
+                    </div>
+                    <div class="my-room-graphic">
+                        <svg viewBox="0 0 220 190" xmlns="http://www.w3.org/2000/svg" class="room-svg">
+                            <rect x="10" y="10" width="200" height="170" rx="4" fill="#fafafa" stroke="#A51C30"
+                                stroke-width="2" />
+                            <rect x="10" y="95" width="4" height="40" fill="#A51C30" />
+                            <path d="M14 95 Q42 95 42 135" fill="none" stroke="#A51C30" stroke-width="1.5"
+                                stroke-dasharray="3,2" />
+                            <rect x="30" y="22" width="60" height="32" rx="3" fill="#f5e6e8" stroke="#A51C30"
+                                stroke-width="1.5" />
+                            <rect x="30" y="22" width="60" height="9" rx="2" fill="#A51C30" opacity=".45" />
+                            <text x="60" y="46" text-anchor="middle" font-size="8" fill="#A51C30" font-weight="600">BED
+                                1</text>
+                            <rect x="130" y="22" width="60" height="32" rx="3" fill="#f5e6e8" stroke="#A51C30"
+                                stroke-width="1.5" />
+                            <rect x="130" y="22" width="60" height="9" rx="2" fill="#A51C30" opacity=".45" />
+                            <text x="160" y="46" text-anchor="middle" font-size="8" fill="#A51C30" font-weight="600">BED
+                                2</text>
+                            <rect x="30" y="130" width="75" height="32" rx="2" fill="#e8f0fe" stroke="#1a73e8"
+                                stroke-width="1" />
+                            <rect x="36" y="136" width="28" height="20" rx="1" fill="#c5d8fb" />
+                            <text x="72" y="151" text-anchor="middle" font-size="7" fill="#1a73e8"
+                                font-weight="600">DESK</text>
+                            <rect x="155" y="75" width="42" height="52" rx="2" fill="#fff3e0" stroke="#ff9800"
+                                stroke-width="1" />
+                            <line x1="176" y1="75" x2="176" y2="127" stroke="#ff9800" stroke-width="1" />
+                            <circle cx="173" cy="100" r="2" fill="#ff9800" />
+                            <circle cx="179" cy="100" r="2" fill="#ff9800" />
+                            <text x="176" y="137" text-anchor="middle" font-size="6.5" fill="#ff9800"
+                                font-weight="600">WARDROBE</text>
+                            <rect x="85" y="10" width="50" height="5" fill="#90caf9" />
+                            <text x="110" y="9" text-anchor="middle" font-size="6" fill="#1565c0">WINDOW</text>
+                            <text x="110" y="100" text-anchor="middle" font-size="28" font-weight="900" fill="#A51C30"
+                                opacity=".08">204</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="section-subheading">Room Availability Map — Adams House</div>
+                <div class="filter-row">
+                    <select class="filter-select" id="floorFilter">
+                        <option value="">All Floors</option>
+                        <option value="1">1st Floor</option>
+                        <option value="2">2nd Floor</option>
+                        <option value="3">3rd Floor</option>
+                    </select>
+                    <select class="filter-select" id="typeFilter">
+                        <option value="">All Types</option>
+                        <option value="single">Single</option>
+                        <option value="double">Double</option>
+                        <option value="triple">Triple</option>
+                    </select>
+                    <button class="btn-primary small" onclick="filterRooms()"><i class="fa fa-filter"></i>
+                        Filter</button>
+                </div>
+                <div class="room-legend">
+                    <span><span class="legend-dot available"></span>Available</span>
+                    <span><span class="legend-dot occupied"></span>Occupied</span>
+                    <span><span class="legend-dot mine"></span>My Room</span>
+                    <span><span class="legend-dot reserved"></span>Reserved</span>
+                </div>
+                <div class="room-grid" id="roomGrid"></div>
+
+                <div class="form-card" id="roomRequestForm" style="display:none;">
+                    <div class="card-header">
+                        <h3>Request Room Change</h3>
+                        <button class="btn-ghost small"
+                            onclick="document.getElementById('roomRequestForm').style.display='none'"><i
+                                class="fa fa-times"></i> Close</button>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Requested Room</label>
+                            <input type="text" id="reqRoomNo" readonly class="form-input"
+                                placeholder="Select from grid above" />
+                        </div>
+                        <div class="form-group">
+                            <label>Reason for Change</label>
+                            <select class="form-input" id="reqReason">
+                                <option>Medical Requirement</option>
+                                <option>Roommate Conflict</option>
+                                <option>Academic Needs</option>
+                                <option>Personal Preference</option>
+                            </select>
+                        </div>
+                        <div class="form-group full">
+                            <label>Additional Comments</label>
+                            <textarea class="form-input" rows="3" id="reqComments"
+                                placeholder="Provide any additional context…"></textarea>
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="submitRoomRequest()"><i class="fa fa-paper-plane"></i> Submit
+                        Request</button>
+                </div>
+            </section>
+
+            <!-- ████ COMPLAINTS ████ -->
+            <section class="section" id="section-complaints">
+                <div class="section-title-bar">
+                    <h2>Complaint Tracking</h2>
+                    <p>Submit and track maintenance or residential complaints</p>
+                    <button class="btn-primary" onclick="openComplaintModal()"><i class="fa fa-plus"></i> New
+                        Complaint</button>
+                </div>
+
+                <div class="complaint-summary">
+                    <div class="cs-item open">
+                        <div class="cs-num" id="csOpen">3</div>
+                        <div>Open</div>
+                    </div>
+                    <div class="cs-item progress">
+                        <div class="cs-num" id="csProgress">1</div>
+                        <div>In Progress</div>
+                    </div>
+                    <div class="cs-item resolved">
+                        <div class="cs-num" id="csResolved">4</div>
+                        <div>Resolved</div>
+                    </div>
+                    <div class="cs-item total">
+                        <div class="cs-num" id="csTotal">8</div>
+                        <div>Total</div>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <select class="filter-select" id="complaintStatusFilter">
+                        <option value="all">All Status</option>
+                        <option value="open">Open</option>
+                        <option value="progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                    <select class="filter-select" id="complaintCatFilter">
+                        <option value="all">All Categories</option>
+                        <option value="maintenance">Maintenance</option>
+                        <option value="electrical">Electrical</option>
+                        <option value="plumbing">Plumbing</option>
+                        <option value="cleanliness">Cleanliness</option>
+                        <option value="security">Security</option>
+                    </select>
+                    <button class="btn-primary small" onclick="filterComplaints()"><i class="fa fa-filter"></i>
+                        Filter</button>
+                </div>
+                <div class="complaint-list" id="complaintList"></div>
+            </section>
+
+            <!-- ████ MESS MENU ████ -->
+            <section class="section" id="section-mess">
+                <div class="section-title-bar">
+                    <h2>Mess Menu</h2>
+                    <p>Weekly dining schedule —  Residential Dining</p>
+                </div>
+
+                <div class="day-tabs" id="dayTabs">
+                    <button class="day-tab" data-day="0">Sun</button>
+                    <button class="day-tab" data-day="1">Mon</button>
+                    <button class="day-tab" data-day="2">Tue</button>
+                    <button class="day-tab" data-day="3">Wed</button>
+                    <button class="day-tab" data-day="4">Thu</button>
+                    <button class="day-tab" data-day="5">Fri</button>
+                    <button class="day-tab" data-day="6">Sat</button>
+                </div>
+
+                <div class="mess-day-content" id="messDayContent"></div>
+
+                <div class="nutrition-banner">
+                    <div class="nb-icon"><i class="fa fa-leaf"></i></div>
+                    <div class="nb-text">
+                        <strong>Dietary Accommodations Available</strong>
+                        <p>Vegan, vegetarian, gluten-free, and halal options at all dining halls. Contact
+                            dining@.edu or visit the servery.</p>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <div class="card-header">
+                        <h3>Rate Today's Meal</h3>
+                    </div>
+                    <div class="meal-rating">
+                        <span>Your Rating:</span>
+                        <div class="stars" id="mealStars">
+                            <i class="fa fa-star" data-star="1"></i>
+                            <i class="fa fa-star" data-star="2"></i>
+                            <i class="fa fa-star" data-star="3"></i>
+                            <i class="fa fa-star" data-star="4"></i>
+                            <i class="fa fa-star" data-star="5"></i>
+                        </div>
+                    </div>
+                    <textarea class="form-input" rows="2" placeholder="Share your feedback about today's food…"
+                        id="messFeedback"></textarea>
+                    <button class="btn-primary" style="margin-top:12px" onclick="submitMessFeedback()"><i
+                            class="fa fa-paper-plane"></i> Submit Feedback</button>
+                </div>
+            </section>
+
+            <!-- ████ LAUNDRY ████ -->
+            <section class="section" id="section-laundry">
+                <div class="section-title-bar">
+                    <h2>Laundry Booking</h2>
+                    <p>Reserve your laundry slot — 3 machines per floor</p>
+                </div>
+
+                <div class="form-card">
+                    <div class="card-header">
+                        <h3>My Upcoming Bookings</h3>
+                    </div>
+                    <div class="laundry-booking-list" id="myLaundryBookings"></div>
+                </div>
+
+                <div class="form-card">
+                    <div class="card-header">
+                        <h3>Book a New Slot</h3>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Select Date</label>
+                            <input type="date" class="form-input" id="laundryDate" />
+                        </div>
+                        <div class="form-group">
+                            <label>Select Machine</label>
+                            <select class="form-input" id="laundryMachine">
+                                <option value="M1">Machine 1 — 2nd Floor</option>
+                                <option value="M2">Machine 2 — 2nd Floor</option>
+                                <option value="M3">Machine 3 — 2nd Floor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Wash Type</label>
+                            <select class="form-input" id="laundryWashType">
+                                <option>Regular Wash</option>
+                                <option>Delicate</option>
+                                <option>Heavy Duty</option>
+                                <option>Quick Wash (30 min)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Time Slot</label>
+                            <select class="form-input" id="laundryTime">
+                                <option>7:00 AM – 8:00 AM</option>
+                                <option>8:00 AM – 9:00 AM</option>
+                                <option>9:00 AM – 10:00 AM</option>
+                                <option>10:00 AM – 11:00 AM</option>
+                                <option>11:00 AM – 12:00 PM</option>
+                                <option>2:00 PM – 3:00 PM</option>
+                                <option>3:00 PM – 4:00 PM</option>
+                                <option>4:00 PM – 5:00 PM</option>
+                                <option>6:00 PM – 7:00 PM</option>
+                                <option>7:00 PM – 8:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="bookLaundry()"><i class="fa fa-calendar-check"></i> Book
+                        Slot</button>
+                </div>
+
+                <div class="section-subheading">Today's Slot Availability — 2nd Floor</div>
+                <div class="laundry-slot-grid" id="laundrySlotGrid"></div>
+
+                <div class="info-cards-row">
+                    <div class="info-mini-card"><i class="fa fa-clock crimson-icon"></i><strong>Max Duration</strong>
+                        <p>Each slot is 60 minutes. Overstays incur a $2/hour fee charged to your student account.</p>
+                    </div>
+                    <div class="info-mini-card"><i class="fa fa-ban crimson-icon"></i><strong>Cancellation</strong>
+                        <p>Cancel at least 2 hours before your slot to avoid a no-show penalty mark.</p>
+                    </div>
+                    <div class="info-mini-card"><i class="fa fa-soap crimson-icon"></i><strong>Detergent</strong>
+                        <p>HY-approved detergents are available free of charge at the laundry room counter.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ████ NOTICES ████ -->
+            <section class="section" id="section-notices">
+                <div class="section-title-bar">
+                    <h2>Notices &amp; Announcements</h2>
+                    <p>Updates from  Housing &amp; Residential Life</p>
+                </div>
+                <div class="notice-filter-tabs" id="noticeFilterTabs">
+                    <button class="nft active" data-cat="all">All</button>
+                    <button class="nft" data-cat="urgent">Urgent</button>
+                    <button class="nft" data-cat="maintenance">Maintenance</button>
+                    <button class="nft" data-cat="events">Events</button>
+                    <button class="nft" data-cat="policy">Policy</button>
+                </div>
+                <div class="notice-board" id="noticeBoard"></div>
+            </section>
+
+            <!-- ████ PROFILE ████ -->
+            <section class="section" id="section-profile">
+                <div class="section-title-bar">
+                    <h2>My Profile</h2>
+                    <p>Manage your personal information and hostel preferences</p>
+                </div>
+                <div class="profile-layout">
+                    <div class="profile-sidebar-card">
+                        <div class="profile-avatar-big" id="profileAvatarBig">JD</div>
+                        <div class="profile-fullname">John Doe</div>
+                        <div class="profile-id">Student ID: 2023048271</div>
+                        <div class="profile-house-tag">Adams House</div>
+                        <hr class="profile-divider" />
+                        <div class="profile-stat-mini">
+                            <div><span>204</span><small>Room</small></div>
+                            <div><span>2nd</span><small>Floor</small></div>
+                            <div><span>4.1</span><small>Rating</small></div>
+                        </div>
+                        <button class="btn-outline full-width"
+                            onclick="document.getElementById('avatarUpload').click()">
+                            <i class="fa fa-camera"></i> Change Photo
+                        </button>
+                        <input type="file" id="avatarUpload" accept="image/*" style="display:none"
+                            onchange="handleAvatarUpload(event)" />
+                    </div>
+
+                    <div class="profile-main-card">
+                        <div class="card-header">
+                            <h3>Personal Information</h3>
+                            <button class="btn-ghost small" id="editProfileBtn" onclick="toggleProfileEdit()"><i
+                                    class="fa fa-edit"></i> Edit</button>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group"><label>First Name</label><input type="text"
+                                    class="form-input profile-field" id="pfFirstName" value="John" disabled /></div>
+                            <div class="form-group"><label>Last Name</label><input type="text"
+                                    class="form-input profile-field" id="pfLastName" value="Doe" disabled /></div>
+                            <div class="form-group"><label>Email</label><input type="email"
+                                    class="form-input profile-field" id="pfEmail" value="jdoe@college..edu"
+                                    disabled /></div>
+                            <div class="form-group"><label>Phone Number</label><input type="tel"
+                                    class="form-input profile-field" id="pfPhone" value="+1 (617) 495-0001" disabled />
+                            </div>
+                            <div class="form-group"><label>Program / Department</label><input type="text"
+                                    class="form-input profile-field" id="pfDept"
+                                    value="Computer Science · School of Engineering" disabled /></div>
+                            <div class="form-group"><label>Year of Study</label><input type="text"
+                                    class="form-input profile-field" id="pfYear" value="Junior (3rd Year)" disabled />
+                            </div>
+                            <div class="form-group"><label>Emergency Contact</label><input type="text"
+                                    class="form-input profile-field" id="pfECName" value="Jane Doe" disabled /></div>
+                            <div class="form-group"><label>Emergency Phone</label><input type="tel"
+                                    class="form-input profile-field" id="pfECPhone" value="+1 (617) 555-9821"
+                                    disabled /></div>
+                        </div>
+                        <div class="form-actions" id="profileActions" style="display:none">
+                            <button class="btn-primary" onclick="saveProfile()"><i class="fa fa-save"></i> Save
+                                Changes</button>
+                            <button class="btn-ghost" onclick="cancelProfileEdit()">Cancel</button>
+                        </div>
+
+                        <div class="card-header" style="margin-top:2rem">
+                            <h3>Hostel Preferences</h3>
+                        </div>
+                        <div class="preferences-grid">
+                            <label class="pref-toggle"><input type="checkbox" checked /> Quiet Hours
+                                Notifications</label>
+                            <label class="pref-toggle"><input type="checkbox" checked /> Meal Reminders</label>
+                            <label class="pref-toggle"><input type="checkbox" /> Laundry Slot Alerts</label>
+                            <label class="pref-toggle"><input type="checkbox" checked /> Notice Emails</label>
+                            <label class="pref-toggle"><input type="checkbox" /> Share Room Temperature Data</label>
+                            <label class="pref-toggle"><input type="checkbox" checked /> SMS Alerts for
+                                Complaints</label>
+                        </div>
+                        <button class="btn-primary small" style="margin-top:1rem"
+                            onclick="showToast('Preferences saved!','success')"><i class="fa fa-check"></i> Save
+                            Preferences</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ████ ADMIN ████ -->
+            <section class="section" id="section-admin">
+                <div class="section-title-bar">
+                    <h2>Admin Panel</h2>
+                    <p>Residential Life Staff · Administrative Dashboard</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon crimson"><i class="fa fa-users"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value">482</div>
+                            <div class="stat-label">Total Residents</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon amber"><i class="fa fa-door-open"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value">248</div>
+                            <div class="stat-label">Occupied Rooms</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon teal"><i class="fa fa-exclamation-circle"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value">14</div>
+                            <div class="stat-label">Pending Complaints</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fa fa-tshirt"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value">31</div>
+                            <div class="stat-label">Laundry Today</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-grid">
+                    <div class="admin-tool-card" onclick="showToast('Opening resident management…','info')"><i
+                            class="fa fa-users-cog"></i>
+                        <h4>Manage Residents</h4>
+                        <p>Add, remove, or transfer residents across houses</p>
+                    </div>
+                    <div class="admin-tool-card" onclick="showToast('Opening room assignment module…','info')"><i
+                            class="fa fa-th"></i>
+                        <h4>Room Assignments</h4>
+                        <p>Bulk allocate, swap, or vacate room assignments</p>
+                    </div>
+                    <div class="admin-tool-card" onclick="showToast('Opening complaint queue…','info')"><i
+                            class="fa fa-tasks"></i>
+                        <h4>Complaint Queue</h4>
+                        <p>Triage, assign, and resolve maintenance tickets</p>
+                    </div>
+                    <div class="admin-tool-card" onclick="showToast('Opening menu editor…','info')"><i
+                            class="fa fa-utensils"></i>
+                        <h4>Edit Mess Menu</h4>
+                        <p>Update weekly menus and special dietary options</p>
+                    </div>
+                    <div class="admin-tool-card" onclick="openNoticeModal()"><i class="fa fa-bullhorn"></i>
+                        <h4>Post Notice</h4>
+                        <p>Publish announcements to all residents or specific houses</p>
+                    </div>
+                    <div class="admin-tool-card" onclick="showToast('Generating occupancy report…','success')"><i
+                            class="fa fa-chart-bar"></i>
+                        <h4>Reports &amp; Analytics</h4>
+                        <p>Generate occupancy, complaint, and dining reports</p>
+                    </div>
+                </div>
+
+                <div class="section-subheading">Resident Directory</div>
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Room</th>
+                                <th>House</th>
+                                <th>Program</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="residentTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ═══════════════ MODALS ═══════════════ -->
+
+    <!-- Complaint Modal -->
+    <div class="modal-backdrop" id="complaintModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>File a New Complaint</h3>
+                <button class="modal-close" onclick="closeModal('complaintModal')"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-input" id="cmpCategory">
+                            <option value="maintenance">Maintenance</option>
+                            <option value="electrical">Electrical</option>
+                            <option value="plumbing">Plumbing</option>
+                            <option value="cleanliness">Cleanliness</option>
+                            <option value="security">Security</option>
+                            <option value="noise">Noise</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select class="form-input" id="cmpPriority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+                    <div class="form-group full">
+                        <label>Subject *</label>
+                        <input type="text" class="form-input" id="cmpSubject"
+                            placeholder="Brief description of the issue" />
+                    </div>
+                    <div class="form-group full">
+                        <label>Detailed Description *</label>
+                        <textarea class="form-input" rows="4" id="cmpDesc"
+                            placeholder="Describe the issue in detail…"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Location / Room</label>
+                        <input type="text" class="form-input" id="cmpLocation"
+                            placeholder="e.g., Room 204, 2nd Floor Bathroom" />
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Resolution</label>
+                        <select class="form-input" id="cmpTime">
+                            <option>Within 24 hours</option>
+                            <option>Within 3 days</option>
+                            <option>Within a week</option>
+                            <option>No urgency</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ghost" onclick="closeModal('complaintModal')">Cancel</button>
+                <button class="btn-primary" onclick="submitComplaint()"><i class="fa fa-paper-plane"></i>
+                    Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notice Modal -->
+    <div class="modal-backdrop" id="noticeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Post New Notice</h3>
+                <button class="modal-close" onclick="closeModal('noticeModal')"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group full"><label>Notice Title *</label><input type="text" class="form-input"
+                            id="noticeTitle" placeholder="e.g., Hot Water Outage — March 20" /></div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-input" id="noticeCat">
+                            <option value="urgent">Urgent</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="events">Events</option>
+                            <option value="policy">Policy</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Target House</label>
+                        <select class="form-input" id="noticeHouse">
+                            <option>All Houses</option>
+                            <option>Adams House</option>
+                            <option>Cabot House</option>
+                            <option>Dunster House</option>
+                            <option>Eliot House</option>
+                        </select>
+                    </div>
+                    <div class="form-group full"><label>Notice Content *</label><textarea class="form-input" rows="5"
+                            id="noticeContent" placeholder="Full notice text here…"></textarea></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ghost" onclick="closeModal('noticeModal')">Cancel</button>
+                <button class="btn-primary" onclick="postNotice()"><i class="fa fa-bullhorn"></i> Post Notice</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Room Detail Modal -->
+    <div class="modal-backdrop" id="roomDetailModal">
+        <div class="modal wide">
+            <div class="modal-header">
+                <h3 id="rdmTitle">Room Details</h3>
+                <button class="modal-close" onclick="closeModal('roomDetailModal')"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="rdmBody"></div>
+            <div class="modal-footer">
+                <button class="btn-ghost" onclick="closeModal('roomDetailModal')">Close</button>
+                <button class="btn-primary" id="rdmRequestBtn"><i class="fa fa-exchange-alt"></i> Request This
+                    Room</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

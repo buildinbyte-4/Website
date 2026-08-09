@@ -34,8 +34,15 @@ const getCategoryFromTech = (techStack = []) => {
 };
 
 const getDemoUrl = (product) => {
-  if (product.demo_url || product.demoUrl || product.url) {
-    return product.demo_url || product.demoUrl || product.url;
+  let demoUrl = product.demo_url || product.demoUrl || product.url || null;
+  if (demoUrl) {
+    if (demoUrl.includes('/demos/')) {
+      demoUrl = demoUrl.replace('/demos/', '/templates/');
+      if (!demoUrl.endsWith('index.html')) {
+        demoUrl = demoUrl.endsWith('/') ? `${demoUrl}index.html` : `${demoUrl}/index.html`;
+      }
+    }
+    return demoUrl;
   }
 
   const nameLower = (product.name || '').toLowerCase();
@@ -45,6 +52,7 @@ const getDemoUrl = (product) => {
   if (nameLower.includes('elecstore') || nameLower.includes('electronics')) return '/templates/elecstore/index.html';
   if (nameLower.includes('kanchi')) return '/templates/kanchimarket/index.html';
   if (nameLower.includes('scsvmv') || nameLower.includes('university') || nameLower.includes('school')) return '/templates/scsvmv/index.html';
+  if (nameLower.includes('hostel')) return '/templates/hostel-management/index.html';
   return null;
 };
 

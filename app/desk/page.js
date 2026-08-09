@@ -5,12 +5,74 @@ import { supabase } from '@/lib/supabase';
 import FloatingContactButton from '@/components/FloatingContactButton';
 import InquiryModal from '@/components/InquiryModal';
 
+// ── Static project data (no projects table exists yet) ──────────────
+const STATIC_PROJECTS = [
+  {
+    id: 'BIB-4982',
+    name: 'BuildInByte Custom SaaS',
+    desc: 'Main corporate codebase and API services deployment.',
+    status: 'active',  // active | in_scoping | completed
+  },
+  {
+    id: 'BIB-7712',
+    name: 'API Documentation',
+    desc: 'Internal developer guides and integration protocols.',
+    status: 'in_scoping',
+  },
+];
+
+// ── Status badge styling helper ─────────────────────────────────────
+function getProjectBadge(status) {
+  switch (status) {
+    case 'active':
+      return { label: 'ACTIVE', cls: 'bg-[#0066FF] text-white border-2 border-black' };
+    case 'in_scoping':
+      return { label: 'IN SCOPING', cls: 'bg-white text-black border-2 border-black' };
+    case 'completed':
+      return { label: 'COMPLETED', cls: 'bg-black text-white border-2 border-black' };
+    default:
+      return { label: status.toUpperCase(), cls: 'bg-white text-black border-2 border-black' };
+  }
+}
+
+function getOrderStatusBadge(status) {
+  switch (status) {
+    case 'paid':
+      return { label: 'PAID', cls: 'bg-black text-white border-2 border-black' };
+    case 'pending':
+      return { label: 'PENDING', cls: 'bg-white text-[#0066FF] border-2 border-[#0066FF]' };
+    case 'failed':
+      return { label: 'FAILED', cls: 'bg-white text-red-600 border-2 border-red-600' };
+    case 'refunded':
+      return { label: 'REFUNDED', cls: 'bg-white text-red-600 border-2 border-red-600' };
+    default:
+      return { label: (status || '—').toUpperCase(), cls: 'bg-white text-black border-2 border-black' };
+  }
+}
+
+// ── Date formatter ──────────────────────────────────────────────────
+function fmtDate(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+function fmtMonthYear(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+
 export default function DeskPage() {
   const [session, setSession] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('MY PROJECTS');
   const [inquiryConfig, setInquiryConfig] = useState(null);
 
+  // Real data from Supabase
+  const [orders, setOrders] = useState([]);
+  const [ordersLoading, setOrdersLoading] = useState(true);
+
+  // ── Auth ───────────────────────────────────────────────────────────
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -30,10 +92,35 @@ export default function DeskPage() {
     return () => subscription.unsubscribe();
   }, []);
 
+  // ── Fetch orders for logged-in user ───────────────────────────────
+  useEffect(() => {
+    if (!session?.user?.email) return;
+    const fetchOrders = async () => {
+      setOrdersLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('orders')
+          .select('*, order_items(*)')
+          .eq('buyer_email', session.user.email)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        setOrders(data || []);
+      } catch (err) {
+        console.error('Error fetching orders:', err);
+        setOrders([]);
+      } finally {
+        setOrdersLoading(false);
+      }
+    };
+    fetchOrders();
+  }, [session?.user?.email]);
+
   const handleInquiryRequest = (config) => {
     setInquiryConfig(config);
   };
 
+  // ── Loading state ─────────────────────────────────────────────────
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-brutal-bg">
@@ -49,13 +136,40 @@ export default function DeskPage() {
 
   if (!session) return null;
 
+  // ── Derived values ────────────────────────────────────────────────
   const email = session.user?.email || '';
   const fullName = session.user?.user_metadata?.full_name || session.user?.user_metadata?.name || 'Developer';
   const role = email.includes('admin') ? 'Administrator' : 'Client Workspace';
+  const memberSince = fmtMonthYear(session.user?.created_at);
+
+  // Summary stats (derived from real orders)
+  const paidOrders = orders.filter(o => o.status === 'paid');
+  const totalSpent = paidOrders.reduce((sum, o) => sum + (Number(o.amount_usd) || 0), 0);
+  const invoiceCount = orders.length;
+
+  // Activity feed (derived from real orders + account creation)
+  const activityEvents = [
+    // Account creation event
+    {
+      type: 'account',
+      label: 'Account created',
+      detail: `Workspace registration confirmed for ${email}`,
+      date: session.user?.created_at,
+      color: 'bg-brutal-green',
+    },
+    // Order events
+    ...orders.map(o => ({
+      type: 'order',
+      label: `Invoice ORD-${o.id.slice(0, 8).toUpperCase()} created — $${Number(o.amount_usd || 0).toLocaleString()}`,
+      detail: `Payment status: ${(o.status || 'unknown').toUpperCase()}`,
+      date: o.created_at,
+      color: 'bg-brutal-blue',
+    })),
+  ].sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const menuItems = [
     'MY PROJECTS',
-    'MY ORDERS',
+    'BILLING & ORDERS',
     'MY HISTORY',
     'ACCOUNT SETTINGS',
     'SUPPORT & CONSULTATIONS'
@@ -93,7 +207,52 @@ export default function DeskPage() {
           </div>
         </div>
 
-        {/* 2-Column Grid Layout */}
+        {/* ── TOP SUMMARY STRIP ─────────────────────────────────── */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          {/* Total Spent */}
+          <div className="editorial-card p-6 bg-white flex flex-col justify-between">
+            <span className="font-display text-[10px] font-black uppercase tracking-widest text-white bg-brutal-black px-2 py-1 mb-4 inline-block shadow-brutal-sm self-start">
+              Total Spent
+            </span>
+            <span className="font-display font-black text-4xl sm:text-5xl text-brutal-black block leading-none">
+              ${totalSpent.toLocaleString()}
+            </span>
+            <div className="h-1 bg-brutal-black mt-4" />
+            <span className="text-xs text-brutal-black font-bold uppercase mt-4 block pt-2">
+              Lifetime paid invoices
+            </span>
+          </div>
+
+          {/* Invoices */}
+          <div className="editorial-card p-6 bg-white flex flex-col justify-between">
+            <span className="font-display text-[10px] font-black uppercase tracking-widest text-white bg-brutal-black px-2 py-1 mb-4 inline-block shadow-brutal-sm self-start">
+              Invoices
+            </span>
+            <span className="font-display font-black text-4xl sm:text-5xl text-brutal-black block leading-none">
+              {invoiceCount}
+            </span>
+            <div className="h-1 bg-brutal-black mt-4" />
+            <span className="text-xs text-brutal-black font-bold uppercase mt-4 block pt-2">
+              Total orders on file
+            </span>
+          </div>
+
+          {/* Member Since */}
+          <div className="editorial-card p-6 bg-white flex flex-col justify-between">
+            <span className="font-display text-[10px] font-black uppercase tracking-widest text-white bg-brutal-black px-2 py-1 mb-4 inline-block shadow-brutal-sm self-start">
+              Member Since
+            </span>
+            <span className="font-display font-black text-4xl sm:text-5xl text-brutal-black block leading-none">
+              {memberSince}
+            </span>
+            <div className="h-1 bg-brutal-black mt-4" />
+            <span className="text-xs text-brutal-black font-bold uppercase mt-4 block pt-2">
+              Account creation date
+            </span>
+          </div>
+        </div>
+
+        {/* ── 2-COLUMN GRID LAYOUT ──────────────────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Column: Sidebar Navigation Menu */}
@@ -118,6 +277,8 @@ export default function DeskPage() {
 
           {/* Right Column: Active Tab Content Area */}
           <div className="lg:col-span-8 bg-white border-4 border-brutal-black p-6 sm:p-8 shadow-brutal min-h-[400px]">
+
+            {/* ═══════════════ MY PROJECTS ═══════════════ */}
             {activeTab === 'MY PROJECTS' && (
               <div className="space-y-6">
                 <div className="border-b-4 border-black pb-4">
@@ -126,87 +287,116 @@ export default function DeskPage() {
                   </h2>
                 </div>
                 <div className="space-y-4">
-                  <div className="editorial-card p-6 bg-brutal-yellow/10 border-2 border-black shadow-brutal-sm">
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <h3 className="font-black text-lg uppercase text-brutal-black">BuildInByte Custom SaaS</h3>
-                        <span className="text-[10px] font-black uppercase bg-brutal-green text-brutal-black px-2 py-0.5 border border-black rounded mt-1 inline-block">
-                          Active
-                        </span>
+                  {STATIC_PROJECTS.map((project) => {
+                    const badge = getProjectBadge(project.status);
+                    return (
+                      <div key={project.id} className="editorial-card p-6 bg-white border-2 border-black shadow-brutal-sm">
+                        <div className="flex justify-between items-start mb-3">
+                          <div>
+                            <h3 className="font-black text-lg uppercase text-brutal-black">{project.name}</h3>
+                            <span className={`text-[10px] font-black uppercase px-2 py-0.5 mt-1 inline-block ${badge.cls}`}>
+                              {badge.label}
+                            </span>
+                          </div>
+                          <span className="font-mono text-xs font-bold text-zinc-500">ID: {project.id}</span>
+                        </div>
+                        <p className="text-xs text-zinc-700 font-bold uppercase mb-5">{project.desc}</p>
+                        <div className="flex gap-3">
+                          <button
+                            onClick={() => handleInquiryRequest({ title: `Project Update: ${project.name}` })}
+                            className="flex-1 text-center px-4 py-2.5 bg-[#0066FF] text-white text-xs font-black uppercase border-2 border-black shadow-brutal-sm hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform cursor-pointer"
+                          >
+                            Request Update
+                          </button>
+                          <button
+                            onClick={() => handleInquiryRequest({ title: `Support: ${project.name}` })}
+                            className="flex-1 text-center px-4 py-2.5 bg-white text-black text-xs font-black uppercase border-2 border-black shadow-brutal-sm hover:bg-brutal-yellow transition-colors cursor-pointer"
+                          >
+                            Message Team
+                          </button>
+                        </div>
                       </div>
-                      <span className="font-mono text-xs font-bold text-zinc-500">ID: BIB-4982</span>
-                    </div>
-                    <p className="text-xs text-zinc-700 font-bold uppercase mb-4">Main corporate codebase and API services deployment.</p>
-                    <div className="grid grid-cols-2 gap-4 text-xs font-bold">
-                      <div className="bg-white border-2 border-black p-3 text-center">
-                        <span className="block text-[10px] text-zinc-400">STATUS</span>
-                        <span className="text-brutal-green font-black">99.9% UPTIME</span>
-                      </div>
-                      <div className="bg-white border-2 border-black p-3 text-center">
-                        <span className="block text-[10px] text-zinc-400">LATENCY</span>
-                        <span className="text-brutal-blue font-black">12MS avg</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="editorial-card p-6 bg-brutal-pink/10 border-2 border-black shadow-brutal-sm">
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <h3 className="font-black text-lg uppercase text-brutal-black">API Documentation</h3>
-                        <span className="text-[10px] font-black uppercase bg-brutal-yellow text-brutal-black px-2 py-0.5 border border-black rounded mt-1 inline-block">
-                          In Scoping
-                        </span>
-                      </div>
-                      <span className="font-mono text-xs font-bold text-zinc-500">ID: BIB-7712</span>
-                    </div>
-                    <p className="text-xs text-zinc-700 font-bold uppercase mb-4">Internal developer guides and integration protocols.</p>
-                    <Link href="/" className="btn-secondary py-2 justify-center text-xs text-center w-full block bg-white border-2 border-black">
-                      Browse Templates Catalog
-                    </Link>
-                  </div>
+                    );
+                  })}
                 </div>
               </div>
             )}
 
-            {activeTab === 'MY ORDERS' && (
+            {/* ═══════════════ BILLING & ORDERS ═══════════════ */}
+            {activeTab === 'BILLING & ORDERS' && (
               <div className="space-y-6">
                 <div className="border-b-4 border-black pb-4">
                   <h2 className="font-display font-black text-2xl text-brutal-black uppercase bg-brutal-pink/20 px-3 py-1 border-l-4 border-brutal-black inline-block">
-                    My Orders
+                    Billing & Orders
                   </h2>
                 </div>
-                <div className="space-y-4">
-                  <div className="editorial-card p-6 bg-white border-2 border-black">
-                    <div className="flex justify-between items-center border-b border-[#E2E8F0] pb-3 mb-3">
-                      <div>
-                        <h3 className="font-black text-sm uppercase text-brutal-black">Invoice #BIB-2026-001</h3>
-                        <span className="text-xs text-zinc-500 font-bold">Aug 5, 2026</span>
-                      </div>
-                      <span className="font-black text-sm text-brutal-green bg-green-50 border border-green-200 px-2 py-0.5">PAID</span>
-                    </div>
-                    <div className="flex justify-between text-xs font-bold uppercase text-zinc-700">
-                      <span>Custom API Integration Plan</span>
-                      <span className="text-brutal-black">$499.00</span>
-                    </div>
-                  </div>
 
-                  <div className="editorial-card p-6 bg-white border-2 border-black">
-                    <div className="flex justify-between items-center border-b border-[#E2E8F0] pb-3 mb-3">
-                      <div>
-                        <h3 className="font-black text-sm uppercase text-brutal-black">Inquiry #BIB-REQ-889</h3>
-                        <span className="text-xs text-zinc-500 font-bold">Aug 5, 2026</span>
-                      </div>
-                      <span className="font-black text-sm text-brutal-blue bg-blue-50 border border-blue-200 px-2 py-0.5">PENDING REVIEW</span>
-                    </div>
-                    <div className="flex justify-between text-xs font-bold uppercase text-zinc-700">
-                      <span>Technical Scoping Consultation</span>
-                      <span className="text-brutal-black">Quote Requested</span>
-                    </div>
+                {ordersLoading ? (
+                  <div className="flex items-center justify-center py-16">
+                    <div className="w-10 h-10 border-4 border-brutal-black bg-brutal-yellow animate-spin"></div>
                   </div>
-                </div>
+                ) : orders.length === 0 ? (
+                  <div className="border-2 border-black p-8 text-center bg-zinc-50">
+                    <div className="text-3xl mb-3">📄</div>
+                    <h3 className="font-black text-sm uppercase text-brutal-black mb-1">No Orders Yet</h3>
+                    <p className="text-xs text-zinc-500 font-bold uppercase">
+                      Your invoices and payment history will appear here.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {orders.map((order) => {
+                      const badge = getOrderStatusBadge(order.status);
+                      const items = order.order_items || [];
+                      return (
+                        <div key={order.id} className="editorial-card p-6 bg-white border-2 border-black">
+                          <div className="flex justify-between items-center border-b-2 border-zinc-200 pb-3 mb-3">
+                            <div>
+                              <h3 className="font-black text-sm uppercase text-brutal-black">
+                                ORD-{order.id.slice(0, 8).toUpperCase()}
+                              </h3>
+                              <span className="text-xs text-zinc-500 font-bold">{fmtDate(order.created_at)}</span>
+                            </div>
+                            <span className={`font-black text-[10px] uppercase px-2.5 py-1 ${badge.cls}`}>
+                              {badge.label}
+                            </span>
+                          </div>
+
+                          {/* Line items */}
+                          {items.length > 0 && (
+                            <div className="space-y-1 mb-3">
+                              {items.map((item, idx) => (
+                                <div key={idx} className="flex justify-between text-xs font-bold uppercase text-zinc-700">
+                                  <span>{item.name}</span>
+                                  <span className="text-brutal-black">${Number(item.price_usd || 0).toLocaleString()}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          <div className="flex justify-between items-center pt-2 border-t border-zinc-200">
+                            <span className="text-xs font-bold text-zinc-500 uppercase">Total</span>
+                            <span className="font-black text-lg text-brutal-black">
+                              ${Number(order.amount_usd || 0).toLocaleString()}
+                            </span>
+                          </div>
+
+                          {order.stripe_payment_id && order.stripe_payment_id !== '—' && (
+                            <div className="mt-3 pt-2 border-t border-zinc-200">
+                              <span className="text-[10px] font-bold text-zinc-400 uppercase">
+                                TXN: {order.stripe_payment_id}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             )}
 
+            {/* ═══════════════ MY HISTORY ═══════════════ */}
             {activeTab === 'MY HISTORY' && (
               <div className="space-y-6">
                 <div className="border-b-4 border-black pb-4">
@@ -214,29 +404,35 @@ export default function DeskPage() {
                     My History
                   </h2>
                 </div>
-                <div className="relative border-l-4 border-brutal-black ml-4 pl-6 space-y-8 py-2">
-                  <div className="relative">
-                    <span className="absolute -left-[30px] top-0 w-3.5 h-3.5 bg-brutal-green border-2 border-black rounded-full"></span>
-                    <div className="text-xs font-black text-zinc-400 uppercase">Aug 5, 2026 at 20:30</div>
-                    <div className="font-bold text-sm text-brutal-black uppercase mt-1">Authorized Profile Verification</div>
-                    <p className="text-xs text-zinc-500 font-bold uppercase">Updated contact phone number and preset avatar preferences.</p>
+
+                {activityEvents.length === 0 ? (
+                  <div className="border-2 border-black p-8 text-center bg-zinc-50">
+                    <div className="text-3xl mb-3">📋</div>
+                    <h3 className="font-black text-sm uppercase text-brutal-black mb-1">No Activity Yet</h3>
+                    <p className="text-xs text-zinc-500 font-bold uppercase">
+                      Your account events will appear here.
+                    </p>
                   </div>
-                  <div className="relative">
-                    <span className="absolute -left-[30px] top-0 w-3.5 h-3.5 bg-brutal-blue border-2 border-black rounded-full"></span>
-                    <div className="text-xs font-black text-zinc-400 uppercase">Aug 5, 2026 at 19:40</div>
-                    <div className="font-bold text-sm text-brutal-black uppercase mt-1">Google OAuth Session Initiated</div>
-                    <p className="text-xs text-zinc-500 font-bold uppercase">Logged in from browser callback callback.</p>
+                ) : (
+                  <div className="relative border-l-4 border-brutal-black ml-4 pl-6 space-y-8 py-2">
+                    {activityEvents.map((event, idx) => (
+                      <div key={idx} className="relative">
+                        <span className={`absolute -left-[30px] top-0.5 w-3.5 h-3.5 ${event.color} border-2 border-black`}></span>
+                        <div className="text-xs font-black text-zinc-400 uppercase">
+                          {fmtDate(event.date)}
+                        </div>
+                        <div className="font-bold text-sm text-brutal-black uppercase mt-1">
+                          {event.label}
+                        </div>
+                        <p className="text-xs text-zinc-500 font-bold uppercase">{event.detail}</p>
+                      </div>
+                    ))}
                   </div>
-                  <div className="relative">
-                    <span className="absolute -left-[30px] top-0 w-3.5 h-3.5 bg-brutal-yellow border-2 border-black rounded-full"></span>
-                    <div className="text-xs font-black text-zinc-400 uppercase">Aug 5, 2026 at 15:30</div>
-                    <div className="font-bold text-sm text-brutal-black uppercase mt-1">Account Created</div>
-                    <p className="text-xs text-zinc-500 font-bold uppercase">Workspace registration confirmed.</p>
-                  </div>
-                </div>
+                )}
               </div>
             )}
 
+            {/* ═══════════════ ACCOUNT SETTINGS ═══════════════ */}
             {activeTab === 'ACCOUNT SETTINGS' && (
               <div className="space-y-6">
                 <div className="border-b-4 border-black pb-4">
@@ -267,6 +463,7 @@ export default function DeskPage() {
               </div>
             )}
 
+            {/* ═══════════════ SUPPORT & CONSULTATIONS ═══════════════ */}
             {activeTab === 'SUPPORT & CONSULTATIONS' && (
               <div className="space-y-6">
                 <div className="border-b-4 border-black pb-4">

@@ -50,6 +50,14 @@ const TEMPLATES = [
     description: 'Institutional public-facing website template tailored for educational organizations, universities, and academies.',
     url: '/templates/scsvmv/index.html',
     badge: 'Academic / Institutional'
+  },
+  {
+    id: 'hostel-management',
+    name: 'Hostel Management System',
+    category: 'Education & Enterprise',
+    description: 'An administrative portal for university student housing, featuring room allocation dashboards, warden communications, maintenance request queues, and student profiles.',
+    url: '/templates/hostel-management/index.html',
+    badge: 'Student Housing / Portal'
   }
 ];
 
