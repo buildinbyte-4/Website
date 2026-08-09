@@ -19,6 +19,7 @@ export async function POST(request) {
 }
 
 export async function GET(request) {
+  console.log('GET logout route hit!');
   try {
     const origin = process.env.NEXT_PUBLIC_APP_URL || request.headers.get('origin') || 'http://localhost:8000';
     const response = NextResponse.redirect(new URL('/', origin));

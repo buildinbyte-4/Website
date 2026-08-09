@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import crypto from 'crypto';
 
 export function applySecurityHeaders(request, response) {
   const origin = request.headers.get('origin');
@@ -15,12 +16,12 @@ export function applySecurityHeaders(request, response) {
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
   if (process.env.NODE_ENV === 'production') {
-    response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    const nonce = crypto.randomBytes(16).toString('base64');
 
     const cspHeader = [
       "default-src 'self';",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://rfrowgjjwrwdcigftcjl.supabase.co;",
-      "style-src 'self' 'unsafe-inline';",
+      `script-src 'self' https://rfrowgjjwrwdcigftcjl.supabase.co 'nonce-${nonce}';`,
+      `style-src 'self' https://api.dicebear.com 'nonce-${nonce}';`,
       "img-src 'self' data: blob: https://api.dicebear.com https://rfrowgjjwrwdcigftcjl.supabase.co;",
       "connect-src 'self' https://rfrowgjjwrwdcigftcjl.supabase.co https://formsubmit.co ws: wss:;",
       "font-src 'self' data:;",
@@ -30,6 +31,13 @@ export function applySecurityHeaders(request, response) {
     ].join(' ');
 
     response.headers.set('Content-Security-Policy', cspHeader);
+    response.headers.set('X-Content-Security-Policy', cspHeader);
+
+    // Additional security headers
+    response.headers.set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+    response.headers.set('X-Permitted-Cross-Domain-Policies', 'none');
+    response.headers.set('X-Download-Options', 'noopen');
+    response.headers.set('X-DNS-Prefetch-Control', 'off');
   }
 
   return response;

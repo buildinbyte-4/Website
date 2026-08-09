@@ -21,3 +21,11 @@ yarn-error.log*
 # System files
 .DS_Store
 Thumbs.db
+
+# Backup, logs, and scratch files
+*.backup
+*.log
+debug.js
+test-example.js
+test-results/
+

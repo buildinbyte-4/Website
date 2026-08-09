@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { PROJECTS } from '@/lib/data';
+import ProjectCoverArt from './ProjectCoverArt';
 
 function StatCounter({ targetValue, duration = 800, hasIntersected, suffix = '' }) {
   const [currentValue, setCurrentValue] = useState(0);
@@ -79,98 +80,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
     return defaultMetrics;
   };
 
-  const renderMockup = (project) => {
-    const title = (project.title || '').toLowerCase();
-    
-    // Custom mockups representing the template types
-    if (title.includes('hotel') || title.includes('hospitality')) {
-      return (
-        <div className="w-full h-36 bg-zinc-950 text-white p-3 flex flex-col justify-between font-sans border-b-4 border-brutal-black relative overflow-hidden select-none">
-          <div className="flex justify-between items-center border-b border-zinc-800 pb-1.5">
-            <span className="text-[10px] font-black tracking-widest text-[#0066FF]">AURELIA GRAND</span>
-            <span className="text-[8px] bg-[#FFE800] text-black px-1.5 font-bold uppercase">5 STAR</span>
-          </div>
-          <div className="my-auto text-left">
-            <div className="text-sm font-black leading-tight uppercase font-display">Refined Luxury</div>
-            <div className="text-[7px] text-zinc-400 mt-1 uppercase max-w-[80%] leading-normal">
-              Ocean suite rooms starting from $450/night. Integrated wellness spa.
-            </div>
-          </div>
-          <div className="flex justify-between items-center text-[7px] border-t border-zinc-800 pt-1.5 text-zinc-500 font-mono">
-            <span>ROOMS AVAILABLE: 14</span>
-            <span className="text-[#00FF41]">● ONLINE BOOKING</span>
-          </div>
-        </div>
-      );
-    } else if (title.includes('real estate') || title.includes('property')) {
-      return (
-        <div className="w-full h-36 bg-zinc-50 text-black p-3 flex flex-col justify-between font-sans border-b-4 border-brutal-black relative overflow-hidden select-none dark:bg-zinc-900 dark:text-white">
-          <div className="flex justify-between items-center">
-            <span className="text-[8px] bg-zinc-900 text-white dark:bg-white dark:text-black px-1.5 font-bold uppercase">FOR SALE</span>
-            <span className="text-[10px] font-black text-zinc-800 dark:text-zinc-200 font-mono">$1,249,000</span>
-          </div>
-          <div className="my-2 border-2 border-dashed border-zinc-300 dark:border-zinc-700 p-1 bg-white dark:bg-zinc-950 flex gap-2 items-center">
-            <div className="w-8 h-8 bg-zinc-200 dark:bg-zinc-800 border border-black flex items-center justify-center text-sm shrink-0">🏠</div>
-            <div className="text-left leading-none">
-              <span className="text-[8px] font-black uppercase block">The Oakwood Estate</span>
-              <span className="text-[7px] text-zinc-500 uppercase mt-0.5 block">5 BED • 4 BATH • 4,200 SQFT</span>
-            </div>
-          </div>
-          <div className="flex justify-between items-center text-[7px] text-zinc-500 font-mono">
-            <span>LOC: PORTLAND, OR</span>
-            <span className="text-[#0066FF] font-bold">VIEW DETAILS →</span>
-          </div>
-        </div>
-      );
-    } else if (title.includes('elecstore') || title.includes('electronics') || title.includes('commerce') || title.includes('market') || title.includes('store') || title.includes('shop')) {
-      return (
-        <div className="w-full h-36 bg-white text-black p-3 flex flex-col justify-between font-sans border-b-4 border-brutal-black relative overflow-hidden select-none dark:bg-zinc-950 dark:text-white">
-          <div className="flex justify-between items-center border-b border-zinc-200 dark:border-zinc-800 pb-1.5">
-            <span className="text-[9px] font-black tracking-widest uppercase">ELECSTORE.NET</span>
-            <span className="text-[8px] bg-red-600 text-white px-1.5 font-bold uppercase">-15% OFF</span>
-          </div>
-          <div className="grid grid-cols-2 gap-2 my-auto">
-            <div className="border border-zinc-200 dark:border-zinc-800 p-1.5 bg-zinc-50 dark:bg-zinc-900 text-center flex flex-col items-center">
-              <span className="text-xs">🎧</span>
-              <span className="text-[7px] font-bold mt-1 uppercase block truncate max-w-full">Pro Headset</span>
-              <span className="text-[8px] font-black text-blue-600 dark:text-blue-400 mt-0.5">$89.00</span>
-            </div>
-            <div className="border border-zinc-200 dark:border-zinc-800 p-1.5 bg-zinc-50 dark:bg-zinc-900 text-center flex flex-col items-center">
-              <span className="text-xs">⌚</span>
-              <span className="text-[7px] font-bold mt-1 uppercase block truncate max-w-full">Smartwatch</span>
-              <span className="text-[8px] font-black text-blue-600 dark:text-blue-400 mt-0.5">$199.00</span>
-            </div>
-          </div>
-          <div className="text-[6px] text-zinc-400 uppercase text-center font-mono tracking-widest mt-1">
-            SECURE CHECKOUT ENABLED
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div className="w-full h-36 bg-zinc-950 text-white p-3 flex flex-col justify-between font-sans border-b-4 border-brutal-black relative overflow-hidden select-none">
-          <div className="flex justify-between items-center border-b border-zinc-800 pb-1.5">
-            <span className="text-[10px] font-black tracking-widest uppercase text-emerald-400">INSTITUTIONAL CORE</span>
-            <span className="text-[8px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-1.5 font-bold uppercase">ACCREDITED</span>
-          </div>
-          <div className="my-auto text-left space-y-1">
-            <div className="text-xs font-black uppercase text-zinc-100">Portal Main Dashboard</div>
-            <div className="h-1 bg-zinc-800 w-full rounded-full overflow-hidden">
-              <div className="h-full bg-emerald-400 w-[78%]"></div>
-            </div>
-            <div className="flex justify-between text-[7px] text-zinc-500 uppercase font-mono">
-              <span>Server Uptime: 99.98%</span>
-              <span>78% complete</span>
-            </div>
-          </div>
-          <div className="flex justify-between items-center text-[7px] border-t border-zinc-800 pt-1.5 text-zinc-500 font-mono">
-            <span>SCSVMV SYSTEMS</span>
-            <span className="text-emerald-400">● SECURE SYNC</span>
-          </div>
-        </div>
-      );
-    }
-  };
+
 
   return (
     <section id="case-studies" ref={sectionRef} className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
@@ -256,21 +166,8 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                 style={{ transitionDelay: `${index * 80}ms` }}
               >
                 
-                {/* macOS Browser Header */}
-                <div className="border-b-4 border-brutal-black bg-zinc-100 dark:bg-zinc-900 p-3 flex items-center justify-between shrink-0 select-none">
-                  <div className="flex gap-1.5 shrink-0">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-500 border border-brutal-black"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500 border border-brutal-black"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-500 border border-brutal-black"></div>
-                  </div>
-                  <div className="bg-white dark:bg-black border-2 border-brutal-black text-[9px] font-mono px-2 py-0.5 rounded text-zinc-500 uppercase select-none overflow-hidden truncate max-w-[60%] shrink-0">
-                    {project.industry ? project.industry.toLowerCase() : 'custom'}_system.bin
-                  </div>
-                  <div className="w-8 shrink-0"></div>
-                </div>
-
-                {/* Structured Preview Mockup */}
-                {renderMockup(project)}
+                {/* Generative Project Cover Art */}
+                <ProjectCoverArt project={project} />
 
                 <div className="p-6 bg-white border-b-4 border-brutal-black flex-1 dark:bg-black">
                   {/* Title & Description */}

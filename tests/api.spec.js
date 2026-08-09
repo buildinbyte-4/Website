@@ -1,0 +1,48 @@
+const { test, expect } = require('@playwright/test');
+
+test.describe('API Endpoints', () => {
+  const BASE_URL = 'http://localhost:8000';
+
+  test('POST /api/admin/login returns 401 for invalid credentials', async ({ request }) => {
+    const response = await request.post(`${BASE_URL}/api/admin/login`, {
+      data: {
+        username: 'wrong',
+        password: 'wrong',
+      },
+    });
+    expect(response.status()).toBe(401);
+    const json = await response.json();
+    expect(json.error).toContain('Invalid username or password');
+  });
+
+  test('POST /api/admin/logout clears session cookie', async ({ request }) => {
+    const response = await request.post(`${BASE_URL}/api/admin/logout`, {
+      data: {},
+    });
+    expect(response.status()).toBe(200);
+    const json = await response.json();
+    expect(json.data.loggedOut).toBe(true);
+    const setCookieHeader = response.headers()['set-cookie'];
+    // Normalize to array
+    const setCookieArray = Array.isArray(setCookieHeader) ? setCookieHeader : (setCookieHeader ? [setCookieHeader] : []);
+    expect(setCookieArray.length).toBeGreaterThan(0);
+    const found = setCookieArray.some(cookie => {
+      return typeof cookie === 'string' && cookie.includes('admin_session') && cookie.includes('Max-Age=0');
+    });
+    expect(found).toBe(true);
+  });
+
+  test('GET /api/admin/logout redirects to homepage', async ({ request }) => {
+    const response = await request.get(`${BASE_URL}/api/admin/logout`, {
+      redirect: 'manual'
+    });
+    // Expect redirect status (307 etc)
+    const status = response.status();
+    console.log(`GET /api/admin/logout status: ${status}`);
+    console.log(`Headers:`, JSON.stringify(response.headers()));
+    const redirectUrl = response.headers()['location'];
+    console.log(`Location: ${redirectUrl}`);
+    expect([301, 302, 307, 308]).toContain(status);
+    expect(redirectUrl).toContain('/');
+  });
+});

@@ -716,3 +716,29 @@ html:not(.dark) footer .text-\[\#1D4FF7\],
 html:not(.dark) footer .text-\[\#1D4FF7\] * {
   color: #1D4FF7 !important;
 }
+
+/* Hard diagonal scan sweep effect */
+@keyframes scan-sweep {
+  0% {
+    transform: translateX(-150%) skewX(-45deg);
+  }
+  100% {
+    transform: translateX(250%) skewX(-45deg);
+  }
+}
+
+.scan-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 15%;
+  background-color: rgba(29, 79, 247, 0.3);
+  transform: translateX(-150%) skewX(-45deg);
+  pointer-events: none;
+}
+
+/* Trigger scan sweep when parent card (group) is hovered */
+.group:hover .scan-bar {
+  animation: scan-sweep 300ms linear forwards;
+}
+

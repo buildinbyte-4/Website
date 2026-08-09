@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  // experimental: { appDir: true } // removed as appDir is stable in Next.js 13+
 };
 
 export default nextConfig;

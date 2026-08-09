@@ -1,9 +1,14 @@
 import { NextResponse } from 'next/server';
 import { protectAdminRoute } from '@/middleware/auth';
 import { applyRateLimit } from '@/middleware/rate-limit';
-import { applySecurityHeaders } from '@/middleware/security';
+import { applySecurityHeaders } from './middleware/security';
+
+console.log('middleware.js loaded');
+
+export const runtime = 'nodejs';
 
 export async function middleware(request) {
+  console.log('middleware called for:', request.nextUrl.pathname);
   const { pathname } = request.nextUrl;
   const method = request.method;
 

@@ -7,6 +7,7 @@ import { appLog, errorLog } from '@/lib/security/logger';
 import { checkLoginRateLimit } from '@/lib/security/rate-limiter';
 
 export async function POST(request) {
+  console.log('Login route hit!');
   const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || '127.0.0.1';
 
   // Stricter rate-limit for the admin login endpoint
