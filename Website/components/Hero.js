@@ -90,7 +90,7 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
                 <span className="font-black text-[10px] uppercase block mb-3 text-brutal-black/75">
                   Step 1: Select Solution Type
                 </span>
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-2 gap-2">
                   {['Web App', 'Custom API', 'IoT/Hardware', 'Dashboard'].map((type) => {
                     const isSelected = selectedType === type;
                     return (
@@ -98,7 +98,7 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
                         key={type}
                         type="button"
                         onClick={() => setSelectedType(type)}
-                        className={`px-3 py-1.5 text-xs font-black uppercase border-2 border-brutal-black cursor-pointer shadow-brutal-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all ${
+                        className={`w-full h-full flex items-center justify-center px-3 py-1.5 text-xs font-black uppercase border-2 border-brutal-black cursor-pointer shadow-brutal-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all ${
                           isSelected ? 'bg-brutal-black text-white' : 'bg-brutal-yellow text-brutal-black'
                         }`}
                       >

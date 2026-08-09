@@ -153,12 +153,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Copyright */}
-      <div className="max-w-7xl mx-auto px-6 py-6 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
-        <p className="text-xs uppercase font-black text-[#64748B] dark:text-[#A1A1AA]">
-          &copy; {new Date().getFullYear()} BuildInByte. All rights reserved.
-        </p>
-      </div>
 
     </footer>
   );

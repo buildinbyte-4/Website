@@ -6,6 +6,7 @@ output_file = '/Users/gopalsarma/Desktop/Xcode_Templates_Code.md'
 templates = [
     'buildinbyte-luxury-hotel',
     'elecstore',
+    'hostel-management',
     'kanchimarket',
     'luxury-hotel',
     'real-estate',
