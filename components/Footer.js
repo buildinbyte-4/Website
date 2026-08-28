@@ -1,103 +1,111 @@
 'use client';
+
 import Link from 'next/link';
-import { useSettings } from '@/hooks/useSettings';
 
 export default function Footer() {
-  const { settings, loading, error } = useSettings();
-  const companyName = settings?.company_name || 'BuildInByte';
-  const description = settings?.address ? `${settings.address}` : 'Production-grade software engineering for ambitious companies.';
-  const socials = [
-    { 
-      label: 'X', 
-      href: settings?.twitter || '#', 
-      icon: (
-        <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-        </svg>
-      )
-    },
-    { 
-      label: 'IN', 
-      href: settings?.linkedin || '#', 
-      icon: (
-        <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z"/>
-        </svg>
-      )
-    },
-    { 
-      label: 'GH', 
-      href: settings?.github || '#', 
-      icon: (
-        <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-        </svg>
-      )
-    },
-  ];
-
   return (
-    <footer className="relative z-50 mt-auto bg-white dark:bg-black text-black dark:text-white border-t-4 border-black dark:border-white transition-colors duration-200 overflow-hidden">
+    <footer className="bg-[#060e20] text-[#dae2fd] border-t border-white/10 relative overflow-hidden">
       
-      {/* 1. CTA STRIP */}
-      <Link 
-        href="/contact" 
-        className="group/cta block w-full bg-black py-10 border-b-4 border-black dark:border-white hover:bg-zinc-900 transition-colors duration-100"
-      >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between gap-4">
-          <span className="font-display font-black text-2xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tighter uppercase text-white">
-            LET'S BUILD SOMETHING
-          </span>
-          <span className="font-display font-black text-2xl sm:text-4xl md:text-5xl lg:text-6xl transform transition-transform duration-100 ease-linear group-hover/cta:translate-x-[8px] select-none text-white shrink-0">
-            →
-          </span>
-        </div>
-      </Link>
+      {/* Top Banner Callout */}
+      <div className="border-b border-white/10 bg-[#0b1326]/60 backdrop-blur-md py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#06b6d4]/10 border border-[#06b6d4]/30 text-[#4cd7f6] font-mono text-xs tracking-wider uppercase mb-2">
+              <span className="w-2 h-2 rounded-full bg-[#06b6d4] animate-pulse"></span>
+              <span>● All Systems Operational</span>
+            </div>
+            <h3 className="font-display font-bold text-2xl sm:text-3xl text-[#dae2fd]">
+              Ready to Engineer Your Business Solution?
+            </h3>
+          </div>
 
-      {/* 3. WATERMARK WORDMARK */}
-      <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden pointer-events-none select-none z-0 hidden md:block" style={{ height: '220px' }}>
-        <div className="footer-watermark font-display font-black text-center leading-none tracking-widest" style={{ fontSize: '180px' }}>
-          BUILDINBYTE
+          <div className="flex items-center gap-4">
+            <a
+              href="mailto:hello@buildinbyte.in"
+              className="btn-cyan px-6 py-3 rounded-xl text-xs font-mono tracking-wider uppercase shadow-lg shadow-cyan-500/20"
+            >
+              hello@buildinbyte.in
+            </a>
+          </div>
         </div>
       </div>
 
-      {/* Main Content Grid */}
-      <div className="max-w-7xl mx-auto px-6 py-16 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12">
+      {/* Main Footer Links */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           
-          {/* Column 1: Brand Info */}
-          <div className="md:col-span-1 flex flex-col justify-between">
-            <div>
-              <Link href="/" className="flex items-center gap-3 shrink-0 mb-6">
-                <img src="/logo.jpg" alt="BuildInByte Logo" className="h-10 w-auto" />
-                <span className="font-display font-black text-2xl tracking-tighter text-black dark:text-white uppercase">
-                  {companyName}
-                </span>
-              </Link>
-              <p className="text-sm font-bold uppercase leading-snug mb-6 text-black dark:text-white">
-                {description}
-              </p>
-              {/* 6. STATUS PILL */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 border-2 border-black dark:border-white bg-white dark:bg-black text-xs font-black uppercase tracking-wider text-black dark:text-white mb-6">
-                <div className="pulse-dot"></div>
-                <span>AVAILABLE FOR PROJECTS</span>
+          {/* Brand Info */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#06b6d4] to-[#8b5cf6] p-[1px]">
+                <div className="w-full h-full bg-[#0b1326] rounded-[7px] flex items-center justify-center font-mono font-bold text-sm text-[#4cd7f6]">
+                  B
+                </div>
               </div>
+              <span className="font-display font-extrabold text-xl text-[#dae2fd]">
+                BuildInByte
+              </span>
             </div>
+            <p className="text-xs text-[#869397] font-mono leading-relaxed">
+              Engineering Businesses Through Technology. End-to-end software, embedded systems, custom PCB design, and IoT platforms.
+            </p>
+          </div>
 
-            {/* 5. SOCIAL ICON MAGNETIC HOVER */}
-            <div className="flex flex-row gap-4 items-center mt-4 z-10 relative">
-              {socials.map((s, idx) => (
-                <a
-                  key={idx}
-                  href={s.href}
-                  className="social-link-horizontal group/social flex items-center relative overflow-hidden pointer-events-auto shrink-0 w-10 hover:w-[176px]"
-                  aria-label={s.label === 'X' ? 'Follow on X' : s.label === 'IN' ? 'Connect on LinkedIn' : 'View on GitHub'}
-                >
-                  <span className="social-icon-horizontal">
-                    {s.icon}
-                  </span>
-                  <span className="social-label-horizontal">
-                    {s.label === 'X' ? 'FOLLOW ON X' : s.label === 'IN' ? 'CONNECT ON LINKEDIN' : 'VIEW ON GITHUB'}
+          {/* Column 1: Capabilities */}
+          <div>
+            <h4 className="font-mono text-xs text-[#06b6d4] tracking-widest uppercase mb-4">
+              // Capabilities
+            </h4>
+            <ul className="space-y-2.5 text-xs text-[#bcc9cd] font-mono">
+              <li><a href="#capabilities" className="hover:text-[#4cd7f6] transition-colors">Embedded C/C++ & Firmware</a></li>
+              <li><a href="#capabilities" className="hover:text-[#4cd7f6] transition-colors">Multi-Layer PCB Layout</a></li>
+              <li><a href="#capabilities" className="hover:text-[#4cd7f6] transition-colors">Industrial IoT Networks</a></li>
+              <li><a href="#capabilities" className="hover:text-[#4cd7f6] transition-colors">Cloud & Microservices</a></li>
+              <li><a href="#capabilities" className="hover:text-[#4cd7f6] transition-colors">AI & Process Automation</a></li>
+            </ul>
+          </div>
+
+          {/* Column 2: Solutions */}
+          <div>
+            <h4 className="font-mono text-xs text-[#8b5cf6] tracking-widest uppercase mb-4">
+              // Solutions
+            </h4>
+            <ul className="space-y-2.5 text-xs text-[#bcc9cd] font-mono">
+              <li><a href="#products" className="hover:text-[#c4abff] transition-colors">Enterprise Web Apps</a></li>
+              <li><a href="#products" className="hover:text-[#c4abff] transition-colors">IoT Monitoring Dashboards</a></li>
+              <li><a href="#products" className="hover:text-[#c4abff] transition-colors">Custom Hardware Kits</a></li>
+              <li><a href="#products" className="hover:text-[#c4abff] transition-colors">Zeno OS Platform</a></li>
+              <li><a href="#products" className="hover:text-[#c4abff] transition-colors">Template Store</a></li>
+            </ul>
+          </div>
+
+          {/* Column 3: Contact & Legal */}
+          <div>
+            <h4 className="font-mono text-xs text-[#dae2fd] tracking-widest uppercase mb-4">
+              // Connect
+            </h4>
+            <ul className="space-y-2.5 text-xs text-[#bcc9cd] font-mono mb-6">
+              <li><a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-[#4cd7f6] transition-colors">GitHub Repository ↗</a></li>
+              <li><a href="https://linkedin.com/company/buildinbyte" target="_blank" rel="noreferrer" className="hover:text-[#4cd7f6] transition-colors">LinkedIn Company ↗</a></li>
+              <li><Link href="/privacy" className="hover:text-[#4cd7f6] transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="hover:text-[#4cd7f6] transition-colors">Terms of Service</Link></li>
+            </ul>
+          </div>
+
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="pt-12 mt-12 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#869397]">
+          <p>© {new Date().getFullYear()} BuildInByte. All Rights Reserved.</p>
+          <p className="flex items-center gap-1.5">
+            <span>Designed & Built with</span>
+            <span className="text-[#06b6d4]">Precision-Glow UI</span>
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
                   </span>
                 </a>
               ))}

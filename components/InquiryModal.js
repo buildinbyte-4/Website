@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
 
@@ -15,7 +16,6 @@ export default function InquiryModal({ config, onClose }) {
     setLoading(true);
     setErrorMsg('');
     try {
-      // 1. Log to Supabase Database
       if (supabase) {
         const { error } = await supabase.from('inquiries').insert([
           {
@@ -31,7 +31,6 @@ export default function InquiryModal({ config, onClose }) {
         }
       }
 
-      // 2. Submit to FormSubmit via AJAX in background to trigger email
       const formBody = {
         name: formData.name,
         email: formData.email,
@@ -59,45 +58,116 @@ export default function InquiryModal({ config, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-      <div className="bg-white dark:bg-black text-black dark:text-white border-3 border-black dark:border-white shadow-[8px_8px_0px_#000000] dark:shadow-[8px_8px_0px_#ffffff] p-6 md:p-8 rounded-none relative w-full max-w-lg z-50">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+      <div className="glass-panel p-6 md:p-8 rounded-2xl relative w-full max-w-lg border border-white/10 shadow-2xl animate-in zoom-in-95">
         
+        {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 border-2 border-black dark:border-white bg-white dark:bg-black text-black dark:text-white font-bold flex items-center justify-center hover:bg-red-650 hover:text-white cursor-pointer select-none transition-none"
+          className="absolute top-4 right-4 w-8 h-8 rounded-lg bg-[#171f33] text-[#bcc9cd] hover:text-[#dae2fd] border border-white/10 flex items-center justify-center transition-colors"
         >
           ✕
         </button>
 
         {!submitted ? (
           <div>
-            <span className="text-[10px] font-black uppercase tracking-wider text-black bg-brutal-yellow px-2.5 py-1 border-2 border-black inline-block mb-4 shadow-brutal-sm">
-              Direct Consultation Channel
-            </span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#06b6d4]/10 border border-[#06b6d4]/30 text-[#4cd7f6] font-mono text-xs tracking-wider uppercase mb-3">
+              <span>Direct Consultation Channel</span>
+            </div>
             
-            <h2 className="font-display font-black text-2xl text-black dark:text-white mb-2 tracking-tight">
+            <h2 className="font-display font-bold text-2xl text-[#dae2fd] mb-2">
               {config.title || 'Initiate Client Inquiry'}
             </h2>
 
-            <p className="text-xs text-black dark:text-zinc-400 font-bold uppercase leading-tight mb-6">
-              Connect directly with our delivery team. We respond within 24 hours with a tailored path forward.
+            <p className="text-xs text-[#869397] font-mono mb-6">
+              Connect directly with our engineering lead team. We respond within 24 hours with a tailored solution outline.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4 text-xs font-bold uppercase">
+            <form onSubmit={handleSubmit} className="space-y-4 text-xs font-mono">
               <div>
-                <label className="block text-black dark:text-white mb-1">Full Name *</label>
+                <label className="block text-[#dae2fd] mb-1.5">Full Name *</label>
                 <input
                   required
                   type="text"
-                  placeholder="e.g. Alex Sterling"
+                  placeholder="Alex Sterling"
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-none bg-white dark:bg-zinc-900 border-2 border-black dark:border-white text-xs text-black dark:text-white focus:outline-none shadow-[2px_2px_0px_#000000] dark:shadow-[2px_2px_0px_#ffffff] focus:bg-brutal-yellow focus:text-black focus:border-black transition-none duration-0"
+                  className="w-full glass-input px-4 py-2.5 rounded-xl text-xs"
                 />
               </div>
 
               <div>
-                <label className="block text-black dark:text-white mb-1">Work Email *</label>
+                <label className="block text-[#dae2fd] mb-1.5">Work Email *</label>
+                <input
+                  required
+                  type="email"
+                  placeholder="alex@company.com"
+                  value={formData.email}
+                  onChange={e => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full glass-input px-4 py-2.5 rounded-xl text-xs"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[#dae2fd] mb-1.5">Company / Organization</label>
+                <input
+                  type="text"
+                  placeholder="Acme Corp"
+                  value={formData.company}
+                  onChange={e => setFormData({ ...formData, company: e.target.value })}
+                  className="w-full glass-input px-4 py-2.5 rounded-xl text-xs"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[#dae2fd] mb-1.5">Project Scope / Requirements *</label>
+                <textarea
+                  required
+                  rows={4}
+                  placeholder="Describe your hardware specs, firmware goals, software requirements, or target timeline..."
+                  value={formData.scope}
+                  onChange={e => setFormData({ ...formData, scope: e.target.value })}
+                  className="w-full glass-input px-4 py-2.5 rounded-xl text-xs"
+                />
+              </div>
+
+              {errorMsg && (
+                <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-xs">
+                  {errorMsg}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full btn-cyan py-3 rounded-xl text-xs font-mono uppercase tracking-wider shadow-lg shadow-cyan-500/20 disabled:opacity-50"
+              >
+                {loading ? 'Submitting Technical Inquiry...' : 'Submit Inquiry →'}
+              </button>
+            </form>
+          </div>
+        ) : (
+          <div className="text-center py-8 space-y-4">
+            <div className="w-12 h-12 rounded-full bg-[#06b6d4]/20 border border-[#06b6d4] text-[#4cd7f6] flex items-center justify-center mx-auto text-xl">
+              ✓
+            </div>
+            <h3 className="font-display font-bold text-2xl text-[#dae2fd]">Inquiry Received</h3>
+            <p className="text-xs font-mono text-[#869397] max-w-sm mx-auto">
+              Thank you for reaching out to BuildInByte. Our engineering delivery leads are reviewing your project scope and will follow up shortly.
+            </p>
+            <button
+              onClick={onClose}
+              className="btn-cyan px-6 py-2.5 rounded-xl text-xs font-mono uppercase mt-4"
+            >
+              Close Window
+            </button>
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
                 <input
                   required
                   type="email"

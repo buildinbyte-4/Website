@@ -1,103 +1,204 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { PROJECTS } from '@/lib/data';
 
 export default function Hero({ onOpenDemo, onOpenInquiry }) {
-  const [selectedType, setSelectedType] = useState('Web App');
-  const [timeline, setTimeline] = useState('3-6 weeks');
-  const featured = PROJECTS[0];
+  const [selectedType, setSelectedType] = useState('Embedded & Hardware');
+  const [timeline, setTimeline] = useState('4-8 weeks');
 
-  const tickerWords = ['SYSTEMS', 'PRODUCTS', 'APIS', 'PLATFORMS'];
+  const tickerWords = [
+    'EMBEDDED SYSTEMS',
+    'CUSTOM HARDWARE',
+    'ENTERPRISE SAAS',
+    'INDUSTRIAL IOT',
+    'AI AUTOMATION'
+  ];
   const [tickerIndex, setTickerIndex] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTickerIndex((prev) => (prev + 1) % tickerWords.length);
-    }, 1500);
+    }, 2000);
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <section className="relative pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden bg-brutal-bg border-b-4 border-brutal-black">
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+    <section className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden bg-[#0b1326]">
+      {/* Ambient Radial Glowing Spheres */}
+      <div className="ambient-glow-cyan -top-24 -left-24 blur-3xl opacity-60"></div>
+      <div className="ambient-glow-violet top-1/2 -right-32 blur-3xl opacity-50"></div>
+      
+      {/* 3D Matrix Background Grid */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none z-0"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Left Column: Huge Brutalist Text */}
+          {/* Left Column: Glowing Headline & Engineering Narrative */}
           <div className="lg:col-span-7 space-y-6">
+            
+            {/* Top Monospaced Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#06b6d4]/10 border border-[#06b6d4]/30 text-[#4cd7f6] font-mono text-xs tracking-wide">
+              <span className="w-2 h-2 rounded-full bg-[#06b6d4] animate-ping"></span>
+              <span>HARDWARE + SOFTWARE + CLOUD INTEGRATION</span>
+            </div>
 
-            {/* Headline */}
-            <h1 className="font-display text-5xl sm:text-7xl lg:text-[5.5rem] font-black leading-[0.9] text-brutal-black uppercase tracking-tighter">
-              <span className="animate-drop-1 block">WE BUILD</span>
-              <div className="animate-drop-2">
-                <span className="bg-brutal-yellow px-4 py-1 inline-block -rotate-1 border-4 border-brutal-black shadow-brutal mt-4 min-w-[220px] sm:min-w-[320px] text-center transition-none duration-0">
-                  {tickerWords[tickerIndex]}
-                </span>
-              </div>
-              <span className="animate-drop-3 block mt-4">THAT SCALE.</span>
+            {/* Main Headline */}
+            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#dae2fd] tracking-tight leading-[1.05]">
+              Engineering Businesses <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4cd7f6] via-[#06b6d4] to-[#c4abff]">
+                Through Technology.
+              </span>
             </h1>
 
+            {/* Dynamic Monospaced Ticker */}
+            <div className="flex items-center gap-3 pt-1">
+              <span className="text-xs font-mono text-[#869397] uppercase tracking-widest">Architecting:</span>
+              <span className="font-mono text-sm sm:text-base font-bold text-[#4cd7f6] bg-[#171f33] px-3 py-1 rounded border border-[#06b6d4]/30 shadow-inner">
+                [ {tickerWords[tickerIndex]} ]
+              </span>
+            </div>
+
             {/* Subheadline */}
-            <p className="text-xl sm:text-2xl text-brutal-black font-bold uppercase leading-snug border-l-8 border-brutal-pink pl-4 py-2 mt-8 animate-slide-in-left">
-              We architect, build, and deploy raw, production-grade custom web applications and APIs for ambitious companies. No fluff.
+            <p className="text-base sm:text-xl text-[#bcc9cd] leading-relaxed max-w-2xl pt-2 font-normal">
+              BuildInByte delivers complete end-to-end engineering solutions—from custom firmware, ESP32/STM32 microcontrollers, and multi-layer PCB design to cloud architecture, web applications, and AI-powered automation.
             </p>
 
-            {/* Dual CTAs */}
-            <div className="flex flex-wrap items-center gap-4 pt-6">
+            {/* Dual Actions */}
+            <div className="flex flex-wrap items-center gap-4 pt-4">
               <button
-                onClick={() => onOpenInquiry({ title: 'Book a Technical Scoping Call' })}
-                className="btn-primary animate-cta-1"
+                onClick={() => onOpenInquiry({ title: 'Request Technical Scoping' })}
+                className="btn-cyan px-7 py-3.5 rounded-xl flex items-center gap-2.5 text-sm tracking-wide font-semibold shadow-xl shadow-cyan-500/20"
               >
-                BOOK SCOPING CALL
+                <span>Request Scoping Call</span>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
               </button>
 
-              <a href="#projects" className="btn-secondary animate-cta-2">
-                VIEW OUR WORK
+              <a
+                href="#capabilities"
+                className="btn-ghost-cyan px-6 py-3.5 rounded-xl text-sm font-mono tracking-wide"
+              >
+                Explore Capabilities ↓
               </a>
             </div>
 
             {/* Tech Tags */}
-            <div className="flex flex-wrap items-center gap-2.5 pt-6 text-xs sm:text-sm text-brutal-black font-black uppercase">
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-1">React & Next.js</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-2">Node APIs</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-3">PostgreSQL</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-4">AWS / GCP</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-5">EMBEDDED C/C++</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-6">PCB DESIGN & HARDWARE</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-7">PYTHON & FASTAPI</span>
+            <div className="flex flex-wrap items-center gap-2 pt-6">
+              <span className="tech-badge">ESP32 & STM32</span>
+              <span className="tech-badge">Custom PCB Layout</span>
+              <span className="tech-badge">Next.js & React</span>
+              <span className="tech-badge-violet">Industrial IoT</span>
+              <span className="tech-badge-violet">AWS & Cloud</span>
+              <span className="tech-badge">AI Automation</span>
             </div>
 
           </div>
 
-          <div className="lg:col-span-5 animate-project-card">
-            <div className="project-scoping-card p-6 bg-white dark:bg-black border-4 border-brutal-black relative group overflow-hidden">
+          {/* Right Column: Interactive Solution Scoping Box */}
+          <div className="lg:col-span-5">
+            <div className="glass-card p-6 sm:p-8 rounded-2xl border border-white/10 relative shadow-2xl">
               
-              {/* Header Section */}
-              <div className="animate-project-header flex flex-col gap-2 mb-6">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-display font-black text-2xl text-brutal-black uppercase tracking-tighter">
-                    Start Your Project
-                  </h3>
-                  <span className="font-black text-[10px] tracking-wider text-white bg-brutal-black px-2 py-1 border-2 border-brutal-black uppercase">
+              <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+                <div>
+                  <h3 className="font-display text-xl font-bold text-[#dae2fd]">
                     Interactive Scoping
-                  </span>
+                  </h3>
+                  <p className="text-xs text-[#869397] font-mono mt-0.5">Custom Engineering Calculator</p>
                 </div>
-                <p className="text-xs text-brutal-black font-bold uppercase">
-                  Select your solution type and timeline to launch your custom project.
-                </p>
+                <span className="tech-badge-violet">BUILDINBYTE LABS</span>
               </div>
 
-              {/* Step 1: Solution Type Pills */}
-              <div className="mb-6 animate-project-step-1">
-                <span className="font-black text-[10px] uppercase block mb-3 text-brutal-black/75">
-                  Step 1: Select Solution Type
-                </span>
+              {/* Step 1: Solution Type */}
+              <div className="space-y-3 mb-6">
+                <label className="text-xs font-mono uppercase text-[#bcc9cd] block">
+                  01. Select Technical Scope
+                </label>
                 <div className="grid grid-cols-2 gap-2">
-                  {['Web App', 'Custom API', 'IoT/Hardware', 'Dashboard'].map((type) => {
+                  {[
+                    'Embedded & Hardware',
+                    'Custom PCB Design',
+                    'Enterprise Web/SaaS',
+                    'IoT & AI Cloud'
+                  ].map((type) => {
                     const isSelected = selectedType === type;
                     return (
                       <button
                         key={type}
                         type="button"
+                        onClick={() => setSelectedType(type)}
+                        className={`p-3 rounded-lg text-xs text-left font-mono transition-all ${
+                          isSelected
+                            ? 'bg-[#06b6d4]/20 border border-[#06b6d4] text-[#4cd7f6] shadow-lg shadow-cyan-500/10'
+                            : 'bg-[#131b2e] border border-white/5 text-[#bcc9cd] hover:border-white/20'
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Step 2: Estimated Timeline */}
+              <div className="space-y-3 mb-6">
+                <label className="text-xs font-mono uppercase text-[#bcc9cd] block">
+                  02. Target Deployment Timeline
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {['2-4 Weeks', '4-8 Weeks', '8-12+ Weeks'].map((time) => {
+                    const isSelected = timeline === time;
+                    return (
+                      <button
+                        key={time}
+                        type="button"
+                        onClick={() => setTimeline(time)}
+                        className={`p-2.5 rounded-lg text-xs font-mono text-center transition-all ${
+                          isSelected
+                            ? 'bg-[#8b5cf6]/20 border border-[#8b5cf6] text-[#c4abff]'
+                            : 'bg-[#131b2e] border border-white/5 text-[#bcc9cd] hover:border-white/20'
+                        }`}
+                      >
+                        {time}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Summary & Trigger */}
+              <div className="p-4 rounded-xl bg-[#060e20] border border-white/5 space-y-3">
+                <div className="flex justify-between items-center text-xs font-mono">
+                  <span className="text-[#869397]">Scope:</span>
+                  <span className="text-[#4cd7f6] font-bold">{selectedType}</span>
+                </div>
+                <div className="flex justify-between items-center text-xs font-mono">
+                  <span className="text-[#869397]">Target Time:</span>
+                  <span className="text-[#c4abff] font-bold">{timeline}</span>
+                </div>
+                
+                <button
+                  onClick={() =>
+                    onOpenInquiry({
+                      title: `Scope Request: ${selectedType}`,
+                      message: `I'm interested in an estimated project for ${selectedType} targeting a timeline of ${timeline}.`
+                    })
+                  }
+                  className="w-full mt-2 btn-cyan py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2"
+                >
+                  <span>Submit Scope Inquiry</span>
+                  <span>→</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
                         onClick={() => setSelectedType(type)}
                         className={`w-full h-full flex items-center justify-center px-3 py-1.5 text-xs font-black uppercase border-2 border-brutal-black cursor-pointer shadow-brutal-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all ${
                           isSelected ? 'bg-brutal-black text-white' : 'bg-brutal-yellow text-brutal-black'

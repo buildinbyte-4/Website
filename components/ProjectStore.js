@@ -1,62 +1,12 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+
+import { useState } from 'react';
 import { PROJECTS } from '@/lib/data';
 import ProjectCoverArt from './ProjectCoverArt';
-
-function StatCounter({ targetValue, duration = 800, hasIntersected, suffix = '' }) {
-  const [currentValue, setCurrentValue] = useState(0);
-
-  useEffect(() => {
-    if (!hasIntersected) return;
-    
-    let start = 0;
-    const end = parseInt(targetValue, 10) || 0;
-    if (start === end) {
-      setCurrentValue(end);
-      return;
-    }
-
-    const startTime = performance.now();
-
-    const animate = (currentTime) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      const current = Math.floor(progress * end);
-      setCurrentValue(current);
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        setCurrentValue(end);
-      }
-    };
-
-    requestAnimationFrame(animate);
-  }, [hasIntersected, targetValue, duration]);
-
-  return <>{currentValue}{suffix}</>;
-}
 
 export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry }) {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [hasIntersected, setHasIntersected] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setHasIntersected(true);
-        observer.disconnect();
-      }
-    }, { threshold: 0.05 });
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
 
   const displayList = customProjects && customProjects.length > 0 ? customProjects : PROJECTS;
   const dynamicFilterTabs = ['All', ...Array.from(new Set(displayList.map(p => p.category)))];
@@ -69,35 +19,138 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
     return matchesCategory && matchesSearch;
   });
 
-  const getMetrics = (id) => {
-    const defaultMetrics = [
-      { label: 'Latency', value: '-40%' },
-      { label: 'Uptime', value: '99.9%' },
-      { label: 'Load', value: '< 1s' }
-    ];
-    if (id % 3 === 0) return [{ label: 'Conv.', value: '+45%' }, { label: 'Speed', value: '0.8s' }, { label: 'API', value: '1M+' }];
-    if (id % 2 === 0) return [{ label: 'Sync', value: '<50ms' }, { label: 'Ret.', value: '+22%' }, { label: 'Up', value: '99.99%' }];
-    return defaultMetrics;
-  };
-
-
-
   return (
-    <section id="case-studies" ref={sectionRef} className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="products" className="py-24 bg-[#0b1326] relative border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Header */}
+        {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="overflow-hidden mb-4">
-              <span 
-                className="font-black text-xs uppercase tracking-widest text-brutal-black bg-brutal-yellow px-3 py-1 border-2 border-brutal-black inline-block shadow-brutal-sm"
-                style={{
-                  transform: hasIntersected ? 'translateX(0)' : 'translateX(-101%)',
-                  transition: 'transform 300ms linear',
-                }}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#06b6d4]/10 border border-[#06b6d4]/30 text-[#4cd7f6] font-mono text-xs tracking-wider uppercase mb-3">
+              <span>// PRODUCTS_AND_TEMPLATES</span>
+            </div>
+            <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#dae2fd] tracking-tight">
+              Featured Solutions & <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4cd7f6] to-[#8b5cf6]">
+                Engineering Work
+              </span>
+            </h2>
+          </div>
+
+          {/* Search Box */}
+          <div className="w-full md:w-80">
+            <input
+              type="text"
+              placeholder="Search stack, title, or IoT..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-mono placeholder:text-[#869397]"
+            />
+          </div>
+        </div>
+
+        {/* Filter Pills */}
+        <div className="flex flex-wrap items-center gap-2 mb-10 pb-4 border-b border-white/5">
+          {dynamicFilterTabs.map((cat) => {
+            const isSelected = activeCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-2 rounded-xl text-xs font-mono transition-all ${
+                  isSelected
+                    ? 'bg-[#06b6d4] text-[#001f26] font-bold shadow-lg shadow-cyan-500/20'
+                    : 'bg-[#131b2e] text-[#bcc9cd] border border-white/5 hover:border-white/20'
+                }`}
               >
-                Production Work
+                {cat}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Grid of Products / Case Studies */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredProjects.map((project) => (
+            <div
+              key={project.id}
+              className="glass-card rounded-2xl border border-white/10 overflow-hidden flex flex-col justify-between group hover:-translate-y-1 transition-all duration-300"
+            >
+              {/* Cover Art Image */}
+              <div className="relative h-48 bg-[#060e20] overflow-hidden border-b border-white/10">
+                {project.image_url ? (
+                  <img
+                    src={project.image_url}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                ) : (
+                  <ProjectCoverArt category={project.category} title={project.title} />
+                )}
+                <div className="absolute top-3 left-3">
+                  <span className="tech-badge-violet bg-[#0b1326]/80 backdrop-blur-md">
+                    {project.category}
+                  </span>
+                </div>
+              </div>
+
+              {/* Card Body */}
+              <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                <div>
+                  <h3 className="font-display font-bold text-xl text-[#dae2fd] group-hover:text-[#4cd7f6] transition-colors mb-2">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm text-[#bcc9cd] line-clamp-3 leading-relaxed font-normal">
+                    {project.desc}
+                  </p>
+                </div>
+
+                {/* Tech Stack Chips */}
+                <div className="pt-2 flex flex-wrap gap-1.5">
+                  {project.stack && project.stack.map((stk, sIdx) => (
+                    <span key={sIdx} className="tech-badge">
+                      {stk}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Actions */}
+                <div className="pt-4 border-t border-white/5 flex items-center justify-between gap-3">
+                  <button
+                    onClick={() => onOpenDemo(project)}
+                    className="flex-1 btn-ghost-cyan py-2 rounded-lg text-xs font-mono text-center"
+                  >
+                    Live Demo ↗
+                  </button>
+                  <button
+                    onClick={() => onOpenInquiry({ title: `Inquiry: ${project.title}` })}
+                    className="flex-1 btn-cyan py-2 rounded-lg text-xs font-mono text-center"
+                  >
+                    Custom Quote
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {filteredProjects.length === 0 && (
+          <div className="glass-panel p-12 rounded-2xl text-center border border-white/10 my-8">
+            <p className="text-base text-[#bcc9cd] font-mono">No engineering products match your current query.</p>
+            <button
+              onClick={() => { setActiveCategory('All'); setSearchQuery(''); }}
+              className="mt-4 btn-ghost-cyan px-4 py-2 rounded-lg text-xs font-mono"
+            >
+              Reset Filters
+            </button>
+          </div>
+        )}
+
+      </div>
+    </section>
+  );
+}
               </span>
             </div>
             <h2 className="font-display text-5xl sm:text-6xl font-black text-brutal-black uppercase tracking-tighter leading-none">
