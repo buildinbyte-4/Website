@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,33 +8,39 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'brutal-bg': 'var(--brutal-bg)',
-        'brutal-black': 'var(--brutal-black)',
-        'brutal-yellow': 'var(--brutal-yellow)',
-        'brutal-blue': 'var(--brutal-blue)',
-        'brutal-pink': 'var(--brutal-pink)',
-        'brutal-green': 'var(--brutal-green)',
-        
-        // Aliases to avoid breaking everything entirely right away, though we will refactor components
-        'bg-primary-dark': 'var(--brutal-bg)',
-        'bg-surface-dark': 'var(--brutal-bg)',
-        'text-primary': 'var(--brutal-black)',
-        'text-secondary': 'var(--brutal-black)',
-        'text-muted': 'var(--brutal-black)',
-        'border-subtle': 'var(--brutal-black)',
-        'accent-blue': 'var(--brutal-blue)',
-        'accent-cyan': 'var(--brutal-pink)',
+        canvas: '#F6F3EE',
+        surface: '#FFFFFF',
+        ink: '#1C1917',
+        muted: '#57534E',
+        faint: '#A8A29E',
+        line: '#E7E2DA',
+        accent: '#9A5B3C',
+        'accent-hover': '#7C4630',
+        'on-accent': '#F6F3EE',
+        danger: '#9F2D2D',
+        footer: '#EFEBE4',
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
         display: ['var(--font-plus-jakarta)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-jetbrains-mono)', 'monospace'],
+        mono: ['var(--font-jetbrains-mono)', 'ui-monospace', 'monospace'],
       },
-      boxShadow: {
-        'brutal': '6px 6px 0px 0px rgba(0,0,0,1)',
-        'brutal-hover': '8px 8px 0px 0px rgba(0,0,0,1)',
-        'brutal-sm': '4px 4px 0px 0px rgba(0,0,0,1)',
-      }
+      maxWidth: {
+        atelier: '1200px',
+      },
+      borderRadius: {
+        DEFAULT: '4px',
+        sm: '2px',
+        md: '4px',
+        lg: '4px',
+        xl: '4px',
+      },
+      transitionTimingFunction: {
+        atelier: 'cubic-bezier(0.22, 1, 0.36, 1)',
+      },
+      transitionDuration: {
+        atelier: '180ms',
+      },
     },
   },
   plugins: [],

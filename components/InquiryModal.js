@@ -41,7 +41,7 @@ export default function InquiryModal({ config, onClose }) {
 
       await fetch("https://formsubmit.co/ajax/support@buildinbyte.in", {
         method: "POST",
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
@@ -58,191 +58,98 @@ export default function InquiryModal({ config, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-      <div className="glass-panel p-6 md:p-8 rounded-2xl relative w-full max-w-lg border border-white/10 shadow-2xl animate-in zoom-in-95">
-        
-        {/* Close Button */}
+    <div className="fixed inset-0 bg-ink/40 z-50 flex items-center justify-center p-4">
+      <div className="bg-surface p-6 md:p-8 relative w-full max-w-lg border border-line">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 rounded-lg bg-[#171f33] text-[#bcc9cd] hover:text-[#dae2fd] border border-white/10 flex items-center justify-center transition-colors"
+          className="absolute top-4 right-4 w-8 h-8 border border-line text-muted hover:text-ink hover:border-accent flex items-center justify-center transition-colors duration-atelier"
         >
           ✕
         </button>
 
         {!submitted ? (
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#06b6d4]/10 border border-[#06b6d4]/30 text-[#4cd7f6] font-mono text-xs tracking-wider uppercase mb-3">
-              <span>Direct Consultation Channel</span>
-            </div>
-            
-            <h2 className="font-display font-bold text-2xl text-[#dae2fd] mb-2">
-              {config.title || 'Initiate Client Inquiry'}
+            <p className="label-meta mb-3">Consultation</p>
+            <h2 className="font-display font-semibold text-2xl text-ink mb-2">
+              {config.title || 'Start a project inquiry'}
             </h2>
-
-            <p className="text-xs text-[#869397] font-mono mb-6">
-              Connect directly with our engineering lead team. We respond within 24 hours with a tailored solution outline.
+            <p className="text-sm text-muted mb-6">
+              Connect with our engineering team. We typically respond within 24 hours with a tailored outline.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4 text-xs font-mono">
+            <form onSubmit={handleSubmit} className="space-y-4 text-sm">
               <div>
-                <label className="block text-[#dae2fd] mb-1.5">Full Name *</label>
+                <label className="block text-xs font-medium text-muted mb-1.5">Full name *</label>
                 <input
                   required
                   type="text"
                   placeholder="Alex Sterling"
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full glass-input px-4 py-2.5 rounded-xl text-xs"
+                  className="form-input"
                 />
               </div>
-
               <div>
-                <label className="block text-[#dae2fd] mb-1.5">Work Email *</label>
+                <label className="block text-xs font-medium text-muted mb-1.5">Work email *</label>
                 <input
                   required
                   type="email"
                   placeholder="alex@company.com"
                   value={formData.email}
                   onChange={e => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full glass-input px-4 py-2.5 rounded-xl text-xs"
+                  className="form-input"
                 />
               </div>
-
               <div>
-                <label className="block text-[#dae2fd] mb-1.5">Company / Organization</label>
+                <label className="block text-xs font-medium text-muted mb-1.5">Company / organization</label>
                 <input
                   type="text"
                   placeholder="Acme Corp"
                   value={formData.company}
                   onChange={e => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full glass-input px-4 py-2.5 rounded-xl text-xs"
+                  className="form-input"
                 />
               </div>
-
               <div>
-                <label className="block text-[#dae2fd] mb-1.5">Project Scope / Requirements *</label>
+                <label className="block text-xs font-medium text-muted mb-1.5">Project scope / requirements *</label>
                 <textarea
                   required
                   rows={4}
-                  placeholder="Describe your hardware specs, firmware goals, software requirements, or target timeline..."
+                  placeholder="Describe hardware specs, firmware goals, software requirements, or timeline…"
                   value={formData.scope}
                   onChange={e => setFormData({ ...formData, scope: e.target.value })}
-                  className="w-full glass-input px-4 py-2.5 rounded-xl text-xs"
+                  className="form-input resize-none"
                 />
               </div>
-
               {errorMsg && (
-                <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-xs">
+                <div className="p-3 border border-danger text-danger text-xs">
                   {errorMsg}
                 </div>
               )}
-
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full btn-cyan py-3 rounded-xl text-xs font-mono uppercase tracking-wider shadow-lg shadow-cyan-500/20 disabled:opacity-50"
+                className="w-full btn-primary py-3 text-xs disabled:opacity-50"
               >
-                {loading ? 'Submitting Technical Inquiry...' : 'Submit Inquiry →'}
+                {loading ? 'Submitting…' : 'Submit inquiry'}
               </button>
             </form>
           </div>
         ) : (
           <div className="text-center py-8 space-y-4">
-            <div className="w-12 h-12 rounded-full bg-[#06b6d4]/20 border border-[#06b6d4] text-[#4cd7f6] flex items-center justify-center mx-auto text-xl">
-              ✓
-            </div>
-            <h3 className="font-display font-bold text-2xl text-[#dae2fd]">Inquiry Received</h3>
-            <p className="text-xs font-mono text-[#869397] max-w-sm mx-auto">
-              Thank you for reaching out to BuildInByte. Our engineering delivery leads are reviewing your project scope and will follow up shortly.
+            <p className="label-meta">Received</p>
+            <h3 className="font-display font-semibold text-2xl text-ink">Inquiry received</h3>
+            <p className="text-sm text-muted max-w-sm mx-auto">
+              Thank you for reaching out to BuildInByte. Our delivery leads are reviewing your project scope and will follow up shortly.
             </p>
             <button
               onClick={onClose}
-              className="btn-cyan px-6 py-2.5 rounded-xl text-xs font-mono uppercase mt-4"
+              className="btn-primary px-6 py-2.5 text-xs mt-4"
             >
-              Close Window
+              Close
             </button>
           </div>
         )}
-
-      </div>
-    </div>
-  );
-}
-                <input
-                  required
-                  type="email"
-                  placeholder="alex@company.com"
-                  value={formData.email}
-                  onChange={e => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-none bg-white dark:bg-zinc-900 border-2 border-black dark:border-white text-xs text-black dark:text-white focus:outline-none shadow-[2px_2px_0px_#000000] dark:shadow-[2px_2px_0px_#ffffff] focus:bg-brutal-yellow focus:text-black focus:border-black transition-none duration-0"
-                />
-              </div>
-
-              <div>
-                <label className="block text-black dark:text-white mb-1">Company / Organization</label>
-                <input
-                  type="text"
-                  placeholder="e.g. Vanguard Labs"
-                  value={formData.company}
-                  onChange={e => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-none bg-white dark:bg-zinc-900 border-2 border-black dark:border-white text-xs text-black dark:text-white focus:outline-none shadow-[2px_2px_0px_#000000] dark:shadow-[2px_2px_0px_#ffffff] focus:bg-brutal-yellow focus:text-black focus:border-black transition-none duration-0"
-                />
-              </div>
-
-              <div>
-                <label className="block text-black dark:text-white mb-1">Project Scope & Requirements</label>
-                <textarea
-                  rows={3}
-                  placeholder="Detail your technology requirements, timeframe, or desired features..."
-                  value={formData.scope}
-                  onChange={e => setFormData({ ...formData, scope: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-none bg-white dark:bg-zinc-900 border-2 border-black dark:border-white text-xs text-black dark:text-white focus:outline-none shadow-[2px_2px_0px_#000000] dark:shadow-[2px_2px_0px_#ffffff] focus:bg-brutal-yellow focus:text-black focus:border-black transition-none duration-0"
-                ></textarea>
-              </div>
-
-              {errorMsg && (
-                <div className="p-3 bg-red-100 border-2 border-red-650 text-red-650 text-xs font-black">
-                  {errorMsg}
-                </div>
-              )}
-
-              <div className="pt-2 flex justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={onClose}
-                  disabled={loading}
-                  className="btn-secondary-invert text-xs py-2.5 px-4 cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="btn-primary-invert text-xs py-2.5 px-5 flex items-center gap-2 cursor-pointer"
-                >
-                  {loading && <span className="w-3.5 h-3.5 border-2 border-t-transparent border-[#FDFBF7] rounded-full animate-spin"></span>}
-                  <span>Submit Inquiry</span>
-                </button>
-              </div>
-            </form>
-          </div>
-        ) : (
-          <div className="text-center py-6 space-y-4">
-            <div className="w-12 h-12 border-4 border-black dark:border-white text-black dark:text-white bg-brutal-yellow mx-auto flex items-center justify-center font-bold text-2xl shadow-brutal-sm">
-              ✓
-            </div>
-            <h3 className="font-display font-black text-2xl text-black dark:text-white">
-              Inquiry Received
-            </h3>
-            <p className="text-xs text-black dark:text-zinc-400 font-bold uppercase max-w-sm mx-auto leading-relaxed">
-              Thank you, <span className="font-black text-black dark:text-white">{formData.name}</span>. Our team has received your request and will follow up at <span className="font-black text-blue-600 dark:text-blue-400">{formData.email}</span> within 24 hours.
-            </p>
-            <button onClick={onClose} className="btn-primary-invert text-xs py-2 px-6 cursor-pointer">
-              Close Window
-            </button>
-          </div>
-        )}
-
       </div>
     </div>
   );

@@ -34,6 +34,11 @@ export default function HomePage() {
 
   // Auth
   useEffect(() => {
+    if (!supabase) {
+      setAuthLoading(false);
+      return undefined;
+    }
+
     const handleInitialAuth = async () => {
       if (typeof window !== 'undefined' && window.location.hash) {
         const hash = window.location.hash.substring(1);
@@ -85,6 +90,11 @@ export default function HomePage() {
 
   // 2. Fetch Products from Supabase on Login / Session Status Change
   useEffect(() => {
+    if (!supabase) {
+      setProducts(MOCK_PROJECTS);
+      return;
+    }
+
     const fetchProducts = async () => {
       try {
        const { data, error } = await supabase
@@ -93,9 +103,6 @@ export default function HomePage() {
   .eq('status', 'active')
   .eq('show_on_store', true)
   .order('created_at', { ascending: false });
-
-console.log("Products from Supabase:", data);
-console.log("Count:", data?.length);
 
 if (error) throw error;
 
@@ -137,6 +144,23 @@ if (error) throw error;
               else if (nameLower.includes('hostel')) demoUrl = '/templates/hostel-management/index.html';
             }
 
+            let imageUrl = p.image_url || p.imageUrl || null;
+            if (!imageUrl) {
+              if (nameLower.includes('luxury hotel') || nameLower.includes('hotel') || nameLower.includes('aurelia')) {
+                imageUrl = '/images/{DEAC9CCD-53AC-4B9C-84C8-50AA56796FAD}.png';
+              } else if (nameLower.includes('real estate') || nameLower.includes('property') || nameLower.includes('aura')) {
+                imageUrl = '/images/{DB2CB040-B7FC-40A5-815F-3C97E8198F6E}.png';
+              } else if (nameLower.includes('elecstore') || nameLower.includes('electronics') || nameLower.includes('circuit')) {
+                imageUrl = '/images/{A5305420-E9CC-47E1-A43D-71D3E7689E75}.png';
+              } else if (nameLower.includes('kanchi')) {
+                imageUrl = '/images/{A2188B76-5498-435A-84A4-0EE74EB7AA08}.png';
+              } else if (nameLower.includes('scsvmv') || nameLower.includes('university') || nameLower.includes('school')) {
+                imageUrl = '/images/{F07A4DBE-B260-47E1-86F9-2C66E09213EE}.png';
+              } else if (nameLower.includes('hostel')) {
+                imageUrl = '/images/{5FF674F5-377E-40BA-B84F-D8EDEB211A26}.png';
+              }
+            }
+
             return {
               id: p.id,
               title: p.name,
@@ -145,12 +169,10 @@ if (error) throw error;
               category,
               industry: p.category || 'Business',
               status: 'Ready to Customize',
+              image_url: imageUrl,
               demoUrl,
             };
           });
-          console.log("Mapped products:", mapped);
-          console.log("Mapped count:", mapped.length);
-
           setProducts(mapped.filter(p => p.demoUrl));
           
         } else {
@@ -178,11 +200,11 @@ if (error) throw error;
   // Auth Loading State
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-brutal-bg">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 border-4 border-brutal-black bg-brutal-yellow animate-spin"></div>
-          <span className="text-xl font-bold text-brutal-black uppercase tracking-widest font-display">
-            LOADING
+      <div className="min-h-screen flex items-center justify-center bg-canvas">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border border-line border-t-accent rounded-full animate-spin"></div>
+          <span className="text-sm text-muted font-display">
+            Loading
           </span>
         </div>
       </div>
@@ -191,7 +213,7 @@ if (error) throw error;
 
   return (
     <SmoothScroll>
-      <div className="min-h-screen bg-brutal-bg text-brutal-black font-sans antialiased selection:bg-brutal-yellow selection:text-brutal-black">
+      <div className="min-h-screen bg-canvas text-ink font-sans antialiased">
         
         {/* Header (Pass session state and trigger callbacks) */}
         <Navbar 

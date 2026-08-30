@@ -17,11 +17,34 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
     return () => clearInterval(timer);
   }, []);
 
+  // Simple intersection observer for timeline nodes to add glowing active state
+  useEffect(() => {
+    const observerCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          entry.target.classList.remove('bg-surface-container-high');
+        } else {
+          entry.target.classList.remove('active');
+          entry.target.classList.add('bg-surface-container-high');
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, { threshold: 0.5 });
+    const nodes = document.querySelectorAll('.timeline-node');
+    nodes.forEach(node => observer.observe(node));
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <section className="relative pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden bg-brutal-bg border-b-4 border-brutal-black">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
+
           {/* Left Column: Huge Brutalist Text */}
           <div className="lg:col-span-7 space-y-6">
 
@@ -69,7 +92,7 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
           {/* Right Column: Start Your Project Widget */}
           <div className="lg:col-span-5 animate-project-card">
             <div className="project-scoping-card p-6 bg-white dark:bg-black border-4 border-brutal-black relative group overflow-hidden">
-              
+
               {/* Header Section */}
               <div className="animate-project-header flex flex-col gap-2 mb-6">
                 <div className="flex items-center justify-between">
@@ -135,7 +158,7 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
                   LAUNCH PROJECT SCOPING
                 </button>
               </div>
-              
+
             </div>
           </div>
 

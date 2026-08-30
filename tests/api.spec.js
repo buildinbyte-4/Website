@@ -34,14 +34,10 @@ test.describe('API Endpoints', () => {
 
   test('GET /api/admin/logout redirects to homepage', async ({ request }) => {
     const response = await request.get(`${BASE_URL}/api/admin/logout`, {
-      redirect: 'manual'
+      maxRedirects: 0,
     });
-    // Expect redirect status (307 etc)
     const status = response.status();
-    console.log(`GET /api/admin/logout status: ${status}`);
-    console.log(`Headers:`, JSON.stringify(response.headers()));
     const redirectUrl = response.headers()['location'];
-    console.log(`Location: ${redirectUrl}`);
     expect([301, 302, 307, 308]).toContain(status);
     expect(redirectUrl).toContain('/');
   });

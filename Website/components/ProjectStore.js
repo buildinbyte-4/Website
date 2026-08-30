@@ -8,7 +8,7 @@ function StatCounter({ targetValue, duration = 800, hasIntersected, suffix = '' 
 
   useEffect(() => {
     if (!hasIntersected) return;
-    
+
     let start = 0;
     const end = parseInt(targetValue, 10) || 0;
     if (start === end) {
@@ -21,7 +21,7 @@ function StatCounter({ targetValue, duration = 800, hasIntersected, suffix = '' 
     const animate = (currentTime) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      
+
       const current = Math.floor(progress * end);
       setCurrentValue(current);
 
@@ -81,18 +81,15 @@ export default function ProjectStore({ customProjects, loading, onOpenDemo, onOp
   };
 
 
-
-  const BRUTAL_COLORS = ['bg-brutal-yellow', 'bg-brutal-pink', 'bg-brutal-green', 'bg-brutal-blue'];
-
   return (
     <section id="projects" ref={sectionRef} className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
       <div className="max-w-7xl mx-auto px-6">
-        
+
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
             <div className="overflow-hidden mb-4">
-              <span 
+              <span
                 className="font-black text-xs uppercase tracking-widest text-brutal-black bg-brutal-yellow px-3 py-1 border-2 border-brutal-black inline-block shadow-brutal-sm"
                 style={{
                   transform: hasIntersected ? 'translateX(0)' : 'translateX(-101%)',
@@ -120,7 +117,7 @@ export default function ProjectStore({ customProjects, loading, onOpenDemo, onOp
 
         {/* Filter Bar & Search */}
         <div className="flex flex-wrap lg:flex-nowrap items-center justify-between gap-4 mb-12 p-4 bg-white border-4 border-brutal-black shadow-brutal dark:bg-black">
-          
+
           <div data-lenis-prevent className="flex items-center gap-2 overflow-x-auto flex-nowrap pb-2 lg:pb-0 scroll-smooth" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <style jsx>{`
               div::-webkit-scrollbar { display: none; }
@@ -162,103 +159,115 @@ export default function ProjectStore({ customProjects, loading, onOpenDemo, onOp
             <span className="font-black text-xl uppercase text-brutal-black">No solutions match your filters yet.</span>
           </div>
         ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => {
-            const hasDemo = Boolean(project.demoUrl);
-            const metrics = getMetrics(project.id);
-            const cardBgColor = BRUTAL_COLORS[index % BRUTAL_COLORS.length];
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProjects.map((project, index) => {
+              const hasDemo = Boolean(project.demoUrl);
+              const metrics = getMetrics(project.id);
+              const cardBgColor = ['bg-brutal-yellow', 'bg-brutal-green', 'bg-brutal-pink', 'bg-brutal-blue'][index % 4];
 
-            return (
-              <div
-                key={project.id}
-                onClick={() => {
-                  if (hasDemo) window.open(project.demoUrl, '_blank', 'noopener,noreferrer');
-                  else onOpenDemo(project);
-                }}
-                className={`group brutal-card-hover flex flex-col justify-between cursor-pointer h-full ${cardBgColor} p-0 overflow-hidden card-reveal ${hasIntersected ? 'visible' : ''}`}
-                style={{ transitionDelay: `${index * 80}ms` }}
-              >
-                
-                {/* Generative Project Cover Art */}
-                <ProjectCoverArt project={project} />
+              return (
+                <div
+                  key={project.id}
+                  onClick={() => {
+                    if (hasDemo) window.open(project.demoUrl, '_blank', 'noopener,noreferrer');
+                    else onOpenDemo(project);
+                  }}
+                  className={`group brutal-card-hover flex flex-col justify-between cursor-pointer h-full ${cardBgColor} p-0 overflow-hidden card-reveal ${hasIntersected ? 'visible' : ''}`}
+                  style={{ transitionDelay: `${index * 80}ms` }}
+                >
 
-                <div className="p-6 bg-white border-b-4 border-brutal-black flex-1 dark:bg-black">
-                  {/* Title & Description */}
-                  <h3 className="font-display font-black text-3xl text-brutal-black mb-4 uppercase leading-none tracking-tight">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-base text-brutal-black font-bold uppercase leading-tight mb-6 line-clamp-3">
-                    {project.desc}
-                  </p>
-
-                  {/* Quantifiable Metrics */}
-                  <div className="grid grid-cols-3 gap-2 mb-6">
-                    {metrics.map((m, i) => (
-                      <div key={i} className="bg-pure-white text-black border-2 border-black dark:border-white flex flex-col items-center justify-center text-center p-1.5">
-                        <span className="font-black text-[10px] text-black uppercase">{m.label}</span>
-                        <span className="font-black text-lg text-black">{m.value}</span>
-                      </div>
-                    ))}
+                  {/* Project Screenshot */}
+                  <div className="w-full h-36 border-b-4 border-brutal-black relative overflow-hidden select-none">
+                    <img
+                      src={`/screenshots/${project.img}.png`}
+                      alt={`${project.title} screenshot`}
+                      className="object-cover w-full h-full"
+                    />
+                    {/* Category Pill Tag */}
+                    <div className="absolute top-3 left-3 bg-white border-2 border-black px-2 py-0.5 text-[9px] font-black tracking-widest text-black uppercase z-10 shadow-none rounded-none">
+                      {project.industry.toUpperCase()}
+                    </div>
+                    {/* Scan Sweep Bar */}
+                    <div className="scan-bar" />
                   </div>
 
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {project.stack && project.stack.map((tech, idx) => (
-                      <span
-                         key={idx}
-                         className="font-black text-[10px] uppercase px-2 py-1 bg-white text-brutal-black border-2 border-brutal-black dark:bg-black"
-                      >
-                         {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                  <div className="p-8 bg-white border-b-4 border-brutal-black flex-1 dark:bg-black">
+                    {/* Title & Description */}
+                    <h3 className="font-display font-black text-3xl text-brutal-black mb-4 uppercase leading-none tracking-tight">
+                      {project.title}
+                    </h3>
 
-                {/* Actions */}
-                <div className="p-4 bg-white dark:bg-black">
-                  <div className="grid grid-cols-2 gap-3">
-                    {hasDemo ? (
+                    <p className="text-base text-brutal-black font-bold uppercase leading-tight mb-6 line-clamp-3">
+                      {project.desc}
+                    </p>
+
+                    {/* Quantifiable Metrics */}
+                    <div className="grid grid-cols-3 gap-2 mb-6">
+                      {metrics.map((m, i) => (
+                        <div key={i} className="bg-pure-white text-black border-2 border-black dark:border-white flex flex-col items-center justify-center text-center p-1.5">
+                          <span className="font-black text-[10px] text-black uppercase">{m.label}</span>
+                          <span className="font-black text-lg text-black">{m.value}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Tech Stack */}
+                    <div className="flex flex-wrap gap-2 mb-2">
+                      {project.stack && project.stack.map((tech, idx) => (
+                        <span
+                           key={idx}
+                           className="font-black text-[10px] uppercase px-2 py-1 bg-white text-brutal-black border-2 border-brutal-black dark:bg-black"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="p-4 bg-white dark:bg-black">
+                    <div className="grid grid-cols-2 gap-3">
+                      {hasDemo ? (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.open(project.demoUrl, '_blank', 'noopener,noreferrer');
+                          }}
+                          className="btn-primary-invert py-3 justify-center text-xs cursor-pointer"
+                        >
+                          LIVE DEMO
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onOpenDemo(project);
+                          }}
+                          className="btn-secondary-invert py-3 justify-center text-xs cursor-pointer"
+                        >
+                          VIEW ARCH
+                        </button>
+                      )}
+
                       <button
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          window.open(project.demoUrl, '_blank', 'noopener,noreferrer');
-                        }}
-                        className="btn-primary-invert py-3 justify-center text-xs cursor-pointer"
-                      >
-                        LIVE DEMO
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onOpenDemo(project);
+                          onOpenInquiry({ title: `Technical Inquiry — ${project.title}` });
                         }}
                         className="btn-secondary-invert py-3 justify-center text-xs cursor-pointer"
                       >
-                        VIEW ARCH
+                        READ DOC
                       </button>
-                    )}
-
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onOpenInquiry({ title: `Technical Inquiry — ${project.title}` });
-                      }}
-                      className="btn-secondary-invert py-3 justify-center text-xs cursor-pointer"
-                    >
-                      READ DOC
-                    </button>
+                    </div>
                   </div>
-                </div>
 
-              </div>
-            );
-          })}
-        </div>
+                </div>
+              );
+            })}
+          </div>
         )}
 
       </div>

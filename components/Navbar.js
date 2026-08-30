@@ -3,7 +3,16 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 
-export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk, onOpenInquiry }) {
+const NAV_LINKS = [
+  { href: '/#capabilities', label: 'Capabilities' },
+  { href: '/#process', label: 'Process' },
+  { href: '/#products', label: 'Work' },
+  { href: '/templates', label: 'Templates' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+
+export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInquiry }) {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -18,6 +27,8 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk
   }, []);
 
   const handleSignOut = async () => {
+    if (!supabase) return;
+
     try {
       await supabase.auth.signOut();
       setShowLogoutConfirm(false);
@@ -28,76 +39,44 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-atelier ease-atelier ${
         isScrolled
-          ? 'py-3 bg-[#0b1326]/85 backdrop-blur-xl border-b border-white/10 shadow-2xl'
+          ? 'py-3 bg-canvas/90 backdrop-blur-md border-b border-line shadow-[var(--shadow-header)]'
           : 'py-5 bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        
-        {/* Logo & Status Dot */}
-        <div className="flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#06b6d4] to-[#8b5cf6] p-[1px] shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
-              <div className="w-full h-full bg-[#0b1326] rounded-[7px] flex items-center justify-center font-mono font-bold text-lg text-[#4cd7f6]">
-                B
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-display font-extrabold text-xl tracking-tight text-[#dae2fd] group-hover:text-[#4cd7f6] transition-colors">
-                BuildInByte
-              </span>
-              <span className="font-mono text-[10px] text-[#06b6d4] tracking-widest uppercase -mt-1 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#06b6d4] animate-pulse"></span>
-                Engineering
-              </span>
-            </div>
-          </Link>
-        </div>
+      <div className="page-wrap flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="w-8 h-8 border border-ink flex items-center justify-center font-display font-semibold text-sm text-ink">
+            B
+          </div>
+          <span className="font-display font-semibold text-lg tracking-tight text-ink group-hover:text-accent transition-colors duration-atelier">
+            BuildInByte
+          </span>
+        </Link>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#bcc9cd]">
-          <a
-            href="#capabilities"
-            className="hover:text-[#4cd7f6] transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#06b6d4] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
-          >
-            Capabilities
-          </a>
-          <a
-            href="#products"
-            className="hover:text-[#4cd7f6] transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#06b6d4] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
-          >
-            Products & Templates
-          </a>
-          <a
-            href="#services"
-            className="hover:text-[#4cd7f6] transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#06b6d4] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
-          >
-            Services
-          </a>
+        <nav className="hidden md:flex items-center gap-8">
+          {NAV_LINKS.map((link) => (
+            <Link key={link.href} href={link.href} className="nav-link">
+              {link.label}
+            </Link>
+          ))}
           {session && (
-            <Link
-              href="/desk"
-              className="text-[#c4abff] hover:text-white font-mono text-xs tracking-wider uppercase px-2.5 py-1 rounded bg-[#8b5cf6]/10 border border-[#8b5cf6]/30 hover:border-[#8b5cf6] transition-all"
-            >
-              My Desk →
+            <Link href="/desk" className="nav-link">
+              My Desk
             </Link>
           )}
         </nav>
 
-        {/* Action CTAs & Auth */}
         <div className="flex items-center gap-3">
           {session ? (
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowLogoutConfirm(true)}
-                className="hidden sm:block btn-ghost-cyan text-xs font-mono px-3 py-2 rounded-lg uppercase tracking-wider"
+                className="hidden sm:inline-flex btn-ghost text-xs px-3 py-2"
               >
-                Log Out
+                Log out
               </button>
-              
-              {/* User Avatar */}
               {(() => {
                 const avatarUrl = session?.user?.user_metadata?.avatar_url || session?.user?.user_metadata?.picture || session?.user?.user_metadata?.avatarUrl || '';
                 const email = session?.user?.email || '';
@@ -107,10 +86,10 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk
                 return (
                   <button
                     onClick={onOpenProfile}
-                    className="w-9 h-9 rounded-full border border-[#06b6d4]/50 p-[2px] bg-[#171f33] hover:border-[#06b6d4] transition-all overflow-hidden flex items-center justify-center text-xs font-mono font-bold text-[#4cd7f6]"
+                    className="w-9 h-9 rounded-sm border border-line overflow-hidden flex items-center justify-center text-xs font-display font-semibold text-ink bg-surface hover:border-accent transition-colors duration-atelier"
                   >
                     {avatarUrl ? (
-                      <img src={avatarUrl} alt="User Avatar" className="w-full h-full object-cover rounded-full" />
+                      <img src={avatarUrl} alt="User Avatar" className="w-full h-full object-cover" />
                     ) : (
                       initial
                     )}
@@ -118,95 +97,92 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenDesk
                 );
               })()}
             </div>
-          ) : (
+          ) : onOpenLogin ? (
             <button
               onClick={onOpenLogin}
-              className="btn-ghost-cyan text-xs font-mono px-4 py-2 rounded-lg uppercase tracking-wider"
+              className="btn-ghost text-xs px-4 py-2"
             >
-              Log In
+              Log in
             </button>
+          ) : (
+            <Link href="/contact" className="btn-ghost text-xs px-4 py-2">
+              Get in touch
+            </Link>
           )}
 
           <button
-            onClick={() => onOpenInquiry({ title: 'Book a Technical Consultation' })}
-            className="btn-cyan text-xs px-4 py-2 rounded-lg flex items-center gap-2 tracking-wide font-semibold shadow-lg shadow-cyan-500/20"
+            onClick={() => onOpenInquiry?.({ title: 'Book a Technical Consultation' })}
+            className="btn-primary text-xs px-4 py-2 hidden sm:inline-flex"
           >
-            <span>Book Consultation</span>
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
+            Start a project
           </button>
 
-          {/* Mobile Hamburger Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg bg-[#171f33] text-[#dae2fd] border border-white/10"
+            className="md:hidden p-2 border border-line text-ink bg-surface"
+            aria-label="Toggle menu"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               {mobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
               )}
             </svg>
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden glass-panel border-b border-white/10 px-6 py-6 mt-2 space-y-4 animate-in slide-in-from-top">
-          <a
-            href="#capabilities"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-[#dae2fd] hover:text-[#4cd7f6]"
-          >
-            Capabilities
-          </a>
-          <a
-            href="#products"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-[#dae2fd] hover:text-[#4cd7f6]"
-          >
-            Products & Templates
-          </a>
-          <a
-            href="#services"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-[#dae2fd] hover:text-[#4cd7f6]"
-          >
-            Services
-          </a>
+        <div className="md:hidden border-t border-line bg-canvas px-6 py-6 mt-3 space-y-4">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-sm font-medium text-ink hover:text-accent"
+            >
+              {link.label}
+            </Link>
+          ))}
           {session && (
             <Link
               href="/desk"
               onClick={() => setMobileMenuOpen(false)}
-              className="block text-xs font-mono uppercase text-[#c4abff]"
+              className="block text-sm font-medium text-ink hover:text-accent"
             >
-              My Desk →
+              My Desk
             </Link>
           )}
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              onOpenInquiry?.({ title: 'Book a Technical Consultation' });
+            }}
+            className="btn-primary w-full text-xs py-2.5 sm:hidden"
+          >
+            Start a project
+          </button>
         </div>
       )}
 
-      {/* Sign Out Confirmation Modal */}
       {showLogoutConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="glass-panel p-6 rounded-2xl max-w-sm w-full space-y-4 border border-white/10 shadow-2xl">
-            <h3 className="text-lg font-display font-bold text-[#dae2fd]">Confirm Log Out</h3>
-            <p className="text-sm text-[#bcc9cd]">Are you sure you want to sign out of BuildInByte?</p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/40">
+          <div className="bg-surface p-6 max-w-sm w-full space-y-4 border border-line">
+            <h3 className="text-lg font-display font-semibold text-ink">Confirm log out</h3>
+            <p className="text-sm text-muted">Are you sure you want to sign out of BuildInByte?</p>
             <div className="flex items-center justify-end gap-3 pt-2">
               <button
                 onClick={() => setShowLogoutConfirm(false)}
-                className="px-4 py-2 text-xs font-mono rounded-lg border border-white/10 text-[#dae2fd] hover:bg-white/5"
+                className="btn-ghost text-xs px-4 py-2"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSignOut}
-                className="px-4 py-2 text-xs font-mono rounded-lg bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30"
+                className="px-4 py-2 text-xs font-medium border border-danger text-danger hover:bg-danger hover:text-on-accent transition-colors duration-atelier"
               >
-                Log Out
+                Log out
               </button>
             </div>
           </div>

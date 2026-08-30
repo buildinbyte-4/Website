@@ -64,6 +64,11 @@ export default function ProfileModal({ user, onClose }) {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    if (!supabase) {
+      setErrorMsg('Profile updates are unavailable while Supabase is not configured.');
+      return;
+    }
+
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');

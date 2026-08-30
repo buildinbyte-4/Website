@@ -23,43 +23,31 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
   };
 
   return (
-    <header className={`sticky top-0 z-50 bg-white dark:bg-black px-3 sm:px-6 py-3 w-full border-black dark:border-white transition-none ${isScrolled ? 'border-b-[3px] border-solid' : 'border-b border-solid'}`}>
-      <div className="flex items-center justify-between max-w-7xl mx-auto w-full gap-2 sm:gap-4">
+    <header className={`sticky top-0 z-50 bg-surface/50 dark:bg-surface/50 backdrop-blur-xl border-b border-white/10 transition-none ${isScrolled ? 'border-b-[3px] border-solid' : 'border-b border-solid'}`}>
+      <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto h-20">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 shrink-0">
-          <img src="/logo.jpg" alt="BuildInByte Logo" className="h-10 w-auto" />
-          <div>
-            <span className="font-display font-black text-3xl tracking-tighter text-brutal-black uppercase">
-              BuildInByte
-            </span>
-          </div>
+        <Link href="/" className="flex items-center gap-2 group">
+          <img alt="BuildInByte Logo" class="w-10 h-10 rounded-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMjLBoDO1r2vvTHvU_16-88X4EBjb5U8CIyUNsRziKNuYbEeeNfKFGcjnVnZeuESuB_tNlEEeBIiEWLyPF2I5TjvF4cyXKXqV1q6TC2NzAP1hFx4gPpjt8Ou-UBjOnFLeDTUiHV8Nvy4mniPaFSSZqDRQTbsqCDRXeJcHee2v_YQiXmC8uJNPjpejAcdLwaRvIM9fkkwa9GXCeauFNbGcSg5R3zJX89Qdb7pWJxdhXOT1NlLwmwgGVh5ae5MkAJ9TlUfhMH5UYyzM"/>
+          <span class="font-display-lg text-headline-md font-bold text-primary tracking-tight">BuildInByte</span>
         </Link>
 
-        {/* Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 text-lg font-black text-brutal-black uppercase font-display">
-          <a href="#projects" className="px-1 pb-1 border-b-4 border-transparent hover:border-brutal-black transition-none duration-0">
-            Our Solutions
-          </a>
-          <Link href="/templates" className="px-1 pb-1 border-b-4 border-transparent hover:border-brutal-black transition-none duration-0">
-            Templates
-          </Link>
-          <a href="#services" className="px-1 pb-1 border-b-4 border-transparent hover:border-brutal-black transition-none duration-0">
-            Services
-          </a>
-          <a href="#work" className="px-1 pb-1 border-b-4 border-transparent hover:border-brutal-black transition-none duration-0">
-            Our Work
-          </a>
-        </nav>
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-8">
+          <a className="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors py-2" href="#solutions">Solutions</a>
+          <a className="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors py-2" href="#showcase">Showcase</a>
+          <a className="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors py-2" href="#process">Process</a>
+          <a className="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors py-2" href="#contact">Contact</a>
+        </div>
 
-        {/* CTA */}
-        <div className="flex items-center gap-4">
+        {/* Trailing Action */}
+        <div className="hidden md:flex">
           {session && (
             <button
               onClick={onOpenProfile}
-              className="flex items-center gap-2 px-3 py-1.5 bg-brutal-yellow border-2 border-brutal-black text-brutal-black text-sm font-black uppercase cursor-pointer hover:bg-brutal-pink hover:text-white transition-colors"
+              className="bg-primary text-on-primary font-label-caps text-label-caps px-6 py-3 rounded hover:bg-primary-fixed transition-all duration-300 uppercase tracking-widest flex items-center gap-2"
             >
-              <span>PROFILE</span>
+              PROFILE <span class="material-symbols-outlined">person</span>
             </button>
           )}
 
@@ -80,12 +68,16 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
           )}
           <button
             onClick={() => onOpenInquiry({ title: 'Book a Consultation' })}
-            className="btn-primary"
+            className="bg-primary text-on-primary font-label-caps text-label-caps px-6 py-3 rounded hover:bg-primary-fixed transition-all duration-300 uppercase tracking-widest flex items-center gap-2"
           >
-            <span>Talk to Us</span>
+            Let's Build <span class="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>arrow_forward</span>
           </button>
         </div>
 
+        {/* Mobile Menu Toggle (Decorative for this scope) */}
+        <button className="md:hidden text-primary">
+          <span className="material-symbols-outlined">menu</span>
+        </button>
       </div>
     </header>
   );

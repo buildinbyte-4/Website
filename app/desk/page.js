@@ -74,6 +74,12 @@ export default function DeskPage() {
 
   // ── Auth ───────────────────────────────────────────────────────────
   useEffect(() => {
+    if (!supabase) {
+      setAuthLoading(false);
+      window.location.replace('/');
+      return undefined;
+    }
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setAuthLoading(false);
@@ -94,7 +100,7 @@ export default function DeskPage() {
 
   // ── Fetch orders for logged-in user ───────────────────────────────
   useEffect(() => {
-    if (!session?.user?.email) return;
+    if (!supabase || !session?.user?.email) return;
     const fetchOrders = async () => {
       setOrdersLoading(true);
       try {

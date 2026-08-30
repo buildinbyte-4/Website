@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
       className={`${plusJakartaSans.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans bg-bg-primary-dark text-text-primary">{children}</body>
+      <body className="min-h-full flex flex-col font-body-md antialiased tech-bg">{children}</body>
     </html>
   );
 }

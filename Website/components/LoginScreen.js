@@ -105,189 +105,214 @@ export default function LoginScreen({ onClose, message }) {
   };
 
   return (
-    <div className="fixed inset-0 w-screen h-screen flex items-center justify-center bg-[rgba(0,0,0,0.6)] z-50 overflow-y-auto p-4 md:p-6">
-      <div className="max-w-2xl w-full bg-[#FFFFFF] border-2 border-[#000000] p-8 shadow-[6px_6px_0px_#000000] text-center space-y-6 my-auto relative">
-        
+    <div className="fixed inset-0 w-screen h-screen flex items-center justify-center bg-black/60 z-50 overflow-y-auto p-4 md:p-6">
+      <div className="glass-panel rounded-xl p-8 md:p-12 relative overflow-hidden border-0 max-w-md w-full">
         {/* Close Button */}
         {onClose && (
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-8 h-8 bg-[#FFFFFF] border-2 border-[#000000] text-[#000000] font-bold flex items-center justify-center hover:bg-[#000000] hover:text-white transition-all cursor-pointer"
+            className="absolute top-4 right-4 w-8 h-8 border-2 border-white/20 bg-surface/50 dark:bg-surface/50 text-on-surface-variant dark:text-on-surface-variant font-bold flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-all duration-300 cursor-pointer select-none"
           >
             ✕
           </button>
         )}
-        
-        {/* Brand Logo */}
-        <div className="flex flex-col items-center gap-3">
-          <img 
-            src="/logo.jpg" 
-            alt="BuildInByte Logo" 
-            className="w-16 h-16 rounded-2xl object-cover shadow-md" 
-          />
-          <div>
-            <h1 className="font-display font-bold text-3xl text-[#000000]">
-              BuildInByte
-            </h1>
-            <p className="text-[10px] uppercase tracking-widest text-[#0066FF] font-bold mt-1">
-              Custom Software Development & Solutions
-            </p>
-          </div>
-        </div>
 
-        {/* Two-Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-6 items-center md:items-start text-left mt-6">
-          {/* Left Column: Characters */}
-          <div className="flex md:flex-col justify-center items-center gap-4 py-4 md:py-8 w-full select-none">
-            <LoginCharacters mood={mood} />
+        <div className="relative z-10">
+          {/* Brand Logo */}
+          <div className="flex flex-col items-center gap-4 mb-6">
+            <img
+              src="/logo.jpg"
+              alt="BuildInByte Logo"
+              className="w-12 h-12 rounded-sm"
+            />
+            <div>
+              <h1 className="font-display-lg text-headline-md font-bold text-primary">
+                BuildInByte
+              </h1>
+              <p className="font-label-caps text-label-caps text-primary uppercase bg-primary/10 px-2 py-1 rounded border border-primary/20">
+                Custom Software Development & Solutions
+              </p>
+            </div>
           </div>
 
-          {/* Right Column: Form content */}
-          <div className="space-y-6">
-            {/* Tab Selector */}
-            <div className="flex bg-[#FFFFFF] p-1 border-2 border-[#000000]">
-              <button
-                onClick={() => { setIsSignUp(false); setErrorMsg(''); setSuccessMsg(''); }}
-                className={`flex-1 py-2 text-xs font-bold transition-all ${
-                  !isSignUp 
-                    ? 'bg-[#000000] text-[#FFFFFF] shadow-sm' 
-                    : 'text-[#000000] hover:bg-[#F8FAFC]'
-                }`}
-              >
-                Sign In
-              </button>
-              <button
-                onClick={() => { setIsSignUp(true); setErrorMsg(''); setSuccessMsg(''); }}
-                className={`flex-1 py-2 text-xs font-bold transition-all ${
-                  isSignUp 
-                    ? 'bg-[#000000] text-[#FFFFFF] shadow-sm' 
-                    : 'text-[#000000] hover:bg-[#F8FAFC]'
-                }`}
-              >
-                Create Account
-              </button>
+          {/* Two-Column Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-6 items-center md:items-start">
+            {/* Left Column: Characters */}
+            <div className="flex md:flex-col justify-center items-center gap-4 py-4 md:py-8 w-full select-none">
+              <LoginCharacters mood={mood} />
             </div>
 
-            {message && (
-              <div className="p-3 bg-brutal-yellow border-2 border-black text-xs font-black text-black text-left uppercase shadow-brutal-sm">
-                {message}
+            {/* Right Column: Form content */}
+            <div className="space-y-6">
+              {/* Tab Selector */}
+              <div className="flex bg-surface-container-high p-1 border border-outline/20">
+                <button
+                  onClick={() => { setIsSignUp(false); setErrorMsg(''); setSuccessMsg(''); }}
+                  className={`flex-1 py-2 text-xs font-black uppercase transition-all ${
+                    !isSignUp
+                      ? 'bg-primary text-on-primary font-bold'
+                      : 'text-on-surface-variant hover:bg-primary/10'
+                  }`}
+                >
+                  Sign In
+                </button>
+                <button
+                  onClick={() => { setIsSignUp(true); setErrorMsg(''); setSuccessMsg(''); }}
+                  className={`flex-1 py-2 text-xs font-black uppercase transition-all ${
+                    isSignUp
+                      ? 'bg-primary text-on-primary font-bold'
+                      : 'text-on-surface-variant hover:bg-primary/10'
+                  }`}
+                >
+                  Create Account
+                </button>
               </div>
-            )}
 
-            {errorMsg && (
-              <div className="p-3 bg-accent-blue/10 border border-accent-blue rounded-xl text-xs font-semibold text-accent-blue text-left">
-                ⚠️ {errorMsg}
-              </div>
-            )}
-
-            {successMsg && (
-              <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs font-semibold text-emerald-800 text-left">
-                ✓ {successMsg}
-              </div>
-            )}
-
-            {/* Form */}
-            <form onSubmit={handleCredentialsSubmit} className="space-y-4 text-left text-xs">
-              {isSignUp && (
-                <div>
-                  <label className="block font-bold text-[#000000] mb-1">Full Name</label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="e.g. Liam Patel"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    onFocus={() => setIsNameFocused(true)}
-                    onBlur={() => setIsNameFocused(false)}
-                    className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border-2 border-[#000000] text-xs text-[#000000] placeholder:text-[#71717A] focus:outline-none focus:border-[#0066FF]"
-                  />
+              {message && (
+                <div className="p-4 bg-primary/10 border border-primary/20 rounded-lg mb-4">
+                  <p className="font-label-caps text-label-caps text-on-surface-variant uppercase bg-primary/20 px-2 py-1 rounded border border-primary/20 mb-2 inline-block">
+                    {message.split('\n')[0]}
+                  </p>
+                  <p className="font-body-md text-body-md text-on-surface-variant">
+                    {message.split('\n').slice(1).join(' ')}
+                  </p>
                 </div>
               )}
 
-              <div>
-                <label className="block font-bold text-[#000000] mb-1">Email Address</label>
-                <input
-                  required
-                  type="email"
-                  placeholder="name@domain.com"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  onFocus={() => setIsEmailFocused(true)}
-                  onBlur={() => setIsEmailFocused(false)}
-                  className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border-2 border-[#000000] text-xs text-[#000000] placeholder:text-[#71717A] focus:outline-none focus:border-[#0066FF]"
-                />
-              </div>
+              {errorMsg && (
+                <div className="p-4 bg-error/10 border border-error/20 rounded-lg mb-4">
+                  <p className="font-label-caps text-label-caps text-on-error uppercase bg-error/20 px-2 py-1 rounded border border-error/20 mb-2 inline-block">
+                    Error
+                  </p>
+                  <p className="font-body-md text-body-md text-on-error">
+                    {errorMsg}
+                  </p>
+                </div>
+              )}
 
-              <div>
-                <label className="block font-bold text-[#000000] mb-1">Password</label>
-                <div className="relative flex items-center">
+              {successMsg && (
+                <div className="p-4 bg-primary-fixed/10 border border-primary-fixed/20 rounded-lg mb-4">
+                  <p className="font-label-caps text-label-caps text-on-primary-fixed uppercase bg-primary-fixed/20 px-2 py-1 rounded border border-primary-fixed/20 mb-2 inline-block">
+                    Success
+                  </p>
+                  <p className="font-body-md text-body-md text-on-primary-fixed">
+                    {successMsg}
+                  </p>
+                </div>
+              )}
+
+              {/* Form */}
+              <form onSubmit={handleCredentialsSubmit} className="space-y-6">
+                {isSignUp && (
+                  <div className="space-y-4">
+                    <label className="block font-label-caps text-label-caps text-on-surface-variant uppercase mb-2">Full Name</label>
+                    <input
+                      required
+                      type="text"
+                      name="name"
+                      placeholder="e.g. Liam Patel"
+                      className="w-full bg-[#020617] border-0 border-b border-white/10 text-on-surface font-body-md px-4 py-3 focus:ring-0 transition-colors"
+                      value={name}
+                      onChange={e => setName(e.target.value)}
+                      onFocus={() => setIsNameFocused(true)}
+                      onBlur={() => setIsNameFocused(false)}
+                    />
+                  </div>
+                )}
+
+                <div className="space-y-4">
+                  <label className="block font-label-caps text-label-caps text-on-surface-variant uppercase mb-2">Email Address</label>
                   <input
                     required
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    onFocus={() => setIsPasswordFocused(true)}
-                    onBlur={() => setIsPasswordFocused(false)}
-                    className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border-2 border-[#000000] text-xs text-[#000000] placeholder:text-[#71717A] focus:outline-none focus:border-[#0066FF] pr-16"
+                    type="email"
+                    name="email"
+                    placeholder="name@domain.com"
+                    className="w-full bg-[#020617] border-0 border-b border-white/10 text-on-surface font-body-md px-4 py-3 focus:ring-0 transition-colors"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    onFocus={() => setIsEmailFocused(true)}
+                    onBlur={() => setIsEmailFocused(false)}
                   />
+                </div>
+
+                <div className="space-y-4">
+                  <label className="block font-label-caps text-label-caps text-on-surface-variant uppercase mb-2">Password</label>
+                  <div className="relative">
+                    <input
+                      required
+                      type={showPassword ? 'text' : 'password'}
+                      name="password"
+                      placeholder="••••••••"
+                      className="w-full bg-[#020617] border-0 border-b border-white/10 text-on-surface font-body-md px-4 py-3 focus:ring-0 transition-colors pr-12"
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
+                      onFocus={() => setIsPasswordFocused(true)}
+                      onBlur={() => setIsPasswordFocused(false)}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      aria-pressed={showPassword}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 px-2 py-1 rounded font-label-caps text-label-caps text-on-surface-variant bg-primary/10 hover:bg-primary/20 transition-colors"
+                    >
+                      {showPassword ? 'HIDE' : 'SHOW'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="pt-6">
                   <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                    aria-pressed={showPassword}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 px-2 py-1 text-[9px] font-black tracking-wider text-black bg-white border-2 border-black hover:bg-black hover:text-white select-none transition-none cursor-pointer"
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-primary text-on-primary font-label-caps text-label-caps px-8 py-4 rounded hover:bg-primary-fixed transition-all duration-300 uppercase tracking-widest flex items-center justify-center gap-2"
                   >
-                    {showPassword ? 'HIDE' : 'SHOW'}
+                    {loading ? (
+                      <>
+                        <span className="animate-pulse inline-block h-4 w-4 bg-on-primary rounded"></span>
+                        <span className="ml-2">Processing...</span>
+                      </>
+                    ) : isSignUp ? 'Register & Sign In' : 'Sign In with Email'}
                   </button>
                 </div>
-              </div>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full btn-primary py-3 justify-center shadow-md font-bold text-xs border-2 border-[#000000]"
-              >
-                {loading ? 'Please wait...' : isSignUp ? 'Register & Sign In' : 'Sign In with Email'}
-              </button>
-            </form>
+                {/* Divider */}
+                <div className="relative flex items-center justify-center my-6">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-outline/20"></div>
+                  </div>
+                  <span className="relative px-4 font-label-caps text-label-caps text-on-surface-variant uppercase bg-surface-container-high px-2 py-1">
+                    Or Continue With
+                  </span>
+                </div>
 
-            {/* Divider */}
-            <div className="relative flex items-center justify-center">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t-2 border-[#000000]"></div>
-              </div>
-              <span className="relative px-3 bg-[#FFFFFF] text-[10px] uppercase font-bold text-[#000000]">
-                Or Continue With
-              </span>
-            </div>
+                {/* Google OAuth Button */}
+                <div>
+                  <button
+                    onClick={handleGoogleLogin}
+                    disabled={loading}
+                    className="w-full glass-panel border border-primary/20 text-primary hover:bg-primary/10 transition-all duration-300 flex items-center justify-center gap-3 py-3"
+                  >
+                    {/* SVG Google Logo */}
+                    <svg className="w-4 h-4 shrink-0 text-primary" viewBox="0 0 24 24" fill="none">
+                      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="currentColor"/>
+                      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="currentColor"/>
+                      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="currentColor"/>
+                      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="currentColor"/>
+                    </svg>
+                    <span className="ml-3">Sign In with Google</span>
+                  </button>
+                </div>
 
-            {/* Google OAuth Button */}
-            <div>
-              <button
-                onClick={handleGoogleLogin}
-                disabled={loading}
-                className="w-full btn-secondary py-3 justify-center text-xs shadow-sm flex items-center gap-3 bg-[#FFFFFF] border-2 border-[#000000] text-[#000000] font-bold hover:bg-[#000000] hover:text-[#FFFFFF]"
-              >
-                {/* SVG Google Logo */}
-                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
-                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                </svg>
-                <span>Sign In with Google</span>
-              </button>
-            </div>
-
-            {/* Footnotes */}
-            <div className="pt-4 border-t-2 border-[#000000] text-[9px] text-[#000000] font-bold flex justify-between items-center">
-              <span>Google OAuth & Database Encryption</span>
-              <span>BuildInByte © 2026</span>
+                {/* Footnotes */}
+                <div className="mt-6 border-t border-outline/20 pt-4 flex justify-between items-center text-xs font-label-caps text-label-caps text-on-surface-variant">
+                  <span>Google OAuth & Database Encryption</span>
+                  <span>BuildInByte © 2026</span>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );

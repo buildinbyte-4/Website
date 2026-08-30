@@ -21,13 +21,13 @@ export default function CustomServices({ onOpenInquiry }) {
       if (!processRef.current) return;
       const rect = processRef.current.getBoundingClientRect();
       const viewHeight = window.innerHeight;
-      
+
       const totalDist = rect.height + viewHeight;
       const scrolledDist = viewHeight - rect.top;
-      
+
       let progress = scrolledDist / totalDist;
       progress = Math.max(0, Math.min(progress, 1));
-      
+
       if (rect.top < viewHeight && rect.bottom > 0) {
         const step = Math.floor(progress * 7);
         setActiveStep(Math.max(0, Math.min(step, 6)));
@@ -44,11 +44,11 @@ export default function CustomServices({ onOpenInquiry }) {
   return (
     <section id="services" className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
       <div className="max-w-7xl mx-auto px-6">
-        
+
         {/* Why Choose BuildInByte */}
         <div id="work" className="mb-20">
           <div className="text-center max-w-4xl mx-auto mb-14">
-            <span className="text-xs font-black uppercase tracking-widest text-brutal-black bg-brutal-pink px-4 py-2 border-2 border-brutal-black inline-block mb-4 shadow-brutal-sm">
+            <span className="text-xs font-black uppercase tracking-widest text-brutal-black bg-brutal-yellow px-4 py-2 border-2 border-brutal-black inline-block mb-4 shadow-brutal-sm">
               WHY CHOOSE BUILDINBYTE
             </span>
             <h2 className="font-display text-4xl sm:text-6xl font-black text-brutal-black uppercase leading-none">
@@ -119,11 +119,11 @@ export default function CustomServices({ onOpenInquiry }) {
               { step: '06', label: 'DEPLOY' },
               { step: '07', label: 'MAINTAIN' },
             ].map((phase, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className={`border-2 border-[#000000] text-center flex flex-col items-center gap-0 group cursor-pointer transition-none ${
-                  idx === activeStep 
-                    ? 'bg-[#0066FF] text-white -translate-y-1 shadow-brutal-sm' 
+                  idx === activeStep
+                    ? 'bg-[#0066FF] text-white -translate-y-1 shadow-brutal-sm'
                     : 'bg-white text-[#000000] hover:bg-[#0066FF] hover:text-white hover:-translate-y-1 shadow-brutal-sm'
                 }`}
               >
@@ -149,7 +149,7 @@ export default function CustomServices({ onOpenInquiry }) {
             {SERVICES.map((service, idx) => {
               const bColors = ['bg-brutal-yellow', 'bg-brutal-green', 'bg-brutal-pink', 'bg-brutal-blue'];
               const bg = bColors[idx % bColors.length];
-              
+
               return (
                 <div
                   key={idx}

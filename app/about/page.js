@@ -35,6 +35,19 @@ export default function AboutPage() {
           </div>
         </div>
 
+        {/* Team Banner Image */}
+        <div className="bg-white border-4 border-brutal-black p-2 shadow-brutal mb-8 overflow-hidden">
+          <img 
+            src="/images/images (1).jpg" 
+            alt="BuildInByte Engineering Team" 
+            className="w-full h-64 sm:h-80 object-cover border-2 border-brutal-black"
+          />
+          <div className="p-3 bg-brutal-yellow/20 border-t-2 border-brutal-black flex items-center justify-between text-xs font-black uppercase">
+            <span>Engineering & Systems Development Team</span>
+            <span>BuildInByte Collective</span>
+          </div>
+        </div>
+
         {/* Content Body */}
         <div className="bg-white border-4 border-brutal-black p-6 sm:p-10 shadow-brutal space-y-8 text-sm leading-relaxed text-brutal-black font-medium">
           
