@@ -103,18 +103,18 @@ export default function ProfileModal({ user, onClose }) {
 
   return (
     <div className="fixed inset-0 w-screen h-screen flex items-center justify-center bg-[rgba(0,0,0,0.6)] z-50 overflow-y-auto p-4">
-      <div className="max-w-md w-full bg-[#FFFFFF] border-2 border-[#000000] p-8 shadow-[6px_6px_0px_#000000] space-y-6 my-auto relative text-center">
+      <div className="max-w-md w-full bg-white border border-slate-200 p-8 shadow-xl space-y-6 my-auto relative text-center">
         
         {/* Close Button */}
         <button
           onClick={onClose}
           disabled={loading}
-          className="absolute top-4 right-4 w-8 h-8 bg-[#FFFFFF] border-2 border-[#000000] text-[#000000] font-bold flex items-center justify-center hover:bg-[#000000] hover:text-white transition-all cursor-pointer"
+          className="absolute top-4 right-4 w-8 h-8 bg-white border border-slate-200 text-slate-900 font-semibold flex items-center justify-center hover:bg-slate-100 hover:text-slate-950 transition-all cursor-pointer"
         >
           ✕
         </button>
 
-        <h3 className="font-display font-bold text-2xl text-[#000000]">
+        <h3 className="font-display font-semibold text-2xl text-slate-900">
           {isEditing ? 'Edit Profile' : 'Your Profile'}
         </h3>
 
@@ -141,69 +141,69 @@ export default function ProfileModal({ user, onClose }) {
                   alt={fullName}
                   referrerPolicy="no-referrer"
                   onError={() => setImgFailed(true)}
-                  className="w-20 h-20 rounded-full object-cover border-2 border-black dark:border-white shadow-brutal-sm"
+                  className="w-20 h-20 rounded-full object-cover border border-slate-200 dark:border-white/10 shadow-card-sm"
                 />
               ) : (
-                <div className="w-20 h-20 rounded-full bg-white dark:bg-black border-2 border-black dark:border-white text-black dark:text-white flex items-center justify-center font-display text-2xl font-bold shadow-brutal-sm shrink-0">
+                <div className="w-20 h-20 rounded-full bg-white dark:bg-bg-surface-dark border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white flex items-center justify-center font-display text-2xl font-semibold shadow-card-sm shrink-0">
                   {getInitials(fullName)}
                 </div>
               )}
 
               <div>
-                <h4 className="font-bold text-lg text-[#000000]">
+                <h4 className="font-semibold text-lg text-slate-900">
                   {fullName}
                 </h4>
-                <span className="text-[10px] font-bold uppercase tracking-wider border border-[#0066FF] px-2.5 py-1 rounded-full text-[#0066FF] inline-block mt-1">
+                <span className="text-xs font-semibold  tracking-wider border border-[#b84c00] px-2.5 py-1 rounded-full text-[#b84c00] inline-block mt-1">
                   Signed in via {provider === 'google' ? 'Google' : 'Credentials'}
                 </span>
               </div>
             </div>
 
             {/* Profile Grid Fields */}
-            <div className="bg-[#F8FAFC] border-2 border-[#000000] p-5 text-left text-xs space-y-3.5">
+            <div className="bg-slate-50 border border-slate-200 p-5 text-left text-xs space-y-3.5">
               <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
-                <span className="font-bold text-[#000000] uppercase tracking-wider text-[10px]">Email Address</span>
+                <span className="font-semibold text-slate-900  tracking-wider text-xs">Email Address</span>
                 <span className="font-semibold text-[#18181B]">{email}</span>
               </div>
               <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
-                <span className="font-bold text-[#000000] uppercase tracking-wider text-[10px]">Phone Number</span>
+                <span className="font-semibold text-slate-900  tracking-wider text-xs">Phone Number</span>
                 <span 
                   onClick={() => setIsEditing(true)}
-                  className={`font-semibold transition-all ${phone ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#0066FF] hover:underline cursor-pointer'}`}
+                  className={`font-semibold transition-all ${phone ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#b84c00] hover:underline cursor-pointer'}`}
                 >
                   {phone || 'Not provided [Add details]'}
                 </span>
               </div>
               <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
-                <span className="font-bold text-[#000000] uppercase tracking-wider text-[10px]">Occupation</span>
+                <span className="font-semibold text-slate-900  tracking-wider text-xs">Occupation</span>
                 <span 
                   onClick={() => setIsEditing(true)}
-                  className={`font-semibold transition-all ${occupation ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#0066FF] hover:underline cursor-pointer'}`}
+                  className={`font-semibold transition-all ${occupation ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#b84c00] hover:underline cursor-pointer'}`}
                 >
                   {occupation || 'Not provided [Add details]'}
                 </span>
               </div>
               <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
-                <span className="font-bold text-[#000000] uppercase tracking-wider text-[10px]">Location</span>
+                <span className="font-semibold text-slate-900  tracking-wider text-xs">Location</span>
                 <span 
                   onClick={() => setIsEditing(true)}
-                  className={`font-semibold transition-all ${location ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#0066FF] hover:underline cursor-pointer'}`}
+                  className={`font-semibold transition-all ${location ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#b84c00] hover:underline cursor-pointer'}`}
                 >
                   {location || 'Not provided [Add details]'}
                 </span>
               </div>
               <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
-                <span className="font-bold text-[#000000] uppercase tracking-wider text-[10px]">Theme Mode</span>
+                <span className="font-semibold text-slate-900  tracking-wider text-xs">Theme Mode</span>
                 <button
                   type="button"
                   onClick={toggleDarkMode}
-                  className="px-3 py-1 border-2 border-black bg-white text-black font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5 hover:bg-zinc-100 transition-all cursor-pointer shadow-brutal-sm hover:translate-x-[1px] hover:translate-y-[1px]"
+                  className="px-3 py-1 border border-slate-200 bg-white text-slate-900 font-semibold  tracking-wider text-xs flex items-center gap-1.5 hover:bg-zinc-100 transition-all cursor-pointer shadow-card-sm  "
                 >
                   <span>{darkMode ? '☀️ LIGHT MODE' : '🌙 DARK MODE'}</span>
                 </button>
               </div>
               <div className="flex justify-between items-center">
-                <span className="font-bold text-[#000000] uppercase tracking-wider text-[10px]">Member Since</span>
+                <span className="font-semibold text-slate-900  tracking-wider text-xs">Member Since</span>
                 <span className="font-semibold text-[#18181B]">{joinedDate}</span>
               </div>
             </div>
@@ -211,13 +211,13 @@ export default function ProfileModal({ user, onClose }) {
             <div className="flex gap-3">
               <button
                 onClick={() => setIsEditing(true)}
-                className="flex-1 btn-secondary text-xs py-3 justify-center font-bold"
+                className="flex-1 btn-secondary text-xs py-3 justify-center font-semibold"
               >
                 Edit Profile
               </button>
               <button
                 onClick={onClose}
-                className="flex-1 btn-primary text-xs py-3 justify-center font-bold"
+                className="flex-1 btn-primary text-xs py-3 justify-center font-semibold"
               >
                 Close Profile
               </button>
@@ -229,30 +229,30 @@ export default function ProfileModal({ user, onClose }) {
             
             {/* Name Input */}
             <div>
-              <label className="block font-bold text-[#000000] mb-1">Full Name</label>
+              <label className="block font-semibold text-slate-900 mb-1">Full Name</label>
               <input
                 required
                 type="text"
                 value={fullName}
                 onChange={e => setFullName(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border-2 border-[#000000] text-xs text-[#000000] placeholder:text-[#71717A] focus:outline-none focus:border-[#0066FF]"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#b84c00]"
               />
             </div>
 
             {/* Avatar URL Input */}
             <div>
-              <label className="block font-bold text-[#000000] mb-1">Profile Picture URL</label>
+              <label className="block font-semibold text-slate-900 mb-1">Profile Picture URL</label>
               <input
                 type="url"
                 placeholder="https://example.com/avatar.jpg"
                 value={avatarUrl}
                 onChange={e => setAvatarUrl(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border-2 border-[#000000] text-xs text-[#000000] placeholder:text-[#71717A] focus:outline-none focus:border-[#0066FF]"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#b84c00]"
               />
 
               {/* Preset Avatar Selector */}
               <div className="mt-2.5">
-                <span className="block text-[10px] font-bold text-zinc-500 uppercase tracking-wide mb-1.5">
+                <span className="block text-xs font-semibold text-zinc-500  tracking-wide mb-1.5">
                   Or pick a dynamic robot avatar:
                 </span>
                 <div className="flex gap-3 justify-start">
@@ -261,8 +261,8 @@ export default function ProfileModal({ user, onClose }) {
                       key={idx}
                       type="button"
                       onClick={() => setAvatarUrl(preset.url)}
-                      className={`w-9 h-9 border-2 transition-all overflow-hidden ${
-                        avatarUrl === preset.url ? 'border-[#0066FF] scale-110 shadow-sm' : 'border-[#000000] hover:border-[#0066FF]'
+                      className={`w-9 h-9 border transition-all overflow-hidden ${
+                        avatarUrl === preset.url ? 'border-[#b84c00] scale-110 shadow-sm' : 'border-slate-200 hover:border-[#b84c00]'
                       }`}
                     >
                       <img src={preset.url} alt={preset.name} className="w-full h-full object-cover bg-white" />
@@ -274,37 +274,37 @@ export default function ProfileModal({ user, onClose }) {
 
             {/* Phone Number Input */}
             <div>
-              <label className="block font-bold text-[#000000] mb-1">Phone Number</label>
+              <label className="block font-semibold text-slate-900 mb-1">Phone Number</label>
               <input
                 type="tel"
                 placeholder="+91 98765 43210"
                 value={phone}
                 onChange={e => setPhone(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border-2 border-[#000000] text-xs text-[#000000] placeholder:text-[#71717A] focus:outline-none focus:border-[#0066FF]"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#b84c00]"
               />
             </div>
 
             {/* Occupation Input */}
             <div>
-              <label className="block font-bold text-[#000000] mb-1">Occupation</label>
+              <label className="block font-semibold text-slate-900 mb-1">Occupation</label>
               <input
                 type="text"
                 placeholder="e.g. Tech Lead / UI Architect"
                 value={occupation}
                 onChange={e => setOccupation(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border-2 border-[#000000] text-xs text-[#000000] placeholder:text-[#71717A] focus:outline-none focus:border-[#0066FF]"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#b84c00]"
               />
             </div>
 
             {/* Location Input */}
             <div>
-              <label className="block font-bold text-[#000000] mb-1">Location (City, Country)</label>
+              <label className="block font-semibold text-slate-900 mb-1">Location (City, Country)</label>
               <input
                 type="text"
                 placeholder="e.g. Mumbai, India"
                 value={location}
                 onChange={e => setLocation(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border-2 border-[#000000] text-xs text-[#000000] placeholder:text-[#71717A] focus:outline-none focus:border-[#0066FF]"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#b84c00]"
               />
             </div>
 
@@ -314,16 +314,16 @@ export default function ProfileModal({ user, onClose }) {
                 type="button"
                 disabled={loading}
                 onClick={() => { setIsEditing(false); setErrorMsg(''); }}
-                className="flex-1 btn-secondary text-xs py-3 justify-center font-bold"
+                className="flex-1 btn-secondary text-xs py-3 justify-center font-semibold"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 btn-primary text-xs py-3 justify-center font-bold flex items-center gap-2"
+                className="flex-1 btn-primary text-xs py-3 justify-center font-semibold flex items-center gap-2"
               >
-                {loading && <span className="w-3.5 h-3.5 border-2 border-t-transparent border-[#FDFBF7] rounded-full animate-spin"></span>}
+                {loading && <span className="w-3.5 h-3.5 border border-t-transparent border-[#F7F7F8] rounded-full animate-spin"></span>}
                 <span>Save Changes</span>
               </button>
             </div>

@@ -83,41 +83,35 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
 
 
   return (
-    <section id="case-studies" ref={sectionRef} className="py-20 bg-brutal-bg border-b-4 border-brutal-black">
+    <section id="case-studies" ref={sectionRef} className="border-b border-slate-200 bg-canvas py-20 dark:border-white/10">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="overflow-hidden mb-4">
-              <span 
-                className="font-black text-xs uppercase tracking-widest text-brutal-black bg-brutal-yellow px-3 py-1 border-2 border-brutal-black inline-block shadow-brutal-sm"
-                style={{
-                  transform: hasIntersected ? 'translateX(0)' : 'translateX(-101%)',
-                  transition: 'transform 300ms linear',
-                }}
-              >
+            <div className="mb-3">
+              <span className="text-sm font-semibold text-brand-600 dark:text-brand-400">
                 Production Work
               </span>
             </div>
-            <h2 className="font-display text-5xl sm:text-6xl font-black text-brutal-black uppercase tracking-tighter leading-none">
-              CASE STUDIES
+            <h2 className="font-display text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+              Selected case studies
             </h2>
-            <p className="text-xl text-brutal-black mt-4 max-w-2xl font-bold uppercase">
-              Real-world software solutions architected for scale. We deliver measurable results.
+            <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600 dark:text-zinc-300">
+              Production-ready software shaped around measurable business outcomes.
             </p>
           </div>
 
-          <div className="text-right border-4 border-brutal-black p-4 bg-white dark:bg-black shadow-brutal-sm select-none">
-            <span className="font-black text-sm text-brutal-black block mb-1 uppercase">Total Deployments</span>
-            <span className="font-black text-4xl text-brutal-blue">
+          <div className="select-none rounded-xl border border-slate-200 bg-white px-5 py-4 text-left shadow-sm dark:border-white/10 dark:bg-bg-surface-dark md:text-right">
+            <span className="mb-1 block text-sm text-slate-500 dark:text-zinc-400">Projects shown</span>
+            <span className="font-display text-3xl font-semibold text-primary">
               <StatCounter targetValue={filteredProjects.length} hasIntersected={hasIntersected} />
             </span>
           </div>
         </div>
 
         {/* Filter Bar & Search */}
-        <div className="flex flex-wrap lg:flex-nowrap items-center justify-between gap-4 mb-12 p-4 bg-white border-4 border-brutal-black shadow-brutal dark:bg-black">
+        <div className="mb-12 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm dark:border-white/10 dark:bg-bg-surface-dark lg:flex-nowrap">
           
           <div data-lenis-prevent className="flex items-center gap-2 overflow-x-auto flex-nowrap pb-2 lg:pb-0 scroll-smooth" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <style jsx>{`
@@ -127,10 +121,11 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 text-sm font-black uppercase whitespace-nowrap border-2 border-brutal-black transition-all shadow-brutal-sm cursor-pointer ${
+                aria-pressed={activeCategory === cat}
+                className={`whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium ${
                   activeCategory === cat
-                    ? 'bg-black text-white dark:bg-white dark:text-black dark:border-white translate-y-1 translate-x-1 shadow-none'
-                    : 'bg-white text-black hover:bg-zinc-100 dark:bg-black dark:text-white dark:hover:bg-zinc-900'
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-zinc-300 dark:hover:bg-white/5 dark:hover:text-white'
                 }`}
               >
                 {cat}
@@ -141,10 +136,10 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
           <div className="w-full lg:w-auto shrink-0 relative">
             <input
               type="text"
-              placeholder="FILTER BY TECH..."
+              placeholder="Search by technology"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full lg:w-64 px-4 py-3 bg-white border-4 border-brutal-black text-sm font-black text-brutal-black uppercase placeholder-brutal-black/50 focus:outline-none focus:bg-brutal-yellow transition-colors shadow-brutal-sm"
+              className="w-full border border-slate-200 bg-white px-4 py-2.5 text-sm text-foreground shadow-sm placeholder:text-slate-400 dark:border-white/10 dark:bg-canvas lg:w-64"
             />
           </div>
 
@@ -156,35 +151,31 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
             const hasDemo = Boolean(project.demoUrl);
             const metrics = getMetrics(project.id);
             return (
-              <div
+              <article
                 key={project.id}
-                onClick={() => {
-                  if (hasDemo) window.open(project.demoUrl, '_blank', 'noopener,noreferrer');
-                  else onOpenDemo(project);
-                }}
-                className={`group brutal-card-hover flex flex-col justify-between cursor-pointer h-full bg-white dark:bg-black p-0 overflow-hidden card-reveal ${hasIntersected ? 'visible' : ''}`}
+                className={`group ui-card flex h-full flex-col justify-between p-0 card-reveal ${hasIntersected ? 'visible' : ''}`}
                 style={{ transitionDelay: `${index * 80}ms` }}
               >
                 
                 {/* Generative Project Cover Art */}
                 <ProjectCoverArt project={project} />
 
-                <div className="p-6 bg-white border-b-4 border-brutal-black flex-1 dark:bg-black">
+                <div className="flex-1 border-b border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-bg-surface-dark">
                   {/* Title & Description */}
-                  <h3 className="font-display font-black text-3xl text-brutal-black mb-4 uppercase leading-none tracking-tight">
+                  <h3 className="mb-3 font-display text-2xl font-semibold tracking-tight text-foreground">
                     {project.title}
                   </h3>
 
-                  <p className="text-base text-brutal-black font-bold uppercase leading-tight mb-6 line-clamp-3">
+                  <p className="mb-6 line-clamp-3 text-sm leading-6 text-slate-600 dark:text-zinc-400">
                     {project.desc}
                   </p>
 
                   {/* Quantifiable Metrics */}
                   <div className="grid grid-cols-3 gap-2 mb-6">
                     {metrics.map((m, i) => (
-                      <div key={i} className="bg-pure-white text-black border-2 border-black dark:border-white flex flex-col items-center justify-center text-center p-1.5">
-                        <span className="font-black text-[10px] text-black uppercase">{m.label}</span>
-                        <span className="font-black text-lg text-black">{m.value}</span>
+                      <div key={i} className="flex flex-col items-center justify-center rounded-lg bg-slate-50 p-2 text-center dark:bg-white/5">
+                        <span className="text-xs text-slate-500 dark:text-zinc-400">{m.label}</span>
+                        <span className="text-base font-semibold text-slate-900 dark:text-white">{m.value}</span>
                       </div>
                     ))}
                   </div>
@@ -194,7 +185,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                     {project.stack && project.stack.map((tech, idx) => (
                       <span
                          key={idx}
-                         className="font-black text-[10px] uppercase px-2 py-1 bg-white text-brutal-black border-2 border-brutal-black dark:bg-black"
+                         className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-600 dark:border-white/10 dark:bg-bg-surface-dark dark:text-zinc-300"
                       >
                          {tech}
                       </span>
@@ -203,19 +194,17 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                 </div>
 
                 {/* Actions */}
-                <div className="p-4 bg-white dark:bg-black">
+                <div className="p-4 bg-white dark:bg-bg-surface-dark">
                   <div className="grid grid-cols-2 gap-3">
                     {hasDemo ? (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          window.open(project.demoUrl, '_blank', 'noopener,noreferrer');
-                        }}
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="btn-primary-invert py-3 justify-center text-xs cursor-pointer"
                       >
-                        LIVE DEMO
-                      </button>
+                        Live demo
+                      </a>
                     ) : (
                       <button
                         type="button"
@@ -225,7 +214,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                         }}
                         className="btn-secondary-invert py-3 justify-center text-xs cursor-pointer"
                       >
-                        VIEW ARCH
+                        View architecture
                       </button>
                     )}
 
@@ -237,15 +226,23 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                       }}
                       className="btn-secondary-invert py-3 justify-center text-xs cursor-pointer"
                     >
-                      MODIFY
+                      Customize
                     </button>
                   </div>
                 </div>
 
-              </div>
+              </article>
             );
           })}
         </div>
+
+        {filteredProjects.length === 0 && (
+          <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-bg-surface-dark p-10 text-center">
+            <h3 className="text-xl font-bold text-foreground">No matching projects</h3>
+            <p className="mt-2 text-slate-500">Try another category or technology keyword.</p>
+            <button type="button" onClick={() => { setActiveCategory('All'); setSearchQuery(''); }} className="btn-secondary mt-5">Clear filters</button>
+          </div>
+        )}
 
       </div>
     </section>

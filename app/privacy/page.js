@@ -1,51 +1,52 @@
 'use client';
 import Link from 'next/link';
 import FloatingContactButton from '@/components/FloatingContactButton';
+import MarketingShell from '@/components/MarketingShell';
 
 export default function PrivacyPage() {
   return (
-    <main className="min-h-screen bg-brutal-bg text-brutal-black font-sans py-12 px-4 sm:px-6 lg:px-8">
+    <MarketingShell><main className="min-h-screen bg-canvas text-foreground font-sans py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         
         {/* Navigation / Back to home */}
         <div className="mb-8">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-brutal-black text-xs font-black uppercase shadow-brutal-sm hover:bg-brutal-yellow transition-all"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-bg-surface-dark rounded-2xl border border-slate-200 dark:border-white/10 text-xs font-semibold  shadow-card-sm hover:bg-accent-soft transition-all"
           >
             ← Back to Home
           </Link>
         </div>
 
         {/* Card Header */}
-        <div className="bg-white border-4 border-brutal-black p-6 sm:p-10 shadow-brutal mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div className="bg-white dark:bg-bg-surface-dark rounded-2xl border border-slate-200 dark:border-white/10 p-6 sm:p-10 shadow-card mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div>
-            <span className="text-xs font-black uppercase tracking-widest text-brutal-black bg-brutal-pink px-3 py-1 border-2 border-brutal-black inline-block mb-4 shadow-brutal-sm text-white">
+            <span className="text-xs font-semibold  tracking-widest text-foreground bg-violet px-3 py-1 border border-slate-200 dark:border-white/10 inline-block mb-4 shadow-card-sm text-white">
               Legal & Compliance
             </span>
-            <h1 className="font-display font-black text-3xl sm:text-5xl text-brutal-black uppercase tracking-tight mb-2">
+            <h1 className="font-display font-semibold text-3xl sm:text-5xl text-foreground  tracking-tight mb-2">
               Privacy Policy
             </h1>
-            <p className="text-sm font-bold text-[#64748B] uppercase">
+            <p className="text-sm font-medium text-slate-500 dark:text-zinc-400 ">
               Effective Date: August 2, 2026
             </p>
           </div>
-          <div className="shrink-0 border-4 border-brutal-black bg-white p-3 shadow-brutal-sm self-start sm:self-center">
+          <div className="shrink-0 border border-slate-200 dark:border-white/10 bg-white dark:bg-bg-surface-dark p-3 shadow-card-sm self-start sm:self-center">
             <img src="/logo.jpg" alt="BuildInByte Logo" className="h-14 sm:h-20 w-auto" />
           </div>
         </div>
 
         {/* Content Body */}
-        <div className="bg-white border-4 border-brutal-black p-6 sm:p-10 shadow-brutal space-y-8 text-sm leading-relaxed text-brutal-black font-medium">
+        <div className="bg-white dark:bg-bg-surface-dark rounded-2xl border border-slate-200 dark:border-white/10 p-6 sm:p-10 shadow-card space-y-8 text-sm leading-relaxed text-foreground font-medium">
           
-          <section className="border-b-2 border-[#E2E8F0] pb-6">
-            <p className="font-bold text-base">
-              At <span className="font-black">BuiltInByte</span> (&quot;BuiltInByte&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;), protecting your privacy is a top priority. This Privacy Policy outlines how we handle, process, and secure user data when you interact with our platform and Software-as-a-Service (SaaS) products.
+          <section className="border-b border-[#E2E8F0] pb-6">
+            <p className="font-medium text-base">
+              At <span className="font-semibold">BuiltInByte</span> (&quot;BuiltInByte&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;), protecting your privacy is a top priority. This Privacy Policy outlines how we handle, process, and secure user data when you interact with our platform and Software-as-a-Service (SaaS) products.
             </p>
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-pink/20 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-violet/20 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               1. Data Processing and Use
             </h2>
             <p>
@@ -54,7 +55,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-pink/20 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-violet/20 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               2. Account Information
             </h2>
             <p>
@@ -63,7 +64,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-pink/20 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-violet/20 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               3. Payment Data
             </h2>
             <p>
@@ -72,7 +73,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-pink/20 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-violet/20 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               4. Platform Security
             </h2>
             <p>
@@ -81,7 +82,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-pink/20 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-violet/20 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               5. Third-Party Links &amp; Compliance
             </h2>
             <p>
@@ -90,7 +91,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-pink/20 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-violet/20 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               6. Updates to This Policy
             </h2>
             <p>
@@ -98,22 +99,22 @@ export default function PrivacyPage() {
             </p>
           </section>
 
-          <section className="bg-brutal-pink p-6 border-4 border-brutal-black shadow-brutal-sm text-black">
-            <h2 className="font-display font-black text-xl text-black uppercase mb-3">
+          <section className="bg-violet p-6 border border-slate-200 dark:border-white/10 shadow-card-sm text-black">
+            <h2 className="font-display font-semibold text-xl text-black  mb-3">
               7. Contact Us
             </h2>
-            <p className="mb-2 font-bold">
+            <p className="mb-2 font-medium">
               If you have questions, concerns, or requests regarding this Privacy Policy or how your data is handled, please reach out to us:
             </p>
-            <div className="space-y-1 font-black text-sm">
+            <div className="space-y-1 font-semibold text-sm">
               <p>BuiltInByte</p>
-              <p>Email: <a href="mailto:support@builtinbyte.in" className="text-[#0066FF] underline">support@builtinbyte.in</a></p>
+              <p>Email: <a href="mailto:support@builtinbyte.in" className="text-[#b84c00] underline">support@builtinbyte.in</a></p>
             </div>
           </section>
 
         </div>
       </div>
       <FloatingContactButton />
-    </main>
+    </main></MarketingShell>
   );
 }

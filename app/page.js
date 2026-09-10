@@ -30,10 +30,22 @@ export default function HomePage() {
     if (typeof window !== 'undefined' && window.location.port === '3000') {
       window.location.replace(window.location.href.replace(':3000', ':8000'));
     }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('login') === '1') {
+      setShowLogin(true);
+      params.delete('login');
+      const query = params.toString();
+      window.history.replaceState({}, document.title, `${window.location.pathname}${query ? `?${query}` : ''}`);
+    }
   }, []);
 
   // Auth
   useEffect(() => {
+    if (!supabase) {
+      setAuthLoading(false);
+      return undefined;
+    }
+
     const handleInitialAuth = async () => {
       if (typeof window !== 'undefined' && window.location.hash) {
         const hash = window.location.hash.substring(1);
@@ -86,18 +98,20 @@ export default function HomePage() {
   // 2. Fetch Products from Supabase on Login / Session Status Change
   useEffect(() => {
     const fetchProducts = async () => {
+      if (!supabase) {
+        setProducts(MOCK_PROJECTS);
+        return;
+      }
+
       try {
-       const { data, error } = await supabase
-  .from('products')
-  .select('*')
-  .eq('status', 'active')
-  .eq('show_on_store', true)
-  .order('created_at', { ascending: false });
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .eq('status', 'active')
+          .eq('show_on_store', true)
+          .order('created_at', { ascending: false });
 
-console.log("Products from Supabase:", data);
-console.log("Count:", data?.length);
-
-if (error) throw error;
+        if (error) throw error;
 
         if (data && data.length > 0) {
 
@@ -148,9 +162,6 @@ if (error) throw error;
               demoUrl,
             };
           });
-          console.log("Mapped products:", mapped);
-          console.log("Mapped count:", mapped.length);
-
           setProducts(mapped.filter(p => p.demoUrl));
           
         } else {
@@ -178,10 +189,10 @@ if (error) throw error;
   // Auth Loading State
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-brutal-bg">
+      <div className="min-h-screen flex items-center justify-center bg-canvas">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 border-4 border-brutal-black bg-brutal-yellow animate-spin"></div>
-          <span className="text-xl font-bold text-brutal-black uppercase tracking-widest font-display">
+          <div className="w-16 h-16 border border-slate-200 dark:border-white/10 bg-accent-soft animate-spin"></div>
+          <span className="text-xl font-bold text-foreground  tracking-widest font-display">
             LOADING
           </span>
         </div>
@@ -191,7 +202,7 @@ if (error) throw error;
 
   return (
     <SmoothScroll>
-      <div className="min-h-screen bg-brutal-bg text-brutal-black font-sans antialiased selection:bg-brutal-yellow selection:text-brutal-black">
+      <div className="min-h-screen bg-canvas text-foreground font-sans antialiased selection:bg-accent-soft selection:text-foreground">
         
         {/* Header (Pass session state and trigger callbacks) */}
         <Navbar 

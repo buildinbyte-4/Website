@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import FloatingContactButton from '@/components/FloatingContactButton';
+import MarketingShell from '@/components/MarketingShell';
 
 const FAQ_DATA = [
   {
@@ -96,33 +97,33 @@ export default function FAQPage() {
   };
 
   return (
-    <main className="min-h-screen bg-brutal-bg text-brutal-black font-sans py-12 px-4 sm:px-6 lg:px-8">
+    <MarketingShell><main className="min-h-screen bg-canvas text-foreground font-sans py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         
         {/* Navigation / Back to home */}
         <div className="mb-8">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-brutal-black text-xs font-black uppercase shadow-brutal-sm hover:bg-brutal-yellow transition-all"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-bg-surface-dark rounded-2xl border border-slate-200 dark:border-white/10 text-xs font-semibold  shadow-card-sm hover:bg-accent-soft transition-all"
           >
             ← Back to Home
           </Link>
         </div>
 
         {/* Card Header */}
-        <div className="bg-white border-4 border-brutal-black p-6 sm:p-10 shadow-brutal mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div className="bg-white dark:bg-bg-surface-dark rounded-2xl border border-slate-200 dark:border-white/10 p-6 sm:p-10 shadow-card mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div>
-            <span className="text-xs font-black uppercase tracking-widest text-brutal-black bg-brutal-yellow px-3 py-1 border-2 border-brutal-black inline-block mb-4 shadow-brutal-sm">
+            <span className="text-xs font-semibold  tracking-widest text-foreground bg-accent-soft px-3 py-1 border border-slate-200 dark:border-white/10 inline-block mb-4 shadow-card-sm">
               Help Center
             </span>
-            <h1 className="font-display font-black text-3xl sm:text-5xl text-brutal-black uppercase tracking-tight mb-2">
+            <h1 className="font-display font-semibold text-3xl sm:text-5xl text-foreground  tracking-tight mb-2">
               Frequently Asked Questions
             </h1>
-            <p className="text-sm font-bold text-[#64748B] uppercase">
+            <p className="text-sm font-medium text-slate-500 dark:text-zinc-400 ">
               Everything you need to know about BuiltInByte.
             </p>
           </div>
-          <div className="shrink-0 border-4 border-brutal-black bg-white p-3 shadow-brutal-sm self-start sm:self-center">
+          <div className="shrink-0 border border-slate-200 dark:border-white/10 bg-white dark:bg-bg-surface-dark p-3 shadow-card-sm self-start sm:self-center">
             <img src="/logo.jpg" alt="BuildInByte Logo" className="h-14 sm:h-20 w-auto" />
           </div>
         </div>
@@ -130,12 +131,12 @@ export default function FAQPage() {
         {/* Content Body */}
         <div className="space-y-8">
           {FAQ_DATA.map((cat, catIdx) => {
-            const catColors = ['bg-brutal-yellow', 'bg-brutal-pink', 'bg-brutal-green', 'bg-brutal-blue', 'bg-brutal-yellow'];
+            const catColors = ['bg-accent-soft', 'bg-violet', 'bg-success', 'bg-primary', 'bg-accent-soft'];
             const catBg = catColors[catIdx % catColors.length];
 
             return (
-              <div key={catIdx} className="bg-white border-4 border-brutal-black p-6 sm:p-8 shadow-brutal space-y-4">
-                <h2 className={`font-display font-black text-xl text-brutal-black uppercase px-3 py-1.5 border-2 border-brutal-black inline-block ${catBg} shadow-brutal-sm mb-2`}>
+              <div key={catIdx} className="bg-white dark:bg-bg-surface-dark rounded-2xl border border-slate-200 dark:border-white/10 p-6 sm:p-8 shadow-card space-y-4">
+                <h2 className={`font-display font-semibold text-xl text-foreground  px-3 py-1.5 border border-slate-200 dark:border-white/10 inline-block ${catBg} shadow-card-sm mb-2`}>
                   {cat.category}
                 </h2>
 
@@ -147,20 +148,22 @@ export default function FAQPage() {
                     return (
                       <div
                         key={itemIdx}
-                        className="border-2 border-brutal-black bg-brutal-bg overflow-hidden"
+                        className="border border-slate-200 dark:border-white/10 bg-canvas overflow-hidden"
                       >
                         <button
                           onClick={() => toggleItem(catIdx, itemIdx)}
-                          className="w-full text-left p-4 bg-white flex items-center justify-between font-black text-sm uppercase text-brutal-black hover:bg-brutal-yellow/30 transition-colors"
+                          aria-expanded={isOpen}
+                          aria-controls={`faq-panel-${key}`}
+                          className="w-full text-left p-4 bg-white dark:bg-bg-surface-dark flex items-center justify-between font-semibold text-sm  text-foreground hover:bg-accent-soft/30 transition-colors"
                         >
                           <span>{item.q}</span>
-                          <span className="font-mono font-black text-lg ml-4">
+                          <span className="font-mono font-semibold text-lg ml-4">
                             {isOpen ? '−' : '+'}
                           </span>
                         </button>
 
                         {isOpen && (
-                          <div className="p-4 bg-brutal-bg border-t-2 border-brutal-black text-xs sm:text-sm font-bold text-brutal-black leading-relaxed">
+                          <div id={`faq-panel-${key}`} className="p-4 bg-canvas border-t border-slate-200 dark:border-white/10 text-xs sm:text-sm font-medium text-foreground leading-relaxed">
                             {item.a}
                           </div>
                         )}
@@ -173,13 +176,13 @@ export default function FAQPage() {
           })}
 
           {/* Contact Prompt */}
-          <div className="bg-brutal-yellow p-6 border-4 border-brutal-black shadow-brutal text-center space-y-2">
-            <h3 className="font-display font-black text-xl uppercase text-brutal-black">
+          <div className="bg-accent-soft rounded-xl p-6 border border-slate-200 dark:border-white/10 shadow-card text-center space-y-2">
+            <h3 className="font-display font-semibold text-xl  text-foreground">
               Still have questions?
             </h3>
-            <p className="text-xs sm:text-sm font-bold text-brutal-black">
+            <p className="text-xs sm:text-sm font-medium text-foreground">
               Reach out to our support team directly at{' '}
-              <a href="mailto:support@builtinbyte.in" className="text-[#0066FF] underline font-black">
+              <a href="mailto:support@builtinbyte.in" className="text-[#b84c00] underline font-semibold">
                 support@builtinbyte.in
               </a>
             </p>
@@ -190,6 +193,6 @@ export default function FAQPage() {
 
       {/* Floating Contact Widget */}
       <FloatingContactButton />
-    </main>
+    </main></MarketingShell>
   );
 }

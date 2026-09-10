@@ -5,7 +5,9 @@ import Lenis from 'lenis';
 export default function SmoothScroll({ children }) {
   useEffect(() => {
     // Detect coarse pointer (mobile touch devices) for zero-latency native touch scroll
-    const isTouch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isTouch || reduceMotion) return undefined;
 
     // Initialize Lenis for buttery-smooth desktop & trackpad scrolling
     const lenis = new Lenis({

@@ -26,7 +26,7 @@ export default function GlobalError({ error, reset }) {
           <div className="flex gap-4 justify-center">
             <button
               onClick={() => reset()}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors cursor-pointer"
+              className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-brand-400 transition-colors cursor-pointer"
             >
               Recover Application
             </button>

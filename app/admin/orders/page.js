@@ -8,6 +8,31 @@ export default function AdminOrders() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [notice, setNotice] = useState('');
+
+  const updatePaymentStatus = (paymentStatus) => {
+    setOrders((current) => current.map((order) => order.id === selectedOrder.id ? { ...order, paymentStatus } : order));
+    setSelectedOrder((current) => ({ ...current, paymentStatus }));
+    setNotice(`Order ${selectedOrder.id} marked ${paymentStatus.toLowerCase()}.`);
+  };
+
+  const downloadInvoice = () => {
+    const lines = [
+      `BuildInByte invoice ${selectedOrder.id}`,
+      `Customer: ${selectedOrder.customerName}`,
+      ...selectedOrder.items.map((item) => `${item.name}: $${item.price}`),
+      `Total: $${selectedOrder.amount.toLocaleString()}`,
+      `Payment status: ${selectedOrder.paymentStatus}`,
+    ];
+    const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = `${selectedOrder.id}-invoice.txt`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+    setNotice(`Invoice ${selectedOrder.id} downloaded.`);
+  };
 
   // Filter Logic
   const filteredOrders = orders.filter(order => {
@@ -29,7 +54,8 @@ export default function AdminOrders() {
   };
 
   return (
-    <div className="space-y-6 relative h-full pb-10">
+      <div className="space-y-6 relative h-full pb-10">
+      <p aria-live="polite" className="sr-only">{notice}</p>
       
       {/* Header & Controls */}
       <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
@@ -39,7 +65,7 @@ export default function AdminOrders() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3">
-          <div className="relative border border-zinc-200 bg-white rounded-md shadow-sm flex items-center px-3 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 transition-shadow">
+          <div className="relative border border-zinc-200 bg-white rounded-md shadow-sm flex items-center px-3 focus-within:ring-2 focus-within:ring-brand-500 focus-within:border-brand-500 transition-shadow">
             <Search size={16} className="text-zinc-400" />
             <input 
               type="text" 
@@ -97,7 +123,7 @@ export default function AdminOrders() {
                 <td className="p-4">
                   <button 
                     onClick={() => setSelectedOrder(order)}
-                    className="inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
+                    className="inline-flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-800 transition-colors"
                   >
                     View <ChevronRight size={16} />
                   </button>
@@ -124,16 +150,17 @@ export default function AdminOrders() {
           ></div>
           
           {/* Drawer Content */}
-          <div className="relative w-full max-w-md h-full bg-white shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
+          <div role="dialog" aria-modal="true" aria-labelledby="order-drawer-title" className="relative w-full max-w-md h-full bg-white shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
             
             {/* Drawer Header */}
             <div className="p-6 border-b border-zinc-200 flex justify-between items-start">
               <div>
-                <h2 className="text-lg font-semibold text-zinc-900">Order {selectedOrder.id}</h2>
+                <h2 id="order-drawer-title" className="text-lg font-semibold text-zinc-900">Order {selectedOrder.id}</h2>
                 <p className="text-sm text-zinc-500 mt-1">{new Date(selectedOrder.timestamp).toLocaleString()}</p>
               </div>
               <button 
                 onClick={() => setSelectedOrder(null)}
+                aria-label="Close order details"
                 className="p-2 rounded-md text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 transition-colors"
               >
                 <X size={20} />
@@ -211,13 +238,13 @@ export default function AdminOrders() {
 
             {/* Drawer Footer / Action Controls */}
             <div className="p-6 border-t border-zinc-200 bg-white grid grid-cols-2 gap-3">
-              <button className="flex justify-center items-center gap-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2.5 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              <button onClick={() => updatePaymentStatus('Paid')} className="flex justify-center items-center gap-2 text-sm font-medium text-primary-foreground bg-primary hover:bg-brand-400 rounded-lg px-4 py-2.5 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
                 <CheckCircle size={16} /> Mark Paid
               </button>
-              <button className="flex justify-center items-center gap-2 text-sm font-medium text-zinc-700 bg-white border border-zinc-300 hover:bg-zinc-50 rounded-lg px-4 py-2.5 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              <button onClick={() => updatePaymentStatus('Refunded')} className="flex justify-center items-center gap-2 text-sm font-medium text-zinc-700 bg-white border border-zinc-300 hover:bg-zinc-50 rounded-lg px-4 py-2.5 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
                 <AlertTriangle size={16} /> Refund
               </button>
-              <button className="col-span-2 flex justify-center items-center gap-2 text-sm font-medium text-zinc-700 bg-white border border-zinc-300 hover:bg-zinc-50 rounded-lg px-4 py-2 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              <button onClick={downloadInvoice} className="col-span-2 flex justify-center items-center gap-2 text-sm font-medium text-zinc-700 bg-white border border-zinc-300 hover:bg-zinc-50 rounded-lg px-4 py-2 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
                 <FileText size={16} /> Download Invoice
               </button>
             </div>

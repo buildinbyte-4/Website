@@ -23,28 +23,28 @@ function CharacterSemicircle({ mood }) {
   return (
     <svg width="80" height="80" viewBox="0 0 80 80" className="shrink-0">
       {/* Semicircle Body */}
-      <path d={bodyPath} fill="#FFFFFF" stroke="#000000" strokeWidth="3" />
+      <path d={bodyPath} fill="#FFFFFF" stroke="#111214" strokeWidth="3" />
 
       {/* Eyes and Mouth - always rendered */}
       <>
         {/* Eyes */}
         {isClosedEyes ? (
           <>
-            <line x1="28" y1="52" x2="34" y2="52" stroke="#000000" strokeWidth="2.5" strokeLinecap="square" />
-            <line x1="46" y1="52" x2="52" y2="52" stroke="#000000" strokeWidth="2.5" strokeLinecap="square" />
+            <line x1="28" y1="52" x2="34" y2="52" stroke="#111214" strokeWidth="2.5" strokeLinecap="square" />
+            <line x1="46" y1="52" x2="52" y2="52" stroke="#111214" strokeWidth="2.5" strokeLinecap="square" />
           </>
         ) : (
           <>
-            <circle cx={isWatching ? 34 : 31} cy="52" r="3" fill="#000000" />
-            <circle cx={isWatching ? 52 : 49} cy="52" r="3" fill="#000000" />
+            <circle cx={isWatching ? 34 : 31} cy="52" r="3" fill="#111214" />
+            <circle cx={isWatching ? 52 : 49} cy="52" r="3" fill="#111214" />
           </>
         )}
 
         {/* Mouth */}
         {isSmile ? (
-          <path d="M 35 60 Q 40 66 45 60" fill="none" stroke="#000000" strokeWidth="2.5" strokeLinecap="square" />
+          <path d="M 35 60 Q 40 66 45 60" fill="none" stroke="#111214" strokeWidth="2.5" strokeLinecap="square" />
         ) : (
-          <line x1="35" y1="62" x2="45" y2="62" stroke="#000000" strokeWidth="2.5" strokeLinecap="square" />
+          <line x1="35" y1="62" x2="45" y2="62" stroke="#111214" strokeWidth="2.5" strokeLinecap="square" />
         )}
       </>
     </svg>
@@ -52,7 +52,7 @@ function CharacterSemicircle({ mood }) {
 }
 
 function CharacterArch({ mood }) {
-  const bodyPath = "M 15 70 L 15 30 L 40 10 L 65 30 L 65 70 Z";
+  const bodyPath = "M 15 70 L 15 35 A 25 25 0 0 1 65 35 L 65 70 Z";
 
   const isSmile = mood === 'smiling';
   const isClosedEyes = mood === 'shy';
@@ -61,28 +61,28 @@ function CharacterArch({ mood }) {
   return (
     <svg width="80" height="80" viewBox="0 0 80 80" className="shrink-0">
       {/* Arch Body */}
-      <path d={bodyPath} fill="#1D4FF7" stroke="#000000" strokeWidth="2.5" />
+      <path d={bodyPath} fill="#ff9138" stroke="#111214" strokeWidth="2.5" />
 
       {/* Eyes and Mouth - always rendered */}
       <>
         {/* Eyes */}
         {isClosedEyes ? (
           <>
-            <line x1="29" y1="42" x2="35" y2="42" stroke="#000000" strokeWidth="2.5" strokeLinecap="square" />
-            <line x1="45" y1="42" x2="51" y2="42" stroke="#000000" strokeWidth="2.5" strokeLinecap="square" />
+            <line x1="29" y1="42" x2="35" y2="42" stroke="#111214" strokeWidth="2.5" strokeLinecap="square" />
+            <line x1="45" y1="42" x2="51" y2="42" stroke="#111214" strokeWidth="2.5" strokeLinecap="square" />
           </>
         ) : (
           <>
-            <circle cx={isWatching ? 35 : 32} cy="42" r="3" fill="#000000" />
-            <circle cx={isWatching ? 51 : 48} cy="42" r="3" fill="#000000" />
+            <circle cx={isWatching ? 35 : 32} cy="42" r="3" fill="#111214" />
+            <circle cx={isWatching ? 51 : 48} cy="42" r="3" fill="#111214" />
           </>
         )}
 
         {/* Mouth */}
         {isSmile ? (
-          <path d="M 35 52 Q 40 57 45 52" fill="none" stroke="#000000" strokeWidth="2.5" strokeLinecap="square" />
+          <path d="M 35 52 Q 40 57 45 52" fill="none" stroke="#111214" strokeWidth="2.5" strokeLinecap="square" />
         ) : (
-          <line x1="35" y1="54" x2="45" y2="54" stroke="#000000" strokeWidth="2.5" strokeLinecap="square" />
+          <line x1="35" y1="54" x2="45" y2="54" stroke="#111214" strokeWidth="2.5" strokeLinecap="square" />
         )}
       </>
     </svg>
@@ -97,28 +97,28 @@ function CharacterRect({ mood }) {
   return (
     <svg width="80" height="80" viewBox="0 0 80 80" className="shrink-0">
       {/* Rectangle Body */}
-      <rect x="15" y="25" width="50" height="45" fill="#FFFFFF" stroke="#000000" strokeWidth="2.5" />
+      <rect x="15" y="25" width="50" height="45" rx="12" fill="#E5E7EB" stroke="#111214" strokeWidth="2.5" />
 
       {/* Eyes and Mouth - always rendered */}
       <>
         {/* Eyes */}
         {isClosedEyes ? (
           <>
-            <line x1="29" y1="44" x2="35" y2="44" stroke="#000000" strokeWidth="2.5" strokeLinecap="square" />
-            <line x1="45" y1="44" x2="51" y2="44" stroke="#000000" strokeWidth="2.5" strokeLinecap="square" />
+            <line x1="29" y1="44" x2="35" y2="44" stroke="#111214" strokeWidth="2.5" strokeLinecap="square" />
+            <line x1="45" y1="44" x2="51" y2="44" stroke="#111214" strokeWidth="2.5" strokeLinecap="square" />
           </>
         ) : (
           <>
-            <circle cx={isWatching ? 35 : 32} cy="44" r="3" fill="#000000" />
-            <circle cx={isWatching ? 51 : 48} cy="44" r="3" fill="#000000" />
+            <circle cx={isWatching ? 35 : 32} cy="44" r="3" fill="#111214" />
+            <circle cx={isWatching ? 51 : 48} cy="44" r="3" fill="#111214" />
           </>
         )}
 
         {/* Mouth */}
         {isSmile ? (
-          <path d="M 35 54 Q 40 59 45 54" fill="none" stroke="#000000" strokeWidth="2.5" strokeLinecap="square" />
+          <path d="M 35 54 Q 40 59 45 54" fill="none" stroke="#111214" strokeWidth="2.5" strokeLinecap="square" />
         ) : (
-          <line x1="35" y1="56" x2="45" y2="56" stroke="#000000" strokeWidth="2.5" strokeLinecap="square" />
+          <line x1="35" y1="56" x2="45" y2="56" stroke="#111214" strokeWidth="2.5" strokeLinecap="square" />
         )}
       </>
     </svg>
@@ -136,22 +136,19 @@ export default function LoginCharacters({ mood }) {
   return (
     <div
       aria-hidden="true"
-      className="flex md:flex-col items-center justify-center w-full"
+      className="login-friends relative isolate flex flex-nowrap items-end justify-center w-full"
       style={{
         transform: shyTransform,
-        transition: prefersReducedMotion ? 'none' : 'transform 50ms linear',
+        transition: prefersReducedMotion ? 'none' : 'transform 220ms ease',
         pointerEvents: 'none',
       }}
     >
-      <CharacterSemicircle mood={mood} />
-      <CharacterArch
-        mood={mood}
-        style={{ marginTop: '-8px' }}
-      />
-      <CharacterRect
-        mood={mood}
-        style={{ marginTop: '-8px' }}
-      />
+      <div className="relative z-20 -mr-6 origin-bottom-right rotate-12"><CharacterSemicircle mood={mood} /></div>
+      <div className="relative z-10"><CharacterArch mood={mood} /></div>
+      <div className="relative z-20 -ml-6 origin-bottom-left -rotate-12"><CharacterRect mood={mood} /></div>
+      <svg className="pointer-events-none absolute bottom-[19px] z-30" width="150" height="25" viewBox="0 0 150 25" fill="none">
+        <path d="M 26 5 Q 42 24 59 11 M 91 11 Q 108 24 124 5" stroke="#111214" strokeWidth="3" strokeLinecap="round" />
+      </svg>
     </div>
   );
 }

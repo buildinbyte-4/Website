@@ -18,27 +18,30 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
   }, []);
 
   return (
-    <section className="relative pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden bg-brutal-bg border-b-4 border-brutal-black">
+    <section className="relative overflow-hidden border-b border-slate-200 bg-canvas py-16 dark:border-white/10 lg:py-24">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Left Column: Huge Brutalist Text */}
+          {/* Main positioning */}
           <div className="lg:col-span-7 space-y-6">
 
             {/* Headline */}
-            <h1 className="font-display text-5xl sm:text-7xl lg:text-[5.5rem] font-black leading-[0.9] text-brutal-black uppercase tracking-tighter">
-              <span className="animate-drop-1 block">WE BUILD</span>
+            <div className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-sm font-medium text-brand-700 dark:border-brand-400/20 dark:bg-brand-950/40 dark:text-brand-300">
+              <span className="h-2 w-2 rounded-full bg-brand-500" /> Software, designed around your business
+            </div>
+            <h1 className="font-display text-5xl font-semibold leading-[1.02] tracking-[-0.04em] text-foreground sm:text-6xl lg:text-7xl">
+              <span className="animate-drop-1 block">We build</span>
               <div className="animate-drop-2">
-                <span className="bg-brutal-yellow px-4 py-1 inline-block -rotate-1 border-4 border-brutal-black shadow-brutal mt-4 min-w-[220px] sm:min-w-[320px] text-center transition-none duration-0">
+                <span className="mt-1 inline-block min-w-[220px] py-1 text-brand-600 transition-colors sm:min-w-[320px] dark:text-brand-400">
                   {tickerWords[tickerIndex]}
                 </span>
               </div>
-              <span className="animate-drop-3 block mt-4">THAT SCALE.</span>
+              <span className="animate-drop-3 block mt-1">that scale.</span>
             </h1>
 
             {/* Subheadline */}
-            <p className="text-xl sm:text-2xl text-brutal-black font-bold uppercase leading-snug border-l-8 border-brutal-pink pl-4 py-2 mt-8 animate-slide-in-left">
-              We architect, build, and deploy raw, production-grade custom web applications and APIs for ambitious companies. No fluff.
+            <p className="max-w-2xl text-lg leading-8 text-slate-600 dark:text-zinc-300 sm:text-xl">
+              We design, build, and launch production-ready digital products for ambitious businesses—from modern websites to complex software platforms.
             </p>
 
             {/* Dual CTAs */}
@@ -47,48 +50,48 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
                 onClick={() => onOpenInquiry({ title: 'Book a Technical Scoping Call' })}
                 className="btn-primary animate-cta-1"
               >
-                BOOK SCOPING CALL
+                Book a scoping call
               </button>
 
-              <a href="#projects" className="btn-secondary animate-cta-2">
-                VIEW OUR WORK
+              <a href="#case-studies" className="btn-secondary animate-cta-2">
+                View our work
               </a>
             </div>
 
             {/* Tech Tags */}
-            <div className="flex flex-wrap items-center gap-2.5 pt-6 text-xs sm:text-sm text-brutal-black font-black uppercase">
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-1">React & Next.js</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-2">Node APIs</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-3">PostgreSQL</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-4">AWS / GCP</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-5">EMBEDDED C/C++</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-6">PCB DESIGN & HARDWARE</span>
-              <span className="bg-white px-3 py-1.5 border-2 border-brutal-black shadow-brutal-sm inline-flex items-center animate-badge-7">PYTHON & FASTAPI</span>
+            <div className="flex flex-wrap items-center gap-2.5 pt-6 text-xs sm:text-sm text-slate-600 dark:text-zinc-300 font-semibold">
+              <span className="bg-white dark:bg-white/5 px-3 py-1.5 border border-slate-200 dark:border-white/10 rounded-full inline-flex items-center animate-badge-1">React & Next.js</span>
+              <span className="bg-white dark:bg-white/5 px-3 py-1.5 border border-slate-200 dark:border-white/10 rounded-full inline-flex items-center animate-badge-2">Node APIs</span>
+              <span className="bg-white dark:bg-white/5 px-3 py-1.5 border border-slate-200 dark:border-white/10 rounded-full inline-flex items-center animate-badge-3">PostgreSQL</span>
+              <span className="bg-white dark:bg-white/5 px-3 py-1.5 border border-slate-200 dark:border-white/10 rounded-full inline-flex items-center animate-badge-4">AWS / GCP</span>
+              <span className="bg-white dark:bg-white/5 px-3 py-1.5 border border-slate-200 dark:border-white/10 rounded-full inline-flex items-center animate-badge-5">Embedded C/C++</span>
+              <span className="bg-white dark:bg-white/5 px-3 py-1.5 border border-slate-200 dark:border-white/10 rounded-full inline-flex items-center animate-badge-6">PCB & Hardware</span>
+              <span className="bg-white dark:bg-white/5 px-3 py-1.5 border border-slate-200 dark:border-white/10 rounded-full inline-flex items-center animate-badge-7">Python & FastAPI</span>
             </div>
 
           </div>
 
           <div className="lg:col-span-5 animate-project-card">
-            <div className="project-scoping-card p-6 bg-white dark:bg-black border-4 border-brutal-black relative group overflow-hidden">
+            <div className="project-scoping-card relative overflow-hidden p-6 sm:p-7">
               
               {/* Header Section */}
               <div className="animate-project-header flex flex-col gap-2 mb-6">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-display font-black text-2xl text-brutal-black uppercase tracking-tighter">
+                  <h3 className="font-display text-2xl font-semibold tracking-tight text-foreground">
                     Start Your Project
                   </h3>
-                  <span className="font-black text-[10px] tracking-wider text-white bg-brutal-black px-2 py-1 border-2 border-brutal-black uppercase">
-                    Interactive Scoping
+                  <span className="rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700 dark:bg-brand-950/50 dark:text-brand-300">
+                    Quick estimate
                   </span>
                 </div>
-                <p className="text-xs text-brutal-black font-bold uppercase">
+                <p className="text-sm text-slate-600 dark:text-zinc-400">
                   Select your solution type and timeline to launch your custom project.
                 </p>
               </div>
 
               {/* Step 1: Solution Type Pills */}
               <div className="mb-6 animate-project-step-1">
-                <span className="font-black text-[10px] uppercase block mb-3 text-brutal-black/75">
+                <span className="mb-3 block text-sm font-medium text-slate-700 dark:text-zinc-300">
                   Step 1: Select Solution Type
                 </span>
                 <div className="grid grid-cols-2 gap-2">
@@ -99,8 +102,9 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
                         key={type}
                         type="button"
                         onClick={() => setSelectedType(type)}
-                        className={`w-full h-full flex items-center justify-center px-3 py-1.5 text-xs font-black uppercase border-2 border-brutal-black cursor-pointer shadow-brutal-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all ${
-                          isSelected ? 'bg-brutal-black text-white' : 'bg-brutal-yellow text-brutal-black'
+                        aria-pressed={isSelected}
+                        className={`flex min-h-10 w-full items-center justify-center rounded-lg border px-3 py-2 text-sm font-medium ${
+                          isSelected ? 'border-brand-600 bg-primary text-primary-foreground shadow-sm' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-white/10 dark:bg-canvas dark:text-zinc-100 dark:hover:bg-slate-800'
                         }`}
                       >
                         {type}
@@ -112,13 +116,13 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
 
               {/* Step 2: Timeline Dropdown */}
               <div className="mb-6 animate-project-step-2">
-                <span className="font-black text-[10px] uppercase block mb-3 text-brutal-black/75">
+                <span className="mb-3 block text-sm font-medium text-slate-700 dark:text-zinc-300">
                   Step 2: Estimated Timeline
                 </span>
                 <select
                   value={timeline}
                   onChange={(e) => setTimeline(e.target.value)}
-                  className="w-full p-2.5 bg-white border-4 border-brutal-black text-xs font-black uppercase text-brutal-black focus:outline-none focus:bg-brutal-yellow shadow-brutal-sm cursor-pointer"
+                  className="w-full border border-slate-200 bg-white p-2.5 text-sm font-medium text-slate-700 shadow-sm dark:border-white/10 dark:bg-canvas dark:text-zinc-100"
                 >
                   <option value="1-2 weeks">1-2 Weeks (Rapid Prototype)</option>
                   <option value="3-6 weeks">3-6 Weeks (Standard Deployment)</option>
@@ -131,9 +135,9 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
                 <button
                   type="button"
                   onClick={() => onOpenInquiry({ title: `Scoping: ${selectedType} (${timeline})` })}
-                  className="w-full btn-primary py-3 justify-center text-xs font-black tracking-wider shadow-brutal-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+                  className="btn-primary w-full py-3"
                 >
-                  LAUNCH PROJECT SCOPING
+                  Continue with this scope
                 </button>
               </div>
               

@@ -15,13 +15,15 @@ export default function AdminLayout({ children }) {
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900 flex flex-col md:flex-row font-sans selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen bg-zinc-50 text-zinc-900 flex flex-col md:flex-row font-sans selection:bg-brand-100 selection:text-brand-900">
       
       {/* Mobile Navbar */}
       <div className="md:hidden flex items-center justify-between p-4 border-b border-zinc-200 bg-white sticky top-0 z-50">
         <div className="font-semibold text-lg tracking-tight text-zinc-900">BuildInByte Admin</div>
         <button 
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label={mobileMenuOpen ? 'Close admin navigation' : 'Open admin navigation'}
+          aria-expanded={mobileMenuOpen}
           className="p-2 rounded-md text-zinc-500 hover:bg-zinc-100 transition-colors"
         >
           {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -34,7 +36,7 @@ export default function AdminLayout({ children }) {
         md:flex w-full md:w-64 bg-white border-b md:border-b-0 md:border-r border-zinc-200 flex-col fixed md:sticky top-[61px] md:top-0 h-[calc(100vh-61px)] md:h-screen z-40
       `}>
         <div className="p-6 hidden md:block border-b border-zinc-100">
-          <Link href="/admin" className="block focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md">
+          <Link href="/admin" className="block focus:outline-none focus:ring-2 focus:ring-brand-500 rounded-md">
             <h1 className="font-semibold text-xl tracking-tight text-zinc-900">BuildInByte</h1>
             <p className="text-xs text-zinc-500 mt-1 font-medium">Admin Dashboard</p>
           </Link>
@@ -50,14 +52,14 @@ export default function AdminLayout({ children }) {
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className={`
-                  flex items-center gap-3 px-3 py-2 rounded-md font-medium text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500
+                  flex items-center gap-3 px-3 py-2 rounded-md font-medium text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500
                   ${isActive 
-                    ? 'bg-blue-50 text-blue-700' 
+                    ? 'bg-brand-50 text-brand-700'
                     : 'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900'
                   }
                 `}
               >
-                <Icon size={18} className={isActive ? 'text-blue-600' : 'text-zinc-400'} />
+                <Icon size={18} className={isActive ? 'text-brand-600' : 'text-zinc-400'} />
                 {item.name}
               </Link>
             );
@@ -67,7 +69,7 @@ export default function AdminLayout({ children }) {
         <div className="p-4 border-t border-zinc-100 mt-auto">
           <Link
             href="/"
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-zinc-600 font-medium text-sm transition-colors hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex items-center gap-3 px-3 py-2 rounded-md text-zinc-600 font-medium text-sm transition-colors hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:ring-2 focus:ring-brand-500"
           >
             <LogOut size={18} className="text-zinc-400" />
             Exit Admin

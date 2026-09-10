@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import LoginCharacters from './LoginCharacters';
 
@@ -21,6 +21,19 @@ export default function LoginScreen({ onClose, message }) {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [isNameFocused, setIsNameFocused] = useState(false);
   const [isConfirmPasswordFocused, setIsConfirmPasswordFocused] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape' && onClose && !loading) onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [loading, onClose]);
 
   // Derive character mood
   const getMood = () => {
@@ -45,6 +58,10 @@ export default function LoginScreen({ onClose, message }) {
     setSuccessMsg('');
 
     try {
+      if (!supabase) {
+        throw new Error('Sign in is temporarily unavailable. Please use the contact page and we will assist you.');
+      }
+
       // Admin Bypass
       if (email === 'admin' && password === 'admin') {
         window.location.href = '/admin';
@@ -92,6 +109,9 @@ export default function LoginScreen({ onClose, message }) {
     setErrorMsg('');
     setSuccessMsg('');
     try {
+      if (!supabase) {
+        throw new Error('Google sign-in is temporarily unavailable. Please try again later.');
+      }
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -115,14 +135,15 @@ export default function LoginScreen({ onClose, message }) {
   const isPasswordValid = hasMinLength && hasUppercase && hasLowercase && hasNumber && hasSpecial;
 
   return (
-    <div className="fixed inset-0 w-screen h-screen flex items-center justify-center bg-[rgba(0,0,0,0.6)] z-50 overflow-y-auto p-4 md:p-6">
-      <div className="max-w-2xl w-full bg-white border-2 border-black p-8 shadow-[6px_6px_0px_#000000] text-center space-y-6 my-auto relative">
+    <div className="fixed inset-0 w-screen h-screen flex items-center justify-center bg-black/60 backdrop-blur-sm z-50 overflow-y-auto p-4 md:p-6" onMouseDown={(event) => { if (event.target === event.currentTarget && onClose && !loading) onClose(); }}>
+      <div role="dialog" aria-modal="true" aria-labelledby="login-title" className="login-dialog max-w-3xl w-full bg-bg-surface-dark dark:bg-bg-surface-dark border border-border-subtle dark:border-white/10 rounded-3xl p-5 sm:p-8 shadow-2xl text-center space-y-6 my-auto relative">
         
         {/* Close Button */}
         {onClose && (
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-8 h-8 bg-white border-2 border-black text-black font-bold flex items-center justify-center hover:bg-black hover:text-white transition-all cursor-pointer"
+            aria-label="Close sign in"
+            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-bg-surface-dark border border-border-subtle text-foreground font-semibold flex items-center justify-center hover:bg-canvas transition-colors cursor-pointer"
           >
             ✕
           </button>
@@ -136,33 +157,33 @@ export default function LoginScreen({ onClose, message }) {
             className="w-16 h-16 rounded-2xl object-cover shadow-md" 
           />
           <div>
-            <h1 className="font-display font-bold text-3xl text-black">
+            <h1 id="login-title" className="font-display font-semibold text-3xl text-foreground">
               BuildInByte
             </h1>
-            <p className="text-[10px] uppercase tracking-widest text-[#0066FF] font-bold mt-1">
+            <p className="text-xs  tracking-widest text-brand-700 dark:text-brand-400 font-semibold mt-1">
               Custom Software Development & Solutions
             </p>
           </div>
         </div>
 
         {/* Two-Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-6 items-center md:items-start text-left mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-6 items-center text-left mt-6">
           {/* Left Column: Characters */}
-          <div className="flex md:flex-col justify-center items-center gap-4 py-4 md:py-8 w-full select-none">
+          <div className="flex justify-center items-end py-2 md:py-12 w-full select-none">
             <LoginCharacters mood={mood} />
           </div>
 
           {/* Right Column: Form content */}
           <div className="space-y-6">
             {/* Tab Selector */}
-            <div className="flex bg-white p-1 border-2 border-black">
+            <div className="flex rounded-xl bg-bg-surface-dark p-1 border border-border-subtle">
               <button
                 type="button"
                 onClick={() => { setIsSignUp(false); setErrorMsg(''); setSuccessMsg(''); }}
-                className={`flex-1 py-2 text-xs font-bold transition-all cursor-pointer ${
+                className={`flex-1 py-2 text-xs font-semibold transition-all cursor-pointer ${
                   !isSignUp 
-                    ? 'bg-black text-white shadow-sm' 
-                    : 'text-black hover:bg-zinc-100'
+                    ? 'rounded-lg bg-foreground text-bg-surface-dark shadow-sm'
+                    : 'text-foreground hover:bg-canvas'
                 }`}
               >
                 Sign In
@@ -170,10 +191,10 @@ export default function LoginScreen({ onClose, message }) {
               <button
                 type="button"
                 onClick={() => { setIsSignUp(true); setErrorMsg(''); setSuccessMsg(''); }}
-                className={`flex-1 py-2 text-xs font-bold transition-all cursor-pointer ${
+                className={`flex-1 py-2 text-xs font-semibold transition-all cursor-pointer ${
                   isSignUp 
-                    ? 'bg-black text-white shadow-sm' 
-                    : 'text-black hover:bg-zinc-100'
+                    ? 'rounded-lg bg-foreground text-bg-surface-dark shadow-sm'
+                    : 'text-foreground hover:bg-canvas'
                 }`}
               >
                 Create Account
@@ -181,7 +202,7 @@ export default function LoginScreen({ onClose, message }) {
             </div>
 
             {message && (
-              <div className="p-3 bg-brutal-yellow border-2 border-black text-xs font-black text-black text-left uppercase shadow-brutal-sm">
+              <div className="p-3 bg-accent-soft border border-border-subtle text-xs font-semibold text-foreground text-left  shadow-card-sm">
                 {message}
               </div>
             )}
@@ -193,7 +214,7 @@ export default function LoginScreen({ onClose, message }) {
             )}
 
             {successMsg && (
-              <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs font-semibold text-emerald-800 text-left">
+              <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs font-semibold text-emerald-700 dark:text-emerald-300 text-left">
                 ✓ {successMsg}
               </div>
             )}
@@ -202,8 +223,9 @@ export default function LoginScreen({ onClose, message }) {
             <form onSubmit={handleCredentialsSubmit} className="space-y-4 text-left text-xs">
               {isSignUp && (
                 <div>
-                  <label className="block font-bold text-black mb-1">Full Name</label>
+                  <label htmlFor="signup-name" className="block font-semibold text-foreground mb-1">Full Name</label>
                   <input
+                    id="signup-name"
                     required
                     type="text"
                     placeholder="e.g. Liam Patel"
@@ -211,14 +233,15 @@ export default function LoginScreen({ onClose, message }) {
                     onChange={e => setName(e.target.value)}
                     onFocus={() => setIsNameFocused(true)}
                     onBlur={() => setIsNameFocused(false)}
-                    className="w-full px-3.5 py-2.5 bg-white border-2 border-black text-xs text-black placeholder:text-zinc-500 focus:outline-none focus:border-[#0066FF]"
+                    className="w-full px-3.5 py-2.5 bg-bg-surface-dark border border-border-subtle text-xs text-foreground placeholder:text-zinc-500 focus:border-[#b84c00]"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block font-bold text-black mb-1">Email Address</label>
+                <label htmlFor="auth-email" className="block font-semibold text-foreground mb-1">Email Address</label>
                 <input
+                  id="auth-email"
                   required
                   type="email"
                   placeholder="name@domain.com"
@@ -226,14 +249,15 @@ export default function LoginScreen({ onClose, message }) {
                   onChange={e => setEmail(e.target.value)}
                   onFocus={() => setIsEmailFocused(true)}
                   onBlur={() => setIsEmailFocused(false)}
-                  className="w-full px-3.5 py-2.5 bg-white border-2 border-black text-xs text-black placeholder:text-zinc-500 focus:outline-none focus:border-[#0066FF]"
+                  className="w-full px-3.5 py-2.5 bg-bg-surface-dark border border-border-subtle text-xs text-foreground placeholder:text-zinc-500 focus:border-[#b84c00]"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-black mb-1">Password</label>
+                <label htmlFor="auth-password" className="block font-semibold text-foreground mb-1">Password</label>
                 <div className="relative flex items-center">
                   <input
+                    id="auth-password"
                     required
                     type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••"
@@ -241,14 +265,14 @@ export default function LoginScreen({ onClose, message }) {
                     onChange={e => setPassword(e.target.value)}
                     onFocus={() => setIsPasswordFocused(true)}
                     onBlur={() => setIsPasswordFocused(false)}
-                    className="w-full px-3.5 py-2.5 bg-white border-2 border-black text-xs text-black placeholder:text-zinc-500 focus:outline-none focus:border-[#0066FF] pr-16"
+                    className="w-full px-3.5 py-2.5 bg-bg-surface-dark border border-border-subtle text-xs text-foreground placeholder:text-zinc-500 focus:border-[#b84c00] pr-16"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     aria-label={showPassword ? "Hide password" : "Show password"}
                     aria-pressed={showPassword}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 px-2 py-1 text-[9px] font-black tracking-wider text-black bg-white border-2 border-black hover:bg-black hover:text-white select-none transition-none cursor-pointer"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 px-2 py-1 text-xs font-semibold tracking-wider text-foreground bg-bg-surface-dark border border-border-subtle hover:bg-accent-soft select-none transition-colors cursor-pointer"
                   >
                     {showPassword ? 'HIDE' : 'SHOW'}
                   </button>
@@ -257,13 +281,13 @@ export default function LoginScreen({ onClose, message }) {
 
               {/* Password Validation Checklist */}
               {isSignUp && password && (
-                <div className="p-3 bg-zinc-100 border border-zinc-200 text-[10px] space-y-1 font-bold text-black">
-                  <div className="uppercase tracking-wider text-[9px] text-[#0066FF] mb-1">Password Requirements:</div>
+                <div className="p-3 bg-canvas border border-zinc-200 text-xs space-y-1 font-semibold text-foreground">
+                  <div className=" tracking-wider text-xs text-brand-700 dark:text-brand-400 mb-1">Password Requirements:</div>
                   <div className={hasMinLength ? "text-emerald-600" : "text-red-500"}>
                     {hasMinLength ? '✓' : '✗'} Minimum 8 characters
                   </div>
                   <div className={hasUppercase ? "text-emerald-600" : "text-red-500"}>
-                    {hasUppercase ? '✓' : '✗'} At least one uppercase letter (A-Z)
+                    {hasUppercase ? '✓' : '✗'} At least one  letter (A-Z)
                   </div>
                   <div className={hasLowercase ? "text-emerald-600" : "text-red-500"}>
                     {hasLowercase ? '✓' : '✗'} At least one lowercase letter (a-z)
@@ -279,8 +303,9 @@ export default function LoginScreen({ onClose, message }) {
 
               {isSignUp && (
                 <div>
-                  <label className="block font-bold text-black mb-1">Confirm Password</label>
+                  <label htmlFor="confirm-password" className="block font-semibold text-foreground mb-1">Confirm Password</label>
                   <input
+                    id="confirm-password"
                     required
                     type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••"
@@ -288,13 +313,13 @@ export default function LoginScreen({ onClose, message }) {
                     onChange={e => setConfirmPassword(e.target.value)}
                     onFocus={() => setIsConfirmPasswordFocused(true)}
                     onBlur={() => setIsConfirmPasswordFocused(false)}
-                    className="w-full px-3.5 py-2.5 bg-white border-2 border-black text-xs text-black placeholder:text-zinc-500 focus:outline-none focus:border-[#0066FF]"
+                    className="w-full px-3.5 py-2.5 bg-bg-surface-dark border border-border-subtle text-xs text-foreground placeholder:text-zinc-500 focus:border-[#b84c00]"
                   />
                 </div>
               )}
 
               {isSignUp && confirmPassword && !passwordsMatch && (
-                <div className="text-red-500 font-bold text-[10px] uppercase">
+                <div className="text-red-500 font-semibold text-xs ">
                   ⚠️ Passwords do not match.
                 </div>
               )}
@@ -302,7 +327,7 @@ export default function LoginScreen({ onClose, message }) {
               <button
                 type="submit"
                 disabled={loading || (isSignUp && (!isPasswordValid || !passwordsMatch))}
-                className="w-full btn-primary py-3 justify-center shadow-md font-bold text-xs border-2 border-black cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full btn-primary py-3 justify-center shadow-md font-semibold text-xs border border-border-subtle cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Please wait...' : isSignUp ? 'CREATE ACCOUNT WITH EMAIL' : 'SIGN IN WITH EMAIL'}
               </button>
@@ -311,9 +336,9 @@ export default function LoginScreen({ onClose, message }) {
             {/* Divider */}
             <div className="relative flex items-center justify-center">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t-2 border-black"></div>
+                <div className="w-full border-t border-border-subtle"></div>
               </div>
-              <span className="relative px-3 bg-white text-[10px] uppercase font-bold text-black">
+              <span className="relative px-3 bg-bg-surface-dark text-xs  font-semibold text-foreground">
                 Or Continue With
               </span>
             </div>
@@ -324,7 +349,7 @@ export default function LoginScreen({ onClose, message }) {
                 type="button"
                 onClick={handleGoogleLogin}
                 disabled={loading}
-                className="w-full btn-secondary py-3 justify-center text-xs shadow-sm flex items-center gap-3 bg-white border-2 border-black text-black font-bold hover:bg-black hover:text-white cursor-pointer"
+                className="w-full btn-secondary py-3 justify-center text-xs shadow-sm flex items-center gap-3 bg-bg-surface-dark border border-border-subtle text-foreground font-semibold hover:bg-accent-soft cursor-pointer"
               >
                 {/* SVG Google Logo */}
                 <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
@@ -338,8 +363,8 @@ export default function LoginScreen({ onClose, message }) {
             </div>
 
             {/* Footnotes */}
-            <div className="pt-4 border-t-2 border-[#000000] text-[9px] text-[#000000] font-bold flex justify-between items-center">
-              <span>Google OAuth & Database Encryption</span>
+            <div className="pt-4 border-t border-border-subtle text-xs text-foreground font-semibold flex justify-between items-center">
+              <span>Your workspace starts here.</span>
             </div>
           </div>
         </div>

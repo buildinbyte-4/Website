@@ -58,20 +58,20 @@ export default function TemplatesPage() {
   const [previewDevice, setPreviewDevice] = useState('desktop'); // desktop | tablet | mobile
 
   return (
-    <div className="min-h-screen bg-bg-primary-dark text-[#FFFDF9] flex flex-col font-sans">
+    <div className="min-h-screen bg-black text-white flex flex-col font-sans">
       
       {/* Top Bar Navigation */}
-      <header className="bg-bg-primary-dark border-b border-accent-blue px-6 py-3 flex items-center justify-between z-10">
+      <header className="bg-black/95 backdrop-blur-xl border-b border-white/10 px-4 sm:px-6 py-3 flex items-center justify-between z-10">
         <div className="flex items-center gap-4">
           <Link
             href="/"
-            className="text-xs font-bold bg-accent-blue/40 hover:bg-accent-blue text-[#FDFBF7] px-3 py-1.5 rounded-lg border border-accent-blue transition-all flex items-center gap-1.5"
+            className="text-xs font-bold bg-white/10 hover:bg-white/15 text-white px-3 py-2 rounded-xl border border-white/10 transition-colors flex items-center gap-1.5"
           >
             ← Back to BuildInByte
           </Link>
           <div className="h-4 w-[1px] bg-accent-blue/40 hidden sm:block"></div>
           <div>
-            <h1 className="font-display text-lg font-bold text-[#FDFBF7] leading-tight">
+            <h1 className="font-display text-lg font-bold text-[#F7F7F8] leading-tight">
               BuildInByte Template Suite
             </h1>
             <p className="text-[11px] text-[#D4C3B5] hidden sm:block">
@@ -82,27 +82,30 @@ export default function TemplatesPage() {
 
         {/* Device Responsive Controls & Launch Action */}
         <div className="flex items-center gap-3">
-          <div className="bg-bg-primary-dark border border-accent-blue rounded-lg p-1 hidden md:flex items-center gap-1 text-xs">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-1 hidden md:flex items-center gap-1 text-xs">
             <button
               onClick={() => setPreviewDevice('desktop')}
+              aria-pressed={previewDevice === 'desktop'}
               className={`px-2.5 py-1 rounded font-bold transition-all ${
-                previewDevice === 'desktop' ? 'bg-accent-blue text-white' : 'text-text-muted hover:text-white'
+                previewDevice === 'desktop' ? 'bg-primary text-primary-foreground' : 'text-slate-400 hover:text-white'
               }`}
             >
               💻 Desktop
             </button>
             <button
               onClick={() => setPreviewDevice('tablet')}
+              aria-pressed={previewDevice === 'tablet'}
               className={`px-2.5 py-1 rounded font-bold transition-all ${
-                previewDevice === 'tablet' ? 'bg-accent-blue text-white' : 'text-text-muted hover:text-white'
+                previewDevice === 'tablet' ? 'bg-primary text-primary-foreground' : 'text-slate-400 hover:text-white'
               }`}
             >
               📱 Tablet
             </button>
             <button
               onClick={() => setPreviewDevice('mobile')}
+              aria-pressed={previewDevice === 'mobile'}
               className={`px-2.5 py-1 rounded font-bold transition-all ${
-                previewDevice === 'mobile' ? 'bg-accent-blue text-white' : 'text-text-muted hover:text-white'
+                previewDevice === 'mobile' ? 'bg-primary text-primary-foreground' : 'text-slate-400 hover:text-white'
               }`}
             >
               📲 Mobile
@@ -113,7 +116,7 @@ export default function TemplatesPage() {
             href={selectedTemplate.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-accent-blue hover:bg-[#9E1B32] text-white text-xs px-4 py-2 rounded-lg font-bold shadow-md transition-all flex items-center gap-1"
+            className="bg-primary hover:bg-brand-500 text-primary-foreground text-xs px-4 py-2 rounded-xl font-bold transition-colors flex items-center gap-1"
           >
             Open Standalone ↗
           </a>
@@ -124,8 +127,8 @@ export default function TemplatesPage() {
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         
         {/* Left Sidebar: Template Directory */}
-        <aside className="w-full lg:w-80 bg-[#231215] border-r border-accent-blue p-4 overflow-y-auto space-y-3 shrink-0">
-          <div className="text-[11px] uppercase font-bold text-text-muted tracking-wider px-1">
+        <aside className="w-full shrink-0 space-y-3 overflow-y-auto border-r border-white/10 bg-white/5 p-4 lg:w-80">
+          <div className="text-[11px]  font-bold text-text-muted tracking-wider px-1">
             Available Website Templates ({TEMPLATES.length})
           </div>
 
@@ -133,42 +136,44 @@ export default function TemplatesPage() {
             {TEMPLATES.map((tmpl) => {
               const isSelected = selectedTemplate.id === tmpl.id;
               return (
-                <div
+                <button
+                  type="button"
                   key={tmpl.id}
                   onClick={() => setSelectedTemplate(tmpl)}
-                  className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                  aria-pressed={isSelected}
+                  className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all ${
                     isSelected
-                      ? 'bg-accent-blue/40 border-accent-blue shadow-md ring-1 ring-[#800020]'
-                      : 'bg-bg-primary-dark border-accent-blue hover:border-accent-blue hover:bg-bg-primary-dark'
+                      ? 'bg-brand-600/20 border-brand-400 shadow-lg shadow-brand-950/20'
+                      : 'bg-white/5 border-white/10 hover:border-white/25 hover:bg-white/10'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[10px] uppercase font-bold text-[#D4C3B5] bg-accent-blue/30 px-2 py-0.5 rounded border border-accent-blue">
+                      <span className="text-[11px]  font-bold text-brand-200 bg-brand-400/10 px-2 py-0.5 rounded-full border border-brand-300/15">
                       {tmpl.badge}
                     </span>
                     {isSelected && (
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                     )}
                   </div>
-                  <h3 className="font-display font-bold text-sm text-[#FDFBF7] mb-1">
+                  <h3 className="font-display font-bold text-sm text-[#F7F7F8] mb-1">
                     {tmpl.name}
                   </h3>
                   <p className="text-[11px] text-[#A8988C] line-clamp-2 leading-relaxed">
                     {tmpl.description}
                   </p>
-                </div>
+                </button>
               );
             })}
           </div>
         </aside>
 
         {/* Right Area: Interactive Live Viewport */}
-        <main className="flex-1 bg-[#0F0805] flex flex-col items-center justify-center p-4 relative overflow-hidden">
+        <main className="flex-1 bg-black flex flex-col items-center justify-center p-4 relative overflow-auto">
           
           {/* Active Template Header Info */}
           <div className="w-full max-w-5xl mb-3 flex items-center justify-between text-xs text-text-muted px-2">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-[#FDFBF7]">{selectedTemplate.name}</span>
+              <span className="font-bold text-[#F7F7F8]">{selectedTemplate.name}</span>
               <span>•</span>
               <span>{selectedTemplate.category}</span>
             </div>
@@ -179,7 +184,7 @@ export default function TemplatesPage() {
 
           {/* Responsive Frame Container */}
           <div
-            className={`transition-all duration-300 ease-in-out border border-accent-blue rounded-xl overflow-hidden shadow-2xl bg-white ${
+            className={`transition-[width,height] duration-300 ease-out border border-white/15 rounded-2xl overflow-hidden shadow-2xl bg-white max-w-full ${
               previewDevice === 'desktop'
                 ? 'w-full max-w-6xl h-[calc(100vh-160px)]'
                 : previewDevice === 'tablet'
@@ -191,6 +196,8 @@ export default function TemplatesPage() {
               key={selectedTemplate.id}
               src={selectedTemplate.url}
               title={selectedTemplate.name}
+              sandbox="allow-scripts allow-forms"
+              referrerPolicy="no-referrer"
               className="w-full h-full border-0"
             />
           </div>

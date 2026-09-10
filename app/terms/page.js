@@ -1,51 +1,52 @@
 'use client';
 import Link from 'next/link';
 import FloatingContactButton from '@/components/FloatingContactButton';
+import MarketingShell from '@/components/MarketingShell';
 
 export default function TermsPage() {
   return (
-    <main className="min-h-screen bg-brutal-bg text-brutal-black font-sans py-12 px-4 sm:px-6 lg:px-8">
+    <MarketingShell><main className="min-h-screen bg-canvas text-foreground font-sans py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         
         {/* Navigation / Back to home */}
         <div className="mb-8">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-brutal-black text-xs font-black uppercase shadow-brutal-sm hover:bg-brutal-yellow transition-all"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-bg-surface-dark rounded-2xl border border-slate-200 dark:border-white/10 text-xs font-semibold  shadow-card-sm hover:bg-accent-soft transition-all"
           >
             ← Back to Home
           </Link>
         </div>
 
         {/* Card Header */}
-        <div className="bg-white border-4 border-brutal-black p-6 sm:p-10 shadow-brutal mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div className="bg-white dark:bg-bg-surface-dark rounded-2xl border border-slate-200 dark:border-white/10 p-6 sm:p-10 shadow-card mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div>
-            <span className="text-xs font-black uppercase tracking-widest text-brutal-black bg-brutal-yellow px-3 py-1 border-2 border-brutal-black inline-block mb-4 shadow-brutal-sm">
+            <span className="text-xs font-semibold  tracking-widest text-foreground bg-accent-soft px-3 py-1 border border-slate-200 dark:border-white/10 inline-block mb-4 shadow-card-sm">
               Legal & Compliance
             </span>
-            <h1 className="font-display font-black text-3xl sm:text-5xl text-brutal-black uppercase tracking-tight mb-2">
+            <h1 className="font-display font-semibold text-3xl sm:text-5xl text-foreground  tracking-tight mb-2">
               Terms of Service
             </h1>
-            <p className="text-sm font-bold text-[#64748B] uppercase">
+            <p className="text-sm font-medium text-slate-500 dark:text-zinc-400 ">
               Effective Date: August 2, 2026
             </p>
           </div>
-          <div className="shrink-0 border-4 border-brutal-black bg-white p-3 shadow-brutal-sm self-start sm:self-center">
+          <div className="shrink-0 border border-slate-200 dark:border-white/10 bg-white dark:bg-bg-surface-dark p-3 shadow-card-sm self-start sm:self-center">
             <img src="/logo.jpg" alt="BuildInByte Logo" className="h-14 sm:h-20 w-auto" />
           </div>
         </div>
 
         {/* Content Body */}
-        <div className="bg-white border-4 border-brutal-black p-6 sm:p-10 shadow-brutal space-y-8 text-sm leading-relaxed text-brutal-black font-medium">
+        <div className="bg-white dark:bg-bg-surface-dark rounded-2xl border border-slate-200 dark:border-white/10 p-6 sm:p-10 shadow-card space-y-8 text-sm leading-relaxed text-foreground font-medium">
           
-          <section className="border-b-2 border-[#E2E8F0] pb-6">
-            <p className="font-bold text-base">
-              Welcome to <span className="font-black">BuiltInByte</span> (&quot;BuiltInByte&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;). By accessing or using our Software-as-a-Service (SaaS) platform, you agree to be bound by these Terms of Service. If you do not agree, please do not use our services.
+          <section className="border-b border-[#E2E8F0] pb-6">
+            <p className="font-medium text-base">
+              Welcome to <span className="font-semibold">BuiltInByte</span> (&quot;BuiltInByte&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;). By accessing or using our Software-as-a-Service (SaaS) platform, you agree to be bound by these Terms of Service. If you do not agree, please do not use our services.
             </p>
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-yellow/30 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-accent-soft/30 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               1. Eligibility
             </h2>
             <p>
@@ -54,11 +55,11 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-yellow/30 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-accent-soft/30 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               2. User Accounts
             </h2>
             <p className="mb-3">To access certain features, you may be required to create an account. You agree to:</p>
-            <ul className="list-disc pl-6 space-y-1 font-bold">
+            <ul className="list-disc pl-6 space-y-1 font-medium">
               <li>Provide accurate and complete information.</li>
               <li>Keep your login credentials confidential.</li>
               <li>Notify us immediately of any unauthorized use of your account.</li>
@@ -67,11 +68,11 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-yellow/30 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-accent-soft/30 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               3. Acceptable Use
             </h2>
             <p className="mb-3">You agree not to:</p>
-            <ul className="list-disc pl-6 space-y-1 font-bold">
+            <ul className="list-disc pl-6 space-y-1 font-medium">
               <li>Use the service for any unlawful purpose.</li>
               <li>Attempt to gain unauthorized access to our systems or other users&apos; accounts.</li>
               <li>Upload or distribute malicious software, viruses, or harmful code.</li>
@@ -82,7 +83,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-yellow/30 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-accent-soft/30 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               4. Subscription and Payments
             </h2>
             <p>
@@ -91,7 +92,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-yellow/30 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-accent-soft/30 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               5. Refunds
             </h2>
             <p>
@@ -100,7 +101,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-yellow/30 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-accent-soft/30 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               6. Intellectual Property
             </h2>
             <p>
@@ -109,7 +110,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-yellow/30 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-accent-soft/30 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               7. User Content &amp; Ownership
             </h2>
             <p>
@@ -118,7 +119,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-yellow/30 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-accent-soft/30 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               8. Service Availability
             </h2>
             <p>
@@ -127,11 +128,11 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-yellow/30 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-accent-soft/30 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               9. Account Suspension or Termination
             </h2>
             <p className="mb-3">We reserve the right to suspend or terminate accounts that:</p>
-            <ul className="list-disc pl-6 space-y-1 font-bold">
+            <ul className="list-disc pl-6 space-y-1 font-medium">
               <li>Violate these Terms.</li>
               <li>Engage in fraudulent or illegal activities.</li>
               <li>Abuse or disrupt the platform or other users.</li>
@@ -139,7 +140,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-yellow/30 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-accent-soft/30 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               10. Limitation of Liability
             </h2>
             <p>
@@ -148,7 +149,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-yellow/30 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-accent-soft/30 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               11. Disclaimer
             </h2>
             <p>
@@ -157,7 +158,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-yellow/30 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-accent-soft/30 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               12. Governing Law
             </h2>
             <p>
@@ -166,7 +167,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3 bg-brutal-yellow/30 px-3 py-1 border-l-4 border-brutal-black inline-block">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-accent-soft/30 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
               13. Changes to These Terms
             </h2>
             <p>
@@ -174,22 +175,22 @@ export default function TermsPage() {
             </p>
           </section>
 
-          <section className="bg-brutal-yellow p-6 border-4 border-brutal-black shadow-brutal-sm">
-            <h2 className="font-display font-black text-xl text-brutal-black uppercase mb-3">
+          <section className="bg-accent-soft rounded-xl p-6 border border-slate-200 dark:border-white/10 shadow-card-sm">
+            <h2 className="font-display font-semibold text-xl text-foreground  mb-3">
               14. Contact Us
             </h2>
-            <p className="mb-2 font-bold">
+            <p className="mb-2 font-medium">
               If you have any questions regarding these Terms of Service, please contact us:
             </p>
-            <div className="space-y-1 font-black text-sm">
+            <div className="space-y-1 font-semibold text-sm">
               <p>BuiltInByte</p>
-              <p>Email: <a href="mailto:support@builtinbyte.in" className="text-[#0066FF] underline">support@builtinbyte.in</a></p>
+              <p>Email: <a href="mailto:support@builtinbyte.in" className="text-[#b84c00] underline">support@builtinbyte.in</a></p>
             </div>
           </section>
 
         </div>
       </div>
       <FloatingContactButton />
-    </main>
+    </main></MarketingShell>
   );
 }

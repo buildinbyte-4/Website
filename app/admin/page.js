@@ -22,7 +22,7 @@ export default function AdminOverview() {
     </div>
   );
 
-  const PIE_COLORS = ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B'];
+  const PIE_COLORS = ['#b84c00', '#8B5CF6', '#10B981', '#F59E0B'];
 
   // Custom Tooltip for Clean styling
   const CleanTooltip = ({ active, payload, label }) => {
@@ -52,7 +52,7 @@ export default function AdminOverview() {
         </div>
         
         <div className="relative inline-block text-left">
-          <select className="appearance-none bg-white border border-zinc-200 text-zinc-700 rounded-md px-4 py-2 pr-8 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer shadow-sm hover:bg-zinc-50 transition-colors">
+          <select className="appearance-none bg-white border border-zinc-200 text-zinc-700 rounded-md px-4 py-2 pr-8 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer shadow-sm hover:bg-zinc-50 transition-colors">
             <option>Last 7 Days</option>
             <option>Last 30 Days</option>
             <option>Year to Date</option>
@@ -87,8 +87,8 @@ export default function AdminOverview() {
               <AreaChart data={trendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.1}/>
-                    <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#b84c00" stopOpacity={0.1}/>
+                    <stop offset="95%" stopColor="#b84c00" stopOpacity={0}/>
                   </linearGradient>
                   <linearGradient id="colorLoss" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#F43F5E" stopOpacity={0.1}/>
@@ -100,7 +100,7 @@ export default function AdminOverview() {
                 <YAxis axisLine={false} tickLine={false} tick={{fill: '#71717A', fontSize: 12}} tickFormatter={(val) => `$${val / 1000}k`} />
                 <Tooltip content={<CleanTooltip />} cursor={{ stroke: '#D4D4D8', strokeWidth: 1, strokeDasharray: '4 4' }} />
                 
-                <Area type="monotone" dataKey="revenue" name="Revenue" stroke="#3B82F6" strokeWidth={2} fillOpacity={1} fill="url(#colorRev)" />
+                <Area type="monotone" dataKey="revenue" name="Revenue" stroke="#b84c00" strokeWidth={2} fillOpacity={1} fill="url(#colorRev)" />
                 <Area type="monotone" dataKey="loss" name="Loss" stroke="#F43F5E" strokeWidth={2} fillOpacity={1} fill="url(#colorLoss)" />
               </AreaChart>
             </ResponsiveContainer>
