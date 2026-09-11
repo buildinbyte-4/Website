@@ -45,7 +45,7 @@ export default function DemoModal({ project, onClose, onOpenInquiry }) {
         {/* Solution Preview / Live Iframe Container */}
         {project.demoUrl ? (
           <div className="mb-6 border border-accent-blue rounded-xl overflow-hidden shadow-inner bg-bg-primary-dark">
-            <div className="bg-[#30190c] px-4 py-2 flex items-center justify-between text-xs text-[#F7F7F8]">
+            <div className="bg-[#111110] px-4 py-2 flex items-center justify-between text-xs text-[#F7F7F8]">
               <span className="font-semibold flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 Live Static Website Preview
@@ -54,7 +54,7 @@ export default function DemoModal({ project, onClose, onOpenInquiry }) {
                 href={project.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-accent-blue hover:bg-[#9a3e00] text-white px-3 py-1 rounded text-[11px] font-semibold transition-all flex items-center gap-1"
+                className="bg-accent-blue hover:bg-[#232321] text-white px-3 py-1 rounded text-[11px] font-semibold transition-all flex items-center gap-1"
               >
                 Open in Fullscreen ↗
               </a>

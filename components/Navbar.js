@@ -51,7 +51,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2.5 rounded-lg focus-visible:outline-none">
           <img src="/logo.jpg" alt="" className="h-9 w-9 rounded-xl object-cover ring-1 ring-slate-200 dark:ring-white/10" />
-          <span className="font-display text-base sm:text-xl font-semibold tracking-tight text-slate-950 dark:text-white">BuildInByte</span>
+          <span className="font-display text-base sm:text-xl font-semibold tracking-tight text-slate-950 dark:text-foreground">BuildInByte</span>
         </Link>
 
         <nav aria-label="Primary navigation" className="hidden items-center gap-1 md:flex">
@@ -76,11 +76,11 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
             <Link href="/contact" className="inline-flex min-h-10 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-brand-400">Talk to us</Link>
           )}
           {session && (
-            <button type="button" onClick={onOpenProfile} aria-label="Open profile" className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-100 text-sm font-semibold text-slate-700 hover:ring-2 hover:ring-brand-200 dark:border-white/10 dark:bg-zinc-800 dark:text-white">
+            <button type="button" onClick={onOpenProfile} aria-label="Open profile" className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-100 text-sm font-semibold text-slate-700 hover:ring-2 hover:ring-brand-200 dark:border-white/10 dark:bg-zinc-800 dark:text-foreground">
               {avatarUrl ? <img src={avatarUrl} alt="" referrerPolicy="no-referrer" className="h-full w-full object-cover" /> : identity.charAt(0).toUpperCase()}
             </button>
           )}
-          <button type="button" aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={mobileOpen} onClick={() => setMobileOpen(open => !open)} className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 md:hidden dark:border-white/10 dark:bg-bg-surface-dark dark:text-white">
+          <button type="button" aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={mobileOpen} onClick={() => setMobileOpen(open => !open)} className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 md:hidden dark:border-white/10 dark:bg-bg-surface-dark dark:text-foreground">
             {mobileOpen ? <X size={19} /> : <Menu size={19} />}
           </button>
         </div>
@@ -98,7 +98,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
       {showLogoutConfirm && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/55 p-4 backdrop-blur-sm" onMouseDown={event => event.target === event.currentTarget && setShowLogoutConfirm(false)}>
           <div role="alertdialog" aria-modal="true" aria-labelledby="logout-title" className="w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-bg-surface-dark">
-            <h2 id="logout-title" className="font-display text-xl font-semibold text-slate-950 dark:text-white">Log out?</h2>
+            <h2 id="logout-title" className="font-display text-xl font-semibold text-slate-950 dark:text-foreground">Log out?</h2>
             <p className="mt-2 text-sm text-slate-600 dark:text-zinc-300">You’ll need to sign in again to access your workspace.</p>
             <div className="mt-6 flex justify-end gap-2">
               <button type="button" onClick={() => setShowLogoutConfirm(false)} className="btn-secondary">Cancel</button>

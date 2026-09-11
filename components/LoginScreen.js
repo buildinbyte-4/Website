@@ -233,7 +233,7 @@ export default function LoginScreen({ onClose, message }) {
                     onChange={e => setName(e.target.value)}
                     onFocus={() => setIsNameFocused(true)}
                     onBlur={() => setIsNameFocused(false)}
-                    className="w-full px-3.5 py-2.5 bg-bg-surface-dark border border-border-subtle text-xs text-foreground placeholder:text-zinc-500 focus:border-[#b84c00]"
+                    className="w-full px-3.5 py-2.5 bg-bg-surface-dark border border-border-subtle text-xs text-foreground placeholder:text-zinc-500 focus:border-[#111110]"
                   />
                 </div>
               )}
@@ -249,7 +249,7 @@ export default function LoginScreen({ onClose, message }) {
                   onChange={e => setEmail(e.target.value)}
                   onFocus={() => setIsEmailFocused(true)}
                   onBlur={() => setIsEmailFocused(false)}
-                  className="w-full px-3.5 py-2.5 bg-bg-surface-dark border border-border-subtle text-xs text-foreground placeholder:text-zinc-500 focus:border-[#b84c00]"
+                  className="w-full px-3.5 py-2.5 bg-bg-surface-dark border border-border-subtle text-xs text-foreground placeholder:text-zinc-500 focus:border-[#111110]"
                 />
               </div>
 
@@ -265,7 +265,7 @@ export default function LoginScreen({ onClose, message }) {
                     onChange={e => setPassword(e.target.value)}
                     onFocus={() => setIsPasswordFocused(true)}
                     onBlur={() => setIsPasswordFocused(false)}
-                    className="w-full px-3.5 py-2.5 bg-bg-surface-dark border border-border-subtle text-xs text-foreground placeholder:text-zinc-500 focus:border-[#b84c00] pr-16"
+                    className="w-full px-3.5 py-2.5 bg-bg-surface-dark border border-border-subtle text-xs text-foreground placeholder:text-zinc-500 focus:border-[#111110] pr-16"
                   />
                   <button
                     type="button"
@@ -313,7 +313,7 @@ export default function LoginScreen({ onClose, message }) {
                     onChange={e => setConfirmPassword(e.target.value)}
                     onFocus={() => setIsConfirmPasswordFocused(true)}
                     onBlur={() => setIsConfirmPasswordFocused(false)}
-                    className="w-full px-3.5 py-2.5 bg-bg-surface-dark border border-border-subtle text-xs text-foreground placeholder:text-zinc-500 focus:border-[#b84c00]"
+                    className="w-full px-3.5 py-2.5 bg-bg-surface-dark border border-border-subtle text-xs text-foreground placeholder:text-zinc-500 focus:border-[#111110]"
                   />
                 </div>
               )}

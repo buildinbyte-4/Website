@@ -184,7 +184,7 @@ export default function TermsPage() {
             </p>
             <div className="space-y-1 font-semibold text-sm">
               <p>BuiltInByte</p>
-              <p>Email: <a href="mailto:support@builtinbyte.in" className="text-[#b84c00] underline">support@builtinbyte.in</a></p>
+              <p>Email: <a href="mailto:support@builtinbyte.in" className="text-[#111110] underline">support@builtinbyte.in</a></p>
             </div>
           </section>
 

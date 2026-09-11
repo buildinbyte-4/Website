@@ -25,7 +25,7 @@ const STATIC_PROJECTS = [
 function getProjectBadge(status) {
   switch (status) {
     case 'active':
-      return { label: 'ACTIVE', cls: 'bg-[#b84c00] text-white border border-slate-200' };
+      return { label: 'ACTIVE', cls: 'bg-[#111110] text-white border border-slate-200' };
     case 'in_scoping':
       return { label: 'IN SCOPING', cls: 'bg-white text-slate-900 border border-slate-200' };
     case 'completed':
@@ -40,7 +40,7 @@ function getOrderStatusBadge(status) {
     case 'paid':
       return { label: 'PAID', cls: 'bg-slate-900 text-white border border-slate-200' };
     case 'pending':
-      return { label: 'PENDING', cls: 'bg-white text-[#b84c00] border border-[#b84c00]' };
+      return { label: 'PENDING', cls: 'bg-white text-[#111110] border border-[#111110]' };
     case 'failed':
       return { label: 'FAILED', cls: 'bg-white text-red-600 border border-red-600' };
     case 'refunded':
@@ -270,7 +270,7 @@ export default function DeskPage() {
                   onClick={() => setActiveTab(item)}
                   className={`w-full text-left px-4 py-3 font-semibold text-sm  tracking-wide border border-slate-200 transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-[#b84c00] text-white shadow-card-sm translate-x-[-2px] translate-y-[-2px]'
+                      ? 'bg-[#111110] text-white shadow-card-sm translate-x-[-2px] translate-y-[-2px]'
                       : 'bg-white text-foreground hover:bg-zinc-100'
                   }`}
                 >
@@ -309,7 +309,7 @@ export default function DeskPage() {
                         <div className="flex gap-3">
                           <button
                             onClick={() => handleInquiryRequest({ title: `Project Update: ${project.name}` })}
-                            className="flex-1 text-center px-4 py-2.5 bg-[#b84c00] text-white text-xs font-semibold  border border-slate-200 shadow-card-sm   transition-transform cursor-pointer"
+                            className="flex-1 text-center px-4 py-2.5 bg-[#111110] text-white text-xs font-semibold  border border-slate-200 shadow-card-sm   transition-transform cursor-pointer"
                           >
                             Request Update
                           </button>

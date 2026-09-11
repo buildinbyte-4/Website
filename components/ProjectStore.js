@@ -83,7 +83,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
 
 
   return (
-    <section id="case-studies" ref={sectionRef} className="border-b border-slate-200 bg-canvas py-20 dark:border-white/10">
+    <section id="case-studies" ref={sectionRef} className="border-b border-slate-200 bg-transparent py-20 dark:border-white/10">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header */}
@@ -175,7 +175,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                     {metrics.map((m, i) => (
                       <div key={i} className="flex flex-col items-center justify-center rounded-lg bg-slate-50 p-2 text-center dark:bg-white/5">
                         <span className="text-xs text-slate-500 dark:text-zinc-400">{m.label}</span>
-                        <span className="text-base font-semibold text-slate-900 dark:text-white">{m.value}</span>
+                        <span className="text-base font-semibold text-slate-900 dark:text-foreground">{m.value}</span>
                       </div>
                     ))}
                   </div>

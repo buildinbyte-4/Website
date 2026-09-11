@@ -52,7 +52,7 @@ export default function ContactPage() {
             <div className="space-y-3 font-medium text-base">
               <div>
                 <span className="block font-semibold text-xs  text-foreground/70">Email</span>
-                <a href="mailto:support@builtinbyte.in" className="text-[#b84c00] underline font-semibold">
+                <a href="mailto:support@builtinbyte.in" className="text-[#111110] underline font-semibold">
                   support@builtinbyte.in
                 </a>
               </div>
@@ -73,7 +73,7 @@ export default function ContactPage() {
               Note on Privacy
             </h3>
             <p className="font-medium text-sm text-foreground">
-              Any personal information submitted through our contact channels is handled strictly in accordance with our <Link href="/privacy" className="text-[#b84c00] underline font-semibold">Privacy Policy</Link>. We do not share your details with unauthorized third parties.
+              Any personal information submitted through our contact channels is handled strictly in accordance with our <Link href="/privacy" className="text-[#111110] underline font-semibold">Privacy Policy</Link>. We do not share your details with unauthorized third parties.
             </p>
           </section>
 

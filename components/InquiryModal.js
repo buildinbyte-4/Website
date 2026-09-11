@@ -75,12 +75,12 @@ export default function InquiryModal({ config, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" onMouseDown={(event) => { if (event.target === event.currentTarget && !loading) onClose(); }}>
-      <div role="dialog" aria-modal="true" aria-labelledby="inquiry-title" className="bg-white dark:bg-bg-surface-dark text-slate-900 dark:text-white border border-slate-200 dark:border-white/10 shadow-2xl p-6 md:p-8 rounded-2xl relative w-full max-w-lg z-50">
+      <div role="dialog" aria-modal="true" aria-labelledby="inquiry-title" className="bg-white dark:bg-bg-surface-dark text-slate-900 dark:text-foreground border border-slate-200 dark:border-white/10 shadow-2xl p-6 md:p-8 rounded-2xl relative w-full max-w-lg z-50">
         
         <button
           onClick={onClose}
           aria-label="Close inquiry form"
-          className="absolute top-4 right-4 w-9 h-9 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-bg-surface-dark text-slate-900 dark:text-white font-semibold flex items-center justify-center hover:bg-slate-100 dark:hover:bg-white/10 cursor-pointer"
+          className="absolute top-4 right-4 w-9 h-9 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-bg-surface-dark text-slate-900 dark:text-foreground font-semibold flex items-center justify-center hover:bg-slate-100 dark:hover:bg-white/10 cursor-pointer"
         >
           ✕
         </button>
@@ -91,7 +91,7 @@ export default function InquiryModal({ config, onClose }) {
               Direct Consultation Channel
             </span>
             
-            <h2 id="inquiry-title" className="font-display font-semibold text-2xl text-slate-900 dark:text-white mb-2 tracking-tight">
+            <h2 id="inquiry-title" className="font-display font-semibold text-2xl text-slate-900 dark:text-foreground mb-2 tracking-tight">
               {config.title || 'Initiate Client Inquiry'}
             </h2>
 
@@ -101,7 +101,7 @@ export default function InquiryModal({ config, onClose }) {
 
             <form onSubmit={handleSubmit} className="space-y-4 text-xs font-semibold ">
               <div>
-                <label htmlFor="inquiry-name" className="block text-slate-900 dark:text-white mb-1">Full Name *</label>
+                <label htmlFor="inquiry-name" className="block text-slate-900 dark:text-foreground mb-1">Full Name *</label>
                 <input
                   id="inquiry-name"
                   required
@@ -109,12 +109,12 @@ export default function InquiryModal({ config, onClose }) {
                   placeholder="e.g. Alex Sterling"
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-lg bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-white focus:outline-none shadow-sm dark:shadow-sm focus:bg-accent-soft focus:text-black focus:border-slate-200 transition-colors duration-200"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-foreground focus:outline-none shadow-sm dark:shadow-sm focus:bg-accent-soft focus:text-black focus:border-slate-200 transition-colors duration-200"
                 />
               </div>
 
               <div>
-                <label htmlFor="inquiry-email" className="block text-slate-900 dark:text-white mb-1">Work Email *</label>
+                <label htmlFor="inquiry-email" className="block text-slate-900 dark:text-foreground mb-1">Work Email *</label>
                 <input
                   id="inquiry-email"
                   required
@@ -122,31 +122,31 @@ export default function InquiryModal({ config, onClose }) {
                   placeholder="alex@company.com"
                   value={formData.email}
                   onChange={e => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-lg bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-white focus:outline-none shadow-sm dark:shadow-sm focus:bg-accent-soft focus:text-black focus:border-slate-200 transition-colors duration-200"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-foreground focus:outline-none shadow-sm dark:shadow-sm focus:bg-accent-soft focus:text-black focus:border-slate-200 transition-colors duration-200"
                 />
               </div>
 
               <div>
-                <label htmlFor="inquiry-company" className="block text-slate-900 dark:text-white mb-1">Company / Organization</label>
+                <label htmlFor="inquiry-company" className="block text-slate-900 dark:text-foreground mb-1">Company / Organization</label>
                 <input
                   id="inquiry-company"
                   type="text"
                   placeholder="e.g. Vanguard Labs"
                   value={formData.company}
                   onChange={e => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-lg bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-white focus:outline-none shadow-sm dark:shadow-sm focus:bg-accent-soft focus:text-black focus:border-slate-200 transition-colors duration-200"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-foreground focus:outline-none shadow-sm dark:shadow-sm focus:bg-accent-soft focus:text-black focus:border-slate-200 transition-colors duration-200"
                 />
               </div>
 
               <div>
-                <label htmlFor="inquiry-scope" className="block text-slate-900 dark:text-white mb-1">Project Scope & Requirements</label>
+                <label htmlFor="inquiry-scope" className="block text-slate-900 dark:text-foreground mb-1">Project Scope & Requirements</label>
                 <textarea
                   id="inquiry-scope"
                   rows={3}
                   placeholder="Detail your technology requirements, timeframe, or desired features..."
                   value={formData.scope}
                   onChange={e => setFormData({ ...formData, scope: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-lg bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-white focus:outline-none shadow-sm dark:shadow-sm focus:bg-accent-soft focus:text-black focus:border-slate-200 transition-colors duration-200"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-foreground focus:outline-none shadow-sm dark:shadow-sm focus:bg-accent-soft focus:text-black focus:border-slate-200 transition-colors duration-200"
                 ></textarea>
               </div>
 
@@ -178,14 +178,14 @@ export default function InquiryModal({ config, onClose }) {
           </div>
         ) : (
           <div className="text-center py-6 space-y-4">
-            <div className="w-12 h-12 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white bg-accent-soft mx-auto flex items-center justify-center font-semibold text-2xl shadow-card-sm">
+            <div className="w-12 h-12 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-foreground bg-accent-soft mx-auto flex items-center justify-center font-semibold text-2xl shadow-card-sm">
               ✓
             </div>
-            <h3 className="font-display font-semibold text-2xl text-slate-900 dark:text-white">
+            <h3 className="font-display font-semibold text-2xl text-slate-900 dark:text-foreground">
               Inquiry Received
             </h3>
             <p className="text-xs text-black dark:text-zinc-400 font-semibold  max-w-sm mx-auto leading-relaxed">
-              Thank you, <span className="font-semibold text-slate-900 dark:text-white">{formData.name}</span>. Our team has received your request and will follow up at <span className="font-semibold text-brand-600 dark:text-brand-400">{formData.email}</span> within 24 hours.
+              Thank you, <span className="font-semibold text-slate-900 dark:text-foreground">{formData.name}</span>. Our team has received your request and will follow up at <span className="font-semibold text-brand-600 dark:text-brand-400">{formData.email}</span> within 24 hours.
             </p>
             <button onClick={onClose} className="btn-primary-invert text-xs py-2 px-6 cursor-pointer">
               Close Window

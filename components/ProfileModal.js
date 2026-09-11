@@ -144,7 +144,7 @@ export default function ProfileModal({ user, onClose }) {
                   className="w-20 h-20 rounded-full object-cover border border-slate-200 dark:border-white/10 shadow-card-sm"
                 />
               ) : (
-                <div className="w-20 h-20 rounded-full bg-white dark:bg-bg-surface-dark border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white flex items-center justify-center font-display text-2xl font-semibold shadow-card-sm shrink-0">
+                <div className="w-20 h-20 rounded-full bg-white dark:bg-bg-surface-dark border border-slate-200 dark:border-white/10 text-slate-900 dark:text-foreground flex items-center justify-center font-display text-2xl font-semibold shadow-card-sm shrink-0">
                   {getInitials(fullName)}
                 </div>
               )}
@@ -153,7 +153,7 @@ export default function ProfileModal({ user, onClose }) {
                 <h4 className="font-semibold text-lg text-slate-900">
                   {fullName}
                 </h4>
-                <span className="text-xs font-semibold  tracking-wider border border-[#b84c00] px-2.5 py-1 rounded-full text-[#b84c00] inline-block mt-1">
+                <span className="text-xs font-semibold  tracking-wider border border-[#111110] px-2.5 py-1 rounded-full text-[#111110] inline-block mt-1">
                   Signed in via {provider === 'google' ? 'Google' : 'Credentials'}
                 </span>
               </div>
@@ -169,7 +169,7 @@ export default function ProfileModal({ user, onClose }) {
                 <span className="font-semibold text-slate-900  tracking-wider text-xs">Phone Number</span>
                 <span 
                   onClick={() => setIsEditing(true)}
-                  className={`font-semibold transition-all ${phone ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#b84c00] hover:underline cursor-pointer'}`}
+                  className={`font-semibold transition-all ${phone ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#111110] hover:underline cursor-pointer'}`}
                 >
                   {phone || 'Not provided [Add details]'}
                 </span>
@@ -178,7 +178,7 @@ export default function ProfileModal({ user, onClose }) {
                 <span className="font-semibold text-slate-900  tracking-wider text-xs">Occupation</span>
                 <span 
                   onClick={() => setIsEditing(true)}
-                  className={`font-semibold transition-all ${occupation ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#b84c00] hover:underline cursor-pointer'}`}
+                  className={`font-semibold transition-all ${occupation ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#111110] hover:underline cursor-pointer'}`}
                 >
                   {occupation || 'Not provided [Add details]'}
                 </span>
@@ -187,7 +187,7 @@ export default function ProfileModal({ user, onClose }) {
                 <span className="font-semibold text-slate-900  tracking-wider text-xs">Location</span>
                 <span 
                   onClick={() => setIsEditing(true)}
-                  className={`font-semibold transition-all ${location ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#b84c00] hover:underline cursor-pointer'}`}
+                  className={`font-semibold transition-all ${location ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#111110] hover:underline cursor-pointer'}`}
                 >
                   {location || 'Not provided [Add details]'}
                 </span>
@@ -235,7 +235,7 @@ export default function ProfileModal({ user, onClose }) {
                 type="text"
                 value={fullName}
                 onChange={e => setFullName(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#b84c00]"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#111110]"
               />
             </div>
 
@@ -247,7 +247,7 @@ export default function ProfileModal({ user, onClose }) {
                 placeholder="https://example.com/avatar.jpg"
                 value={avatarUrl}
                 onChange={e => setAvatarUrl(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#b84c00]"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#111110]"
               />
 
               {/* Preset Avatar Selector */}
@@ -262,7 +262,7 @@ export default function ProfileModal({ user, onClose }) {
                       type="button"
                       onClick={() => setAvatarUrl(preset.url)}
                       className={`w-9 h-9 border transition-all overflow-hidden ${
-                        avatarUrl === preset.url ? 'border-[#b84c00] scale-110 shadow-sm' : 'border-slate-200 hover:border-[#b84c00]'
+                        avatarUrl === preset.url ? 'border-[#111110] scale-110 shadow-sm' : 'border-slate-200 hover:border-[#111110]'
                       }`}
                     >
                       <img src={preset.url} alt={preset.name} className="w-full h-full object-cover bg-white" />
@@ -280,7 +280,7 @@ export default function ProfileModal({ user, onClose }) {
                 placeholder="+91 98765 43210"
                 value={phone}
                 onChange={e => setPhone(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#b84c00]"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#111110]"
               />
             </div>
 
@@ -292,7 +292,7 @@ export default function ProfileModal({ user, onClose }) {
                 placeholder="e.g. Tech Lead / UI Architect"
                 value={occupation}
                 onChange={e => setOccupation(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#b84c00]"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#111110]"
               />
             </div>
 
@@ -304,7 +304,7 @@ export default function ProfileModal({ user, onClose }) {
                 placeholder="e.g. Mumbai, India"
                 value={location}
                 onChange={e => setLocation(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#b84c00]"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#111110]"
               />
             </div>
 

@@ -90,7 +90,7 @@ export default function MetricsBanner() {
   };
 
   return (
-    <section ref={sectionRef} className="border-b border-slate-200 bg-white py-12 dark:border-white/10 dark:bg-canvas">
+    <section ref={sectionRef} className="border-b border-slate-200 bg-white py-12 dark:border-white/10 dark:bg-transparent">
       <div className="max-w-7xl mx-auto px-6 relative">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
           {metrics.map((metric, idx) => {

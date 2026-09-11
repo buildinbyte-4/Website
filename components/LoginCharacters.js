@@ -61,7 +61,7 @@ function CharacterArch({ mood }) {
   return (
     <svg width="80" height="80" viewBox="0 0 80 80" className="shrink-0">
       {/* Arch Body */}
-      <path d={bodyPath} fill="#ff9138" stroke="#111214" strokeWidth="2.5" />
+      <path d={bodyPath} fill="#E8E5DC" stroke="#111214" strokeWidth="2.5" />
 
       {/* Eyes and Mouth - always rendered */}
       <>

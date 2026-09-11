@@ -101,7 +101,7 @@ export default function AboutPage() {
               We are always looking for ways to improve and better serve our community. Have ideas, questions, or feedback?
             </p>
             <div className="space-y-1 font-semibold text-sm">
-              <p>Email: <a href="mailto:support@builtinbyte.in" className="text-[#b84c00] underline">support@builtinbyte.in</a></p>
+              <p>Email: <a href="mailto:support@builtinbyte.in" className="text-[#111110] underline">support@builtinbyte.in</a></p>
             </div>
           </section>
 

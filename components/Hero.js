@@ -18,7 +18,7 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
   }, []);
 
   return (
-    <section className="relative overflow-hidden border-b border-slate-200 bg-canvas py-16 dark:border-white/10 lg:py-24">
+    <section className="relative overflow-hidden border-b border-slate-200 bg-transparent py-16 dark:border-white/10 lg:py-24">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           

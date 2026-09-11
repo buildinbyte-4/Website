@@ -182,7 +182,7 @@ export default function FAQPage() {
             </h3>
             <p className="text-xs sm:text-sm font-medium text-foreground">
               Reach out to our support team directly at{' '}
-              <a href="mailto:support@builtinbyte.in" className="text-[#b84c00] underline font-semibold">
+              <a href="mailto:support@builtinbyte.in" className="text-[#111110] underline font-semibold">
                 support@builtinbyte.in
               </a>
             </p>

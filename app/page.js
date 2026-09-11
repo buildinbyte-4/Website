@@ -13,6 +13,7 @@ import LoginScreen from '@/components/LoginScreen';
 import ProfileModal from '@/components/ProfileModal';
 import SmoothScroll from '@/components/SmoothScroll';
 import FloatingContactButton from '@/components/FloatingContactButton';
+import StarField from '@/components/StarField';
 import { PROJECTS as MOCK_PROJECTS } from '@/lib/data';
 
 export default function HomePage() {
@@ -202,7 +203,9 @@ export default function HomePage() {
 
   return (
     <SmoothScroll>
-      <div className="min-h-screen bg-canvas text-foreground font-sans antialiased selection:bg-accent-soft selection:text-foreground">
+      <div className="relative isolate min-h-screen overflow-hidden bg-canvas text-foreground font-sans antialiased selection:bg-accent-soft selection:text-foreground">
+        <StarField />
+        <div className="relative z-10">
         
         {/* Header (Pass session state and trigger callbacks) */}
         <Navbar 
@@ -277,6 +280,7 @@ export default function HomePage() {
 
         {/* Floating Contact Button */}
         <FloatingContactButton onClick={handleInquiryRequest} />
+        </div>
 
       </div>
     </SmoothScroll>
