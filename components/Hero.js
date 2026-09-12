@@ -1,21 +1,11 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { PROJECTS } from '@/lib/data';
+import { useState } from 'react';
+
+const TICKER_WORDS = ['SYSTEMS', 'PRODUCTS', 'APIS', 'PLATFORMS'];
 
 export default function Hero({ onOpenDemo, onOpenInquiry }) {
   const [selectedType, setSelectedType] = useState('Web App');
   const [timeline, setTimeline] = useState('3-6 weeks');
-  const featured = PROJECTS[0];
-
-  const tickerWords = ['SYSTEMS', 'PRODUCTS', 'APIS', 'PLATFORMS'];
-  const [tickerIndex, setTickerIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTickerIndex((prev) => (prev + 1) % tickerWords.length);
-    }, 1500);
-    return () => clearInterval(timer);
-  }, []);
 
   return (
     <section className="relative overflow-hidden border-b border-slate-200 bg-transparent py-16 dark:border-white/10 lg:py-24">
@@ -26,17 +16,25 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
           <div className="lg:col-span-7 space-y-6">
 
             {/* Headline */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-sm font-medium text-brand-700 dark:border-brand-400/20 dark:bg-brand-950/40 dark:text-brand-300">
-              <span className="h-2 w-2 rounded-full bg-brand-500" />
-            </div>
-            <h1 className="font-display text-5xl font-semibold leading-[1.02] tracking-[-0.04em] text-foreground sm:text-6xl lg:text-7xl">
-              <span className="animate-drop-1 block">We build</span>
-              <div className="animate-drop-2">
-                <span className="mt-1 inline-block min-w-[220px] py-1 text-brand-600 transition-colors sm:min-w-[320px] dark:text-brand-400">
-                  {tickerWords[tickerIndex]}
+            <h1
+              aria-label="We build systems, products, APIs, and platforms that scale."
+              className="font-display text-5xl font-semibold leading-[1.02] tracking-[-0.04em] text-foreground sm:text-6xl lg:text-7xl"
+            >
+              <span aria-hidden="true" className="animate-drop-1 block">We build</span>
+              <span aria-hidden="true" className="animate-drop-2 block">
+                <span className="hero-word-rotator mt-1 py-1 text-brand-600 dark:text-brand-400">
+                  {TICKER_WORDS.map((word, index) => (
+                    <span
+                      key={word}
+                      className="hero-ticker-word"
+                      style={{ '--word-index': index }}
+                    >
+                      {word}
+                    </span>
+                  ))}
                 </span>
-              </div>
-              <span className="animate-drop-3 block mt-1">that scale.</span>
+              </span>
+              <span aria-hidden="true" className="animate-drop-3 mt-1 block">that scale.</span>
             </h1>
 
             {/* Subheadline */}

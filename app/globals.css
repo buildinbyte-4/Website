@@ -252,6 +252,45 @@ input, select, textarea {
 
 .scan-bar { display: none; }
 
+.hero-word-rotator {
+  display: inline-grid;
+  min-width: 4.9em;
+  height: 1.08em;
+  overflow: hidden;
+  vertical-align: bottom;
+  perspective: 700px;
+}
+
+.hero-ticker-word {
+  grid-area: 1 / 1;
+  display: block;
+  opacity: 0;
+  transform: translateY(42%) rotateX(-16deg);
+  transform-origin: center bottom;
+  filter: blur(5px);
+  animation: hero-word-cycle 8.8s cubic-bezier(.22, .75, .24, 1) infinite;
+  animation-delay: calc((var(--word-index) * 2.2s) - .18s);
+  will-change: transform, opacity, filter;
+}
+
+@keyframes hero-word-cycle {
+  0% {
+    opacity: 0;
+    transform: translateY(42%) rotateX(-16deg);
+    filter: blur(5px);
+  }
+  3.5%, 25% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+    filter: blur(0);
+  }
+  28.5%, 100% {
+    opacity: 0;
+    transform: translateY(-38%) rotateX(14deg);
+    filter: blur(4px);
+  }
+}
+
 .site-star-field {
   display: none;
 }
@@ -342,6 +381,19 @@ html.dark .site-star-field {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .hero-ticker-word {
+    display: none;
+    animation: none !important;
+    opacity: 0;
+    transform: none;
+    filter: none;
+  }
+
+  .hero-ticker-word:first-child {
+    display: block;
+    opacity: 1;
   }
 }
 
