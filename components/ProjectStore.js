@@ -69,19 +69,6 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
     return matchesCategory && matchesSearch;
   });
 
-  const getMetrics = (id) => {
-    const defaultMetrics = [
-      { label: 'Latency', value: '-40%' },
-      { label: 'Uptime', value: '99.9%' },
-      { label: 'Load', value: '< 1s' }
-    ];
-    if (id % 3 === 0) return [{ label: 'Conv.', value: '+45%' }, { label: 'Speed', value: '0.8s' }, { label: 'API', value: '1M+' }];
-    if (id % 2 === 0) return [{ label: 'Sync', value: '<50ms' }, { label: 'Ret.', value: '+22%' }, { label: 'Up', value: '99.99%' }];
-    return defaultMetrics;
-  };
-
-
-
   return (
     <section id="case-studies" ref={sectionRef} className="border-b border-slate-200 bg-transparent py-20 dark:border-white/10">
       <div className="max-w-7xl mx-auto px-6">
@@ -149,7 +136,6 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project, index) => {
             const hasDemo = Boolean(project.demoUrl);
-            const metrics = getMetrics(project.id);
             return (
               <article
                 key={project.id}
@@ -169,16 +155,6 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
                   <p className="mb-6 line-clamp-3 text-sm leading-6 text-slate-600 dark:text-zinc-400">
                     {project.desc}
                   </p>
-
-                  {/* Quantifiable Metrics */}
-                  <div className="grid grid-cols-3 gap-2 mb-6">
-                    {metrics.map((m, i) => (
-                      <div key={i} className="flex flex-col items-center justify-center rounded-lg bg-slate-50 p-2 text-center dark:bg-white/5">
-                        <span className="text-xs text-slate-500 dark:text-zinc-400">{m.label}</span>
-                        <span className="text-base font-semibold text-slate-900 dark:text-foreground">{m.value}</span>
-                      </div>
-                    ))}
-                  </div>
 
                   {/* Tech Stack */}
                   <div className="flex flex-wrap gap-2 mb-2">
