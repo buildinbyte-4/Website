@@ -7,8 +7,17 @@ async function main() {
   const root = path.resolve(__dirname, '..');
   const source = process.argv[2];
   if (!source) throw new Error('Pass the path to the supplied brand image.');
-  await fs.copyFile(source, path.join(root, 'public/brand-source.png'));
-  const logo = sharp(source).extract({ left: 260, top: 340, width: 1145, height: 1145 });
+  const perimeterMask = Buffer.from(`
+    <svg width="1600" height="1600" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="835" cy="912" r="554" fill="none" stroke="white" stroke-width="34" />
+    </svg>
+  `);
+  const cleanSource = await sharp(source)
+    .composite([{ input: perimeterMask }])
+    .png()
+    .toBuffer();
+  await fs.writeFile(path.join(root, 'public/brand-source.png'), cleanSource);
+  const logo = sharp(cleanSource).extract({ left: 260, top: 340, width: 1145, height: 1145 });
   await logo.clone().resize(768, 768).png().toFile(path.join(root, 'public/brand-logo.png'));
   // Keep the old URL valid for saved links and older cached pages.
   await logo.clone().resize(768, 768).jpeg({ quality: 95 }).toFile(path.join(root, 'public/logo.jpg'));

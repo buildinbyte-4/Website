@@ -49,14 +49,20 @@ html.dark {
   width: min(64vw, 390px, 62vh);
   height: auto;
   background: white;
-  border-radius: 50%;
-  overflow: hidden;
+}
+.brand-intro-b-mark {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: brand-b-awaken 2.2s cubic-bezier(.22,.8,.24,1) both;
 }
 .brand-flight-trail { stroke-dasharray: 1; stroke-dashoffset: 1; }
 .brand-intro-caption { margin: 24px 0 0; font-size: 14px; letter-spacing: .06em; color: var(--muted-foreground); }
-.brand-intro-skip { margin-top: 24px; padding: 8px 18px; border: 1px solid var(--border); border-radius: 999px; font-size: 13px; }
-.brand-intro-skip:hover { background: var(--accent-soft); }
-.brand-intro-skip:focus-visible { outline: 2px solid var(--foreground); outline-offset: 4px; }
+@keyframes brand-b-awaken {
+  0% { opacity: .25; transform: scale(.94); filter: blur(2px); }
+  35% { opacity: 1; transform: scale(1.025); filter: blur(0); }
+  68% { transform: scale(.99); }
+  100% { opacity: 1; transform: scale(1); }
+}
 @keyframes brand-intro-exit { to { opacity: 0; visibility: hidden; pointer-events: none; } }
 @media (prefers-reduced-motion: reduce) { .brand-intro { display: none; } }
 

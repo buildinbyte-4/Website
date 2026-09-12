@@ -55,8 +55,12 @@ export default function BrandIntro() {
   return (
     <div className="brand-intro" aria-label="BuildInByte introduction">
       <svg className="brand-intro-art" viewBox="240 320 1185 1185" aria-hidden="true">
-        <defs><clipPath id="intro-art-interior"><circle cx="835" cy="912" r="542" /></clipPath></defs>
+        <defs>
+          <clipPath id="intro-art-interior"><circle cx="835" cy="912" r="542" /></clipPath>
+          <clipPath id="intro-b-mark"><rect x="485" y="410" width="650" height="850" rx="80" /></clipPath>
+        </defs>
         <image href="/brand-source.png" width="1600" height="1600" />
+        <image className="brand-intro-b-mark" href="/brand-source.png" width="1600" height="1600" clipPath="url(#intro-b-mark)" />
         {/* Clear only the original stationary plane and trail for the moving layers. */}
         <path d="M1106 1094 L1318 789 L1364 1072 L1280 1072 L1269 1130 L1196 1080 Z" fill="white" clipPath="url(#intro-art-interior)" />
         <path d={FLIGHT_PATH} stroke="white" strokeWidth="42" fill="none" strokeLinecap="round" />
@@ -67,7 +71,6 @@ export default function BrandIntro() {
         </g>
       </svg>
       <p className="brand-intro-caption">Ideas taking flight.</p>
-      <button className="brand-intro-skip" type="button" onClick={() => setFinished(true)}>Skip intro</button>
     </div>
   );
 }
