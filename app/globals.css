@@ -252,6 +252,27 @@ input, select, textarea {
 
 .scan-bar { display: none; }
 
+.login-characters {
+  display: block;
+  width: min(100%, 440px);
+  height: auto;
+  overflow: visible;
+}
+
+.login-character {
+  transform-origin: center bottom;
+  animation: login-character-arrive 520ms cubic-bezier(.22, .8, .24, 1) both;
+}
+
+.login-character--black { animation-delay: 70ms; }
+.login-character--orange { animation-delay: 120ms; }
+.login-character--yellow { animation-delay: 170ms; }
+
+@keyframes login-character-arrive {
+  from { opacity: 0; transform: translateY(18px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 .hero-word-rotator {
   display: inline-grid;
   min-width: 4.9em;
@@ -400,4 +421,5 @@ html.dark .site-star-field {
 @media (max-width: 640px) {
   .social-link-horizontal { width: 2.5rem !important; }
   .social-label-horizontal { display: none; }
+  .login-characters { max-width: 330px; }
 }
