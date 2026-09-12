@@ -27,7 +27,7 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
 
             {/* Headline */}
             <div className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-sm font-medium text-brand-700 dark:border-brand-400/20 dark:bg-brand-950/40 dark:text-brand-300">
-              <span className="h-2 w-2 rounded-full bg-brand-500" /> Software, designed around your business
+              <span className="h-2 w-2 rounded-full bg-brand-500" />
             </div>
             <h1 className="font-display text-5xl font-semibold leading-[1.02] tracking-[-0.04em] text-foreground sm:text-6xl lg:text-7xl">
               <span className="animate-drop-1 block">We build</span>
