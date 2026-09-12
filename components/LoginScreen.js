@@ -132,7 +132,7 @@ export default function LoginScreen({ onClose, message }) {
 
         <aside className="relative flex min-h-[250px] flex-col overflow-hidden bg-[#efedf3] px-6 pb-0 pt-6 dark:bg-[#19181e] sm:min-h-[300px] sm:px-9 sm:pt-8 md:min-h-[660px]">
           <div className="flex items-center gap-3">
-            <img src="/logo.jpg" alt="" className="h-10 w-10 rounded-xl object-cover shadow-sm" />
+            <img src="/brand-logo.png" alt="" className="h-10 w-10 rounded-xl object-cover shadow-sm" />
             <div>
               <p className="font-display text-base font-semibold text-[#111217] dark:text-[#f8f7f4]">BuildInByte</p>
               <p className="text-xs text-[#77727e] dark:text-[#aaa6b0]">Your software workspace</p>

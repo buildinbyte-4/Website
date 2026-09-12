@@ -1,5 +1,6 @@
 import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from "next/font/google";
 import CustomCursor from "@/components/CustomCursor";
+import BrandIntro from "@/components/BrandIntro";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -51,7 +52,9 @@ export default function RootLayout({ children }) {
       </head>
       <body className="min-h-full flex flex-col font-sans bg-bg-primary-dark text-text-primary">
         <CustomCursor />
-        {children}
+        <BrandIntro />
+        <noscript><style>{`.brand-intro { display: none !important; }`}</style></noscript>
+        <div id="site-content" className="min-h-screen flex flex-col">{children}</div>
       </body>
     </html>
   );

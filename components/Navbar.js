@@ -50,7 +50,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
     <header className={`sticky top-0 z-50 border-b border-slate-200/80 dark:border-white/10 transition-colors ${isScrolled ? 'bg-white/95 dark:bg-canvas/95 shadow-sm backdrop-blur-xl' : 'bg-white/85 dark:bg-canvas/85 backdrop-blur-md'}`}>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2.5 rounded-lg focus-visible:outline-none">
-          <img src="/logo.jpg" alt="" className="h-9 w-9 rounded-xl object-cover ring-1 ring-slate-200 dark:ring-white/10" />
+          <img src="/brand-logo.png" alt="" className="h-9 w-9 rounded-xl object-cover ring-1 ring-slate-200 dark:ring-white/10" />
           <span className="font-display text-base sm:text-xl font-semibold tracking-tight text-slate-950 dark:text-foreground">BuildInByte</span>
         </Link>
 

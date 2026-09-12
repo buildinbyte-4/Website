@@ -31,7 +31,7 @@ export default function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           <div className="sm:col-span-2">
             <Link href="/" className="inline-flex items-center gap-3">
-              <img src="/logo.jpg" alt="" className="h-10 w-10 rounded-xl object-cover ring-1 ring-slate-200 dark:ring-white/10" />
+              <img src="/brand-logo.png" alt="" className="h-10 w-10 rounded-xl object-cover ring-1 ring-slate-200 dark:ring-white/10" />
               <span className="font-display text-xl font-semibold tracking-tight text-slate-950 dark:text-foreground">{companyName}</span>
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-6 text-slate-600 dark:text-zinc-400">{description}</p>
