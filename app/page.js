@@ -19,7 +19,7 @@ import { PROJECTS as MOCK_PROJECTS } from '@/lib/data';
 export default function HomePage() {
   const [session, setSession] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
-  const [products, setProducts] = useState(MOCK_PROJECTS); // Start with mock projects
+  const products = MOCK_PROJECTS;
   const [demoProject, setDemoProject] = useState(null);
   const [inquiryConfig, setInquiryConfig] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
@@ -95,87 +95,6 @@ export default function HomePage() {
 
     return () => subscription.unsubscribe();
   }, []);
-
-  // 2. Fetch Products from Supabase on Login / Session Status Change
-  useEffect(() => {
-    const fetchProducts = async () => {
-      if (!supabase) {
-        setProducts(MOCK_PROJECTS);
-        return;
-      }
-
-      try {
-        const { data, error } = await supabase
-          .from('products')
-          .select('*')
-          .eq('status', 'active')
-          .eq('show_on_store', true)
-          .order('created_at', { ascending: false });
-
-        if (error) throw error;
-
-        if (data && data.length > 0) {
-
-          const mapped = data.map((p) => {
-            const normalizedTech = (p.tech_stack || []).map(s => String(s).toLowerCase());
-            let category = 'Custom Application';
-
-            if (normalizedTech.some(s => s.includes('dashboard') || s.includes('analytics'))) {
-              category = 'Dashboard';
-            } else if (normalizedTech.some(s => s.includes('ecommerce') || s.includes('shop') || s.includes('commerce'))) {
-              category = 'E-Commerce';
-            } else if (normalizedTech.some(s => s.includes('ai') || s.includes('gpt') || s.includes('llm') || s.includes('ml'))) {
-              category = 'AI Solutions';
-            } else if (normalizedTech.some(s => s.includes('erp') || s.includes('crm') || s.includes('management') || s.includes('workflow'))) {
-              category = 'Enterprise Software';
-            } else if (normalizedTech.some(s => s.includes('inventory') || s.includes('attendance') || s.includes('queue') || s.includes('employee'))) {
-              category = 'Internal Management System';
-            } else if (normalizedTech.some(s => s.includes('website') || s.includes('web'))) {
-              category = 'Business Website';
-            }
-
-            const nameLower = (p.name || '').toLowerCase();
-            let demoUrl = p.demo_url || p.demoUrl || p.url || null;
-            if (demoUrl && demoUrl.includes('/demos/')) {
-              demoUrl = demoUrl.replace('/demos/', '/templates/');
-              if (!demoUrl.endsWith('index.html')) {
-                demoUrl = demoUrl.endsWith('/') ? `${demoUrl}index.html` : `${demoUrl}/index.html`;
-              }
-            }
-            if (!demoUrl) {
-              if (nameLower.includes('buildinbyte') || nameLower.includes('aurelia')) demoUrl = '/templates/buildinbyte-luxury-hotel/index.html';
-              else if (nameLower.includes('luxury hotel') || nameLower.includes('hotel')) demoUrl = '/templates/luxury-hotel/index.html';
-              else if (nameLower.includes('real estate') || nameLower.includes('property')) demoUrl = '/templates/real-estate/index.html';
-              else if (nameLower.includes('elecstore') || nameLower.includes('electronics')) demoUrl = '/templates/elecstore/index.html';
-              else if (nameLower.includes('kanchi')) demoUrl = '/templates/kanchimarket/index.html';
-              else if (nameLower.includes('scsvmv') || nameLower.includes('university') || nameLower.includes('school')) demoUrl = '/templates/scsvmv/index.html';
-              else if (nameLower.includes('hostel')) demoUrl = '/templates/hostel-management/index.html';
-            }
-
-            return {
-              id: p.id,
-              title: p.name,
-              desc: p.description,
-              stack: p.tech_stack || [],
-              category,
-              industry: p.category || 'Business',
-              status: 'Ready to Customize',
-              demoUrl,
-            };
-          });
-          setProducts(mapped.filter(p => p.demoUrl));
-          
-        } else {
-          setProducts(MOCK_PROJECTS);
-        }
-      } catch (err) {
-        console.error('Error fetching Supabase products:', err);
-        setProducts(MOCK_PROJECTS);
-      }
-    };
-
-    fetchProducts();
-  }, [session]);
 
   // Auth gate wrapper for action conversions
   const handleInquiryRequest = (config) => {
