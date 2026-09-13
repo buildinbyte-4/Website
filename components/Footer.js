@@ -50,7 +50,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col gap-3 border-t border-slate-200 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between dark:border-white/10 dark:text-zinc-500">
-          <p>© {new Date().getFullYear()} {companyName}. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} {companyName}</p>
         </div>
       </div>
     </footer>
