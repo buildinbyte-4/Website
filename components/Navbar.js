@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Menu, X, Sun, Moon } from 'lucide-react';
@@ -19,16 +19,35 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const themeTransitioning = useRef(false);
 
   useEffect(() => {
     setIsDark(document.documentElement.classList.contains('dark'));
   }, []);
 
   const toggleTheme = () => {
+    if (themeTransitioning.current) return;
     const nextDark = !document.documentElement.classList.contains('dark');
-    document.documentElement.classList.toggle('dark', nextDark);
-    setIsDark(nextDark);
-    try { localStorage.setItem('theme', nextDark ? 'dark' : 'light'); } catch {}
+    const applyTheme = () => {
+      document.documentElement.classList.toggle('dark', nextDark);
+      document.documentElement.style.colorScheme = nextDark ? 'dark' : 'light';
+      setIsDark(nextDark);
+      try { localStorage.setItem('theme', nextDark ? 'dark' : 'light'); } catch {}
+    };
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!document.startViewTransition || reduceMotion) {
+      applyTheme();
+      return;
+    }
+
+    themeTransitioning.current = true;
+    document.documentElement.classList.add('theme-transitioning');
+    const transition = document.startViewTransition(applyTheme);
+    transition.finished.finally(() => {
+      document.documentElement.classList.remove('theme-transitioning');
+      themeTransitioning.current = false;
+    });
   };
 
   useEffect(() => {

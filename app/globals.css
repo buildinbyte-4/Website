@@ -33,6 +33,52 @@ html.dark {
 
 * { box-sizing: border-box; }
 
+@property --theme-reveal-radius {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+html.theme-transitioning::view-transition-old(root),
+html.theme-transitioning::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html.theme-transitioning::view-transition-old(root) { z-index: 1; }
+
+html.theme-transitioning::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-radial-reveal 980ms cubic-bezier(.4, 0, .2, 1) both;
+  -webkit-mask-image: radial-gradient(
+    circle at 0% 0%,
+    #000 0,
+    #000 calc(var(--theme-reveal-radius) - 46px),
+    rgba(0, 0, 0, .9) calc(var(--theme-reveal-radius) - 28px),
+    rgba(0, 0, 0, .45) calc(var(--theme-reveal-radius) - 10px),
+    transparent calc(var(--theme-reveal-radius) + 18px)
+  );
+  mask-image: radial-gradient(
+    circle at 0% 0%,
+    #000 0,
+    #000 calc(var(--theme-reveal-radius) - 46px),
+    rgba(0, 0, 0, .9) calc(var(--theme-reveal-radius) - 28px),
+    rgba(0, 0, 0, .45) calc(var(--theme-reveal-radius) - 10px),
+    transparent calc(var(--theme-reveal-radius) + 18px)
+  );
+  will-change: mask-image;
+}
+
+@keyframes theme-radial-reveal {
+  from { --theme-reveal-radius: 0px; }
+  to { --theme-reveal-radius: 150vmax; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-transitioning::view-transition-old(root),
+  html.theme-transitioning::view-transition-new(root) { animation: none; }
+}
+
 .brand-intro {
   position: fixed;
   inset: 0;
@@ -49,6 +95,18 @@ html.dark {
   width: min(64vw, 390px, 62vh);
   height: auto;
   background: white;
+}
+/* Blend the artwork as a single layer, including the plane's white cutouts.
+   White disappears against light surfaces; inverted black disappears in dark mode. */
+.brand-intro-art,
+img[src="/brand-logo.png"] {
+  mix-blend-mode: multiply;
+}
+img[src="/brand-logo.png"] { box-shadow: none; }
+html.dark .brand-intro-art,
+html.dark img[src="/brand-logo.png"] {
+  filter: invert(1);
+  mix-blend-mode: screen;
 }
 .brand-intro-b-mark {
   transform-box: fill-box;
