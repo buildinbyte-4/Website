@@ -3,16 +3,47 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LayoutDashboard, ShoppingCart, MessageSquareWarning, LogOut, Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
 
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [authorized, setAuthorized] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    async function verifyAdmin() {
+      if (!supabase) {
+        window.location.replace('/?login=1');
+        return;
+      }
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        window.location.replace('/?login=1');
+        return;
+      }
+      const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).maybeSingle();
+      if (!active) return;
+      if (profile?.role !== 'admin') {
+        window.location.replace('/');
+        return;
+      }
+      setAuthorized(true);
+      setAuthLoading(false);
+    }
+    verifyAdmin();
+    return () => { active = false; };
+  }, []);
 
   const navItems = [
     { name: 'Overview', href: '/admin', icon: LayoutDashboard },
     { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
     { name: 'Support', href: '/admin/support', icon: MessageSquareWarning },
   ];
+
+  if (authLoading || !authorized) return null;
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900 flex flex-col md:flex-row font-sans selection:bg-brand-100 selection:text-brand-900">

@@ -88,7 +88,7 @@ export function useProducts() {
           title: product.name,
           desc: product.short_description || product.description || '',
           stack: Array.isArray(product.tech_stack) ? product.tech_stack : [],
-          category: getCategoryFromTech(Array.isArray(product.tech_stack) ? product.tech_stack : []),
+          category: product.category || getCategoryFromTech(Array.isArray(product.tech_stack) ? product.tech_stack : []),
           industry: product.category || 'Business',
           status: product.status || 'Ready to Customize',
           demoUrl: getDemoUrl(product),
@@ -113,8 +113,14 @@ export function useProducts() {
 
     fetchProducts();
 
+    const channel = supabase
+      ?.channel('live-products')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, fetchProducts)
+      .subscribe();
+
     return () => {
       active = false;
+      if (channel) supabase.removeChannel(channel);
     };
   }, []);
 

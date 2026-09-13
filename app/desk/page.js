@@ -79,12 +79,11 @@ export default function DeskPage() {
       window.location.href = '/?login=1';
       return undefined;
     }
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
+    Promise.all([supabase.auth.getSession(), supabase.auth.getUser()]).then(([sessionResult, userResult]) => {
+      const currentSession = userResult.data.user ? sessionResult.data.session : null;
+      setSession(currentSession);
       setAuthLoading(false);
-      if (!session) {
-        window.location.href = '/';
-      }
+      if (!currentSession) window.location.href = '/';
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -99,14 +98,14 @@ export default function DeskPage() {
 
   // ── Fetch orders for logged-in user ───────────────────────────────
   useEffect(() => {
-    if (!session?.user?.email) return;
+    if (!session?.user?.id) return;
     const fetchOrders = async () => {
       setOrdersLoading(true);
       try {
         const { data, error } = await supabase
           .from('orders')
           .select('*, order_items(*)')
-          .eq('buyer_email', session.user.email)
+          .eq('buyer_id', session.user.id)
           .order('created_at', { ascending: false });
 
         if (error) throw error;
@@ -119,7 +118,15 @@ export default function DeskPage() {
       }
     };
     fetchOrders();
-  }, [session?.user?.email]);
+
+    const channel = supabase
+      .channel(`desk-orders-${session.user.id}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'orders', filter: `buyer_id=eq.${session.user.id}` }, fetchOrders)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'order_items' }, fetchOrders)
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, [session?.user?.id]);
 
   const handleInquiryRequest = (config) => {
     setInquiryConfig(config);

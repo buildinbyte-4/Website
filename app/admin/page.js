@@ -1,10 +1,36 @@
 'use client';
-import { financialData } from '@/lib/adminMockData';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
 import { DollarSign, TrendingUp, TrendingDown, Clock, Activity, ChevronDown } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 export default function AdminOverview() {
-  const { kpis, trendData, paymentMethods } = financialData;
+  const [kpis, setKpis] = useState({ grossRevenue: 0, moneyLoss: 0, netRevenue: 0, moneyPending: 0 });
+  const [trendData, setTrendData] = useState([]);
+  const [paymentMethods, setPaymentMethods] = useState([]);
+
+  useEffect(() => {
+    async function fetchFinancials() {
+      const [{ data: totals }, { data: trend }, { data: methods }] = await Promise.all([
+        supabase.from('admin_financial_kpis').select('*').maybeSingle(),
+        supabase.from('admin_financial_trend').select('*'),
+        supabase.from('admin_payment_methods').select('*'),
+      ]);
+      if (totals) setKpis({
+        grossRevenue: Number(totals.gross_revenue || 0),
+        moneyLoss: Number(totals.money_loss || 0),
+        netRevenue: Number(totals.net_revenue || 0),
+        moneyPending: Number(totals.money_pending || 0),
+      });
+      setTrendData((trend || []).map((row) => ({ date: row.date, revenue: Number(row.revenue), loss: Number(row.loss) })));
+      setPaymentMethods((methods || []).map((row) => ({ name: row.payment_method || 'Other', value: Number(row.percentage) })));
+    }
+    fetchFinancials();
+    const channel = supabase.channel('admin-financials-live')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, fetchFinancials)
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, []);
 
   const StatCard = ({ title, amount, icon: Icon }) => (
     <div className="bg-white rounded-xl p-5 border border-zinc-200 shadow-sm flex flex-col justify-between gap-4">

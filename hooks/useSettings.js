@@ -20,7 +20,7 @@ export function useSettings() {
           throw new Error('Supabase client is unavailable.');
         }
 
-        const { data, error } = await supabase.from('site_settings').select('*').limit(1).single();
+        const { data, error } = await supabase.from('site_settings').select('*').limit(1).maybeSingle();
 
         if (error) throw error;
 
@@ -41,8 +41,14 @@ export function useSettings() {
 
     fetchSettings();
 
+    const channel = supabase
+      ?.channel('live-site-settings')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'site_settings' }, fetchSettings)
+      .subscribe();
+
     return () => {
       active = false;
+      if (channel) supabase.removeChannel(channel);
     };
   }, []);
 

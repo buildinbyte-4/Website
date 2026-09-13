@@ -15,11 +15,13 @@ import SmoothScroll from '@/components/SmoothScroll';
 import FloatingContactButton from '@/components/FloatingContactButton';
 import StarField from '@/components/StarField';
 import { PROJECTS as MOCK_PROJECTS } from '@/lib/data';
+import { useProducts } from '@/hooks/useProducts';
 
 export default function HomePage() {
   const [session, setSession] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
-  const products = MOCK_PROJECTS;
+  const { products: liveProducts } = useProducts();
+  const products = liveProducts.length > 0 ? liveProducts : MOCK_PROJECTS;
   const [demoProject, setDemoProject] = useState(null);
   const [inquiryConfig, setInquiryConfig] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
@@ -78,8 +80,11 @@ export default function HomePage() {
         }
       }
 
-      const { data: { session: currentSession } } = await supabase.auth.getSession();
-      setSession(currentSession);
+      const [{ data: { session: currentSession } }, { data: { user: authenticatedUser } }] = await Promise.all([
+        supabase.auth.getSession(),
+        supabase.auth.getUser(),
+      ]);
+      setSession(authenticatedUser ? currentSession : null);
       setAuthLoading(false);
     };
 

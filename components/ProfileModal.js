@@ -81,6 +81,20 @@ export default function ProfileModal({ user, onClose }) {
 
       if (error) throw error;
 
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({
+          full_name: fullName,
+          avatar_url: avatarUrl,
+          phone_number: phone,
+          occupation,
+          location,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', user.id);
+
+      if (profileError) throw profileError;
+
       setSuccessMsg('Profile updated successfully!');
       setTimeout(() => {
         setIsEditing(false);

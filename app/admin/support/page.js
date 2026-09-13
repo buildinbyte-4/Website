@@ -1,16 +1,63 @@
 'use client';
-import { useState } from 'react';
-import { supportTickets } from '@/lib/adminMockData';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
 import { MessageSquare, AlertCircle, CheckCircle, RefreshCcw, Send, ExternalLink, ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
 
 export default function AdminSupport() {
-  const [tickets, setTickets] = useState(supportTickets);
-  const [selectedTicket, setSelectedTicket] = useState(tickets[0]);
+  const [tickets, setTickets] = useState([]);
+  const [selectedTicket, setSelectedTicket] = useState(null);
   const [replyText, setReplyText] = useState('');
   const [notice, setNotice] = useState('');
 
-  const updateTicket = (changes, systemMessage) => {
+  const statusLabel = (value) => ({ open_disputes: 'Open Disputes', pending_queries: 'Pending Queries', resolved_issues: 'Resolved Issues' }[value] || value);
+  const statusValue = (value) => ({ 'Open Disputes': 'open_disputes', 'Pending Queries': 'pending_queries', 'Resolved Issues': 'resolved_issues' }[value] || value);
+
+  useEffect(() => {
+    async function fetchTickets() {
+      const { data, error } = await supabase
+        .from('support_tickets')
+        .select('*, support_messages(*)')
+        .order('created_at', { ascending: false });
+      if (error) return console.error('Unable to load support tickets:', error.message);
+      const mapped = (data || []).map((ticket) => ({
+        dbId: ticket.id,
+        id: `TKT-${String(ticket.ticket_number).padStart(4, '0')}`,
+        customer: ticket.customer_name,
+        orderId: ticket.order_id ? `ORD-${ticket.order_id.slice(0, 8).toUpperCase()}` : 'No linked order',
+        subject: ticket.subject,
+        status: statusLabel(ticket.status),
+        severity: `${ticket.severity.charAt(0).toUpperCase()}${ticket.severity.slice(1)}`,
+        history: (ticket.support_messages || [])
+          .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+          .map((message) => ({
+            sender: message.sender_name,
+            role: message.role === 'admin' ? 'agent' : message.role,
+            timestamp: new Date(message.created_at).toLocaleString(),
+            message: message.message,
+          })),
+      }));
+      setTickets(mapped);
+      setSelectedTicket((current) => current ? mapped.find((item) => item.dbId === current.dbId) || mapped[0] || null : mapped[0] || null);
+    }
+    fetchTickets();
+    const channel = supabase.channel('admin-support-live')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'support_tickets' }, fetchTickets)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'support_messages' }, fetchTickets)
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, []);
+
+  const updateTicket = async (changes, systemMessage) => {
+    if (!selectedTicket) return;
+    const dbChanges = {};
+    if (changes.status) dbChanges.status = statusValue(changes.status);
+    if (changes.severity) dbChanges.severity = changes.severity.toLowerCase();
+    const { error } = await supabase.from('support_tickets').update(dbChanges).eq('id', selectedTicket.dbId);
+    if (error) return setNotice(`Ticket update failed: ${error.message}`);
+    if (systemMessage) {
+      await supabase.from('support_messages').insert({ ticket_id: selectedTicket.dbId, sender_name: 'System', role: 'system', message: systemMessage });
+    }
     const nextTicket = {
       ...selectedTicket,
       ...changes,
@@ -20,9 +67,16 @@ export default function AdminSupport() {
     setTickets((current) => current.map((ticket) => ticket.id === nextTicket.id ? nextTicket : ticket));
   };
 
-  const sendReply = () => {
+  const sendReply = async () => {
     const message = replyText.trim();
     if (!message || !selectedTicket) return;
+    const { error } = await supabase.from('support_messages').insert({
+      ticket_id: selectedTicket.dbId,
+      sender_name: 'BuildInByte',
+      role: 'admin',
+      message,
+    });
+    if (error) return setNotice(`Reply failed: ${error.message}`);
     const nextTicket = {
       ...selectedTicket,
       history: [...selectedTicket.history, { sender: 'BuildInByte', role: 'agent', timestamp: 'Just now', message }],

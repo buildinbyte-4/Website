@@ -20,7 +20,7 @@ export function useHero() {
           throw new Error('Supabase client is unavailable.');
         }
 
-        const { data, error } = await supabase.from('hero_section').select('*').limit(1).single();
+        const { data, error } = await supabase.from('hero_section').select('*').limit(1).maybeSingle();
 
         if (error) throw error;
 
@@ -41,8 +41,14 @@ export function useHero() {
 
     fetchHero();
 
+    const channel = supabase
+      ?.channel('live-hero')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'hero_section' }, fetchHero)
+      .subscribe();
+
     return () => {
       active = false;
+      if (channel) supabase.removeChannel(channel);
     };
   }, []);
 

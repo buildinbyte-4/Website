@@ -39,9 +39,7 @@ export default function InquiryModal({ config, onClose }) {
             status: 'new'
           }
         ]);
-        if (error) {
-          console.warn('Supabase insert warning:', error.message);
-        }
+        if (error) throw error;
       }
 
       // 2. Submit to FormSubmit via AJAX in background to trigger email

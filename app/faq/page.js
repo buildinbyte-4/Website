@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import FloatingContactButton from '@/components/FloatingContactButton';
 import MarketingShell from '@/components/MarketingShell';
+import { useFAQ } from '@/hooks/useFAQ';
 
 const FAQ_DATA = [
   {
@@ -90,6 +91,10 @@ const FAQ_DATA = [
 
 export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState({});
+  const { faq } = useFAQ();
+  const displayedFaq = faq.length > 0
+    ? [{ category: 'General Questions', items: faq.map((item) => ({ q: item.question, a: item.answer })) }]
+    : FAQ_DATA;
 
   const toggleItem = (catIdx, itemIdx) => {
     const key = `${catIdx}-${itemIdx}`;
@@ -130,7 +135,7 @@ export default function FAQPage() {
 
         {/* Content Body */}
         <div className="space-y-8">
-          {FAQ_DATA.map((cat, catIdx) => {
+          {displayedFaq.map((cat, catIdx) => {
             const catColors = ['bg-accent-soft', 'bg-violet', 'bg-success', 'bg-primary', 'bg-accent-soft'];
             const catBg = catColors[catIdx % catColors.length];
 

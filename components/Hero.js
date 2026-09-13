@@ -1,9 +1,11 @@
 'use client';
 import { useState } from 'react';
+import { useHero } from '@/hooks/useHero';
 
 const TICKER_WORDS = ['SYSTEMS', 'PRODUCTS', 'APIS', 'PLATFORMS'];
 
 export default function Hero({ onOpenDemo, onOpenInquiry }) {
+  const { hero } = useHero();
   const [selectedType, setSelectedType] = useState('Web App');
   const [timeline, setTimeline] = useState('3-6 weeks');
 
@@ -17,9 +19,12 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
 
             {/* Headline */}
             <h1
-              aria-label="We build systems, products, APIs, and platforms that scale."
+              aria-label={hero?.title || 'We build systems, products, APIs, and platforms that scale.'}
               className="font-display text-5xl font-semibold leading-[1.02] tracking-[-0.04em] text-foreground sm:text-6xl lg:text-7xl"
             >
+              {hero?.title ? (
+                <span className="animate-drop-1 block">{hero.title}</span>
+              ) : <>
               <span aria-hidden="true" className="animate-drop-1 block">We build</span>
               <span aria-hidden="true" className="animate-drop-2 block">
                 <span className="hero-word-rotator mt-1 py-1 text-brand-600 dark:text-brand-400">
@@ -35,11 +40,12 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
                 </span>
               </span>
               <span aria-hidden="true" className="animate-drop-3 mt-1 block">that scale.</span>
+              </>}
             </h1>
 
             {/* Subheadline */}
             <p className="max-w-2xl text-lg leading-8 text-slate-600 dark:text-zinc-300 sm:text-xl">
-              We design, build, and launch production-ready digital products for ambitious businesses—from modern websites to complex software platforms.
+              {hero?.subtitle || 'We design, build, and launch production-ready digital products for ambitious businesses—from modern websites to complex software platforms.'}
             </p>
 
             {/* Dual CTAs */}
@@ -48,11 +54,11 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
                 onClick={() => onOpenInquiry({ title: 'Book a Technical Scoping Call' })}
                 className="btn-primary animate-cta-1"
               >
-                Book a scoping call
+                {hero?.primary_button || 'Book a scoping call'}
               </button>
 
-              <a href="#case-studies" className="btn-secondary animate-cta-2">
-                View our work
+              <a href={hero?.secondary_button_link || '#case-studies'} className="btn-secondary animate-cta-2">
+                {hero?.secondary_button || 'View our work'}
               </a>
             </div>
 

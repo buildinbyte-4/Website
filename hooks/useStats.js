@@ -58,8 +58,14 @@ export function useStats() {
 
     fetchStats();
 
+    const channel = supabase
+      ?.channel('live-company-stats')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'company_stats' }, fetchStats)
+      .subscribe();
+
     return () => {
       active = false;
+      if (channel) supabase.removeChannel(channel);
     };
   }, []);
 

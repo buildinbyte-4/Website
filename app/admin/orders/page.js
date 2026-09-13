@@ -1,16 +1,50 @@
 'use client';
-import { useState } from 'react';
-import { ordersData } from '@/lib/adminMockData';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
 import { Search, Filter, X, ChevronRight, CheckCircle, AlertTriangle, FileText } from 'lucide-react';
 
 export default function AdminOrders() {
-  const [orders, setOrders] = useState(ordersData);
+  const [orders, setOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [notice, setNotice] = useState('');
 
-  const updatePaymentStatus = (paymentStatus) => {
+  useEffect(() => {
+    async function fetchOrders() {
+      const { data, error } = await supabase.from('orders').select('*, order_items(*)').order('created_at', { ascending: false });
+      if (error) return console.error('Unable to load orders:', error.message);
+      const mapped = (data || []).map((order) => ({
+        dbId: order.id,
+        id: `ORD-${order.id.slice(0, 8).toUpperCase()}`,
+        customerName: order.customer_name || 'Customer',
+        contact: order.buyer_email,
+        amount: Number(order.amount_usd || 0),
+        paymentStatus: `${(order.status || 'pending').charAt(0).toUpperCase()}${(order.status || 'pending').slice(1)}`,
+        orderStatus: `${(order.fulfillment_status || 'processing').charAt(0).toUpperCase()}${(order.fulfillment_status || 'processing').slice(1)}`,
+        address: order.billing_address || 'Not provided',
+        transactionId: order.stripe_payment_id || 'Pending',
+        timestamp: order.created_at,
+        items: (order.order_items || []).map((item) => ({ name: item.name, price: Number(item.price_usd || 0) })),
+      }));
+      setOrders(mapped);
+      setSelectedOrder((current) => current ? mapped.find((item) => item.dbId === current.dbId) || null : null);
+    }
+    fetchOrders();
+    const channel = supabase.channel('admin-orders-live')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, fetchOrders)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'order_items' }, fetchOrders)
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, []);
+
+  const updatePaymentStatus = async (paymentStatus) => {
+    const dbStatus = paymentStatus.toLowerCase();
+    const { error } = await supabase.from('orders').update({ status: dbStatus }).eq('id', selectedOrder.dbId);
+    if (error) {
+      setNotice(`Could not update ${selectedOrder.id}: ${error.message}`);
+      return;
+    }
     setOrders((current) => current.map((order) => order.id === selectedOrder.id ? { ...order, paymentStatus } : order));
     setSelectedOrder((current) => ({ ...current, paymentStatus }));
     setNotice(`Order ${selectedOrder.id} marked ${paymentStatus.toLowerCase()}.`);

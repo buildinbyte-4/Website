@@ -41,8 +41,14 @@ export function useFAQ() {
 
     fetchFaq();
 
+    const channel = supabase
+      ?.channel('live-faq')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'faq' }, fetchFaq)
+      .subscribe();
+
     return () => {
       active = false;
+      if (channel) supabase.removeChannel(channel);
     };
   }, []);
 
