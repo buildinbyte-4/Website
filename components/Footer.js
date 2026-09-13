@@ -35,9 +35,6 @@ export default function Footer() {
               <span className="font-display text-xl font-semibold tracking-tight text-slate-950 dark:text-foreground">{companyName}</span>
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-6 text-slate-600 dark:text-zinc-400">{description}</p>
-            <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-950/30 dark:text-emerald-300">
-              <span className="pulse-dot" /> Available for new projects
-            </div>
           </div>
 
           {groups.map(group => (
