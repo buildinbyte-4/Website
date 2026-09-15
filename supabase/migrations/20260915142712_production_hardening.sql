@@ -1,4 +1,4 @@
--- BuildInByte production hardening
+-- BuildInByte production hardening (applied to production)
 -- Aligns Data API grants, RLS, indexes, content defaults, and audit-friendly timestamps.
 
 alter table public.inquiries

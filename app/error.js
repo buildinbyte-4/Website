@@ -1,10 +1,13 @@
 'use client';
 
 import { useEffect } from 'react';
+import Link from 'next/link';
+import { reportClientError } from '@/lib/report-client-error';
 
 export default function Error({ error, reset }) {
   useEffect(() => {
     console.error('Unhandled UI exception captured:', error);
+    reportClientError(error);
   }, [error]);
 
   return (
@@ -26,12 +29,12 @@ export default function Error({ error, reset }) {
           >
             Try Again
           </button>
-          <a
+          <Link
             href="/"
             className="px-4 py-2 bg-zinc-100 text-zinc-700 border border-zinc-200 rounded-lg text-sm font-medium hover:bg-zinc-200 transition-colors"
           >
             Go Home
-          </a>
+          </Link>
         </div>
       </div>
     </div>

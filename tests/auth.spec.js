@@ -12,9 +12,9 @@ test.describe('Admin Authentication', () => {
         password: 'wrong-password',
       },
     });
-    expect(response.status()).toBe(401);
+    expect([401, 429]).toContain(response.status());
     const json = await response.json();
-    expect(json.error).toContain('Invalid email or password');
+    expect(json.error).toMatch(/Invalid email or password|Too many login attempts|Authentication rate limit/);
   });
 
   test('should succeed with valid credentials (if provided)', async ({ request }) => {

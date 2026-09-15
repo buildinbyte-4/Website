@@ -1,6 +1,5 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { PROJECTS } from '@/lib/data';
 import ProjectCoverArt from './ProjectCoverArt';
 
 function StatCounter({ targetValue, duration = 800, hasIntersected, suffix = '' }) {
@@ -38,7 +37,7 @@ function StatCounter({ targetValue, duration = 800, hasIntersected, suffix = '' 
   return <>{currentValue}{suffix}</>;
 }
 
-export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry }) {
+export default function ProjectStore({ customProjects, isLoading = false, loadError = null, onRetry, onOpenDemo, onOpenInquiry }) {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [hasIntersected, setHasIntersected] = useState(false);
@@ -58,7 +57,7 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
     return () => observer.disconnect();
   }, []);
 
-  const displayList = customProjects && customProjects.length > 0 ? customProjects : PROJECTS;
+  const displayList = Array.isArray(customProjects) ? customProjects : [];
   const dynamicFilterTabs = ['All', ...Array.from(new Set(displayList.map(p => p.category)))];
 
   const filteredProjects = displayList.filter(p => {
@@ -132,8 +131,19 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
 
         </div>
 
+        {loadError && displayList.length === 0 && (
+          <div role="alert" className="mb-8 rounded-2xl border border-red-200 bg-red-50 p-6 text-center dark:border-red-900/40 dark:bg-red-950/20">
+            <h3 className="text-lg font-semibold text-foreground">Projects could not be loaded</h3>
+            <p className="mt-2 text-sm text-slate-600 dark:text-zinc-400">The live catalog is temporarily unavailable.</p>
+            {onRetry && <button type="button" onClick={onRetry} className="btn-secondary mt-4">Try again</button>}
+          </div>
+        )}
+
         {/* Project Card Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {isLoading && displayList.length === 0 && Array.from({ length: 3 }).map((_, index) => (
+            <div key={index} aria-hidden="true" className="ui-card h-96 animate-pulse bg-slate-100 dark:bg-white/5" />
+          ))}
           {filteredProjects.map((project, index) => {
             const hasDemo = Boolean(project.demoUrl);
             return (
@@ -212,7 +222,14 @@ export default function ProjectStore({ customProjects, onOpenDemo, onOpenInquiry
           })}
         </div>
 
-        {filteredProjects.length === 0 && (
+        {!isLoading && !loadError && displayList.length === 0 && (
+          <div role="status" className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-bg-surface-dark p-10 text-center">
+            <h3 className="text-xl font-bold text-foreground">No projects are published yet</h3>
+            <p className="mt-2 text-slate-500">Please check back soon for new case studies.</p>
+          </div>
+        )}
+
+        {!isLoading && displayList.length > 0 && filteredProjects.length === 0 && (
           <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-bg-surface-dark p-10 text-center">
             <h3 className="text-xl font-bold text-foreground">No matching projects</h3>
             <p className="mt-2 text-slate-500">Try another category or technology keyword.</p>

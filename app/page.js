@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { supabase } from '@/lib/supabase';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -7,21 +8,20 @@ import MetricsBanner from '@/components/MetricsBanner';
 import ProjectStore from '@/components/ProjectStore';
 import CustomServices from '@/components/CustomServices';
 import Footer from '@/components/Footer';
-import DemoModal from '@/components/DemoModal';
-import InquiryModal from '@/components/InquiryModal';
-import LoginScreen from '@/components/LoginScreen';
-import ProfileModal from '@/components/ProfileModal';
 import SmoothScroll from '@/components/SmoothScroll';
 import FloatingContactButton from '@/components/FloatingContactButton';
 import StarField from '@/components/StarField';
-import { PROJECTS as MOCK_PROJECTS } from '@/lib/data';
 import { useProducts } from '@/hooks/useProducts';
+
+const DemoModal = dynamic(() => import('@/components/DemoModal'));
+const InquiryModal = dynamic(() => import('@/components/InquiryModal'));
+const LoginScreen = dynamic(() => import('@/components/LoginScreen'));
+const ProfileModal = dynamic(() => import('@/components/ProfileModal'));
 
 export default function HomePage() {
   const [session, setSession] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
-  const { products: liveProducts } = useProducts();
-  const products = liveProducts.length > 0 ? liveProducts : MOCK_PROJECTS;
+  const { products, loading: productsLoading, error: productsError, refetch: refetchProducts } = useProducts();
   const [demoProject, setDemoProject] = useState(null);
   const [inquiryConfig, setInquiryConfig] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
@@ -151,6 +151,9 @@ export default function HomePage() {
         {/* Software Inventory Grid */}
         <ProjectStore
           customProjects={products}
+          isLoading={productsLoading}
+          loadError={productsError}
+          onRetry={refetchProducts}
           onOpenDemo={setDemoProject}
           onOpenInquiry={handleInquiryRequest}
         />

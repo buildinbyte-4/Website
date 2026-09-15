@@ -19,4 +19,16 @@ test.describe('Homepage', () => {
     await page.goto('/');
     await expect(failedRequests).toHaveLength(0);
   });
+
+  test('should allow a same-origin template to render in an iframe', async ({ page }) => {
+    await page.goto('/');
+    await page.evaluate(() => {
+      const frame = document.createElement('iframe');
+      frame.id = 'template-policy-check';
+      frame.src = '/templates/luxury-hotel/index.html';
+      document.body.appendChild(frame);
+    });
+    const template = page.frameLocator('#template-policy-check');
+    await expect(template.locator('body')).toBeVisible();
+  });
 });

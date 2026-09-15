@@ -9,7 +9,8 @@ test.describe('Protected Routes', () => {
     await page.waitForURL(url => {
       return url.pathname === '/' && url.searchParams.get('login') === '1';
     });
-    await expect(page).toHaveURL(`${BASE_URL}/?login=1`);
+    await expect(page.getByRole('dialog', { name: /welcome|create your account/i })).toBeVisible();
+    await expect(page).toHaveURL(`${BASE_URL}/`);
   });
 
   test('should allow access after authentication (if credentials provided)', async ({ page, context }) => {

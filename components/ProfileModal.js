@@ -3,11 +3,9 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 
 export default function ProfileModal({ user, onClose }) {
-  if (!user) return null;
-
   // Retrieve user metadata
-  const metadata = user.user_metadata || {};
-  const email = user.email || '';
+  const metadata = user?.user_metadata || {};
+  const email = user?.email || '';
   
   // Modes
   const [isEditing, setIsEditing] = useState(false);
@@ -47,11 +45,37 @@ export default function ProfileModal({ user, onClose }) {
 
   // Form Fields
   const [fullName, setFullName] = useState(metadata.full_name || metadata.name || 'BuildInByte User');
-  const [avatarUrl, setAvatarUrl] = useState(user.photoURL || metadata.avatar_url || metadata.picture || '');
+  const [avatarUrl, setAvatarUrl] = useState(user?.photoURL || metadata.avatar_url || metadata.picture || '');
   const [imgFailed, setImgFailed] = useState(false);
   const [phone, setPhone] = useState(metadata.phone_number || '');
   const [occupation, setOccupation] = useState(metadata.occupation || '');
   const [location, setLocation] = useState(metadata.location || '');
+
+  useEffect(() => {
+    if (!user?.id || !supabase) return undefined;
+    let active = true;
+
+    supabase
+      .from('profiles')
+      .select('full_name, avatar_url, phone_number, occupation, location')
+      .eq('id', user.id)
+      .single()
+      .then(({ data, error }) => {
+        if (!active) return;
+        if (error || !data) {
+          setErrorMsg('Your saved profile could not be loaded. Showing account defaults.');
+          return;
+        }
+        setFullName(data.full_name || metadata.full_name || metadata.name || 'BuildInByte User');
+        setAvatarUrl(data.avatar_url || '');
+        setPhone(data.phone_number || '');
+        setOccupation(data.occupation || '');
+        setLocation(data.location || '');
+        setImgFailed(false);
+      });
+
+    return () => { active = false; };
+  }, [metadata.full_name, metadata.name, user?.id]);
 
   // Pre-made Avatar Presets
   const AVATAR_PRESETS = [
@@ -69,19 +93,7 @@ export default function ProfileModal({ user, onClose }) {
     setSuccessMsg('');
 
     try {
-      const { data, error } = await supabase.auth.updateUser({
-        data: {
-          full_name: fullName,
-          avatar_url: avatarUrl,
-          phone_number: phone,
-          occupation: occupation,
-          location: location,
-        }
-      });
-
-      if (error) throw error;
-
-      const { error: profileError } = await supabase
+      const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .update({
           full_name: fullName,
@@ -91,9 +103,12 @@ export default function ProfileModal({ user, onClose }) {
           location,
           updated_at: new Date().toISOString(),
         })
-        .eq('id', user.id);
+        .eq('id', user.id)
+        .select('full_name, avatar_url, phone_number, occupation, location')
+        .single();
 
       if (profileError) throw profileError;
+      if (!profile) throw new Error('Profile update did not affect a record.');
 
       setSuccessMsg('Profile updated successfully!');
       setTimeout(() => {
@@ -107,6 +122,8 @@ export default function ProfileModal({ user, onClose }) {
       setLoading(false);
     }
   };
+
+  if (!user) return null;
 
   const provider = user.app_metadata?.provider || user.identities?.[0]?.provider || 'email';
   const joinedDate = user.created_at ? new Date(user.created_at).toLocaleDateString(undefined, {

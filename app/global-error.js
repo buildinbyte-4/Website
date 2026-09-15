@@ -1,10 +1,13 @@
 'use client';
 
 import { useEffect } from 'react';
+import Link from 'next/link';
+import { reportClientError } from '@/lib/report-client-error';
 
 export default function GlobalError({ error, reset }) {
   useEffect(() => {
     console.error('Critical root-level error captured:', error);
+    reportClientError(error);
   }, [error]);
 
   return (
@@ -30,12 +33,12 @@ export default function GlobalError({ error, reset }) {
             >
               Recover Application
             </button>
-            <a
+            <Link
               href="/"
               className="px-4 py-2 bg-zinc-100 text-zinc-700 border border-zinc-200 rounded-lg text-sm font-medium hover:bg-zinc-200 transition-colors"
             >
               Go Home
-            </a>
+            </Link>
           </div>
         </div>
       </body>

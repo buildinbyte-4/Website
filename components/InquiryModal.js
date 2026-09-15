@@ -1,11 +1,17 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function InquiryModal({ config, onClose }) {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [formData, setFormData] = useState({ name: '', email: '', company: '', scope: '' });
+  const requestKey = useRef(null);
+
+  const updateField = (field, value) => {
+    requestKey.current = null;
+    setFormData((current) => ({ ...current, [field]: value }));
+  };
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -27,9 +33,13 @@ export default function InquiryModal({ config, onClose }) {
     setLoading(true);
     setErrorMsg('');
     try {
+      requestKey.current ||= crypto.randomUUID();
       const response = await fetch('/api/inquiries', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Idempotency-Key': requestKey.current,
+        },
         body: JSON.stringify({
           projectType: config.title || 'General Custom Scope',
           scope: formData.scope,
@@ -44,6 +54,7 @@ export default function InquiryModal({ config, onClose }) {
         throw new Error(result.error || 'The inquiry could not be submitted.');
       }
 
+      requestKey.current = null;
       setSubmitted(true);
     } catch (err) {
       console.error('Error submitting inquiry:', err);
@@ -88,7 +99,7 @@ export default function InquiryModal({ config, onClose }) {
                   type="text"
                   placeholder="e.g. Alex Sterling"
                   value={formData.name}
-                  onChange={e => setFormData({ ...formData, name: e.target.value })}
+                  onChange={e => updateField('name', e.target.value)}
                   className="w-full px-3.5 py-2.5 rounded-lg bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-foreground focus:outline-none shadow-sm dark:shadow-sm focus:bg-accent-soft focus:text-black focus:border-slate-200 transition-colors duration-200"
                 />
               </div>
@@ -101,7 +112,7 @@ export default function InquiryModal({ config, onClose }) {
                   type="email"
                   placeholder="alex@company.com"
                   value={formData.email}
-                  onChange={e => setFormData({ ...formData, email: e.target.value })}
+                  onChange={e => updateField('email', e.target.value)}
                   className="w-full px-3.5 py-2.5 rounded-lg bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-foreground focus:outline-none shadow-sm dark:shadow-sm focus:bg-accent-soft focus:text-black focus:border-slate-200 transition-colors duration-200"
                 />
               </div>
@@ -113,7 +124,7 @@ export default function InquiryModal({ config, onClose }) {
                   type="text"
                   placeholder="e.g. Vanguard Labs"
                   value={formData.company}
-                  onChange={e => setFormData({ ...formData, company: e.target.value })}
+                  onChange={e => updateField('company', e.target.value)}
                   className="w-full px-3.5 py-2.5 rounded-lg bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-foreground focus:outline-none shadow-sm dark:shadow-sm focus:bg-accent-soft focus:text-black focus:border-slate-200 transition-colors duration-200"
                 />
               </div>
@@ -128,7 +139,7 @@ export default function InquiryModal({ config, onClose }) {
                   maxLength={5000}
                   placeholder="Detail your technology requirements, timeframe, or desired features..."
                   value={formData.scope}
-                  onChange={e => setFormData({ ...formData, scope: e.target.value })}
+                  onChange={e => updateField('scope', e.target.value)}
                   className="w-full px-3.5 py-2.5 rounded-lg bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-foreground focus:outline-none shadow-sm dark:shadow-sm focus:bg-accent-soft focus:text-black focus:border-slate-200 transition-colors duration-200"
                 ></textarea>
               </div>

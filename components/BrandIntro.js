@@ -11,6 +11,10 @@ export default function BrandIntro() {
 
   useEffect(() => {
     if (finished) return;
+    if (window.sessionStorage.getItem('buildinbyte-intro-seen') === '1') {
+      setFinished(true);
+      return;
+    }
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (media.matches) { setFinished(true); return; }
     const content = document.getElementById('site-content');
@@ -20,16 +24,19 @@ export default function BrandIntro() {
     let frame;
     let start;
     // Always release the page even when the logo cannot load or animation fails.
-    const timeout = window.setTimeout(() => setFinished(true), 2800);
-    const stop = () => setFinished(true);
-    const onKey = event => { if (event.key === 'Escape') stop(); };
+    const stop = () => {
+      window.sessionStorage.setItem('buildinbyte-intro-seen', '1');
+      setFinished(true);
+    };
+    const timeout = window.setTimeout(stop, 1800);
+    const onKey = event => { if (['Escape', 'Enter', ' '].includes(event.key)) stop(); };
     media.addEventListener('change', stop);
     document.addEventListener('keydown', onKey);
     const path = trail.current;
     const length = path.getTotalLength();
     const animate = timestamp => {
       if (start === undefined) start = timestamp;
-      const progress = Math.min((timestamp - start) / 2200, 1);
+      const progress = Math.min((timestamp - start) / 1400, 1);
       const distance = length * (progress * progress * (3 - 2 * progress));
       const point = path.getPointAtLength(distance);
       const before = path.getPointAtLength(Math.max(0, distance - 1));
@@ -53,7 +60,10 @@ export default function BrandIntro() {
   if (finished) return null;
 
   return (
-    <div className="brand-intro" aria-label="BuildInByte introduction">
+    <div className="brand-intro" aria-label="BuildInByte introduction" onPointerDown={() => {
+      window.sessionStorage.setItem('buildinbyte-intro-seen', '1');
+      setFinished(true);
+    }}>
       <svg className="brand-intro-art" viewBox="240 320 1185 1185" aria-hidden="true">
         <defs>
           <clipPath id="intro-art-interior"><circle cx="835" cy="912" r="542" /></clipPath>
@@ -71,6 +81,10 @@ export default function BrandIntro() {
         </g>
       </svg>
       <p className="brand-intro-caption">Ideas taking flight.</p>
+      <button type="button" className="sr-only focus:not-sr-only" onClick={() => {
+        window.sessionStorage.setItem('buildinbyte-intro-seen', '1');
+        setFinished(true);
+      }}>Skip introduction</button>
     </div>
   );
 }

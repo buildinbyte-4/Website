@@ -4,6 +4,34 @@ import { supabase } from '@/lib/supabase';
 import { DollarSign, TrendingUp, TrendingDown, Clock, Activity, ChevronDown } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
+const PIE_COLORS = ['#111110', '#959188', '#10B981', '#F59E0B'];
+
+function StatCard({ title, amount, icon: Icon }) {
+  return (
+    <div className="bg-white rounded-xl p-5 border border-zinc-200 shadow-sm flex flex-col justify-between gap-4">
+      <div className="flex justify-between items-start">
+        <h3 className="font-medium text-sm text-zinc-500">{title}</h3>
+        <div className="p-2 rounded-lg bg-zinc-50"><Icon size={18} className="text-zinc-600" /></div>
+      </div>
+      <p className="font-semibold text-2xl text-zinc-900 tracking-tight">${amount.toLocaleString()}</p>
+    </div>
+  );
+}
+
+function CleanTooltip({ active, payload, label }) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="bg-white border border-zinc-200 rounded-lg p-3 shadow-md">
+      <p className="font-medium text-zinc-500 text-xs mb-1">{label}</p>
+      {payload.map((entry, index) => (
+        <p key={index} style={{ color: entry.color }} className="font-semibold text-sm">
+          {entry.name}: ${entry.value.toLocaleString()}
+        </p>
+      ))}
+    </div>
+  );
+}
+
 export default function AdminOverview() {
   const [kpis, setKpis] = useState({ grossRevenue: 0, moneyLoss: 0, netRevenue: 0, moneyPending: 0 });
   const [trendData, setTrendData] = useState([]);
@@ -31,41 +59,6 @@ export default function AdminOverview() {
       .subscribe();
     return () => { supabase.removeChannel(channel); };
   }, []);
-
-  const StatCard = ({ title, amount, icon: Icon }) => (
-    <div className="bg-white rounded-xl p-5 border border-zinc-200 shadow-sm flex flex-col justify-between gap-4">
-      <div className="flex justify-between items-start">
-        <h3 className="font-medium text-sm text-zinc-500">{title}</h3>
-        <div className="p-2 rounded-lg bg-zinc-50">
-          <Icon size={18} className="text-zinc-600" />
-        </div>
-      </div>
-      <div>
-        <p className="font-semibold text-2xl text-zinc-900 tracking-tight">
-          ${amount.toLocaleString()}
-        </p>
-      </div>
-    </div>
-  );
-
-  const PIE_COLORS = ['#111110', '#959188', '#10B981', '#F59E0B'];
-
-  // Custom Tooltip for Clean styling
-  const CleanTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-white border border-zinc-200 rounded-lg p-3 shadow-md">
-          <p className="font-medium text-zinc-500 text-xs mb-1">{label}</p>
-          {payload.map((entry, index) => (
-            <p key={index} style={{ color: entry.color }} className="font-semibold text-sm">
-              {entry.name}: ${entry.value.toLocaleString()}
-            </p>
-          ))}
-        </div>
-      );
-    }
-    return null;
-  };
 
   return (
     <div className="space-y-6 pb-12">

@@ -28,4 +28,6 @@ Thumbs.db
 debug.js
 test-example.js
 test-results/
+playwright-report/
+supabase/.temp/
 

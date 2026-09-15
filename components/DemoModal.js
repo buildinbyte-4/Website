@@ -91,7 +91,7 @@ export default function DemoModal({ project, onClose, onOpenInquiry }) {
         {/* What's Included */}
         <div className="mb-6 p-4 rounded-xl bg-bg-primary-dark border border-border-subtle">
           <span className="text-xs font-semibold  tracking-wider text-text-muted block mb-3">
-            What's Included
+            What&apos;s Included
           </span>
           <div className="grid grid-cols-2 gap-2">
             {[

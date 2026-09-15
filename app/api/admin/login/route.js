@@ -1,25 +1,35 @@
 import { ApiError, jsonError, jsonSuccess } from '@/lib/security/response';
 import { errorLog, securityLog } from '@/lib/security/logger';
 import { checkLoginRateLimit } from '@/lib/security/rate-limiter';
+import { getTrustedClientIp } from '@/lib/security/client-ip';
 import { loginSchema, parseJsonBody } from '@/lib/validation/schemas';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { createHash } from 'node:crypto';
 
 export async function POST(request) {
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-    || request.headers.get('x-real-ip')
-    || 'unknown';
-
-  if (!checkLoginRateLimit(`admin-login:${ip}`)) {
-    return jsonError('Too many login attempts. Please try again later.', 429);
-  }
+  const ip = getTrustedClientIp(request);
 
   try {
     const credentials = await parseJsonBody(request, loginSchema);
+    const accountKey = createHash('sha256').update(credentials.email.toLowerCase()).digest('hex');
+
+    if (!checkLoginRateLimit(`admin-login-ip:${ip}`, `admin-login-account:${accountKey}`)) {
+      return jsonError(
+        'Too many login attempts. Please try again later.',
+        429,
+        null,
+        { 'Retry-After': '900' },
+      );
+    }
+
     const supabase = await createServerSupabaseClient();
     const { data, error } = await supabase.auth.signInWithPassword(credentials);
 
     if (error || !data.user) {
       securityLog('Failed admin login attempt', { ip });
+      if (error?.status === 429) {
+        return jsonError('Authentication rate limit reached. Please try again later.', 429, null, { 'Retry-After': '900' });
+      }
       return jsonError('Invalid email or password', 401);
     }
 

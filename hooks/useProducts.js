@@ -14,7 +14,7 @@ const getCategoryFromTech = (techStack = []) => {
     return 'E-Commerce';
   }
 
-  if (normalized.some((value) => value.includes('ai') || value.includes('gpt') || value.includes('llm') || value.includes('ml'))) {
+  if (normalized.some((value) => /\b(ai|gpt|llm|ml)\b|machine learning/.test(value))) {
     return 'AI Solutions';
   }
 
@@ -60,13 +60,16 @@ export function useProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(0);
 
   useEffect(() => {
     let active = true;
+    let requestSequence = 0;
 
-    async function fetchProducts() {
+    async function fetchProducts({ showLoading = false } = {}) {
+      const requestId = ++requestSequence;
       try {
-        setLoading(true);
+        if (showLoading) setLoading(true);
         setError(null);
 
         if (!supabase) {
@@ -75,13 +78,15 @@ export function useProducts() {
 
         const { data, error } = await supabase
           .from('products')
-          .select('*')
+          .select('id, name, short_description, description, tech_stack, category, status, demo_url, thumbnail, gallery, features, price_usd, created_at')
           .eq('is_active', true)
-          .order('created_at', { ascending: false });
+          .eq('show_on_store', true)
+          .order('created_at', { ascending: false })
+          .limit(60);
 
         if (error) throw error;
 
-        if (!active) return;
+        if (!active || requestId !== requestSequence) return;
 
         const mapped = (data || []).map((product) => ({
           id: product.id,
@@ -100,31 +105,41 @@ export function useProducts() {
 
         setProducts(mapped);
       } catch (err) {
-        if (active) {
+        if (active && requestId === requestSequence) {
           setError(err.message || 'Unable to load products.');
-          setProducts([]);
         }
       } finally {
-        if (active) {
+        if (active && requestId === requestSequence) {
           setLoading(false);
         }
       }
     }
 
-    fetchProducts();
+    fetchProducts({ showLoading: true });
 
+    let refreshTimer;
     const channel = supabase
       ?.channel('live-products')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, fetchProducts)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, () => {
+        clearTimeout(refreshTimer);
+        refreshTimer = setTimeout(fetchProducts, 200);
+      })
       .subscribe();
 
     return () => {
       active = false;
+      clearTimeout(refreshTimer);
       if (channel) supabase.removeChannel(channel);
     };
-  }, []);
+  }, [refreshToken]);
 
   const featuredProducts = useMemo(() => products.filter((product) => product?.title), [products]);
 
-  return { products, featuredProducts, loading, error };
+  return {
+    products,
+    featuredProducts,
+    loading,
+    error,
+    refetch: () => setRefreshToken((value) => value + 1),
+  };
 }
