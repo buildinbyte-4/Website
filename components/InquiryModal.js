@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
 
 export default function InquiryModal({ config, onClose }) {
   const [submitted, setSubmitted] = useState(false);
@@ -28,39 +27,22 @@ export default function InquiryModal({ config, onClose }) {
     setLoading(true);
     setErrorMsg('');
     try {
-      // 1. Log to Supabase Database
-      if (supabase) {
-        const { error } = await supabase.from('inquiries').insert([
-          {
-            name: formData.name,
-            email: formData.email,
-            project_type: config.title || 'General Custom Scope',
-            message: formData.company ? `Company: ${formData.company}. Scope: ${formData.scope}` : formData.scope,
-            status: 'new'
-          }
-        ]);
-        if (error) throw error;
-      }
-
-      // 2. Submit to FormSubmit via AJAX in background to trigger email
-      const formBody = {
-        name: formData.name,
-        email: formData.email,
-        company: formData.company,
-        scope: formData.scope,
-        _subject: config.title || 'New Client Inquiry',
-      };
-
-      const response = await fetch("https://formsubmit.co/ajax/support@buildinbyte.in", {
-        method: "POST",
-        headers: { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(formBody)
+      const response = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          projectType: config.title || 'General Custom Scope',
+          scope: formData.scope,
+          company: formData.company,
+          name: formData.name,
+          email: formData.email,
+        }),
       });
 
-      if (!response.ok) throw new Error('The message service did not accept the request.');
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.error || 'The inquiry could not be submitted.');
+      }
 
       setSubmitted(true);
     } catch (err) {
@@ -141,6 +123,9 @@ export default function InquiryModal({ config, onClose }) {
                 <textarea
                   id="inquiry-scope"
                   rows={3}
+                  required
+                  minLength={10}
+                  maxLength={5000}
                   placeholder="Detail your technology requirements, timeframe, or desired features..."
                   value={formData.scope}
                   onChange={e => setFormData({ ...formData, scope: e.target.value })}

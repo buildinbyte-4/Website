@@ -48,11 +48,6 @@ export default function LoginScreen({ onClose, message }) {
     try {
       if (!supabase) throw new Error('Sign in is temporarily unavailable. Please use the contact page and we will assist you.');
 
-      if (email === 'admin' && password === 'admin') {
-        window.location.href = '/admin';
-        return;
-      }
-
       if (isSignUp) {
         const { data, error } = await supabase.auth.signUp({
           email,

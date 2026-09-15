@@ -1,39 +1,45 @@
-import { NextResponse } from 'next/server';
-import { createSessionCookieOptions, getSessionCookieName } from '@/lib/auth/session';
-import { parseJsonBody, loginSchema } from '@/lib/validation/schemas';
-import { authenticateAdmin } from '@/lib/services/admin.service';
-import { jsonError, jsonSuccess, ApiError } from '@/lib/security/response';
-import { appLog, errorLog } from '@/lib/security/logger';
+import { ApiError, jsonError, jsonSuccess } from '@/lib/security/response';
+import { errorLog, securityLog } from '@/lib/security/logger';
 import { checkLoginRateLimit } from '@/lib/security/rate-limiter';
+import { loginSchema, parseJsonBody } from '@/lib/validation/schemas';
+import { createServerSupabaseClient } from '@/lib/supabase/server';
 
 export async function POST(request) {
-  const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || '127.0.0.1';
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    || request.headers.get('x-real-ip')
+    || 'unknown';
 
-  // Stricter rate-limit for the admin login endpoint
-  if (!checkLoginRateLimit(ip)) {
-    errorLog('Admin login rate-limited', { ip });
+  if (!checkLoginRateLimit(`admin-login:${ip}`)) {
     return jsonError('Too many login attempts. Please try again later.', 429);
   }
 
   try {
-    const body = await parseJsonBody(request, loginSchema);
-    const result = await authenticateAdmin({ username: body.username, password: body.password, ip });
+    const credentials = await parseJsonBody(request, loginSchema);
+    const supabase = await createServerSupabaseClient();
+    const { data, error } = await supabase.auth.signInWithPassword(credentials);
 
-    if (!result.ok) {
-      return jsonError(result.error, result.status);
+    if (error || !data.user) {
+      securityLog('Failed admin login attempt', { ip });
+      return jsonError('Invalid email or password', 401);
     }
 
-    const response = jsonSuccess({ authenticated: true }, 200);
-    response.cookies.set(getSessionCookieName(), result.token, createSessionCookieOptions());
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', data.user.id)
+      .maybeSingle();
 
-    appLog('Admin login succeeded', { ip });
-    return response;
+    if (profileError || profile?.role !== 'admin') {
+      await supabase.auth.signOut();
+      securityLog('Non-admin attempted admin login', { ip, userId: data.user.id });
+      return jsonError('Forbidden', 403);
+    }
+
+    return jsonSuccess({ authenticated: true, role: 'admin' });
   } catch (error) {
     if (error instanceof ApiError) {
-      errorLog('Admin login validation failed', { ip, message: error.message, status: error.status });
       return jsonError(error.message, error.status, error.details);
     }
-
     errorLog('Admin login failed', { ip, message: error.message });
     return jsonError('Internal server error', 500);
   }
