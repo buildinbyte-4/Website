@@ -4,7 +4,7 @@ const seededRandom = (seed) => {
   return value - Math.floor(value);
 };
 
-const STARS = Array.from({ length: 240 }, (_, index) => ({
+const STARS = Array.from({ length: 160 }, (_, index) => ({
   left: `${(seededRandom(index + 1) * 96 + 2).toFixed(2)}%`,
   top: `${(seededRandom(index + 241) * 96 + 2).toFixed(2)}%`,
   size: `${seededRandom(index + 481) > 0.91 ? 4 : seededRandom(index + 721) > 0.65 ? 3 : seededRandom(index + 961) > 0.4 ? 2.5 : 2}px`,

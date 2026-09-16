@@ -16,7 +16,7 @@ export default function Footer() {
   const description = settings?.address || 'Production-grade software engineering for ambitious companies.';
 
   return (
-    <footer className="mt-auto border-t border-slate-200 bg-white dark:border-white/10 dark:bg-transparent">
+    <footer className="mt-auto border-t border-slate-200 bg-white dark:border-white/10 dark:bg-canvas">
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="mb-14 flex flex-col justify-between gap-6 rounded-2xl border border-brand-200 bg-brand-50 p-7 sm:flex-row sm:items-center dark:border-brand-400/20 dark:bg-brand-950/30">
           <div>

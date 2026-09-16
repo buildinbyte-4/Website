@@ -22,6 +22,28 @@ test.describe('API Endpoints', () => {
     expect(templateResponse.headers()['content-security-policy']).toContain("frame-ancestors 'self'");
   });
 
+  test('all project templates and generated previews are available', async ({ request }) => {
+    const slugs = [
+      'buildinbyte-luxury-hotel',
+      'luxury-hotel',
+      'real-estate',
+      'elecstore',
+      'kanchimarket',
+      'scsvmv',
+      'hostel-management',
+    ];
+
+    for (const slug of slugs) {
+      const [templateResponse, previewResponse] = await Promise.all([
+        request.get(`${BASE_URL}/templates/${slug}/index.html`),
+        request.get(`${BASE_URL}/project-previews/${slug}.webp`),
+      ]);
+      expect(templateResponse.status()).toBe(200);
+      expect(previewResponse.status()).toBe(200);
+      expect(previewResponse.headers()['content-type']).toContain('image/webp');
+    }
+  });
+
   test('oversized JSON requests are rejected before parsing', async ({ request }) => {
     const response = await request.post(`${BASE_URL}/api/inquiries`, {
       headers: { 'Content-Type': 'application/json' },

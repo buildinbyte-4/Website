@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { getLocalProjectPreview, getOfferingType } from '@/lib/projectCatalog';
 
 const getCategoryFromTech = (techStack = []) => {
   const normalized = techStack.map((item) => String(item).toLowerCase());
@@ -78,7 +79,7 @@ export function useProducts() {
 
         const { data, error } = await supabase
           .from('products')
-          .select('id, name, short_description, description, tech_stack, category, status, demo_url, thumbnail, gallery, features, price_usd, created_at')
+          .select('id, name, short_description, description, tech_stack, category, status, demo_url, thumbnail, gallery, features, price_usd, offering_type, created_at')
           .eq('is_active', true)
           .eq('show_on_store', true)
           .order('created_at', { ascending: false })
@@ -88,20 +89,26 @@ export function useProducts() {
 
         if (!active || requestId !== requestSequence) return;
 
-        const mapped = (data || []).map((product) => ({
-          id: product.id,
-          title: product.name,
-          desc: product.short_description || product.description || '',
-          stack: Array.isArray(product.tech_stack) ? product.tech_stack : [],
-          category: product.category || getCategoryFromTech(Array.isArray(product.tech_stack) ? product.tech_stack : []),
-          industry: product.category || 'Business',
-          status: product.status || 'Ready to Customize',
-          demoUrl: getDemoUrl(product),
-          thumbnail: product.thumbnail || null,
-          gallery: product.gallery || [],
-          features: product.features || [],
-          priceUsd: product.price_usd,
-        }));
+        const mapped = (data || []).map((product) => {
+          const demoUrl = getDemoUrl(product);
+
+          return {
+            id: product.id,
+            title: product.name,
+            desc: product.short_description || product.description || '',
+            stack: Array.isArray(product.tech_stack) ? product.tech_stack : [],
+            category: product.category || getCategoryFromTech(Array.isArray(product.tech_stack) ? product.tech_stack : []),
+            industry: product.category || 'Business',
+            status: product.status || 'Ready to Customize',
+            demoUrl,
+            thumbnail: product.thumbnail || null,
+            previewImage: getLocalProjectPreview(demoUrl),
+            offeringType: getOfferingType(product, demoUrl),
+            gallery: product.gallery || [],
+            features: product.features || [],
+            priceUsd: product.price_usd,
+          };
+        });
 
         setProducts(mapped);
       } catch (err) {

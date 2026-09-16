@@ -21,7 +21,7 @@ const services = [
 
 export default function CustomServices({ onOpenInquiry }) {
   return (
-    <section id="services" className="border-b border-slate-200 bg-white py-20 dark:border-white/10 dark:bg-transparent">
+    <section id="services" className="border-b border-slate-200 bg-white py-20 dark:border-white/10 dark:bg-canvas">
       <div className="mx-auto max-w-7xl px-6">
         <div id="work" className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold text-brand-600 dark:text-brand-400">Why BuildInByte</p>

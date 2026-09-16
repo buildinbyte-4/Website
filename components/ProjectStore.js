@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import ProjectCoverArt from './ProjectCoverArt';
+import ProjectCard from './ProjectCard';
+import { OFFERING_TYPES } from '@/lib/projectCatalog';
 
 function StatCounter({ targetValue, duration = 800, hasIntersected, suffix = '' }) {
   const [currentValue, setCurrentValue] = useState(0);
@@ -58,18 +59,34 @@ export default function ProjectStore({ customProjects, isLoading = false, loadEr
   }, []);
 
   const displayList = Array.isArray(customProjects) ? customProjects : [];
-  const dynamicFilterTabs = ['All', ...Array.from(new Set(displayList.map(p => p.category)))];
+  const dynamicFilterTabs = ['All', ...Array.from(new Set(displayList.map((project) => project.category).filter(Boolean)))];
 
-  const filteredProjects = displayList.filter(p => {
-    const matchesCategory = activeCategory === 'All' || p.category === activeCategory;
-    const matchesSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          p.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          (p.stack && p.stack.some(s => s.toLowerCase().includes(searchQuery.toLowerCase())));
+  const filteredProjects = displayList.filter((project) => {
+    const normalizedSearch = searchQuery.trim().toLowerCase();
+    const matchesCategory = activeCategory === 'All' || project.category === activeCategory;
+    const matchesSearch = String(project.title).toLowerCase().includes(normalizedSearch) ||
+                          String(project.desc).toLowerCase().includes(normalizedSearch) ||
+                          project.stack?.some((technology) => String(technology).toLowerCase().includes(normalizedSearch));
     return matchesCategory && matchesSearch;
   });
 
+  const offeringGroups = [
+    {
+      id: 'custom-systems',
+      title: 'Custom Systems',
+      description: 'Purpose-built applications, operational platforms, and internal tools shaped around a specific workflow.',
+      projects: filteredProjects.filter((project) => project.offeringType === OFFERING_TYPES.CUSTOM_SYSTEM),
+    },
+    {
+      id: 'website-templates',
+      title: 'Website Templates',
+      description: 'Ready-to-customize starting points with live previews for faster website launches.',
+      projects: filteredProjects.filter((project) => project.offeringType === OFFERING_TYPES.WEBSITE_TEMPLATE),
+    },
+  ];
+
   return (
-    <section id="case-studies" ref={sectionRef} className="border-b border-slate-200 bg-transparent py-20 dark:border-white/10">
+    <section id="case-studies" ref={sectionRef} className="border-b border-slate-200 bg-white py-20 dark:border-white/10 dark:bg-canvas">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header */}
@@ -81,10 +98,10 @@ export default function ProjectStore({ customProjects, isLoading = false, loadEr
               </span>
             </div>
             <h2 className="font-display text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-              Selected case studies
+              Custom systems &amp; website templates
             </h2>
             <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600 dark:text-zinc-300">
-              Production-ready software shaped around measurable business outcomes.
+              Explore purpose-built software and ready-to-customize website foundations, clearly organized by engagement type.
             </p>
           </div>
 
@@ -122,6 +139,7 @@ export default function ProjectStore({ customProjects, isLoading = false, loadEr
           <div className="w-full lg:w-auto shrink-0 relative">
             <input
               type="text"
+              aria-label="Search projects by name, description, or technology"
               placeholder="Search by technology"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
@@ -139,88 +157,48 @@ export default function ProjectStore({ customProjects, isLoading = false, loadEr
           </div>
         )}
 
-        {/* Project Card Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {isLoading && displayList.length === 0 && Array.from({ length: 3 }).map((_, index) => (
-            <div key={index} aria-hidden="true" className="ui-card h-96 animate-pulse bg-slate-100 dark:bg-white/5" />
-          ))}
-          {filteredProjects.map((project, index) => {
-            const hasDemo = Boolean(project.demoUrl);
-            return (
-              <article
-                key={project.id}
-                className={`group ui-card flex h-full flex-col justify-between p-0 card-reveal ${hasIntersected ? 'visible' : ''}`}
-                style={{ transitionDelay: `${index * 80}ms` }}
-              >
-                
-                {/* Generative Project Cover Art */}
-                <ProjectCoverArt project={project} />
+        {isLoading && displayList.length === 0 && (
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3" aria-busy="true" aria-label="Loading projects">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div key={index} aria-hidden="true" className="ui-card h-96 animate-pulse bg-slate-100 dark:bg-white/5" />
+            ))}
+          </div>
+        )}
 
-                <div className="flex-1 border-b border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-bg-surface-dark">
-                  {/* Title & Description */}
-                  <h3 className="mb-3 font-display text-2xl font-semibold tracking-tight text-foreground">
-                    {project.title}
-                  </h3>
-
-                  <p className="mb-6 line-clamp-3 text-sm leading-6 text-slate-600 dark:text-zinc-400">
-                    {project.desc}
-                  </p>
-
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {project.stack && project.stack.map((tech, idx) => (
-                      <span
-                         key={idx}
-                         className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-600 dark:border-white/10 dark:bg-bg-surface-dark dark:text-zinc-300"
-                      >
-                         {tech}
-                      </span>
-                    ))}
+        {!isLoading && filteredProjects.length > 0 && (
+          <div className="space-y-16">
+            {offeringGroups.map((group) => group.projects.length > 0 && (
+              <section key={group.id} aria-labelledby={`${group.id}-heading`}>
+                <div className="mb-7 flex flex-col justify-between gap-3 border-b border-slate-200 pb-5 dark:border-white/10 sm:flex-row sm:items-end">
+                  <div>
+                    <h3 id={`${group.id}-heading`} className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+                      {group.title}
+                    </h3>
+                    <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 dark:text-zinc-400">
+                      {group.description}
+                    </p>
                   </div>
+                  <span className="text-sm font-medium text-slate-500 dark:text-zinc-400">
+                    {group.projects.length} {group.projects.length === 1 ? 'project' : 'projects'}
+                  </span>
                 </div>
 
-                {/* Actions */}
-                <div className="p-4 bg-white dark:bg-bg-surface-dark">
-                  <div className="grid grid-cols-2 gap-3">
-                    {hasDemo ? (
-                      <a
-                        href={project.demoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-primary-invert py-3 justify-center text-xs cursor-pointer"
-                      >
-                        Live demo
-                      </a>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onOpenDemo(project);
-                        }}
-                        className="btn-secondary-invert py-3 justify-center text-xs cursor-pointer"
-                      >
-                        View architecture
-                      </button>
-                    )}
-
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onOpenInquiry({ title: `Technical Inquiry — ${project.title}` });
-                      }}
-                      className="btn-secondary-invert py-3 justify-center text-xs cursor-pointer"
-                    >
-                      Customize
-                    </button>
-                  </div>
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                  {group.projects.map((project, index) => (
+                    <ProjectCard
+                      key={project.id}
+                      project={project}
+                      index={index}
+                      isVisible={hasIntersected}
+                      onOpenDemo={onOpenDemo}
+                      onOpenInquiry={onOpenInquiry}
+                    />
+                  ))}
                 </div>
-
-              </article>
-            );
-          })}
-        </div>
+              </section>
+            ))}
+          </div>
+        )}
 
         {!isLoading && !loadError && displayList.length === 0 && (
           <div role="status" className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-bg-surface-dark p-10 text-center">

@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "check": "npm run lint && npm run build",
     "test": "playwright test",
-    "test:ui": "playwright test --ui"
+    "test:ui": "playwright test --ui",
+    "previews:capture": "node scripts/capture-project-previews.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.7",

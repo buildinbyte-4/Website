@@ -408,12 +408,14 @@ input, select, textarea {
 }
 
 html.dark .site-star-field {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 0;
   display: block;
   overflow: hidden;
   pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
 }
 
 .site-star {
@@ -488,6 +490,12 @@ html.dark .site-star-field {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .site-star {
+    animation: none !important;
+    opacity: var(--star-opacity) !important;
+    transform: none !important;
+  }
+
   *, *::before, *::after {
     scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
@@ -506,6 +514,12 @@ html.dark .site-star-field {
   .hero-ticker-word:first-child {
     display: block;
     opacity: 1;
+  }
+}
+
+@media (max-width: 639px) {
+  .site-star:nth-child(even) {
+    display: none;
   }
 }
 
