@@ -86,7 +86,7 @@ export default function ProjectStore({ customProjects, isLoading = false, loadEr
   ];
 
   return (
-    <section id="case-studies" ref={sectionRef} className="border-b border-slate-200 bg-white py-20 dark:border-white/10 dark:bg-canvas">
+    <section id="case-studies" ref={sectionRef} className="border-b border-slate-200 bg-white py-20 dark:border-white/10 dark:bg-transparent">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header */}

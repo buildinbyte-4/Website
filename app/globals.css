@@ -408,14 +408,12 @@ input, select, textarea {
 }
 
 html.dark .site-star-field {
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: 0;
   display: block;
   overflow: hidden;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
 }
 
 .site-star {

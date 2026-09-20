@@ -128,6 +128,7 @@ export default function HomePage() {
   return (
     <SmoothScroll>
       <div className="relative min-h-screen overflow-hidden bg-canvas text-foreground font-sans antialiased selection:bg-accent-soft selection:text-foreground">
+        <StarField />
         <div className="relative z-10">
         
         {/* Header (Pass session state and trigger callbacks) */}
@@ -139,15 +140,10 @@ export default function HomePage() {
         />
 
         {/* Hero Section */}
-        <div className="relative isolate overflow-hidden">
-          <StarField />
-          <div className="relative z-10">
-            <Hero
-              onOpenDemo={setDemoProject}
-              onOpenInquiry={handleInquiryRequest}
-            />
-          </div>
-        </div>
+        <Hero
+          onOpenDemo={setDemoProject}
+          onOpenInquiry={handleInquiryRequest}
+        />
 
         {/* Social Proof Live Metrics Banner */}
         <MetricsBanner />
