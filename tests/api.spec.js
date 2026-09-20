@@ -73,17 +73,16 @@ test.describe('API Endpoints', () => {
     expect(json.data.loggedOut).toBe(true);
   });
 
-  test('POST /api/inquiries requires authentication', async ({ request }) => {
+  test('POST /api/inquiries validates public project briefs', async ({ request }) => {
     const response = await request.post(`${BASE_URL}/api/inquiries`, {
       data: {
-        name: 'Test Visitor',
-        email: 'visitor@example.com',
-        company: 'Example Company',
-        scope: 'A sufficiently detailed test inquiry that must not be stored.',
-        projectType: 'Test Project',
+        name: 'T',
+        email: 'not-an-email',
+        scope: 'short',
+        projectType: 'Test project',
       },
     });
-    expect(response.status()).toBe(401);
+    expect(response.status()).toBe(422);
     const json = await response.json();
     expect(json.success).toBe(false);
   });

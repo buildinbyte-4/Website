@@ -90,10 +90,29 @@ export default function HomePage() {
 
     handleInitialAuth();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const redirectSignedInClient = async (session) => {
+      const nextPath = new URLSearchParams(window.location.search).get('next');
+      if (nextPath?.startsWith('/') && !nextPath.startsWith('//')) {
+        window.location.assign(nextPath);
+        return;
+      }
+
+      const { data: clientAccount } = await supabase
+        .from('client_accounts')
+        .select('portal_enabled')
+        .eq('user_id', session.user.id)
+        .maybeSingle();
+
+      if (clientAccount?.portal_enabled) window.location.assign('/users');
+    };
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session);
       if (session) {
         setShowLogin(false);
+        if (event === 'SIGNED_IN') {
+          setTimeout(() => { void redirectSignedInClient(session); }, 0);
+        }
       }
       setAuthLoading(false);
     });
@@ -101,14 +120,9 @@ export default function HomePage() {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Auth gate wrapper for action conversions
+  // Project inquiries are public; authentication is reserved for the user portal.
   const handleInquiryRequest = (config) => {
-    if (!session) {
-      setLoginMessage("Please log in or create an account to modify templates or request quotes.");
-      setShowLogin(true); // Gated transition: open login panel
-    } else {
-      setInquiryConfig(config); // Authorised transition: open submission form
-    }
+    setInquiryConfig(config);
   };
 
   // Auth Loading State

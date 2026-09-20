@@ -75,4 +75,23 @@ test.describe('Homepage', () => {
     const animationName = await page.locator('.site-star').first().evaluate((star) => getComputedStyle(star).animationName);
     expect(animationName).toBe('none');
   });
+
+  test('project inquiry page stays usable across supported viewport widths', async ({ page }) => {
+    await page.goto('/contact');
+    await expect(page.getByRole('heading', { name: 'Tell us what needs to work better.' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'An engagement shaped around the work.' })).toBeVisible();
+    await expect(page.getByLabel('What do you need? *')).toBeVisible();
+    await expect(page.getByLabel('Estimated budget range')).toBeVisible();
+    await expect(page.getByText('This is an initial estimate, not the final budget.')).toBeVisible();
+    await expect(page.getByLabel('Target start')).toBeVisible();
+
+    for (const width of [320, 768, 1024, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      const dimensions = await page.evaluate(() => ({
+        viewport: window.innerWidth,
+        page: document.documentElement.scrollWidth,
+      }));
+      expect(dimensions.page).toBeLessThanOrEqual(dimensions.viewport + 1);
+    }
+  });
 });

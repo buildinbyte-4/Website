@@ -41,7 +41,7 @@ export default function TermsPage() {
           
           <section className="border-b border-[#E2E8F0] pb-6">
             <p className="font-medium text-base">
-              Welcome to <span className="font-semibold">BuiltInByte</span> (&quot;BuiltInByte&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;). By accessing or using our Software-as-a-Service (SaaS) platform, you agree to be bound by these Terms of Service. If you do not agree, please do not use our services.
+              Welcome to <span className="font-semibold">BuildInByte</span> (&quot;BuildInByte&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;). By using our website, user portal, digital products, or services, you agree to these Terms of Service. Individual client engagements may also be governed by a separate proposal or agreement.
             </p>
           </section>
 
@@ -84,10 +84,10 @@ export default function TermsPage() {
 
           <section>
             <h2 className="font-display font-semibold text-xl text-foreground  mb-3 bg-accent-soft/30 px-3 py-1 border-l-4 border-slate-200 dark:border-white/10 inline-block">
-              4. Subscription and Payments
+              4. Projects and Payments
             </h2>
             <p>
-              Some features may require a paid subscription. By purchasing a subscription, you agree to pay all applicable fees. Prices may change from time to time, and any changes will apply to future billing periods unless otherwise stated.
+              Project scope, fees, milestones, and payment schedules are defined in the applicable proposal, order, or client agreement. By approving an engagement or purchase, you agree to pay the stated fees according to those terms.
             </p>
           </section>
 
@@ -105,7 +105,7 @@ export default function TermsPage() {
               6. Intellectual Property
             </h2>
             <p>
-              All software, source code, trademarks, logos, graphics, documentation, and other content available through BuiltInByte remain the property of BuiltInByte or its licensors. You are granted a limited, non-exclusive, non-transferable, and revocable license to use our services in accordance with these Terms.
+              BuildInByte retains ownership of its trademarks, website content, reusable tools, and pre-existing intellectual property. Ownership and licensing of custom project deliverables are defined in the applicable client agreement.
             </p>
           </section>
 
@@ -144,7 +144,7 @@ export default function TermsPage() {
               10. Limitation of Liability
             </h2>
             <p>
-              To the maximum extent permitted by law, BuiltInByte shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the platform. Our total liability for any claim shall not exceed the amount you paid for the service during the preceding 12 months.
+              To the maximum extent permitted by law, BuildInByte shall not be liable for indirect, incidental, special, consequential, or punitive damages arising from your use of the website, portal, products, or services. Any additional liability terms for client work are defined in the applicable agreement.
             </p>
           </section>
 
@@ -183,8 +183,8 @@ export default function TermsPage() {
               If you have any questions regarding these Terms of Service, please contact us:
             </p>
             <div className="space-y-1 font-semibold text-sm">
-              <p>BuiltInByte</p>
-              <p>Email: <a href="mailto:support@builtinbyte.in" className="text-[#111110] underline">support@builtinbyte.in</a></p>
+              <p>BuildInByte</p>
+              <p>Email: <a href="mailto:support@buildinbyte.in" className="text-[#111110] underline">support@buildinbyte.in</a></p>
             </div>
           </section>
 

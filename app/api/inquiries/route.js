@@ -2,18 +2,25 @@ import { ApiError, jsonError, jsonSuccess } from '@/lib/security/response';
 import { errorLog } from '@/lib/security/logger';
 import { idempotencyKeySchema, inquirySchema, parseJsonBody } from '@/lib/validation/schemas';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { getTrustedClientIp } from '@/lib/security/client-ip';
+import { checkInquiryRateLimit } from '@/lib/security/rate-limiter';
 import { randomUUID } from 'node:crypto';
 
 export async function POST(request) {
   try {
     const payload = await parseJsonBody(request, inquirySchema);
-    const supabase = await createServerSupabaseClient();
-    const { data: authData, error: authError } = await supabase.auth.getClaims();
-    const userId = authData?.claims?.sub;
-
-    if (authError || !userId) {
-      return jsonError('Please sign in before submitting an inquiry.', 401);
+    if (payload.website) {
+      return jsonSuccess({ received: true });
     }
+
+    const clientIp = getTrustedClientIp(request);
+    if (!checkInquiryRateLimit(`inquiry:${clientIp}`)) {
+      return jsonError('Too many inquiries. Please try again later.', 429, null, { 'Retry-After': '3600' });
+    }
+
+    const supabase = await createServerSupabaseClient();
+    const { data: authData } = await supabase.auth.getClaims();
+    const userId = authData?.claims?.sub;
 
     const suppliedKey = request.headers.get('idempotency-key');
     const parsedKey = suppliedKey ? idempotencyKeySchema.safeParse(suppliedKey) : null;
@@ -22,15 +29,19 @@ export async function POST(request) {
     }
     const requestId = parsedKey?.data || randomUUID();
 
-    const message = payload.company
-      ? `Company: ${payload.company}\n\n${payload.scope}`
-      : payload.scope;
+    const context = [
+      payload.company && `Company: ${payload.company}`,
+      payload.engagement && `Engagement: ${payload.engagement}`,
+      payload.budget && `Budget: ${payload.budget}`,
+      payload.timeline && `Target start: ${payload.timeline}`,
+    ].filter(Boolean);
+    const message = [...context, payload.scope].join('\n\n');
 
     const { data, error } = await supabase
       .from('inquiries')
       .insert({
         id: requestId,
-        user_id: userId,
+        user_id: userId || null,
         name: payload.name,
         email: payload.email,
         project_type: payload.projectType,

@@ -7,9 +7,9 @@ import { Menu, X, Sun, Moon } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 const navigation = [
-  ['Solutions', '/#case-studies'],
-  ['Templates', '/templates'],
+  ['Work', '/#case-studies'],
   ['Services', '/#services'],
+  ['Process', '/#process'],
   ['About', '/about'],
 ];
 
@@ -19,11 +19,31 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [hasClientAccess, setHasClientAccess] = useState(false);
   const themeTransitioning = useRef(false);
 
   useEffect(() => {
     setIsDark(document.documentElement.classList.contains('dark'));
   }, []);
+
+  useEffect(() => {
+    let active = true;
+    if (!session?.user?.id || !supabase) {
+      setHasClientAccess(false);
+      return undefined;
+    }
+
+    supabase
+      .from('client_accounts')
+      .select('portal_enabled')
+      .eq('user_id', session.user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (active) setHasClientAccess(Boolean(data?.portal_enabled));
+      });
+
+    return () => { active = false; };
+  }, [session?.user?.id]);
 
   const toggleTheme = () => {
     if (themeTransitioning.current) return;
@@ -79,7 +99,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
               {label}
             </Link>
           ))}
-          {session && <Link href="/desk" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-zinc-300 dark:hover:bg-white/5 dark:hover:text-white">My Desk</Link>}
+          {hasClientAccess && <Link href="/users" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-zinc-300 dark:hover:bg-white/5 dark:hover:text-white">User Portal</Link>}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -110,6 +130,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
           {[...navigation, ['FAQ', '/faq'], ['Contact', '/contact']].map(([label, href]) => (
             <Link key={href} href={href} onClick={(event) => { event.preventDefault(); setMobileOpen(false); router.push(href); }} className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-zinc-100 dark:hover:bg-white/5">{label}</Link>
           ))}
+          {hasClientAccess && <Link href="/users" onClick={() => setMobileOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-zinc-100 dark:hover:bg-white/5">User Portal</Link>}
           <button type="button" onClick={() => { setMobileOpen(false); session ? setShowLogoutConfirm(true) : onOpenLogin?.(); }} className="rounded-lg px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-slate-100 sm:hidden dark:text-zinc-100 dark:hover:bg-white/5">{session ? 'Log out' : 'Log in'}</button>
         </nav>
       )}

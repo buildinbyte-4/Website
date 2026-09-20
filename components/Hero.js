@@ -1,13 +1,12 @@
 'use client';
-import { useState } from 'react';
+import Link from 'next/link';
+import { ArrowUpRight, Check } from 'lucide-react';
 import { useHero } from '@/hooks/useHero';
 
 const TICKER_WORDS = ['SYSTEMS', 'PRODUCTS', 'APIS', 'PLATFORMS'];
 
-export default function Hero({ onOpenDemo, onOpenInquiry }) {
+export default function Hero({ onOpenInquiry }) {
   const { hero } = useHero();
-  const [selectedType, setSelectedType] = useState('Web App');
-  const [timeline, setTimeline] = useState('3-6 weeks');
 
   return (
     <section className="relative overflow-hidden border-b border-slate-200 bg-transparent py-16 dark:border-white/10 lg:py-24">
@@ -76,75 +75,21 @@ export default function Hero({ onOpenDemo, onOpenInquiry }) {
           </div>
 
           <div className="lg:col-span-5 animate-project-card">
-            <div className="project-scoping-card relative overflow-hidden p-6 sm:p-7">
-              
-              {/* Header Section */}
-              <div className="animate-project-header flex flex-col gap-2 mb-6">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-display text-2xl font-semibold tracking-tight text-foreground">
-                    Start Your Project
-                  </h3>
-                  <span className="rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700 dark:bg-brand-950/50 dark:text-brand-300">
-                    Quick estimate
-                  </span>
-                </div>
-                <p className="text-sm text-slate-600 dark:text-zinc-400">
-                  Select your solution type and timeline to launch your custom project.
-                </p>
-              </div>
+            <div className="project-scoping-card relative overflow-hidden p-7 sm:p-9">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-zinc-400">Have a project in mind?</p>
+              <h2 className="mt-5 font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">Start a conversation.</h2>
+              <p className="mt-4 text-base leading-7 text-slate-600 dark:text-zinc-300">Tell us what you are trying to improve, build, or launch. You do not need a complete specification—we will help shape the right first step.</p>
 
-              {/* Step 1: Solution Type Pills */}
-              <div className="mb-6 animate-project-step-1">
-                <span className="mb-3 block text-sm font-medium text-slate-700 dark:text-zinc-300">
-                  Step 1: Select Solution Type
-                </span>
-                <div className="grid grid-cols-2 gap-2">
-                  {['Web App', 'Custom API', 'IoT/Hardware', 'Dashboard'].map((type) => {
-                    const isSelected = selectedType === type;
-                    return (
-                      <button
-                        key={type}
-                        type="button"
-                        onClick={() => setSelectedType(type)}
-                        aria-pressed={isSelected}
-                        className={`flex min-h-10 w-full items-center justify-center rounded-lg border px-3 py-2 text-sm font-medium ${
-                          isSelected ? 'border-brand-600 bg-primary text-primary-foreground shadow-sm' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-white/10 dark:bg-canvas dark:text-zinc-100 dark:hover:bg-slate-800'
-                        }`}
-                      >
-                        {type}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+              <ul className="mt-7 space-y-3 border-t border-slate-200 pt-6 text-sm text-slate-700 dark:border-white/10 dark:text-zinc-300">
+                {['Share your requirements', 'Choose an estimated budget', 'Receive a practical next step'].map((item) => (
+                  <li key={item} className="flex items-center gap-3"><Check size={16} aria-hidden="true" />{item}</li>
+                ))}
+              </ul>
 
-              {/* Step 2: Timeline Dropdown */}
-              <div className="mb-6 animate-project-step-2">
-                <span className="mb-3 block text-sm font-medium text-slate-700 dark:text-zinc-300">
-                  Step 2: Estimated Timeline
-                </span>
-                <select
-                  value={timeline}
-                  onChange={(e) => setTimeline(e.target.value)}
-                  className="w-full border border-slate-200 bg-white p-2.5 text-sm font-medium text-slate-700 shadow-sm dark:border-white/10 dark:bg-canvas dark:text-zinc-100"
-                >
-                  <option value="1-2 weeks">1-2 Weeks (Rapid Prototype)</option>
-                  <option value="3-6 weeks">3-6 Weeks (Standard Deployment)</option>
-                  <option value="6+ weeks">6+ Weeks (Enterprise / Custom Scale)</option>
-                </select>
-              </div>
-
-              {/* Action Button */}
-              <div className="animate-project-button">
-                <button
-                  type="button"
-                  onClick={() => onOpenInquiry({ title: `Scoping: ${selectedType} (${timeline})` })}
-                  className="btn-primary w-full py-3"
-                >
-                  Continue with this scope
-                </button>
-              </div>
-              
+              <Link href="/contact#project-brief" className="btn-primary mt-8 w-full py-3">
+                Start a conversation <ArrowUpRight size={17} aria-hidden="true" />
+              </Link>
+              <p className="mt-4 text-center text-xs text-slate-500 dark:text-zinc-400">We usually respond within 24–48 business hours.</p>
             </div>
           </div>
 

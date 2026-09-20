@@ -41,7 +41,7 @@ export default function PrivacyPage() {
           
           <section className="border-b border-[#E2E8F0] pb-6">
             <p className="font-medium text-base">
-              At <span className="font-semibold">BuiltInByte</span> (&quot;BuiltInByte&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;), protecting your privacy is a top priority. This Privacy Policy outlines how we handle, process, and secure user data when you interact with our platform and Software-as-a-Service (SaaS) products.
+              At <span className="font-semibold">BuildInByte</span> (&quot;BuildInByte&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;), protecting your privacy is a priority. This Privacy Policy explains how we handle personal data when you use our website, submit a project inquiry, access the user portal, or work with us.
             </p>
           </section>
 
@@ -50,7 +50,7 @@ export default function PrivacyPage() {
               1. Data Processing and Use
             </h2>
             <p>
-              When you submit or upload data to BuiltInByte, you retain full ownership of your content. By using our service, you grant BuiltInByte a limited, non-exclusive license to store, process, and display that content solely for the purpose of providing, maintaining, and improving our SaaS platform and user experience.
+              When you submit or upload data to BuildInByte, you retain ownership of your content. You permit BuildInByte to store, process, and display that content only as needed to respond to inquiries, provide contracted services, operate the user portal, and improve the experience.
             </p>
           </section>
 
@@ -68,7 +68,7 @@ export default function PrivacyPage() {
               3. Payment Data
             </h2>
             <p>
-              For services that require paid subscriptions, transactions and payment processing details are handled securely in accordance with applicable billing standards and security regulations.
+              For paid projects, products, or support engagements, transaction and payment details are handled in accordance with applicable billing and security requirements. Payment providers may process payment information on our behalf.
             </p>
           </section>
 
@@ -107,8 +107,8 @@ export default function PrivacyPage() {
               If you have questions, concerns, or requests regarding this Privacy Policy or how your data is handled, please reach out to us:
             </p>
             <div className="space-y-1 font-semibold text-sm">
-              <p>BuiltInByte</p>
-              <p>Email: <a href="mailto:support@builtinbyte.in" className="text-[#111110] underline">support@builtinbyte.in</a></p>
+              <p>BuildInByte</p>
+              <p>Email: <a href="mailto:support@buildinbyte.in" className="text-[#111110] underline">support@buildinbyte.in</a></p>
             </div>
           </section>
 

@@ -39,7 +39,7 @@ export default function CustomServices({ onOpenInquiry }) {
           ))}
         </div>
 
-        <div className="my-20 rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-white/10 dark:bg-white/[0.03] sm:p-8">
+        <div id="process" className="my-20 scroll-mt-24 rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-white/10 dark:bg-white/[0.03] sm:p-8">
           <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
             <div><p className="text-sm font-semibold text-brand-600 dark:text-brand-400">Our process</p><h3 className="mt-1 font-display text-2xl font-semibold text-slate-950 dark:text-foreground">A clear path from idea to launch</h3></div>
             <p className="text-sm text-slate-500 dark:text-zinc-400">You always know what happens next.</p>

@@ -7,83 +7,66 @@ import { useFAQ } from '@/hooks/useFAQ';
 
 const FAQ_DATA = [
   {
-    category: "1. General Questions",
+    category: "1. Working with BuildInByte",
     items: [
       {
-        q: "What is BuiltInByte?",
-        a: "BuiltInByte is a Software-as-a-Service (SaaS) platform providing reliable, scalable, and intuitive digital tools and applications designed for developers, creators, and businesses."
+        q: "What does BuildInByte build?",
+        a: "We design and deliver custom software, web applications, websites, APIs, automation, AI-enabled workflows, and connected hardware solutions."
       },
       {
-        q: "Do I need to download or install any software?",
-        a: "No. BuiltInByte is fully cloud-based. You can access all features directly through your web browser without downloading or installing additional software."
+        q: "Who do you usually work with?",
+        a: "We work with startups, growing businesses, and operational teams that need a reliable technical partner for a defined build or an evolving product roadmap."
       },
       {
-        q: "Who can use BuiltInByte?",
-        a: "Anyone who is at least 18 years old (or has permission from a parent or legal guardian) can create an account and start using our services."
+        q: "Can you work with an early-stage idea?",
+        a: "Yes. A discovery sprint can turn an early idea into prioritized requirements, a technical direction, and a delivery roadmap before development begins."
       }
     ]
   },
   {
-    category: "2. Account & Security",
+    category: "2. Scope and delivery",
     items: [
       {
-        q: "How do I create an account?",
-        a: "You can sign up directly on our website by clicking the Sign Up or Get Started button and providing a valid email address and password."
+        q: "How does a project begin?",
+        a: "Start by sending a project brief. We review the business outcome, users, constraints, timing, and budget before recommending discovery or a delivery approach."
       },
       {
-        q: "What should I do if I forget my password?",
-        a: "Click on the Forgot Password? link on the login page. We will send a password reset link to the email address associated with your account."
+        q: "How will I follow progress?",
+        a: "Active clients receive access to the BuildInByte user portal for milestones, project updates, billing information, and support. Regular reviews keep decisions and progress visible."
       },
       {
-        q: "How is my data secured?",
-        a: "We take security seriously. We implement industry-standard encryption protocols and administrative controls to keep your account details, usage data, and content safe from unauthorized access."
+        q: "Can you improve an existing product?",
+        a: "Yes. We can assess an existing codebase or workflow, identify the highest-value improvements, and deliver them through a focused project or ongoing engagement."
       }
     ]
   },
   {
-    category: "3. Plans, Pricing & Billing",
+    category: "3. Engagements and commercial terms",
     items: [
       {
-        q: "Is BuiltInByte free to use?",
-        a: "We offer both free options/trials and paid subscription plans, depending on the tools and resources you need. Check our Pricing page for full details on plan tiers."
+        q: "How can we engage BuildInByte?",
+        a: "We offer discovery sprints, fixed-scope builds, dedicated monthly delivery, and post-launch care. We recommend the model that best fits the amount of uncertainty and the pace of work."
       },
       {
-        q: "What payment methods do you accept?",
-        a: "We accept major credit/debit cards and supported digital payment gateways available during checkout."
+        q: "How much does a project cost?",
+        a: "Cost depends on scope, complexity, timeline, and engagement model. Share an indicative budget in the project brief and we will discuss what can be delivered responsibly within it."
       },
       {
-        q: "Can I upgrade, downgrade, or cancel my subscription?",
-        a: "Yes. You can manage or cancel your subscription at any time directly through your account settings. Changes will apply to your next billing cycle."
-      },
-      {
-        q: "What is your refund policy?",
-        a: "Refund requests are handled in accordance with our Terms of Service and applicable consumer protection laws. If you encounter a billing issue, please contact support."
+        q: "Do you provide a proposal before work starts?",
+        a: "Yes. Once the scope is understood, we document the intended outcome, responsibilities, milestones, commercial terms, and assumptions before delivery begins."
       }
     ]
   },
   {
-    category: "4. Privacy & Usage",
+    category: "4. After launch",
     items: [
       {
-        q: "Who owns the content or data I upload?",
-        a: "You retain full ownership of all content and data you upload to BuiltInByte. We only process and display your content to deliver and improve our services to you."
+        q: "Do you support products after launch?",
+        a: "Yes. Care and growth engagements can cover maintenance, monitoring, security updates, performance improvements, and planned product iterations."
       },
       {
-        q: "Will my information be shared with third parties?",
-        a: "No. We do not sell your personal data. We only process information as strictly necessary to operate our services, as outlined in our Privacy Policy."
-      }
-    ]
-  },
-  {
-    category: "5. Support & Troubleshooting",
-    items: [
-      {
-        q: "What if I encounter a bug or technical issue?",
-        a: "If you run into any issues, please check our status updates or reach out to our team at support@builtinbyte.in with a detailed description of the problem."
-      },
-      {
-        q: "How quickly does support respond?",
-        a: "Our support team strives to respond to all inquiries within 24–48 business hours."
+        q: "How quickly will you respond?",
+        a: "We aim to respond to qualified project and support inquiries within 24–48 business hours."
       }
     ]
   }
@@ -125,7 +108,7 @@ export default function FAQPage() {
               Frequently Asked Questions
             </h1>
             <p className="text-sm font-medium text-slate-500 dark:text-zinc-400 ">
-              Everything you need to know about BuiltInByte.
+              What to expect when working with BuildInByte.
             </p>
           </div>
           <div className="shrink-0 border border-slate-200 dark:border-white/10 bg-white dark:bg-bg-surface-dark p-3 shadow-card-sm self-start sm:self-center">
@@ -187,8 +170,8 @@ export default function FAQPage() {
             </h3>
             <p className="text-xs sm:text-sm font-medium text-foreground">
               Reach out to our support team directly at{' '}
-              <a href="mailto:support@builtinbyte.in" className="text-[#111110] underline font-semibold">
-                support@builtinbyte.in
+              <a href="mailto:support@buildinbyte.in" className="text-[#111110] underline font-semibold">
+                support@buildinbyte.in
               </a>
             </p>
           </div>
