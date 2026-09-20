@@ -133,19 +133,20 @@ export default function ProfileModal({ user, onClose }) {
   }) : 'N/A';
 
   return (
-    <div className="fixed inset-0 w-screen h-screen flex items-center justify-center bg-[rgba(0,0,0,0.6)] z-50 overflow-y-auto p-4">
-      <div className="max-w-md w-full bg-white border border-slate-200 p-8 shadow-xl space-y-6 my-auto relative text-center">
+    <div className="fixed inset-0 z-50 flex h-screen w-screen items-center justify-center overflow-y-auto bg-black/65 p-4 backdrop-blur-sm">
+      <div role="dialog" aria-modal="true" aria-labelledby="profile-dialog-title" className="relative my-auto w-full max-w-md space-y-6 border border-border-subtle bg-bg-surface-dark p-8 text-center text-foreground shadow-xl">
         
         {/* Close Button */}
         <button
           onClick={onClose}
           disabled={loading}
-          className="absolute top-4 right-4 w-8 h-8 bg-white border border-slate-200 text-slate-900 font-semibold flex items-center justify-center hover:bg-slate-100 hover:text-slate-950 transition-all cursor-pointer"
+          aria-label="Close profile"
+          className="absolute right-4 top-4 flex h-8 w-8 cursor-pointer items-center justify-center border border-border-subtle bg-bg-surface-dark font-semibold text-foreground transition-all hover:bg-accent-soft disabled:cursor-not-allowed disabled:opacity-50"
         >
           ✕
         </button>
 
-        <h3 className="font-display font-semibold text-2xl text-slate-900">
+        <h3 id="profile-dialog-title" className="font-display text-2xl font-semibold text-foreground">
           {isEditing ? 'Edit Profile' : 'Your Profile'}
         </h3>
 
@@ -156,7 +157,7 @@ export default function ProfileModal({ user, onClose }) {
         )}
 
         {successMsg && (
-          <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs font-semibold text-emerald-800 text-left">
+          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-left text-xs font-semibold text-emerald-800 dark:text-emerald-300">
             ✓ {successMsg}
           </div>
         )}
@@ -181,61 +182,61 @@ export default function ProfileModal({ user, onClose }) {
               )}
 
               <div>
-                <h4 className="font-semibold text-lg text-slate-900">
+                <h4 className="text-lg font-semibold text-foreground">
                   {fullName}
                 </h4>
-                <span className="text-xs font-semibold  tracking-wider border border-[#111110] px-2.5 py-1 rounded-full text-[#111110] inline-block mt-1">
+                <span className="mt-1 inline-block rounded-full border border-border-subtle px-2.5 py-1 text-xs font-semibold tracking-wider text-foreground">
                   Signed in via {provider === 'google' ? 'Google' : 'Credentials'}
                 </span>
               </div>
             </div>
 
             {/* Profile Grid Fields */}
-            <div className="bg-slate-50 border border-slate-200 p-5 text-left text-xs space-y-3.5">
-              <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
-                <span className="font-semibold text-slate-900  tracking-wider text-xs">Email Address</span>
-                <span className="font-semibold text-[#18181B]">{email}</span>
+            <div className="space-y-3.5 border border-border-subtle bg-canvas/60 p-5 text-left text-xs">
+              <div className="flex items-center justify-between gap-4 border-b border-border-subtle pb-2.5">
+                <span className="text-xs font-semibold tracking-wider text-foreground">Email Address</span>
+                <span className="break-all text-right font-semibold text-foreground">{email}</span>
               </div>
-              <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
-                <span className="font-semibold text-slate-900  tracking-wider text-xs">Phone Number</span>
+              <div className="flex items-center justify-between gap-4 border-b border-border-subtle pb-2.5">
+                <span className="text-xs font-semibold tracking-wider text-foreground">Phone Number</span>
                 <span 
                   onClick={() => setIsEditing(true)}
-                  className={`font-semibold transition-all ${phone ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#111110] hover:underline cursor-pointer'}`}
+                  className={`text-right font-semibold transition-all ${phone ? 'text-foreground' : 'cursor-pointer italic text-text-secondary hover:text-foreground hover:underline'}`}
                 >
                   {phone || 'Not provided [Add details]'}
                 </span>
               </div>
-              <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
-                <span className="font-semibold text-slate-900  tracking-wider text-xs">Occupation</span>
+              <div className="flex items-center justify-between gap-4 border-b border-border-subtle pb-2.5">
+                <span className="text-xs font-semibold tracking-wider text-foreground">Occupation</span>
                 <span 
                   onClick={() => setIsEditing(true)}
-                  className={`font-semibold transition-all ${occupation ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#111110] hover:underline cursor-pointer'}`}
+                  className={`text-right font-semibold transition-all ${occupation ? 'text-foreground' : 'cursor-pointer italic text-text-secondary hover:text-foreground hover:underline'}`}
                 >
                   {occupation || 'Not provided [Add details]'}
                 </span>
               </div>
-              <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
-                <span className="font-semibold text-slate-900  tracking-wider text-xs">Location</span>
+              <div className="flex items-center justify-between gap-4 border-b border-border-subtle pb-2.5">
+                <span className="text-xs font-semibold tracking-wider text-foreground">Location</span>
                 <span 
                   onClick={() => setIsEditing(true)}
-                  className={`font-semibold transition-all ${location ? 'text-[#18181B]' : 'text-zinc-500 italic hover:text-[#111110] hover:underline cursor-pointer'}`}
+                  className={`text-right font-semibold transition-all ${location ? 'text-foreground' : 'cursor-pointer italic text-text-secondary hover:text-foreground hover:underline'}`}
                 >
                   {location || 'Not provided [Add details]'}
                 </span>
               </div>
-              <div className="flex justify-between items-center border-b border-[#E4E4E7] pb-2.5">
-                <span className="font-semibold text-slate-900  tracking-wider text-xs">Theme Mode</span>
+              <div className="flex items-center justify-between gap-4 border-b border-border-subtle pb-2.5">
+                <span className="text-xs font-semibold tracking-wider text-foreground">Theme Mode</span>
                 <button
                   type="button"
                   onClick={toggleDarkMode}
-                  className="px-3 py-1 border border-slate-200 bg-white text-slate-900 font-semibold  tracking-wider text-xs flex items-center gap-1.5 hover:bg-zinc-100 transition-all cursor-pointer shadow-card-sm  "
+                  className="flex cursor-pointer items-center gap-1.5 border border-border-subtle bg-bg-surface-dark px-3 py-1 text-xs font-semibold tracking-wider text-foreground shadow-card-sm transition-all hover:bg-accent-soft"
                 >
                   <span>{darkMode ? '☀️ LIGHT MODE' : '🌙 DARK MODE'}</span>
                 </button>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="font-semibold text-slate-900  tracking-wider text-xs">Member Since</span>
-                <span className="font-semibold text-[#18181B]">{joinedDate}</span>
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-xs font-semibold tracking-wider text-foreground">Member Since</span>
+                <span className="text-right font-semibold text-foreground">{joinedDate}</span>
               </div>
             </div>
 
@@ -260,30 +261,30 @@ export default function ProfileModal({ user, onClose }) {
             
             {/* Name Input */}
             <div>
-              <label className="block font-semibold text-slate-900 mb-1">Full Name</label>
+              <label className="mb-1 block font-semibold text-foreground">Full Name</label>
               <input
                 required
                 type="text"
                 value={fullName}
                 onChange={e => setFullName(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#111110]"
+                className="w-full border border-border-subtle bg-canvas px-3.5 py-2.5 text-xs text-foreground placeholder:text-text-secondary focus:border-foreground focus:outline-none"
               />
             </div>
 
             {/* Avatar URL Input */}
             <div>
-              <label className="block font-semibold text-slate-900 mb-1">Profile Picture URL</label>
+              <label className="mb-1 block font-semibold text-foreground">Profile Picture URL</label>
               <input
                 type="url"
                 placeholder="https://example.com/avatar.jpg"
                 value={avatarUrl}
                 onChange={e => setAvatarUrl(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#111110]"
+                className="w-full border border-border-subtle bg-canvas px-3.5 py-2.5 text-xs text-foreground placeholder:text-text-secondary focus:border-foreground focus:outline-none"
               />
 
               {/* Preset Avatar Selector */}
               <div className="mt-2.5">
-                <span className="block text-xs font-semibold text-zinc-500  tracking-wide mb-1.5">
+                <span className="mb-1.5 block text-xs font-semibold tracking-wide text-text-secondary">
                   Or pick a dynamic robot avatar:
                 </span>
                 <div className="flex gap-3 justify-start">
@@ -293,10 +294,10 @@ export default function ProfileModal({ user, onClose }) {
                       type="button"
                       onClick={() => setAvatarUrl(preset.url)}
                       className={`w-9 h-9 border transition-all overflow-hidden ${
-                        avatarUrl === preset.url ? 'border-[#111110] scale-110 shadow-sm' : 'border-slate-200 hover:border-[#111110]'
+                        avatarUrl === preset.url ? 'scale-110 border-foreground shadow-sm' : 'border-border-subtle hover:border-foreground'
                       }`}
                     >
-                      <img src={preset.url} alt={preset.name} className="w-full h-full object-cover bg-white" />
+                      <img src={preset.url} alt={preset.name} className="h-full w-full bg-bg-surface-dark object-cover" />
                     </button>
                   ))}
                 </div>
@@ -305,37 +306,37 @@ export default function ProfileModal({ user, onClose }) {
 
             {/* Phone Number Input */}
             <div>
-              <label className="block font-semibold text-slate-900 mb-1">Phone Number</label>
+              <label className="mb-1 block font-semibold text-foreground">Phone Number</label>
               <input
                 type="tel"
                 placeholder="+91 98765 43210"
                 value={phone}
                 onChange={e => setPhone(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#111110]"
+                className="w-full border border-border-subtle bg-canvas px-3.5 py-2.5 text-xs text-foreground placeholder:text-text-secondary focus:border-foreground focus:outline-none"
               />
             </div>
 
             {/* Occupation Input */}
             <div>
-              <label className="block font-semibold text-slate-900 mb-1">Occupation</label>
+              <label className="mb-1 block font-semibold text-foreground">Occupation</label>
               <input
                 type="text"
                 placeholder="e.g. Tech Lead / UI Architect"
                 value={occupation}
                 onChange={e => setOccupation(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#111110]"
+                className="w-full border border-border-subtle bg-canvas px-3.5 py-2.5 text-xs text-foreground placeholder:text-text-secondary focus:border-foreground focus:outline-none"
               />
             </div>
 
             {/* Location Input */}
             <div>
-              <label className="block font-semibold text-slate-900 mb-1">Location (City, Country)</label>
+              <label className="mb-1 block font-semibold text-foreground">Location (City, Country)</label>
               <input
                 type="text"
                 placeholder="e.g. Mumbai, India"
                 value={location}
                 onChange={e => setLocation(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-[#71717A] focus:outline-none focus:border-[#111110]"
+                className="w-full border border-border-subtle bg-canvas px-3.5 py-2.5 text-xs text-foreground placeholder:text-text-secondary focus:border-foreground focus:outline-none"
               />
             </div>
 
