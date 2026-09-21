@@ -21,6 +21,16 @@ export async function POST(request) {
     const supabase = await createServerSupabaseClient();
     const { data: authData } = await supabase.auth.getClaims();
     const userId = authData?.claims?.sub;
+    const verifiedEmail = authData?.claims?.email?.toLowerCase();
+    const submittedEmail = payload.email.toLowerCase();
+    const isQuickContact = payload.projectType === 'Quick contact message';
+
+    if (
+      isQuickContact
+      && (!userId || !verifiedEmail || verifiedEmail !== submittedEmail || !submittedEmail.endsWith('@gmail.com'))
+    ) {
+      return jsonError('Verify this Gmail address before sending a quick message.', 401);
+    }
 
     const suppliedKey = request.headers.get('idempotency-key');
     const parsedKey = suppliedKey ? idempotencyKeySchema.safeParse(suppliedKey) : null;

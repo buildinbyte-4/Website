@@ -87,6 +87,21 @@ test.describe('API Endpoints', () => {
     expect(json.success).toBe(false);
   });
 
+  test('POST /api/inquiries requires a verified Gmail session for quick messages', async ({ request }) => {
+    const response = await request.post(`${BASE_URL}/api/inquiries`, {
+      data: {
+        name: 'Quick contact',
+        email: 'visitor@gmail.com',
+        company: '',
+        projectType: 'Quick contact message',
+        scope: 'I would like to discuss a new website project.',
+      },
+    });
+    expect(response.status()).toBe(401);
+    const json = await response.json();
+    expect(json.error).toMatch(/Verify this Gmail address/);
+  });
+
   test('GET /api/admin/logout redirects to homepage', async ({ request }) => {
     const response = await request.get(`${BASE_URL}/api/admin/logout`, {
       maxRedirects: 0,

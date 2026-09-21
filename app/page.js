@@ -91,7 +91,10 @@ export default function HomePage() {
     handleInitialAuth();
 
     const redirectSignedInClient = async (session) => {
-      const nextPath = new URLSearchParams(window.location.search).get('next');
+      const searchParams = new URLSearchParams(window.location.search);
+      if (searchParams.get('quick_contact') === 'verified') return;
+
+      const nextPath = searchParams.get('next');
       if (nextPath?.startsWith('/') && !nextPath.startsWith('//')) {
         window.location.assign(nextPath);
         return;
@@ -150,7 +153,6 @@ export default function HomePage() {
           session={session} 
           onOpenLogin={() => setShowLogin(true)} 
           onOpenProfile={() => setShowProfile(true)}
-          onOpenInquiry={handleInquiryRequest} 
         />
 
         {/* Hero Section */}
@@ -220,7 +222,7 @@ export default function HomePage() {
 
 
         {/* Floating Contact Button */}
-        <FloatingContactButton onClick={handleInquiryRequest} />
+        <FloatingContactButton />
         </div>
 
       </div>

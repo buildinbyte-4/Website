@@ -32,6 +32,19 @@ test.describe('Homepage', () => {
     await expect(template.locator('body')).toBeVisible();
   });
 
+  test('routes the navbar CTA to contact and opens the compact quick-message dialog', async ({ page }) => {
+    await page.goto('/');
+
+    await expect(page.getByRole('link', { name: 'Talk to us' })).toHaveAttribute('href', '/contact#project-brief');
+    await page.getByRole('button', { name: 'Open quick contact form' }).click();
+
+    const dialog = page.getByRole('dialog', { name: 'What can we help with?' });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByLabel('Gmail address')).toBeVisible();
+    await expect(dialog.getByLabel('Your message')).toBeVisible();
+    await expect(dialog.locator('input, textarea')).toHaveCount(2);
+  });
+
   test('should group every live project once and recover from a broken preview', async ({ page }) => {
     await page.route('**/*', async (route) => {
       const decodedUrl = decodeURIComponent(route.request().url());

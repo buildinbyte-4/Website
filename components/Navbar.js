@@ -13,7 +13,7 @@ const navigation = [
   ['About', '/about'],
 ];
 
-export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInquiry }) {
+export default function Navbar({ session, onOpenLogin, onOpenProfile }) {
   const router = useRouter();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -109,11 +109,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile, onOpenInqu
           <button type="button" onClick={session ? () => setShowLogoutConfirm(true) : onOpenLogin} className="hidden min-h-10 rounded-lg border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 sm:inline-flex sm:items-center dark:border-white/10 dark:bg-bg-surface-dark dark:text-zinc-100 dark:hover:bg-slate-800">
             {session ? 'Log out' : 'Log in'}
           </button>
-          {onOpenInquiry ? (
-            <button type="button" onClick={() => onOpenInquiry({ title: 'Book a consultation' })} className="inline-flex min-h-10 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-brand-400">Talk to us</button>
-          ) : (
-            <Link href="/contact" className="inline-flex min-h-10 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-brand-400">Talk to us</Link>
-          )}
+          <Link href="/contact#project-brief" className="inline-flex min-h-10 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-brand-400">Talk to us</Link>
           {session && (
             <button type="button" onClick={onOpenProfile} aria-label="Open profile" className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-100 text-sm font-semibold text-slate-700 hover:ring-2 hover:ring-brand-200 dark:border-white/10 dark:bg-zinc-800 dark:text-foreground">
               {avatarUrl ? <img src={avatarUrl} alt="" referrerPolicy="no-referrer" className="h-full w-full object-cover" /> : identity.charAt(0).toUpperCase()}
