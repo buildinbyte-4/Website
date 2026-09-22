@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { supabase } from '@/lib/supabase';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
-import MetricsBanner from '@/components/MetricsBanner';
+import DigitalProducts from '@/components/DigitalProducts';
 import ProjectStore from '@/components/ProjectStore';
 import CustomServices from '@/components/CustomServices';
 import Footer from '@/components/Footer';
@@ -161,8 +161,8 @@ export default function HomePage() {
           onOpenInquiry={handleInquiryRequest}
         />
 
-        {/* Social Proof Live Metrics Banner */}
-        <MetricsBanner />
+        {/* BuildInByte-owned digital product catalog */}
+        <DigitalProducts />
 
         {/* Software Inventory Grid */}
         <ProjectStore

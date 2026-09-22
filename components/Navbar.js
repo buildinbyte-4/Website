@@ -7,6 +7,7 @@ import { Menu, X, Sun, Moon } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 const navigation = [
+  ['Products', '/#digital-products'],
   ['Work', '/#case-studies'],
   ['Services', '/#services'],
   ['Process', '/#process'],

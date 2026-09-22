@@ -5,9 +5,21 @@ test.describe('Homepage', () => {
     await page.goto('/');
     await expect(page).toHaveURL('/');
     await expect(page.locator('body')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'The BuildInByte digital shelf.' })).toBeVisible();
+    await expect(page.getByText('Catalog opening soon')).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Custom systems & website templates' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Custom Systems', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Website Templates', exact: true })).toBeVisible();
+  });
+
+  test('digital products section is catalog-ready without placeholder statistics', async ({ page }) => {
+    await page.goto('/');
+
+    const products = page.locator('#digital-products');
+    await expect(products).toContainText('Original digital products designed, built, and released by our team.');
+    await expect(products).toContainText('Catalog opening soon');
+    await expect(page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: 'Products', exact: true })).toHaveAttribute('href', '/#digital-products');
+    await expect(page.getByText('Success Rate', { exact: true })).toHaveCount(0);
   });
 
   test('should have no network errors', async ({ page }) => {
