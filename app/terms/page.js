@@ -87,7 +87,7 @@ export default function TermsPage() {
               4. Projects and Payments
             </h2>
             <p>
-              Project scope, fees, milestones, and payment schedules are defined in the applicable proposal, order, or client agreement. By approving an engagement or purchase, you agree to pay the stated fees according to those terms.
+              Project scope, fees, milestones, and payment schedules are defined in the applicable proposal, order, or client agreement. Digital source-code purchases are licensed, not sold outright, under the licence included in the downloaded archive. That product licence controls permitted production use, modification, contractor access, and restrictions on redistribution or resale. By approving an engagement or purchase, you agree to pay the stated fees and comply with the applicable licence.
             </p>
           </section>
 
@@ -96,7 +96,7 @@ export default function TermsPage() {
               5. Refunds
             </h2>
             <p>
-              Refunds, if applicable, are subject to our cancellation and refund policies or applicable consumer protection laws.
+              Because source code is a downloadable digital product, refund eligibility may be limited after delivery or access has been provided. We will review duplicate charges, corrupted or inaccessible files, and material product-description errors. Nothing in this section limits rights that cannot be excluded under applicable consumer protection law.
             </p>
           </section>
 

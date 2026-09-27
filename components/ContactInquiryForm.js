@@ -1,17 +1,42 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 
-const initialForm = { name: '', email: '', company: '', service: '', engagement: '', budget: '', timeline: '', scope: '', website: '' };
+const CUSTOM_BUDGET = 'custom';
+const initialForm = { name: '', email: '', company: '', service: '', engagement: '', budget: '', customBudgetMin: '', customBudgetMax: '', timeline: '', scope: '', website: '' };
 const fieldClass = 'mt-2 min-h-12 w-full border border-border-subtle bg-canvas px-3.5 py-3 text-sm text-foreground placeholder:text-text-secondary focus:bg-bg-surface-dark';
+
+const budgetRanges = {
+  INR: ['₹10,000–₹25,000', '₹25,000–₹50,000', '₹50,000–₹1 lakh', '₹1–₹3 lakh', '₹3–₹8 lakh', '₹8 lakh+'],
+  USD: ['$150–$300', '$300–$600', '$600–$1,200', '$1,200–$3,500', '$3,500–$10,000', '$10,000+'],
+};
+
+function getVisitorCurrency() {
+  const locale = Intl.DateTimeFormat().resolvedOptions().locale;
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const locales = [locale, ...(navigator.languages || [])];
+  const isIndia = locales.some((value) => /(?:^|-)IN(?:-|$)/i.test(value)) || ['Asia/Kolkata', 'Asia/Calcutta'].includes(timeZone);
+  return isIndia ? 'INR' : 'USD';
+}
+
+function getBudgetValue(form, currency) {
+  if (form.budget !== CUSTOM_BUDGET) return form.budget;
+  const formatter = new Intl.NumberFormat(currency === 'INR' ? 'en-IN' : 'en-US', { maximumFractionDigits: 0 });
+  return `${currency} ${formatter.format(Number(form.customBudgetMin))}–${formatter.format(Number(form.customBudgetMax))} (custom range)`;
+}
 
 export default function ContactInquiryForm() {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
+  const [currency, setCurrency] = useState(null);
   const requestKey = useRef(null);
+
+  useEffect(() => {
+    setCurrency(getVisitorCurrency());
+  }, []);
 
   const update = (field, value) => {
     requestKey.current = null;
@@ -30,7 +55,7 @@ export default function ContactInquiryForm() {
         body: JSON.stringify({
           name: form.name, email: form.email, company: form.company,
           projectType: form.service || 'General project inquiry',
-          engagement: form.engagement, budget: form.budget, timeline: form.timeline,
+          engagement: form.engagement, budget: getBudgetValue(form, currency), timeline: form.timeline,
           scope: form.scope, website: form.website,
         }),
       });
@@ -82,19 +107,32 @@ export default function ContactInquiryForm() {
             <option>Dedicated delivery</option><option>Care and growth</option>
           </select>
         </label>
-        <label className="text-sm font-medium">Estimated budget range
-          <select id="budget" className={fieldClass} name="budget" required aria-describedby="budget-note" value={form.budget} onChange={(e) => update('budget', e.target.value)}>
-            <option value="">Select a range</option><option>₹10,000–₹25,000</option><option>₹25,000–₹50,000</option>
-            <option>₹50,000–₹1 lakh</option><option>₹1–₹3 lakh</option><option>₹3–₹8 lakh</option><option>₹8 lakh+</option>
+        <div className="text-sm font-medium">
+          <label htmlFor="budget">Estimated budget range</label>
+          <select id="budget" className={fieldClass} name="budget" required disabled={!currency} aria-describedby="budget-note" value={form.budget} onChange={(e) => update('budget', e.target.value)}>
+            <option value="">{currency ? `Select a range (${currency})` : 'Detecting your currency…'}</option>
+            {currency && budgetRanges[currency].map((range) => <option key={range} value={range}>{range}</option>)}
+            {currency && <option value={CUSTOM_BUDGET}>Custom range</option>}
           </select>
           <span id="budget-note" className="mt-2 block text-xs font-normal leading-5 text-text-secondary">This is an initial estimate, not the final budget. Final pricing is agreed after you and the BuildInByte team discuss the requirements.</span>
-        </label>
+        </div>
         <label className="text-sm font-medium">Target start
           <select className={fieldClass} name="timeline" value={form.timeline} onChange={(e) => update('timeline', e.target.value)}>
             <option value="">Flexible</option><option>As soon as possible</option><option>Within 1 month</option>
             <option>Within 1–3 months</option><option>More than 3 months away</option>
           </select>
         </label>
+        {form.budget === CUSTOM_BUDGET && (
+          <fieldset className="grid gap-4 border border-border-subtle bg-canvas p-4 sm:col-span-2 sm:grid-cols-2">
+            <legend className="px-2 text-sm font-medium">Custom budget range ({currency})</legend>
+            <label className="text-sm font-medium">Minimum ({currency === 'INR' ? '₹' : '$'})
+              <input className={fieldClass} name="customBudgetMin" type="number" inputMode="numeric" min="1" step="1" required value={form.customBudgetMin} onChange={(e) => update('customBudgetMin', e.target.value)} />
+            </label>
+            <label className="text-sm font-medium">Maximum ({currency === 'INR' ? '₹' : '$'})
+              <input className={fieldClass} name="customBudgetMax" type="number" inputMode="numeric" min={form.customBudgetMin || '1'} step="1" required value={form.customBudgetMax} onChange={(e) => update('customBudgetMax', e.target.value)} />
+            </label>
+          </fieldset>
+        )}
         <label className="text-sm font-medium sm:col-span-2">What are you trying to achieve? <span aria-hidden="true">*</span>
           <textarea className={`${fieldClass} min-h-36 resize-y`} name="scope" required minLength={20} maxLength={5000} placeholder="The problem, who it affects, what exists today, and what a successful result would look like." value={form.scope} onChange={(e) => update('scope', e.target.value)} />
         </label>

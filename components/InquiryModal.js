@@ -86,8 +86,8 @@ export default function InquiryModal({ config, onClose }) {
               {config.title || 'Initiate Client Inquiry'}
             </h2>
 
-            <p className="text-xs text-black dark:text-zinc-400 font-semibold  leading-tight mb-6">
-              Connect directly with our delivery team. We respond within 24 hours with a tailored path forward.
+            <p className="text-xs text-black dark:text-zinc-400 font-semibold leading-relaxed mb-6">
+              Share a few details so our delivery team can understand what you need and recommend a practical next step.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4 text-xs font-semibold ">
@@ -179,7 +179,7 @@ export default function InquiryModal({ config, onClose }) {
               Inquiry Received
             </h3>
             <p className="text-xs text-black dark:text-zinc-400 font-semibold  max-w-sm mx-auto leading-relaxed">
-              Thank you, <span className="font-semibold text-slate-900 dark:text-foreground">{formData.name}</span>. Our team has received your request and will follow up at <span className="font-semibold text-brand-600 dark:text-brand-400">{formData.email}</span> within 24 hours.
+              Thank you, <span className="font-semibold text-slate-900 dark:text-foreground">{formData.name}</span>. Our team has received your request and will follow up at <span className="font-semibold text-brand-600 dark:text-brand-400">{formData.email}</span> within 24–48 business hours.
             </p>
             <button onClick={onClose} className="btn-primary-invert text-xs py-2 px-6 cursor-pointer">
               Close Window

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import { useSettings } from '@/hooks/useSettings';
 
 const groups = [
@@ -11,22 +12,26 @@ const groups = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
   const { settings } = useSettings();
   const companyName = settings?.company_name || 'BuildInByte';
   const description = settings?.address || 'Production-grade software engineering for ambitious companies.';
+  const showProjectCta = pathname !== '/contact';
 
   return (
     <footer className="mt-auto border-t border-slate-200 bg-white dark:border-white/10 dark:bg-transparent">
       <div className="mx-auto max-w-7xl px-6 py-16">
-        <div className="mb-14 flex flex-col justify-between gap-6 rounded-2xl border border-brand-200 bg-brand-50 p-7 sm:flex-row sm:items-center dark:border-brand-400/20 dark:bg-brand-950/30">
-          <div>
-            <p className="text-sm font-semibold text-brand-700 dark:text-brand-300">Have a project in mind?</p>
-            <h2 className="mt-1 font-display text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl dark:text-foreground">Let’s build something useful.</h2>
+        {showProjectCta && (
+          <div className="mb-14 flex flex-col justify-between gap-6 rounded-2xl border border-brand-200 bg-brand-50 p-7 sm:flex-row sm:items-center dark:border-brand-400/20 dark:bg-brand-950/30">
+            <div>
+              <p className="text-sm font-semibold text-brand-700 dark:text-brand-300">Have a project in mind?</p>
+              <h2 className="mt-1 font-display text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl dark:text-foreground">Let’s build something useful.</h2>
+            </div>
+            <Link href="/contact#project-brief" className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-brand-400">
+              Start a conversation <ArrowUpRight size={17} />
+            </Link>
           </div>
-          <Link href="/contact" className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-brand-400">
-            Start a conversation <ArrowUpRight size={17} />
-          </Link>
-        </div>
+        )}
 
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           <div className="sm:col-span-2">

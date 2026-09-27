@@ -89,7 +89,6 @@ export default function Hero({ onOpenInquiry }) {
               <Link href="/contact#project-brief" className="btn-primary mt-8 w-full py-3">
                 Start a conversation <ArrowUpRight size={17} aria-hidden="true" />
               </Link>
-              <p className="mt-4 text-center text-xs text-slate-500 dark:text-zinc-400">We usually respond within 24–48 business hours.</p>
             </div>
           </div>
 

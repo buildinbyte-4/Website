@@ -16,7 +16,6 @@ import { useProducts } from '@/hooks/useProducts';
 const DemoModal = dynamic(() => import('@/components/DemoModal'));
 const InquiryModal = dynamic(() => import('@/components/InquiryModal'));
 const LoginScreen = dynamic(() => import('@/components/LoginScreen'));
-const ProfileModal = dynamic(() => import('@/components/ProfileModal'));
 
 export default function HomePage() {
   const [session, setSession] = useState(null);
@@ -26,7 +25,6 @@ export default function HomePage() {
   const [inquiryConfig, setInquiryConfig] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
   const [loginMessage, setLoginMessage] = useState('');
-  const [showProfile, setShowProfile] = useState(false);
 
   // 0. Auto-redirect port 3000 -> port 8000 fallback
   useEffect(() => {
@@ -151,8 +149,7 @@ export default function HomePage() {
         {/* Header (Pass session state and trigger callbacks) */}
         <Navbar 
           session={session} 
-          onOpenLogin={() => setShowLogin(true)} 
-          onOpenProfile={() => setShowProfile(true)}
+          onOpenLogin={() => setShowLogin(true)}
         />
 
         {/* Hero Section */}
@@ -210,16 +207,6 @@ export default function HomePage() {
             message={loginMessage}
           />
         )}
-
-        {/* User Profile Modal */}
-        {showProfile && (
-          <ProfileModal
-            user={session?.user}
-            onClose={() => setShowProfile(false)}
-          />
-        )}
-
-
 
         {/* Floating Contact Button */}
         <FloatingContactButton />

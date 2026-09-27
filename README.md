@@ -224,7 +224,11 @@ Maintenance
 
 BuildInByte develops both client solutions and in-house products.
 
-Current and upcoming products include:
+Current product:
+
+- **Payflow Self-Hosted Payment Starter Kit** — a $20 source-code product with Razorpay integration, PostgreSQL storage, hosted checkout, signed webhooks, tests, and developer documentation.
+
+Upcoming products include:
 
 - Zeno OS
 - Embedded Development Platforms
@@ -232,6 +236,10 @@ Current and upcoming products include:
 - IoT Platforms
 - Automation Systems
 - Open Source Libraries
+
+## Payflow payment setup
+
+The website-to-Payflow connection is configured entirely with server-only environment variables. Follow [docs/payflow-integration.md](docs/payflow-integration.md) for local setup, the first mock or Razorpay TEST payment, webhook configuration, and the production checklist.
 
 ---
 

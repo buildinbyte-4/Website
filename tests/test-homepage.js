@@ -6,20 +6,61 @@ test.describe('Homepage', () => {
     await expect(page).toHaveURL('/');
     await expect(page.locator('body')).toBeVisible();
     await expect(page.getByRole('heading', { name: 'The BuildInByte digital shelf.' })).toBeVisible();
-    await expect(page.getByText('Catalog opening soon')).toBeVisible();
+    await expect(page.getByText('Available now · Source code')).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Custom systems & website templates' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Custom Systems', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Website Templates', exact: true })).toBeVisible();
+    await expect(page.getByText('We usually respond within 24–48 business hours.')).toHaveCount(0);
   });
 
-  test('digital products section is catalog-ready without placeholder statistics', async ({ page }) => {
+  test('keeps response-time messaging out of the inquiry entry stage', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Book a scoping call' }).click();
+
+    const dialog = page.getByRole('dialog');
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toContainText('Share a few details so our delivery team can understand what you need');
+    await expect(dialog.getByText(/24–48 business hours/)).toHaveCount(0);
+  });
+
+  test('digital products section offers Payflow without collecting payment credentials', async ({ page }) => {
     await page.goto('/');
 
     const products = page.locator('#digital-products');
     await expect(products).toContainText('Original digital products designed, built, and released by our team.');
-    await expect(products).toContainText('Catalog opening soon');
+    await expect(products).toContainText('Payflow Self-Hosted Payment Starter Kit');
+    await expect(products).toContainText('$20');
+    await expect(products.getByLabel('Name')).toBeVisible();
+    await expect(products.getByLabel('Delivery email')).toBeVisible();
+    await expect(products.getByText('Payment details stay with the payment provider.')).toBeVisible();
+    await expect(products.locator('input[autocomplete="cc-number"], input[autocomplete="cc-csc"]')).toHaveCount(0);
     await expect(page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: 'Products', exact: true })).toHaveAttribute('href', '/#digital-products');
     await expect(page.getByText('Success Rate', { exact: true })).toHaveCount(0);
+  });
+
+  test('starts a Payflow checkout through the server route', async ({ page }) => {
+    let checkoutRequest;
+    await page.route('**/api/payments/checkout', async (route) => {
+      checkoutRequest = route.request();
+      await route.fulfill({
+        status: 201,
+        contentType: 'application/json',
+        body: JSON.stringify({ success: true, data: { paymentId: 'pay_test_12345678', checkoutUrl: 'http://localhost:8000/checkout/result', status: 'CREATED', product: { name: 'Payflow Self-Hosted Payment Starter Kit' } } }),
+      });
+    });
+    await page.goto('/#digital-products');
+    await expect(page.getByLabel('Loading projects')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Buy source code — $20' })).toBeEnabled();
+    await page.locator('#digital-products form').evaluate((form) => {
+      form.elements.name.value = 'Test Buyer';
+      form.elements.email.value = 'buyer@example.com';
+      form.elements.acceptedTerms.checked = true;
+      form.requestSubmit();
+    });
+    await expect.poll(() => checkoutRequest).toBeTruthy();
+    expect(checkoutRequest.headers()['idempotency-key']).toBeTruthy();
+    expect(checkoutRequest.postDataJSON()).toEqual({ name: 'Test Buyer', email: 'buyer@example.com', acceptedTerms: true });
+    await expect(page).toHaveURL('/checkout/result');
   });
 
   test('should have no network errors', async ({ page }) => {
@@ -107,8 +148,12 @@ test.describe('Homepage', () => {
     await expect(page.getByRole('heading', { name: 'An engagement shaped around the work.' })).toBeVisible();
     await expect(page.getByLabel('What do you need? *')).toBeVisible();
     await expect(page.getByLabel('Estimated budget range')).toBeVisible();
+    await expect(page.getByLabel('Estimated budget range')).toContainText(/Select a range \((?:INR|USD)\)/);
+    await expect(page.getByLabel('Estimated budget range').getByRole('option', { name: 'Custom range' })).toHaveCount(1);
     await expect(page.getByText('This is an initial estimate, not the final budget.')).toBeVisible();
     await expect(page.getByLabel('Target start')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Let’s build something useful.' })).toHaveCount(0);
+    await expect(page.getByRole('link', { name: 'Start a conversation' })).toHaveCount(0);
 
     for (const width of [320, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 });
@@ -118,5 +163,46 @@ test.describe('Homepage', () => {
       }));
       expect(dimensions.page).toBeLessThanOrEqual(dimensions.viewport + 1);
     }
+  });
+
+  test('custom budget range reveals explicit currency fields', async ({ page }) => {
+    await page.goto('/contact');
+    const budget = page.getByLabel('Estimated budget range');
+    await expect(budget).toContainText(/Select a range \((?:INR|USD)\)/);
+    const selectedCurrency = (await budget.locator('option').first().textContent()).includes('INR') ? 'INR' : 'USD';
+    const symbol = selectedCurrency === 'INR' ? '₹' : '$';
+    await budget.selectOption('custom');
+
+    await expect(page.getByRole('group', { name: `Custom budget range (${selectedCurrency})` })).toBeVisible();
+    await expect(page.getByLabel(`Minimum (${symbol})`)).toBeVisible();
+    await expect(page.getByLabel(`Maximum (${symbol})`)).toBeVisible();
+  });
+});
+
+test.describe('United States regional budget', () => {
+  test.use({ locale: 'en-US', timezoneId: 'America/New_York' });
+
+  test('uses dollar ranges outside India', async ({ page }) => {
+    await page.goto('/contact');
+    const budget = page.getByLabel('Estimated budget range');
+
+    await expect(budget.getByRole('option', { name: 'Select a range (USD)' })).toHaveCount(1);
+    await expect(budget.getByRole('option', { name: '$150–$300' })).toHaveCount(1);
+    await expect(budget.getByRole('option', { name: 'Custom range' })).toHaveCount(1);
+  });
+});
+
+test.describe('Indian regional budget', () => {
+  test.use({ locale: 'en-IN', timezoneId: 'Asia/Kolkata' });
+
+  test('uses rupee ranges for visitors in India', async ({ page }) => {
+    await page.goto('/contact');
+    const budget = page.getByLabel('Estimated budget range');
+
+    await expect(budget.getByRole('option', { name: 'Select a range (INR)' })).toHaveCount(1);
+    await expect(budget.getByRole('option', { name: '₹10,000–₹25,000' })).toHaveCount(1);
+    await expect(budget.getByRole('option', { name: 'Custom range' })).toHaveCount(1);
+    await budget.selectOption('custom');
+    await expect(page.getByRole('group', { name: 'Custom budget range (INR)' })).toBeVisible();
   });
 });

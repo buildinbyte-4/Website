@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon, ChevronDown, UserRound, LayoutDashboard, LogOut } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 const navigation = [
@@ -14,14 +14,16 @@ const navigation = [
   ['About', '/about'],
 ];
 
-export default function Navbar({ session, onOpenLogin, onOpenProfile }) {
+export default function Navbar({ session, onOpenLogin }) {
   const router = useRouter();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [hasClientAccess, setHasClientAccess] = useState(false);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const themeTransitioning = useRef(false);
+  const accountMenuRef = useRef(null);
 
   useEffect(() => {
     setIsDark(document.documentElement.classList.contains('dark'));
@@ -45,6 +47,24 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile }) {
 
     return () => { active = false; };
   }, [session?.user?.id]);
+
+  useEffect(() => {
+    if (!accountMenuOpen) return undefined;
+
+    const closeOnOutsideClick = (event) => {
+      if (!accountMenuRef.current?.contains(event.target)) setAccountMenuOpen(false);
+    };
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setAccountMenuOpen(false);
+    };
+
+    document.addEventListener('pointerdown', closeOnOutsideClick);
+    document.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutsideClick);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [accountMenuOpen]);
 
   const toggleTheme = () => {
     if (themeTransitioning.current) return;
@@ -80,7 +100,9 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile }) {
 
   const handleSignOut = async () => {
     if (supabase) await supabase.auth.signOut();
-    window.location.href = '/';
+    setAccountMenuOpen(false);
+    router.replace('/');
+    router.refresh();
   };
 
   const avatarUrl = session?.user?.user_metadata?.avatar_url || session?.user?.user_metadata?.picture || '';
@@ -107,14 +129,31 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile }) {
           <button type="button" onClick={toggleTheme} aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border-subtle bg-bg-surface-dark text-foreground hover:bg-accent-soft">
             {isDark ? <Sun size={16} /> : <Moon size={16} />}
           </button>
-          <button type="button" onClick={session ? () => setShowLogoutConfirm(true) : onOpenLogin} className="hidden min-h-10 rounded-lg border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 sm:inline-flex sm:items-center dark:border-white/10 dark:bg-bg-surface-dark dark:text-zinc-100 dark:hover:bg-slate-800">
-            {session ? 'Log out' : 'Log in'}
-          </button>
+          {!session && <button type="button" onClick={onOpenLogin} className="hidden min-h-10 rounded-lg border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 sm:inline-flex sm:items-center dark:border-white/10 dark:bg-bg-surface-dark dark:text-zinc-100 dark:hover:bg-slate-800">Log in</button>}
           <Link href="/contact#project-brief" className="inline-flex min-h-10 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-brand-400">Talk to us</Link>
           {session && (
-            <button type="button" onClick={onOpenProfile} aria-label="Open profile" className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-100 text-sm font-semibold text-slate-700 hover:ring-2 hover:ring-brand-200 dark:border-white/10 dark:bg-zinc-800 dark:text-foreground">
-              {avatarUrl ? <img src={avatarUrl} alt="" referrerPolicy="no-referrer" className="h-full w-full object-cover" /> : identity.charAt(0).toUpperCase()}
-            </button>
+            <div ref={accountMenuRef} className="relative">
+              <button type="button" onClick={() => setAccountMenuOpen(open => !open)} aria-label="Open account menu" aria-haspopup="menu" aria-expanded={accountMenuOpen} className="flex h-10 items-center gap-1 rounded-full border border-slate-200 bg-white p-1 pr-2 text-sm font-semibold text-slate-700 shadow-sm hover:border-slate-300 dark:border-white/10 dark:bg-bg-surface-dark dark:text-foreground dark:hover:border-white/20">
+                <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
+                  {avatarUrl ? <img src={avatarUrl} alt="" referrerPolicy="no-referrer" className="h-full w-full object-cover" /> : identity.charAt(0).toUpperCase()}
+                </span>
+                <ChevronDown size={14} aria-hidden="true" className={`transition-transform ${accountMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {accountMenuOpen && (
+                <div role="menu" aria-label="Account" className="absolute right-0 top-12 w-56 rounded-xl border border-slate-200 bg-white p-2 shadow-2xl dark:border-white/10 dark:bg-[#151515]">
+                  <div className="border-b border-slate-200 px-3 py-2.5 dark:border-white/10">
+                    <p className="truncate text-sm font-semibold text-slate-950 dark:text-white">{identity}</p>
+                    <p className="mt-0.5 truncate text-xs text-slate-500 dark:text-zinc-400">{session.user.email}</p>
+                  </div>
+                  <div className="py-1.5">
+                    <Link role="menuitem" href="/profile" onClick={() => setAccountMenuOpen(false)} className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-zinc-200 dark:hover:bg-white/5"><UserRound size={16} />View profile</Link>
+                    {hasClientAccess && <Link role="menuitem" href="/users" onClick={() => setAccountMenuOpen(false)} className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-zinc-200 dark:hover:bg-white/5"><LayoutDashboard size={16} />User portal</Link>}
+                    <button role="menuitem" type="button" onClick={() => { setAccountMenuOpen(false); setShowLogoutConfirm(true); }} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/30"><LogOut size={16} />Log out</button>
+                  </div>
+                </div>
+              )}
+            </div>
           )}
           <button type="button" aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={mobileOpen} onClick={() => setMobileOpen(open => !open)} className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 md:hidden dark:border-white/10 dark:bg-bg-surface-dark dark:text-foreground">
             {mobileOpen ? <X size={19} /> : <Menu size={19} />}
@@ -128,6 +167,7 @@ export default function Navbar({ session, onOpenLogin, onOpenProfile }) {
             <Link key={href} href={href} onClick={(event) => { event.preventDefault(); setMobileOpen(false); router.push(href); }} className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-zinc-100 dark:hover:bg-white/5">{label}</Link>
           ))}
           {hasClientAccess && <Link href="/users" onClick={() => setMobileOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-zinc-100 dark:hover:bg-white/5">User Portal</Link>}
+          {session && <Link href="/profile" onClick={() => setMobileOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-zinc-100 dark:hover:bg-white/5">View profile</Link>}
           <button type="button" onClick={() => { setMobileOpen(false); session ? setShowLogoutConfirm(true) : onOpenLogin?.(); }} className="rounded-lg px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-slate-100 sm:hidden dark:text-zinc-100 dark:hover:bg-white/5">{session ? 'Log out' : 'Log in'}</button>
         </nav>
       )}
