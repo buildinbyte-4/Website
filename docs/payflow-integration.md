@@ -2,7 +2,7 @@
 
 This branch sells the Payflow source-code product through the separately hosted Payflow gateway. India currently uses a **₹2 INR** test price with UPI, cards, net banking, and wallets; other regions use the **$20 USD** international offer with cards and wallets. Payment credentials remain on the gateway and payment-provider pages; this Next.js app never collects card, CVV, UPI PIN, OTP, or bank credentials.
 
-Regional pricing is resolved server-side from `lib/payflow/product.js`. Trusted Vercel or Cloudflare country headers take precedence, with browser locale/timezone used as a local-development fallback. The browser sends only a country hint; it never supplies the amount or currency.
+Regional pricing is resolved server-side from `lib/payflow/product.js`. Trusted Vercel or Cloudflare country headers take precedence. Local development also recognizes the Website server's India timezone before using the browser locale/timezone hint, because embedded browsers may report UTC or a generic US locale. The browser sends only a country hint; it never supplies the amount or currency.
 
 ## 1. Start Payflow locally
 

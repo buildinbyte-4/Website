@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
 import { createProductPayment } from '@/lib/payflow/gateway';
-import { detectRequestCountry, getPayflowOffer, PAYFLOW_PRODUCT } from '@/lib/payflow/product';
+import { countryFromTimeZone, detectRequestCountry, getPayflowOffer, PAYFLOW_PRODUCT } from '@/lib/payflow/product';
 import { ApiError, jsonError, jsonSuccess } from '@/lib/security/response';
 import { errorLog } from '@/lib/security/logger';
 import { parseJsonBody } from '@/lib/validation/schemas';
@@ -16,7 +16,10 @@ const checkoutSchema = z.object({
 export async function POST(request) {
   try {
     const customer = await parseJsonBody(request, checkoutSchema);
-    const countryCode = detectRequestCountry(request, customer.countryCode);
+    const localRuntimeCountry = process.env.NODE_ENV === 'development'
+      ? countryFromTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone)
+      : '';
+    const countryCode = detectRequestCountry(request, customer.countryCode, localRuntimeCountry);
     const offer = getPayflowOffer(countryCode);
     const suppliedKey = request.headers.get('idempotency-key');
     const idempotencyKey = suppliedKey && z.string().uuid().safeParse(suppliedKey).success ? suppliedKey : randomUUID();
