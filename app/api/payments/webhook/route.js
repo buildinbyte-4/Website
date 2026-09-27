@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { getProductPaymentStatus, verifyPayflowWebhook } from '@/lib/payflow/gateway';
 import { errorLog } from '@/lib/security/logger';
 import { jsonError } from '@/lib/security/response';
-import { PAYFLOW_PRODUCT } from '@/lib/payflow/product';
+import { isKnownPayflowOffer } from '@/lib/payflow/product';
 
 const eventSchema = z.object({
   eventId: z.string().min(1).max(200),
@@ -25,7 +25,7 @@ export async function POST(request) {
     const parsed = eventSchema.safeParse(JSON.parse(rawBody));
     if (!parsed.success) return jsonError('Invalid webhook event.', 422);
     const event = parsed.data;
-    if (event.amount !== PAYFLOW_PRODUCT.amountMinor || event.currency !== PAYFLOW_PRODUCT.currency) {
+    if (!isKnownPayflowOffer(event.amount, event.currency)) {
       return jsonError('Webhook amount or currency does not match the product.', 409);
     }
     const authoritative = await getProductPaymentStatus(event.paymentId);

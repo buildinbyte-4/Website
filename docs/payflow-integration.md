@@ -1,6 +1,8 @@
 # Payflow website integration
 
-This branch sells the Payflow source-code product for **$20 USD** through the separately hosted Payflow gateway. Payment credentials remain on the gateway and payment-provider pages; this Next.js app never collects card, CVV, UPI PIN, OTP, or bank credentials.
+This branch sells the Payflow source-code product through the separately hosted Payflow gateway. India currently uses a **₹2 INR** test price with UPI, cards, net banking, and wallets; other regions use the **$20 USD** international offer with cards and wallets. Payment credentials remain on the gateway and payment-provider pages; this Next.js app never collects card, CVV, UPI PIN, OTP, or bank credentials.
+
+Regional pricing is resolved server-side from `lib/payflow/product.js`. Trusted Vercel or Cloudflare country headers take precedence, with browser locale/timezone used as a local-development fallback. The browser sends only a country hint; it never supplies the amount or currency.
 
 ## 1. Start Payflow locally
 
@@ -28,7 +30,7 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:8000/#digital-products`, enter a test name and email, accept the terms, and select **Buy source code — $20**. The browser is redirected to Payflow's hosted checkout.
+Open `http://localhost:8000/#digital-products`, confirm the automatically selected regional price, enter a test name and email, accept the terms, and select **Buy source code**. The browser is redirected to Payflow's hosted checkout.
 
 ## 4. Complete a test payment
 

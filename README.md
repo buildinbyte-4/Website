@@ -226,7 +226,7 @@ BuildInByte develops both client solutions and in-house products.
 
 Current product:
 
-- **Payflow Self-Hosted Payment Starter Kit** — a $20 source-code product with Razorpay integration, PostgreSQL storage, hosted checkout, signed webhooks, tests, and developer documentation.
+- **Payflow Self-Hosted Payment Starter Kit** — a regionally priced source-code product (currently ₹2 INR in India and $20 USD internationally) with Razorpay integration, PostgreSQL storage, hosted checkout, signed webhooks, tests, and developer documentation.
 
 Upcoming products include:
 

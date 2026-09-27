@@ -1,5 +1,6 @@
 import { Check, Code2, Database, ShieldCheck, Webhook } from 'lucide-react';
 import PayflowPurchaseForm from '@/components/payments/PayflowPurchaseForm';
+import RegionalPrice from '@/components/payments/RegionalPrice';
 import { PAYFLOW_PRODUCT } from '@/lib/payflow/product';
 
 const shelfDetails = [
@@ -58,7 +59,7 @@ export default function DigitalProducts() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="font-mono text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-zinc-400">Single-product licence</p>
-                <p className="mt-2 font-display text-4xl font-semibold tracking-tight text-slate-950 dark:text-foreground">{PAYFLOW_PRODUCT.displayPrice}</p>
+                <RegionalPrice />
               </div>
               <ul className="grid gap-2 text-sm text-slate-600 dark:text-zinc-300 sm:grid-cols-2">
                 {['Full source ZIP', 'Setup documentation', 'Razorpay adapter', 'Automated tests'].map((item) => <li key={item} className="flex items-center gap-2"><Check size={15} aria-hidden="true" /> {item}</li>)}

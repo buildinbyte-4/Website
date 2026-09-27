@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, CheckCircle2, LoaderCircle, LockKeyhole } from 'lucide-react';
+import { detectBrowserCountry, getPayflowOffer } from '@/lib/payflow/product';
 
 function createBrowserUuid() {
   if (typeof globalThis.crypto?.randomUUID === 'function') return globalThis.crypto.randomUUID();
@@ -18,9 +19,14 @@ export default function PayflowPurchaseForm() {
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
   const [ready, setReady] = useState(false);
+  const [region, setRegion] = useState({ countryCode: 'US', offer: getPayflowOffer('US') });
   const idempotencyKey = useRef(null);
 
-  useEffect(() => setReady(true), []);
+  useEffect(() => {
+    const countryCode = detectBrowserCountry();
+    setRegion({ countryCode, offer: getPayflowOffer(countryCode) });
+    setReady(true);
+  }, []);
 
   const startCheckout = async (event) => {
     event.preventDefault();
@@ -31,6 +37,7 @@ export default function PayflowPurchaseForm() {
       name: String(formData.get('name') || '').trim(),
       email: String(formData.get('email') || '').trim(),
       acceptedTerms: formData.get('acceptedTerms') === 'on',
+      countryCode: region.countryCode,
     };
     try {
       idempotencyKey.current ||= createBrowserUuid();
@@ -72,10 +79,13 @@ export default function PayflowPurchaseForm() {
       {error && <p role="alert" className="mt-4 border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-200">{error}</p>}
       <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
         <button type="submit" disabled={!ready || status === 'submitting'} className="btn-primary min-h-12 px-5 disabled:cursor-wait disabled:opacity-60">
-          {status === 'submitting' ? <><LoaderCircle size={17} className="animate-spin" /> Opening secure checkout</> : <>Buy source code — $20 <ArrowRight size={17} /></>}
+          {status === 'submitting' ? <><LoaderCircle size={17} className="animate-spin" /> Opening secure checkout</> : <>Buy source code — {region.offer.displayPrice} <ArrowRight size={17} /></>}
         </button>
         <span className="inline-flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400"><LockKeyhole size={14} /> Payment details stay with the payment provider.</span>
       </div>
+      <p aria-live="polite" className="mt-3 text-xs text-slate-500 dark:text-zinc-400">
+        {region.offer.market} checkout · {region.offer.currency}{region.countryCode === 'IN' ? ' · UPI available' : ''}
+      </p>
       <p className="mt-4 flex items-start gap-2 text-xs leading-5 text-slate-500 dark:text-zinc-400"><CheckCircle2 size={14} className="mt-0.5 shrink-0" /> One production application, buyer-hosted, with Razorpay and mock-provider adapters included.</p>
     </form>
   );

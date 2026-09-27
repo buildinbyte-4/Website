@@ -29,7 +29,7 @@ test.describe('Homepage', () => {
     const products = page.locator('#digital-products');
     await expect(products).toContainText('Original digital products designed, built, and released by our team.');
     await expect(products).toContainText('Payflow Self-Hosted Payment Starter Kit');
-    await expect(products).toContainText('$20');
+    await expect(products).toContainText(/\$20|₹2/);
     await expect(products.getByLabel('Name')).toBeVisible();
     await expect(products.getByLabel('Delivery email')).toBeVisible();
     await expect(products.getByText('Payment details stay with the payment provider.')).toBeVisible();
@@ -50,7 +50,7 @@ test.describe('Homepage', () => {
     });
     await page.goto('/#digital-products');
     await expect(page.getByLabel('Loading projects')).toHaveCount(0);
-    await expect(page.getByRole('button', { name: 'Buy source code — $20' })).toBeEnabled();
+    await expect(page.getByRole('button', { name: /Buy source code — (?:\$20|₹2)/ })).toBeEnabled();
     await page.locator('#digital-products form').evaluate((form) => {
       form.elements.name.value = 'Test Buyer';
       form.elements.email.value = 'buyer@example.com';
@@ -59,7 +59,12 @@ test.describe('Homepage', () => {
     });
     await expect.poll(() => checkoutRequest).toBeTruthy();
     expect(checkoutRequest.headers()['idempotency-key']).toBeTruthy();
-    expect(checkoutRequest.postDataJSON()).toEqual({ name: 'Test Buyer', email: 'buyer@example.com', acceptedTerms: true });
+    expect(checkoutRequest.postDataJSON()).toEqual({
+      name: 'Test Buyer',
+      email: 'buyer@example.com',
+      acceptedTerms: true,
+      countryCode: expect.stringMatching(/^[A-Z]{2}$/),
+    });
     await expect(page).toHaveURL('/checkout/result');
   });
 
