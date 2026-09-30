@@ -224,9 +224,7 @@ Maintenance
 
 BuildInByte develops both client solutions and in-house products.
 
-Current product:
-
-- **Payflow Self-Hosted Payment Starter Kit** — a regionally priced source-code product (currently ₹2 INR in India and $20 USD internationally) with Razorpay integration, PostgreSQL storage, hosted checkout, signed webhooks, tests, and developer documentation.
+The commercial digital catalog is currently being prepared. A clearly labelled ₹1 checkout test product is available for end-to-end Razorpay testing and includes no downloadable asset.
 
 Upcoming products include:
 
@@ -237,9 +235,9 @@ Upcoming products include:
 - Automation Systems
 - Open Source Libraries
 
-## Payflow payment setup
+## Razorpay payment setup
 
-The website-to-Payflow connection is configured entirely with server-only environment variables. Follow [docs/payflow-integration.md](docs/payflow-integration.md) for local setup, the first mock or Razorpay TEST payment, webhook configuration, and the production checklist.
+Payments use Razorpay Standard Checkout directly, with server-controlled prices, signature verification, signed webhooks, and RLS-protected Supabase records. Follow [docs/razorpay-integration.md](docs/razorpay-integration.md) for environment, dashboard, Vercel, migration, testing, and private fulfilment steps.
 
 ---
 

@@ -6,7 +6,7 @@ test.describe('Homepage', () => {
     await expect(page).toHaveURL('/');
     await expect(page.locator('body')).toBeVisible();
     await expect(page.getByRole('heading', { name: 'The BuildInByte digital shelf.' })).toBeVisible();
-    await expect(page.getByText('Available now · Source code')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'BuildInByte Checkout Test' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Custom systems & website templates' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Custom Systems', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Website Templates', exact: true })).toBeVisible();
@@ -23,49 +23,17 @@ test.describe('Homepage', () => {
     await expect(dialog.getByText(/24–48 business hours/)).toHaveCount(0);
   });
 
-  test('digital products section offers Payflow without collecting payment credentials', async ({ page }) => {
+  test('digital products section exposes only the clearly labelled ₹1 test product', async ({ page }) => {
     await page.goto('/');
 
     const products = page.locator('#digital-products');
     await expect(products).toContainText('Original digital products designed, built, and released by our team.');
-    await expect(products).toContainText('Payflow Self-Hosted Payment Starter Kit');
-    await expect(products).toContainText(/\$20|₹2/);
-    await expect(products.getByLabel('Name')).toBeVisible();
-    await expect(products.getByLabel('Delivery email')).toBeVisible();
-    await expect(products.getByText('Payment details stay with the payment provider.')).toBeVisible();
+    await expect(products).toContainText('Test product · ₹1');
+    await expect(products).toContainText('No digital download is included.');
+    await expect(products.getByRole('button', { name: 'Buy securely — ₹1' })).toBeEnabled();
     await expect(products.locator('input[autocomplete="cc-number"], input[autocomplete="cc-csc"]')).toHaveCount(0);
     await expect(page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: 'Products', exact: true })).toHaveAttribute('href', '/#digital-products');
     await expect(page.getByText('Success Rate', { exact: true })).toHaveCount(0);
-  });
-
-  test('starts a Payflow checkout through the server route', async ({ page }) => {
-    let checkoutRequest;
-    await page.route('**/api/payments/checkout', async (route) => {
-      checkoutRequest = route.request();
-      await route.fulfill({
-        status: 201,
-        contentType: 'application/json',
-        body: JSON.stringify({ success: true, data: { paymentId: 'pay_test_12345678', checkoutUrl: 'http://localhost:8000/checkout/result', status: 'CREATED', product: { name: 'Payflow Self-Hosted Payment Starter Kit' } } }),
-      });
-    });
-    await page.goto('/#digital-products');
-    await expect(page.getByLabel('Loading projects')).toHaveCount(0);
-    await expect(page.getByRole('button', { name: /Buy source code — (?:\$20|₹2)/ })).toBeEnabled();
-    await page.locator('#digital-products form').evaluate((form) => {
-      form.elements.name.value = 'Test Buyer';
-      form.elements.email.value = 'buyer@example.com';
-      form.elements.acceptedTerms.checked = true;
-      form.requestSubmit();
-    });
-    await expect.poll(() => checkoutRequest).toBeTruthy();
-    expect(checkoutRequest.headers()['idempotency-key']).toBeTruthy();
-    expect(checkoutRequest.postDataJSON()).toEqual({
-      name: 'Test Buyer',
-      email: 'buyer@example.com',
-      acceptedTerms: true,
-      countryCode: expect.stringMatching(/^[A-Z]{2}$/),
-    });
-    await expect(page).toHaveURL('/checkout/result');
   });
 
   test('should have no network errors', async ({ page }) => {

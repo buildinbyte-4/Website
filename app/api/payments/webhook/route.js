@@ -1,44 +1,48 @@
-import { z } from 'zod';
-import { getProductPaymentStatus, verifyPayflowWebhook } from '@/lib/payflow/gateway';
-import { errorLog } from '@/lib/security/logger';
-import { jsonError } from '@/lib/security/response';
-import { isKnownPayflowOffer } from '@/lib/payflow/product';
+import { verifyWebhookSignature } from '@/lib/payments/signatures.mjs';
+import { createPaymentRepository } from '@/lib/payments/repository';
+import { jsonError, jsonSuccess } from '@/lib/security/response';
+import { errorLog, securityLog } from '@/lib/security/logger';
 
-const eventSchema = z.object({
-  eventId: z.string().min(1).max(200),
-  event: z.string().startsWith('payment.'),
-  paymentId: z.string().startsWith('pay_'),
-  referenceId: z.string().startsWith('BIB-PAYFLOW-'),
-  transactionId: z.string().optional(),
-  status: z.enum(['CREATED', 'PROCESSING', 'SUCCESS', 'FAILED', 'PENDING', 'CANCELLED', 'REFUND_PENDING', 'PARTIALLY_REFUNDED', 'REFUNDED']),
-  amount: z.number().int().positive(),
-  currency: z.string().length(3),
-  createdAt: z.string().optional(),
-}).passthrough();
+export const runtime = 'nodejs';
+
+async function reconcile(event, repository) {
+  const payment = event?.payload?.payment?.entity;
+  const refund = event?.payload?.refund?.entity;
+  if (['payment.captured', 'order.paid'].includes(event.event)) {
+    const record = await repository.findByOrderId(payment?.order_id);
+    if (!record) return;
+    if (Number(payment.amount) !== record.expected_amount || String(payment.currency).toUpperCase() !== record.currency) throw new Error('WEBHOOK_PAYMENT_MISMATCH');
+    await repository.markPaid(record.id, payment.id);
+  } else if (event.event === 'payment.failed') {
+    const record = await repository.findByOrderId(payment?.order_id);
+    if (record) await repository.markFailed(record.id, payment.id);
+  } else if (['payment.refunded', 'refund.processed'].includes(event.event)) {
+    const record = await repository.findByPaymentId(payment?.id || refund?.payment_id);
+    if (record) await repository.markRefunded(record.id);
+  }
+}
 
 export async function POST(request) {
   const rawBody = await request.text();
-  const signature = request.headers.get('x-payment-gateway-signature');
-  const timestamp = request.headers.get('x-payment-gateway-timestamp');
+  const signature = request.headers.get('x-razorpay-signature') || '';
+  const eventId = request.headers.get('x-razorpay-event-id') || '';
+  if (!eventId || !verifyWebhookSignature({ rawBody, signature, secret: process.env.RAZORPAY_WEBHOOK_SECRET || '' })) {
+    securityLog('Rejected unsigned Razorpay webhook', { hasEventId: Boolean(eventId) });
+    return jsonError('Invalid webhook signature.', 401);
+  }
+  let event;
+  try { event = JSON.parse(rawBody); }
+  catch { return jsonError('Invalid webhook payload.', 400); }
+
+  const repository = createPaymentRepository();
   try {
-    if (!verifyPayflowWebhook({ rawBody, signature, timestamp })) return jsonError('Invalid webhook signature.', 401);
-    const parsed = eventSchema.safeParse(JSON.parse(rawBody));
-    if (!parsed.success) return jsonError('Invalid webhook event.', 422);
-    const event = parsed.data;
-    if (!isKnownPayflowOffer(event.amount, event.currency)) {
-      return jsonError('Webhook amount or currency does not match the product.', 409);
-    }
-    const authoritative = await getProductPaymentStatus(event.paymentId);
-    if (String(authoritative.status).toUpperCase() !== event.status) {
-      return jsonError('Webhook status did not match the gateway.', 409);
-    }
-    console.info(JSON.stringify({
-      level: 'info', code: 'PAYFLOW_WEBHOOK_ACCEPTED', eventId: event.eventId,
-      paymentId: event.paymentId, referenceId: event.referenceId, status: event.status,
-    }));
-    return new Response(null, { status: 204 });
+    if (!await repository.beginWebhook(eventId, String(event.event || 'unknown'))) return jsonSuccess({ accepted: true, duplicate: true });
+    await reconcile(event, repository);
+    await repository.finishWebhook(eventId);
+    return jsonSuccess({ accepted: true });
   } catch (error) {
-    errorLog('Payflow webhook processing failed', { message: error.message });
-    return jsonError('Unable to process webhook.', 500);
+    await repository.finishWebhook(eventId, String(error.message).slice(0, 500)).catch(() => {});
+    errorLog('Razorpay webhook reconciliation failed', { eventId, code: error.code });
+    return jsonError('Webhook processing failed.', 500);
   }
 }
